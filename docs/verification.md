@@ -112,6 +112,18 @@ Consequences for the code:
    a token stays listed (no re-list) is back-adjusted in place remains **ASSUMED**; no such
    case exists in the sample.
 
+## Corporate-action endpoints — OBSERVED 2026-09-16 (spec v2 ambiguities A and B)
+
+| Endpoint | Observation |
+|---|---|
+| `GET /api/v3/market/cash-dividend-records?symbol=RMUUSDT&type=paid` | `40034 Parameter RMUUSDT does not exist`. With the **perps** symbol `MUUSDT` it returns `{exDividendDate: 2026-07-06, cashDividendPerShare: 0.15, cashDividendTimestamp: 1783036800000}`. **The endpoint serves RWA stock perps only, as its documentation says; it does not cover spot rTokens.** Ambiguity A: C1 for spot stays on Bitget's published distribution notice (DOCUMENTED, parsed deterministically). The perps endpoint is used as a cross-check and, with `type=pending`, as a forward calendar for underlyings that have a perp |
+| `cashDividendPerShare` gross or net? | For the 4 sample events that have a perps record (rAVGO 0.65, rMU 0.15, rCSCO 0.42, rCMCSA 0.33) it equals the spot notice's figure to the cent, and the spot notice applies ×70% *on top of* that figure. MU's declared dividend is $0.15. **Ambiguity B: gross.** Only 25 of 59 sample underlyings have a perp and only 4 of those have a June/July record, so the cross-check covers 4 events |
+| `cashDividendTimestamp` | 1783036800000 = 2026-07-03 00:00 UTC = Thu 2026-07-02 20:00 ET for a Mon 2026-07-06 ex-date with Fri 07-03 an NYSE holiday: the perps settlement time, holiday-aware, at the US after-hours close. Consistent with article 12560603895292 |
+| `GET /api/v3/market/split-records` | 4 records, all `status=completed`: KORUUSDT 20 (ex 2026-07-15), MUUUSDT 20 (07-15), SOXSUSDT 0.1 (07-15), MSTUUSDT 0.1 (08-24); `exDividendDateTimezone=ET`; halt windows of 7–13 h ending 13:35 UTC (09:35 ET). **All four symbols are `USDT-FUTURES` instruments; none is a spot symbol, and Amphenol's 2:1 (spot rAPH, 2026-09-03) is absent.** The spot rToken for each is (re-)listed *after* the halt ends: RSOXSUSDT `launchTime` 14:37 UTC vs halt end 13:35; RMSTUUSDT 2026-08-25 02:42 vs halt end 08-24 13:35 |
+| Spot series across a split | There is none. The pre-split spot token's intraday history ends; the new listing starts after the halt. The spec's "halt then gap in one series" describes the perps; for spot it is "old token gone, new token listed". The normaliser therefore (a) drops bars before `launchTime`, (b) is halt-aware for any series that does span a `split-records` window, (c) still asserts no split-shaped gap in what remains |
+| `GET /api/v3/market/tickers?category=SPOT` | Carries `platformTurnover24h` (on-platform rToken turnover) beside `turnover24h` (US tape). RMUUSDT: **$290,798** platform vs $11.0B tape. For the 59 sample symbols on 2026-09-16: median platform turnover **$119**, 28 of 63 events' tokens at **$0**, 51 below $10k; the largest are rAVGO $393k, rMU $291k, rQQQ $228k, rTLT $109k. This is the liquidity of the market that produced the measured prices |
+| `GET /api/v3/market/fee-group?category=SPOT` | Three groups with MM1–MM5 and PRO1–PRO6 tiers; an `rtoken` label (1,668 symbols, weight 1.00) sits in GROUP_A with `core_mainstream`. The response carries no ordinary-user base tier; the 0.10% base still comes from v2 symbols. What `weight` means is not documented — **ASSUMED** to be a multiplier and not used |
+
 ## US market calendar — DOCUMENTED (NYSE), not a Bitget parameter
 
 The last cum-dividend session is the last NYSE trading day before the ex-date. NYSE 2026
@@ -124,7 +136,7 @@ cannot be inferred from the candle data.
 
 | # | Question | Blocks |
 |---|---|---|
-| 1 | Bitget dividend snapshot time vs exchange ex/record date | every BUY signal |
+| 1 | Bitget dividend snapshot time vs exchange ex/record date (neither endpoint returns one) | every BUY signal |
 | 2 | In-place adjustment of a split without a re-list | any future series that spans such a split |
 | 3 | Withholding is exactly 30% on every event in the batch | net-dividend arithmetic |
 | 4 | Account-level fee tier vs the published 0.05% (to 31 Aug) / 0.1% (after) | cost model |
