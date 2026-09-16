@@ -46,12 +46,69 @@ fee-tier call and will be re-verified there.
   UTC, i.e. bars with no trades are **omitted**, not zero-filled. Gap handling is therefore
   the caller's job and is treated as a data-integrity check, not filled.
 
+## Dividend notice of 2026-07-24 — DOCUMENTED
+
+Source: https://www.bitget.com/support/articles/12560603890079, saved verbatim under
+`data/sources/` and checksummed in `exnight/sources.py`.
+
+- 63 rows, **59 distinct rTokens**; rSATA appears five times (daily-paying ETF).
+- Ex-dates run from **2026-06-11 to 2026-07-21**. The working spec described the batch as
+  "63 events at a single moment"; it is not. It is one *payment* batch covering six weeks
+  of ex-dates. The sample is still cross-sectional in the sense that all events sit on the
+  same infrastructure and fee schedule, but they are not simultaneous.
+- Withholding: "the securities custodian will deduct a 30% federal withholding tax ...
+  Actual Received Amount = Number of Shares Held × Dividend per Share × 70%".
+- Eligibility: "Users holding the corresponding assets at the time of the snapshot". **The
+  snapshot time is not stated.** `bitget_snapshot_time` is null for every event and
+  `eligibility_verified` is false; every BUY signal is suppressed until this is resolved.
+- Exchange record dates are not stated and are left null rather than inferred.
+
+## Trading hours, fees at the time — DOCUMENTED
+
+- Support article 12560603887176: "Bitget stock spot trading currently supports extended
+  trading across a 24/5 schedule." Weekend trading exists only for a listed subset:
+  61 tokens as of 2026-07-17 (article 12560603889487), "over 100" per the later Academy FAQ.
+  The spec's "all 24/7" is wrong; the overnight ex-date repricing this project measures
+  happens in the weekday overnight session for all tokens, and additionally over weekends
+  for the listed subset. Weekend prices are "reference quotes ... based on Friday's closing
+  price, combined with market maker quotations".
+- Academy FAQ: "During the current promotional period through August 31, 2026, the standard
+  trading fee is 0.05%". Every event in the July notice falls inside that period, so the
+  cost model uses **0.05%** for those events and the live symbol rate (0.1% today) for
+  anything after 2026-08-31. Fee is therefore a per-event field, not a constant.
+- PTP notice 2026-09-15 (article 12560603895180): PTP-related rTokens carry 37%/21%
+  withholding and a potential 10% sale tax; all currently listed PTP rTokens are exempt
+  today. No ticker in the July notice is on the PTP list, but the withholding rate must
+  stay per event.
+
+## Split adjustment and history provenance — OBSERVED 2026-09-16
+
+Two underlying splits fell inside the sample window: CrowdStrike 4:1 (first adjusted trading
+2026-07-02) and Amphenol 2:1 (executed 2026-09-03). Both underlyings have rTokens.
+
+| Observation | Implication |
+|---|---|
+| A scan of 1D candles for all 1,653 rTokens (2026-06-01 → 09-16) found **no** open/prev-close ratio outside [0.6, 1.6] | no raw split gaps exist in the daily series |
+| RCRWDUSDT 1D closes run 171 → 196 → 195 across 2026-07-02 with 5-decimal prices such as 175.48125 (= 701.925 ÷ 4) | pre-split history is **back-adjusted** by the split ratio |
+| RAPHUSDT 1D closes run 79.9 → 81.0 → 82.5 across 2026-09-03; but the 2026-09-02 bar has high = 146.784 vs close 80.997 | back-adjusted, with a **stale un-adjusted print surviving in `high`**. Extremes cannot be trusted across an adjustment |
+| RAPHUSDT `openTime` = 2026-09-03 10:51 UTC (split day), although rAPH paid a dividend in June; RSOXSUSDT and RTZAUSDT `openTime` = 2026-07-15, after their June ex-dates | Bitget appears to **re-list** a token around a corporate action; the symbol's `openTime` moves and intraday history before it is gone |
+| 1D bars start 2026-06-21 for tokens listed in July and September (rCRWD, rAPH, rSOXS) | **daily history is a backfilled reference series**, not a record of rToken trading. It must not be used to measure the Bitget market |
+| 1m bars exist only from `openTime` onward | an event is reconstructable only if its window lies after the symbol's `openTime` |
+
+Consequences for the code:
+1. The normaliser does **not** divide by split ratios; Bitget already has. It verifies
+   continuity across known corporate actions and flags stale extremes.
+2. Measurement uses intraday bars after `openTime` only.
+3. Open question 2 is answered for the backfilled series. Whether a split that occurs while
+   a token stays listed (no re-list) is back-adjusted in place remains **ASSUMED**; no such
+   case exists in the sample.
+
 ## Still ASSUMED (blocks the paths listed)
 
 | # | Question | Blocks |
 |---|---|---|
 | 1 | Bitget dividend snapshot time vs exchange ex/record date | every BUY signal |
-| 2 | Are historical candles split-adjusted? | every series that spans a split |
+| 2 | In-place adjustment of a split without a re-list | any future series that spans such a split |
 | 3 | Withholding is exactly 30% on every event in the batch | net-dividend arithmetic |
-| 4 | Account-level fee tier vs the 0.1% symbol rate | cost model |
+| 4 | Account-level fee tier vs the published 0.05% (to 31 Aug) / 0.1% (after) | cost model |
 | 5 | Overnight book depth at realistic size | slippage model |
