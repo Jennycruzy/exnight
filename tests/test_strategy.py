@@ -1,0 +1,58 @@
+import pandas as pd
+import pytest
+
+from exnight.costs import latest_samples
+from exnight.strategy import estimate, verdict_row
+
+
+def _samples(**over):
+    cols = dict(levels_ask=5, levels_bid=5, ticker_spread_bp=None, ticker_ask1_notional=None, ticker_bid1_notional=None,
+                **{f"{s}_walk_bp_{n}": None for s in ("buy", "sell") for n in (1000, 5000, 25000)})
+    rows = [dict(cols, ts="2026-09-16T20:30:00+00:00", session="after_hours", symbol="RXUSDT", book_source="public_book",
+                 sell_walk_bp_1000=10.0, sell_walk_bp_5000=10.0),
+            dict(cols, ts="2026-09-17T00:11:00+00:00", session="overnight", symbol="RXUSDT", book_source="public_book",
+                 buy_walk_bp_1000=10.0, buy_walk_bp_5000=10.0)]
+    return latest_samples(pd.DataFrame(rows))
+
+
+BASE = dict(event_id="rX-2026-09-21-1", symbol="rX", spot="RXUSDT", ex_date="2026-09-21", gross=1.0, net=0.7,
+            basis="GROSS", eligible=False, price=100.0, price_label="test", fee=0.001, fee_label="test",
+            drop_se=0.1, drop_label="test", notional=1000)
+
+
+def test_hold_when_lower_bound_does_not_beat_net_plus_cost():
+    r = verdict_row(**BASE, drop_ratio=0.66, samples=_samples())
+    cost = 2 * 0.001 * 100 + (0.001 + 0.001) * 100          # 0.4 per share
+    assert r["cost_per_share"] == pytest.approx(cost)
+    assert r["exit_edge_lower"] == pytest.approx((0.66 - 0.2) * 1.0 - 0.7 - cost)
+    assert r["verdict"] == "HOLD" and r["buy"].startswith("SUPPRESSED")
+
+
+def test_exit_only_on_lower_bound():
+    r = verdict_row(**BASE, drop_ratio=1.5, samples=_samples())
+    assert r["exit_edge_lower"] == pytest.approx(1.3 - 0.7 - 0.4) and r["verdict"] == "EXIT"
+    r = verdict_row(**dict(BASE, drop_se=0.5), drop_ratio=1.5, samples=_samples())   # 1.5 - 1.0 = 0.5 < 1.1
+    assert r["verdict"] == "HOLD"
+
+
+def test_no_signal_paths():
+    r = verdict_row(**dict(BASE, basis="UNRESOLVED", gross=None, net=None), drop_ratio=0.66, samples=_samples())
+    assert r["verdict"] == "NO_SIGNAL" and "UNRESOLVED" in r["reason"]
+    r = verdict_row(**dict(BASE, notional=25000), drop_ratio=0.66, samples=_samples())
+    assert r["verdict"] == "NO_SIGNAL" and "sell:" in r["reason"] and "buy:" in r["reason"]
+    r = verdict_row(**dict(BASE, price=None), drop_ratio=0.66, samples=_samples())
+    assert r["reason"] == "no reference price"
+
+
+def test_buy_needs_eligibility_and_positive_edge():
+    r = verdict_row(**dict(BASE, eligible=True), drop_ratio=0.1, samples=_samples())
+    assert r["buy"] == "BUY" and r["buy_edge_point"] == pytest.approx(0.7 - 0.1 - 0.4)
+    r = verdict_row(**dict(BASE, eligible=True), drop_ratio=0.66, samples=_samples())
+    assert r["buy"] is None
+
+
+def test_estimate_requires_slope():
+    s = {"floor_None": {"rungs": {"overnight_2000": {"slope": {"pdr": 0.66, "se": 0.09, "n": 125}}}}}
+    assert estimate(s, "floor_None")["pdr_hat"] == 0.66
+    with pytest.raises(ValueError):
+        estimate({"x": {"rungs": {"overnight_2000": {"slope": {"pdr": None, "se": None, "n": 2}}}}}, "x")
