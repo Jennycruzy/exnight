@@ -28,6 +28,10 @@ BASE_URL = "https://api.bitget.com"
 
 HISTORY_CUTOFF = dt.timedelta(days=85)   # documented: history-candles serves data > 90 days old
 _MIN_INTERVAL_S = 0.1
+_ENDPOINT_INTERVAL_S = {
+    "/api/v3/reality/market/stock-info": 1.05,
+    "/api/v3/reality/market/dividends": 1.05,
+}
 
 # OBSERVED 2026-09-16: /candles rejects limit=1001 and /history-candles rejects limit>100
 # (both code 40020); interval=3m is rejected (48001) although the docs list it.
@@ -78,13 +82,18 @@ class BitgetPublic:
         self._client = client or httpx.Client(base_url=BASE_URL, timeout=30.0)
 
         self._last = 0.0
+        self._last_by_path: dict[str, float] = {}
         self._stock_info_cache: dict[str, dict] = {}
 
     def _get(self, path: str, params: dict) -> list | dict:
-        wait = self._last + _MIN_INTERVAL_S - time.monotonic()
+        now = time.monotonic()
+        path_interval = _ENDPOINT_INTERVAL_S.get(path, _MIN_INTERVAL_S)
+        wait = max(self._last + _MIN_INTERVAL_S,
+                   self._last_by_path.get(path, 0.0) + path_interval) - now
         if wait > 0:
             time.sleep(wait)
         self._last = time.monotonic()
+        self._last_by_path[path] = self._last
         r = self._client.get(path, params=params)
         try:
             body = r.json()
