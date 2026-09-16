@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T19:59:33.013936+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588772894,\"data\":[{\"symbol\":\"RSATAUSDT\",\"code\":\"SATA\",\"name\":null,\"tradingPeriod\":[\"regular\",\"pre_market\",\"after_hours\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RSATAUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

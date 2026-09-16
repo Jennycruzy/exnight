@@ -111,3 +111,12 @@ def test_ledger_writer_is_append_only(tmp_path):
     import pytest
     with pytest.raises(ValueError, match="append-only"):
         write_ledger([changed], path)
+
+
+def test_amount_match_tolerates_reality_rounding_only():
+    from decimal import Decimal
+    from exnight.calendar import _amounts_match
+    assert _amounts_match(Decimal("0.2990"), Decimal("0.298729"))      # rUPRO: Reality rounds to 4 dp
+    assert not _amounts_match(Decimal("1.014"), Decimal("0.8619"))     # rNXPI: 15% home-country withholding
+    assert not _amounts_match(Decimal("0.72"), Decimal("0.54"))        # rMDT: 25%
+    assert not _amounts_match(None, Decimal("1")) and not _amounts_match(Decimal("1"), Decimal("0"))

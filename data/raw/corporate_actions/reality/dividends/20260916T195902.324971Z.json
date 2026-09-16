@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T19:59:02.324971+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588742184,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "LIT",
+      "cursor": "206060",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

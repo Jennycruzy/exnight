@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:08:03.371879+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589283249,\"data\":[{\"symbol\":\"RAVGOUSDT\",\"code\":\"AVGO\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"yes\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RAVGOUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

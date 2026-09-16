@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:09:51.735815+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589391616,\"data\":[{\"symbol\":\"RSTXUSDT\",\"code\":\"STX\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"yes\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RSTXUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

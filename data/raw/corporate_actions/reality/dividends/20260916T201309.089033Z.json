@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T20:13:09.089033+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589588946,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "DGRW",
+      "cursor": "228751",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

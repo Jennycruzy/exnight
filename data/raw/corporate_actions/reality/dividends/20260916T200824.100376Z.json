@@ -1,0 +1,12 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T20:08:24.100376+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589303979,\"data\":{\"list\":[{\"type\":\"cash_dividend\",\"announcementDate\":\"1782144000000\",\"recordDate\":\"1782230400000\",\"exrightDate\":\"1782230400000\",\"dividendDate\":\"1782748800000\",\"dividendPerShare\":\"0.1811380000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1774281600000\",\"recordDate\":\"1774368000000\",\"exrightDate\":\"1774368000000\",\"dividendDate\":\"1774886400000\",\"dividendPerShare\":\"0.2667920000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"stock_split\",\"announcementDate\":\"1770998400000\",\"recordDate\":null,\"exrightDate\":\"1772035200000\",\"dividendDate\":null,\"dividendPerShare\":null,\"stockDividendPerShare\":null,\"splitValidDate\":\"1772035200000\",\"splitNumerator\":\"1.0000000000000000\",\"splitDenominator\":\"10.0000000000000000\"},{\"type\":\"cash_dividend\",\"announcementDate\":\"1766419200000\",\"recordDate\":\"1766505600000\",\"exrightDate\":\"1766505600000\",\"dividendDate\":\"1767110400000\",\"dividendPerShare\":\"0.0224060000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1758556800000\",\"recordDate\":\"1758643200000\",\"exrightDate\":\"1758643200000\",\"dividendDate\":\"1759161600000\",\"dividendPerShare\":\"0.0205010000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null}],\"cursor\":\"30898640\"}}",
+  "request": {
+    "params": {
+      "code": "CRCA",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

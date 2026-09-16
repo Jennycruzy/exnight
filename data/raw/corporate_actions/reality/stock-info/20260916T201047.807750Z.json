@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:10:47.807750+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589447682,\"data\":[{\"symbol\":\"RAPHUSDT\",\"code\":\"APH\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RAPHUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

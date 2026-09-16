@@ -33,6 +33,16 @@ REALITY_DATE_ZONE = ZoneInfo("Asia/Shanghai")
 # withholding tax on dividend income. Actual Received Amount = Shares × Dividend × 70%".
 # This constant applies to that notice only and is attached per event, not globally.
 WITHHOLDING_2026_07_24 = Decimal("0.30")
+# Reality rounds dividendPerShare to 3-4 dp (OBSERVED 2026-09-16: rUPRO 0.2990 vs notice
+# 0.298729). Differences within this relative tolerance are rounding; larger ones (rNXPI
+# 0.85, rMDT 0.75 = home-country withholding) are a basis conflict and stay UNRESOLVED.
+AMOUNT_MATCH_REL_TOL = Decimal("0.005")
+
+
+def _amounts_match(a: Decimal | None, b: Decimal | None) -> bool:
+    if a is None or b is None or b == 0:
+        return False
+    return abs(a / b - 1) <= AMOUNT_MATCH_REL_TOL
 
 
 def _text_lines(raw_html: str) -> list[str]:
@@ -194,6 +204,7 @@ def _reality_action(
     notice_by_key: dict[tuple[str, dt.date], dict],
     weekend: set[str],
     as_of: dt.datetime,
+    verified_symbols: frozenset[str] = frozenset(),
 ) -> CorporateAction:
     action_type = str(row.get("type") or "").lower()
     ex_ts = _timestamp_ms(row.get("exrightDate"), "exrightDate", required=True)
@@ -237,12 +248,24 @@ def _reality_action(
         if amount is None:
             raise ValueError(f"{common['event_id']}: cash dividend has no dividendPerShare")
         notice = notice_by_key.get((spot.base_coin, ex_date))
-        if notice is not None and amount == notice["gross_dividend_per_share"]:
+        symbol_verified = spot.base_coin in verified_symbols
+        if notice is not None and _amounts_match(amount, notice["gross_dividend_per_share"]):
             gross = amount
             basis = "GROSS"
             withholding = WITHHOLDING_2026_07_24
             net = gross * (1 - withholding)
-            common["notes"].append("source amount matches the saved Bitget notice; gross basis is OBSERVED for this row")
+            common["notes"].append("source amount matches the saved Bitget notice within rounding; gross basis is OBSERVED for this row"
+                                   + ("" if amount == notice["gross_dividend_per_share"]
+                                      else f"; notice value {notice['gross_dividend_per_share']} differs by rounding only"))
+        elif notice is None and symbol_verified:
+            # Every notice row for this symbol matched Reality's dividendPerShare exactly, so the
+            # field carries the gross basis for this symbol. OBSERVED at symbol level; the
+            # per-event Yahoo cross-check in the event study is the second confirmation.
+            gross = amount
+            basis = "GROSS"
+            withholding = WITHHOLDING_2026_07_24
+            net = gross * (1 - withholding)
+            common["notes"].append("no notice row for this date; gross basis OBSERVED for this symbol via exact notice matches on its other dates")
         else:
             gross = None
             basis = "UNRESOLVED"
@@ -331,10 +354,22 @@ def build_reality_ledger(
         code = info.get("code")
         if not code:
             raise ValueError(f"{spot.symbol}: Reality stock-info has no code")
-        ordinal_by_key: dict[tuple[dt.date, str], int] = {}
+        pages: list[tuple[dt.datetime, list[dict]]] = []
         for _, rows in api.iter_reality_dividends(str(code), limit=100):
-            fetched_at = api.last_fetch_at or as_of
             _save_raw_response(api, REALITY_DIVIDENDS_ENDPOINT, raw_dir)
+            if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
+                raise ValueError(f"{code}: Reality action page is not a list of objects")
+            pages.append((api.last_fetch_at or as_of, rows))
+        # Symbol-level basis check: every saved notice row for this symbol must match a Reality
+        # cash row exactly (same date, same amount) before unmatched dates inherit the basis.
+        reality_cash = {(_date_in_reality_zone(_timestamp_ms(r["exrightDate"], "exrightDate")), _decimal(r.get("dividendPerShare"), "dividendPerShare"))
+                        for _, rows in pages for r in rows
+                        if str(r.get("type") or "").lower() == "cash_dividend" and r.get("exrightDate") not in (None, "")}
+        notice_rows_sym = [(d, n["gross_dividend_per_share"]) for (s, d), n in notice_by_key.items() if s == base_coin]
+        verified = frozenset({base_coin}) if notice_rows_sym and all(
+            any(d == rd and _amounts_match(ra, n_amt) for rd, ra in reality_cash) for d, n_amt in notice_rows_sym) else frozenset()
+        ordinal_by_key: dict[tuple[dt.date, str], int] = {}
+        for fetched_at, rows in pages:
             for row in rows:
                 if not isinstance(row, dict):
                     raise ValueError(f"{code}: Reality action row is not an object")
@@ -356,7 +391,7 @@ def build_reality_ledger(
                 ordinal_by_key[key] = ordinal_by_key.get(key, 0) + 1
                 events.append(_reality_action(
                     row, spot, str(code), ordinal_by_key[key], fetched_at,
-                    notice_by_key, weekend, as_of,
+                    notice_by_key, weekend, as_of, verified,
                 ))
     return sorted(events, key=lambda e: (e.exchange_ex_date, e.symbol, e.event_id))
 

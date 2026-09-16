@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T20:13:22.721260+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589602595,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "HEI",
+      "cursor": "140550",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

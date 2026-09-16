@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:13:25.057577+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589604937,\"data\":[{\"symbol\":\"RHPEUSDT\",\"code\":\"HPE\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RHPEUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

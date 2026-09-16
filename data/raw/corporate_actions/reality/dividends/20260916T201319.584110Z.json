@@ -1,0 +1,12 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T20:13:19.584110+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589599462,\"data\":{\"list\":[{\"type\":\"cash_dividend\",\"announcementDate\":\"1783958400000\",\"recordDate\":\"1790092800000\",\"exrightDate\":\"1790092800000\",\"dividendDate\":\"1791475200000\",\"dividendPerShare\":\"0.1200000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1777996800000\",\"recordDate\":\"1782230400000\",\"exrightDate\":\"1782230400000\",\"dividendDate\":\"1783958400000\",\"dividendPerShare\":\"0.1200000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null}],\"cursor\":\"34184517\"}}",
+  "request": {
+    "params": {
+      "code": "GFS",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

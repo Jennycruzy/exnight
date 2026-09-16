@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T20:00:10.568235+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588810441,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "VTV",
+      "cursor": "249743",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

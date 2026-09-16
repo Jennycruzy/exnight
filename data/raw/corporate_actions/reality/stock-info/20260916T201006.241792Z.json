@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:10:06.241792+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589406118,\"data\":[{\"symbol\":\"RVOOUSDT\",\"code\":\"VOO\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"yes\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RVOOUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

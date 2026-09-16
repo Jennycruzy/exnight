@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:09:36.811812+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589376679,\"data\":[{\"symbol\":\"RSCHDUSDT\",\"code\":\"SCHD\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RSCHDUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

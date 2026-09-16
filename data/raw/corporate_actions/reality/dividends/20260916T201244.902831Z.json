@@ -1,0 +1,12 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T20:12:44.902831+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589564780,\"data\":{\"list\":[{\"type\":\"cash_dividend\",\"announcementDate\":\"1778601600000\",\"recordDate\":\"1781107200000\",\"exrightDate\":\"1781107200000\",\"dividendDate\":\"1783872000000\",\"dividendPerShare\":\"1.0300000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1747238400000\",\"recordDate\":\"1749657600000\",\"exrightDate\":\"1749657600000\",\"dividendDate\":\"1752076800000\",\"dividendPerShare\":\"0.9500000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1747238400000\",\"recordDate\":\"1749657600000\",\"exrightDate\":\"1749657600000\",\"dividendDate\":\"1752076800000\",\"dividendPerShare\":\"1.0500000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1715875200000\",\"recordDate\":\"1718208000000\",\"exrightDate\":\"1718208000000\",\"dividendDate\":\"1720713600000\",\"dividendPerShare\":\"0.6600000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1715875200000\",\"recordDate\":\"1718208000000\",\"exrightDate\":\"1718208000000\",\"dividendDate\":\"1720713600000\",\"dividendPerShare\":\"1.0000000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null},{\"type\":\"cash_dividend\",\"announcementDate\":\"1700064000000\",\"recordDate\":\"1703088000000\",\"exrightDate\":\"1703001600000\",\"dividendDate\":\"1705507200000\",\"dividendPerShare\":\"1.0000000000000000\",\"stockDividendPerShare\":null,\"splitValidDate\":null,\"splitNumerator\":null,\"splitDenominator\":null}],\"cursor\":\"4883608\"}}",
+  "request": {
+    "params": {
+      "code": "BABA",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

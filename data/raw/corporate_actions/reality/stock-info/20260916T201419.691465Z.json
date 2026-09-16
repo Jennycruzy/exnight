@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:14:19.691465+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589659568,\"data\":[{\"symbol\":\"RSPXUUSDT\",\"code\":\"SPXU\",\"name\":null,\"tradingPeriod\":[\"regular\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RSPXUUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

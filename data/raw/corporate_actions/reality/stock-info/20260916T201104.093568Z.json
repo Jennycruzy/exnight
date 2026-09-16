@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T20:11:04.093568+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789589463971,\"data\":[{\"symbol\":\"RCMCSAUSDT\",\"code\":\"CMCSA\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RCMCSAUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}
