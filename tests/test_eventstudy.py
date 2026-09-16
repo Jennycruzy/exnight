@@ -9,6 +9,9 @@ class EmptyUniverse:
     def rtokens(self):
         return {}
 
+    def market_calendar(self):
+        return {"timeZone": "EST", "regularConfig": ["SATURDAY", "SUNDAY"], "specificConfig": []}
+
 
 def _event(*, basis="UNRESOLVED", event_type=EventType.CASH_DIV):
     return CorporateAction(
@@ -56,3 +59,20 @@ def test_run_excludes_non_cash_actions():
 
     assert result.usable is False
     assert result.exclusion_reason == "event type SPLIT is not a cash dividend"
+
+
+def test_live_calendar_marks_full_day_closures_and_weekends():
+    import datetime as dt
+    from exnight.eventstudy import MarketCalendar, prev_us_trading_day
+    # Shape OBSERVED from /api/v3/reality/market/calendar on 2026-09-16
+    cal = MarketCalendar.from_reality({"timeZone": "EST", "regularConfig": ["SATURDAY", "SUNDAY"], "specificConfig": [
+        {"remark": "", "startTime": "2026-07-02 20:00", "endTime": "2026-07-03 20:00"},
+        {"remark": "", "startTime": "2026-09-06 20:00", "endTime": "2026-09-07 20:00"}]})
+    assert cal.closed_dates == {dt.date(2026, 7, 3), dt.date(2026, 9, 7)}
+    assert prev_us_trading_day(dt.date(2026, 7, 6), cal) == dt.date(2026, 7, 2)   # Mon after the Fri closure
+    assert prev_us_trading_day(dt.date(2026, 9, 8), cal) == dt.date(2026, 9, 4)   # Tue after Labor Day
+    assert prev_us_trading_day(dt.date(2026, 6, 23), cal) == dt.date(2026, 6, 22)
+    # an early close (window not covering 09:30-16:00) is not a closed day
+    cal2 = MarketCalendar.from_reality({"regularConfig": ["SATURDAY", "SUNDAY"],
+                                        "specificConfig": [{"startTime": "2026-11-27 13:00", "endTime": "2026-11-27 20:00"}]})
+    assert cal2.closed_dates == frozenset()

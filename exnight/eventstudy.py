@@ -64,16 +64,43 @@ PROMO_FEE_END = dt.date(2026, 8, 31)
 PROMO_FEE = Decimal("0.0005")   # DOCUMENTED, Academy FAQ: 0.05% through 2026-08-31
 
 
-# NYSE 2026 full-day closures (NYSE holiday calendar; not a Bitget parameter). The two inside
-# the sample are Juneteenth (Fri 06-19) and Independence Day observed (Fri 07-03).
-NYSE_HOLIDAYS_2026 = {dt.date(2026, 1, 1), dt.date(2026, 1, 19), dt.date(2026, 2, 16), dt.date(2026, 4, 3),
-                      dt.date(2026, 5, 25), dt.date(2026, 6, 19), dt.date(2026, 7, 3), dt.date(2026, 9, 7),
-                      dt.date(2026, 11, 26), dt.date(2026, 12, 25)}
+# Market closures come from Bitget's live Reality calendar (OBSERVED shape 2026-09-16:
+# `specificConfig` windows "YYYY-MM-DD HH:MM" in the "EST" zone, e.g. 2026-07-02 20:00 ->
+# 2026-07-03 20:00 for Independence Day observed; `regularConfig` lists the weekend days).
+# A closure window that covers a whole 09:30-16:00 session marks that date as a non-trading
+# day. There is no hardcoded holiday set; a missing calendar is an error, not a default.
+@dataclass(frozen=True)
+class MarketCalendar:
+    closed_dates: frozenset[dt.date]
+    weekend_days: frozenset[int]     # Python weekday numbers
+    source: str
+
+    @classmethod
+    def from_reality(cls, calendar: dict) -> "MarketCalendar":
+        closed: set[dt.date] = set()
+        for cfg in calendar.get("specificConfig", []):
+            start = dt.datetime.strptime(cfg["startTime"], "%Y-%m-%d %H:%M").replace(tzinfo=ET)
+            end = dt.datetime.strptime(cfg["endTime"], "%Y-%m-%d %H:%M").replace(tzinfo=ET)
+            day = start.date()
+            while day <= end.date():
+                s_open = dt.datetime.combine(day, dt.time(9, 30), ET)
+                s_close = dt.datetime.combine(day, dt.time(16, 0), ET)
+                if start <= s_open and end >= s_close:
+                    closed.add(day)
+                day += dt.timedelta(days=1)
+        names = {"MONDAY": 0, "TUESDAY": 1, "WEDNESDAY": 2, "THURSDAY": 3, "FRIDAY": 4, "SATURDAY": 5, "SUNDAY": 6}
+        weekend = frozenset(names[d.upper()] for d in calendar.get("regularConfig", []))
+        if not weekend:
+            raise ValueError("Reality calendar has no regularConfig weekend days")
+        return cls(frozenset(closed), weekend, "OBSERVED /api/v3/reality/market/calendar")
+
+    def is_trading_day(self, d: dt.date) -> bool:
+        return d.weekday() not in self.weekend_days and d not in self.closed_dates
 
 
-def prev_us_trading_day(d: dt.date) -> dt.date:
+def prev_us_trading_day(d: dt.date, cal: MarketCalendar) -> dt.date:
     d -= dt.timedelta(days=1)
-    while d.weekday() >= 5 or d in NYSE_HOLIDAYS_2026:
+    while not cal.is_trading_day(d):
         d -= dt.timedelta(days=1)
     return d
 
@@ -139,9 +166,9 @@ def _fee_for(ex_date: dt.date, live: SpotSymbol) -> tuple[Decimal, str]:
     return live.taker_fee, "OBSERVED live symbol takerFeeRate"
 
 
-def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
+def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol, cal: MarketCalendar,
                 proxy: SpotSymbol | None, ledger: list[CorporateAction]) -> EventResult:
-    d_pre = prev_us_trading_day(e.exchange_ex_date)
+    d_pre = prev_us_trading_day(e.exchange_ex_date, cal)
     start, end = window_for_event(d_pre, e.exchange_ex_date)
     raw = fetch_cached(api, e.spot_symbol, "1m", start, end)
     norm = normalize(e.spot_symbol, raw, ledger, live.open_time)
@@ -263,6 +290,7 @@ def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[
     api = api or BitgetPublic()
     uni = api.rtokens()
     proxy = uni.get(MARKET_PROXY)
+    cal = MarketCalendar.from_reality(api.market_calendar())
     out = []
     for e in ledger:
         if e.event_type is not EventType.CASH_DIV:
@@ -281,7 +309,7 @@ def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[
         if e.spot_symbol is None:
             out.append(_excluded(e, "event has no live spot symbol"))
             continue
-        out.append(study_event(api, e, live, proxy, ledger))
+        out.append(study_event(api, e, live, cal, proxy, ledger))
     return out
 
 
@@ -290,9 +318,16 @@ def main() -> None:
     from dataclasses import asdict
     from pathlib import Path
     from .calendar import read_ledger
-    out = Path(__file__).resolve().parent.parent / "data" / "results" / "event_results.json"
+    import argparse
+    from .calendar import LEDGER_PATH
+    ap = argparse.ArgumentParser(description="Run the ex-date event study")
+    ap.add_argument("--ledger", type=Path, default=LEDGER_PATH)
+    ap.add_argument("--output", type=Path,
+                    default=Path(__file__).resolve().parent.parent / "data" / "results" / "event_results.json")
+    args = ap.parse_args()
+    out = args.output
     out.parent.mkdir(exist_ok=True)
-    res = run(read_ledger())
+    res = run(read_ledger(args.ledger))
     out.write_text(json.dumps([asdict(r) for r in res], indent=1, default=str))
     print(f"{sum(r.usable for r in res)} usable of {len(res)} events -> {out}")
     for r in res:
