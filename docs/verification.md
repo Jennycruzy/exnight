@@ -152,3 +152,14 @@ known 2026 exchange holidays inside the sample, so candle presence is not a holi
 | 3 | Withholding is exactly 30% on every event in the batch | net-dividend arithmetic |
 | 4 | Account-level fee tier vs the published 0.05% (to 31 Aug) / 0.1% (after) | cost model |
 | 5 | Overnight book depth at realistic size | slippage model |
+
+## Agent Hub order surface — OBSERVED 2026-09-16
+
+`bgc` (bitget-agent-cli 3.0.0, SDK 3.1.0) installed via the official installer.
+
+| Fact | Observation |
+|---|---|
+| Reality symbols on the UTA surface | `bgc market --action tickers/orderbook --category SPOT --symbol RAVGOUSDT` returns data; `order --action place` maps to `POST /api/v3/trade/place-order` with `category=SPOT`. No Reality-specific order endpoint |
+| Demo (`--paper-trading`) with a demo key | `account_overview` authenticates (UTA hybrid mode). `order --action place ... --symbol BTCUSDT` → `Insufficient balance` (path works; demo wallet unfunded) |
+| **Reality symbols in demo** | `order --action place --category SPOT --symbol RAVGOUSDT` → **`HTTP 400: Parameter RAVGOUSDT does not exist`**, although the demo `instruments` response lists 1,655 Reality rows. The demo matching engine does not accept rToken spot orders. Evidence: `data/raw/paper/20260916T220013Z/` |
+| Consequence | A paper fill on an rToken cannot be produced. The executable-liquidity question for ticker-only symbols (§ depth) therefore stays OBSERVED-NOW book only; any live demonstration would need a real (funded) account and is a user decision, not a default |

@@ -43,8 +43,12 @@ def bgc(args: list[str], env: dict) -> dict:
         raise SystemExit("bgc not on PATH (source ~/.nvm/nvm.sh)")
     p = subprocess.run([exe, *args], capture_output=True, text=True, env=env, timeout=60)
     if p.returncode != 0:
-        raise SystemExit(f"bgc failed ({p.returncode}): {p.stderr.strip() or p.stdout.strip()}")
+        raise BgcError(p.stderr.strip() or p.stdout.strip())
     return json.loads(p.stdout)
+
+
+class BgcError(RuntimeError):
+    pass
 
 
 def book_with_ticker(api: BitgetPublic, symbol: str) -> dict:
@@ -115,10 +119,16 @@ def main() -> None:
     print(f"{session}: {args.side} {qty} {args.symbol} @ {price} ({args.time_in_force}); resting in band {resting:.4f}; wouldSend={dry['data'].get('wouldSend')}")
 
     if args.live_paper:
-        placed = bgc([*order_args, "--paper-trading"], env)
-        (run / "03_order.json").write_text(json.dumps(placed, indent=1))
-        oid = (placed.get("data") or {}).get("orderId")
-        print("placed:", json.dumps(placed.get("data")))
+        try:
+            placed = bgc([*order_args, "--paper-trading"], env)
+        except BgcError as exc:   # a rejection is evidence too; keep it (no credentials appear in bgc errors)
+            (run / "03_order_error.json").write_text(str(exc))
+            print("REJECTED:", str(exc).splitlines()[0] if "\n" not in str(exc) else json.loads(str(exc))["error"]["message"])
+            placed = None
+        (run / "03_order.json").write_text(json.dumps(placed, indent=1)) if placed else None
+        oid = (placed.get("data") or {}).get("orderId") if placed else None
+        if placed:
+            print("placed:", json.dumps(placed.get("data")))
         if oid:
             status = bgc(["order", "--action", "detail", "--category", "SPOT", "--symbol", args.symbol, "--orderId", str(oid), "--paper-trading"], env)
             (run / "04_order_status.json").write_text(json.dumps(status, indent=1))

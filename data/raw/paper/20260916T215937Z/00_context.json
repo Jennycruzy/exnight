@@ -1,0 +1,16 @@
+{
+ "symbol": "RAVGOUSDT",
+ "base_coin": "rAVGO",
+ "side": "buy",
+ "notional_requested": 100.0,
+ "band": 0.005,
+ "session": "after_hours",
+ "price": "340.51",
+ "qty": "0.2937",
+ "resting_in_band": 41.4862,
+ "time_in_force": "post_only",
+ "mode": "paper-trading",
+ "taker_fee": "0.001",
+ "maker_fee": "0.001",
+ "note": ""
+}

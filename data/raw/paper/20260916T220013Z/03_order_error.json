@@ -1,0 +1,13 @@
+{
+  "ok": false,
+  "error": {
+    "type": "BitgetApiError",
+    "code": "400",
+    "category": "unknown",
+    "message": "HTTP 400 from Bitget: Parameter RAVGOUSDT does not exist",
+    "suggestion": "Retry later or verify endpoint parameters.",
+    "retryable": false,
+    "endpoint": "POST /api/v3/trade/place-order"
+  },
+  "timestamp": "2026-09-16T22:00:14.940Z"
+}
