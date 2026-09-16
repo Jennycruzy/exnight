@@ -39,7 +39,7 @@ def test_gross_basis_conflict_but_not_rounding(monkeypatch):
 def test_adjacent_noncash_relisted_and_name_hint(monkeypatch):
     monkeypatch.setattr("exnight.confounders.yahoo_meta",
                         lambda t: {"instrumentType": "ETF", "longName": "Direxion Daily X Bull 3X Shares"})
-    reality = _reality(("rX", "2026-06-24", "CASH_DIV", "0.8619"), ("rX", "2026-06-25", "CASH_DIV", "0.8619"),
+    reality = _reality(("rX", "2026-06-24", "CASH_DIV", "1.014"), ("rX", "2026-06-25", "CASH_DIV", "1.014"),
                        ("rX", "2026-07-15", "REVERSE_SPLIT", None))
     df = build([_result(open_time="2026-07-15T14:00:00+00:00", ex_date_is_monday=True,
                         market_move_pct={"overnight_2000": -1.5}, dividend_yield_pct=2.5, p_pre_staleness_h=30,
