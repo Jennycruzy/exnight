@@ -1,0 +1,2536 @@
+{
+ "floor_None": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": null,
+  "clean_2000": false,
+  "confounder_clean": false,
+  "n_after_floor": 125,
+  "robustness_2000": {
+   "n": 125,
+   "loo_min": 0.4681463288774609,
+   "loo_max": 1.005549469147658,
+   "drop_top3_yield": {
+    "n": 122,
+    "pdr": 0.9777898020924669,
+    "se": 0.15866297609180066,
+    "intercept": 0.0023030568998328835,
+    "r2": 0.24040380996133973,
+    "p_value": 9.893085639200475e-09
+   },
+   "ratio_of_sums": 0.11503182636455468,
+   "top3_symbols": [
+    "rBITI",
+    "rBITI",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 125,
+    "mean": -1.1431103717979527,
+    "median": 0.010000000000019327,
+    "slope": {
+     "n": 125,
+     "pdr": 0.6556617566914946,
+     "se": 0.0924386292394527,
+     "intercept": 0.0013921311015696965,
+     "r2": 0.2902883160341276,
+     "p_value": 9.080501667693327e-11
+    }
+   },
+   "premarket_0400": {
+    "n": 125,
+    "mean": -0.18229237329729728,
+    "median": 0.0,
+    "slope": {
+     "n": 125,
+     "pdr": 0.9716034882694613,
+     "se": 0.18520821488820358,
+     "intercept": 0.00027419720763434104,
+     "r2": 0.18283601436085947,
+     "p_value": 6.572581761499219e-07
+    }
+   },
+   "open_0930": {
+    "n": 125,
+    "mean": 0.09959506561880216,
+    "median": 0.5620155038761739,
+    "slope": {
+     "n": 125,
+     "pdr": 1.0773129038583278,
+     "se": 0.2003789536737494,
+     "intercept": -0.0008949953645983194,
+     "r2": 0.190285721327565,
+     "p_value": 3.673613007998807e-07
+    }
+   },
+   "open_1000": {
+    "n": 125,
+    "mean": 0.8780983375338205,
+    "median": 0.7541663844955407,
+    "slope": {
+     "n": 125,
+     "pdr": 1.3065131821464158,
+     "se": 0.20797768742381004,
+     "intercept": 2.1818283174438596e-05,
+     "r2": 0.24290623406362,
+     "p_value": 5.25842773900631e-09
+    }
+   },
+   "close_1600": {
+    "n": 125,
+    "mean": 2.3928559880192135,
+    "median": 0.5727272623140457,
+    "slope": {
+     "n": 125,
+     "pdr": 1.3787996980302386,
+     "se": 0.2690419148360303,
+     "intercept": -0.0007170875634403308,
+     "r2": 0.1759572280075613,
+     "p_value": 1.1202638793859523e-06
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 125,
+   "mean": -0.17769718557501785,
+   "median": 0.3534996465003606,
+   "slope": {
+    "n": 125,
+    "pdr": 0.991947186469561,
+    "se": 0.20134069783283148,
+    "intercept": -0.0007169430944993305,
+    "r2": 0.16481335197180152,
+    "p_value": 2.6373803055227226e-06
+   }
+  },
+  "underlying": {
+   "n": 125,
+   "mean": -0.7079775268854248,
+   "median": 0.41818791409402656,
+   "slope": {
+    "n": 125,
+    "pdr": 0.9958999045773625,
+    "se": 0.20338177529508597,
+    "intercept": -0.00042371437862854123,
+    "r2": 0.1631382881021284,
+    "p_value": 2.9972509307957233e-06
+   }
+  }
+ },
+ "floor_0.2": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": 0.2,
+  "clean_2000": false,
+  "confounder_clean": false,
+  "n_after_floor": 54,
+  "robustness_2000": {
+   "n": 54,
+   "loo_min": 0.35080221604702017,
+   "loo_max": 1.079311495720713,
+   "drop_top3_yield": {
+    "n": 51,
+    "pdr": 1.1600602206207984,
+    "se": 0.2219714881506525,
+    "intercept": 0.003957537438802708,
+    "r2": 0.357906124243554,
+    "p_value": 3.546031481962944e-06
+   },
+   "ratio_of_sums": 0.3906729356500987,
+   "top3_symbols": [
+    "rBITI",
+    "rBITI",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 54,
+    "mean": 0.38831294109788683,
+    "median": 0.26457975986277443,
+    "slope": {
+     "n": 54,
+     "pdr": 0.6182736186061677,
+     "se": 0.11848954082941737,
+     "intercept": 0.0006443880602904507,
+     "r2": 0.34365893109143375,
+     "p_value": 3.1983310855084175e-06
+    }
+   },
+   "premarket_0400": {
+    "n": 54,
+    "mean": 0.7304987377219058,
+    "median": 0.850124855415108,
+    "slope": {
+     "n": 54,
+     "pdr": 0.9876378436024136,
+     "se": 0.26396313589739756,
+     "intercept": 0.0005810149943760038,
+     "r2": 0.21211384331729283,
+     "p_value": 0.00045768370494959313
+    }
+   },
+   "open_0930": {
+    "n": 54,
+    "mean": 1.7031712663562817,
+    "median": 1.0912101682778363,
+    "slope": {
+     "n": 54,
+     "pdr": 0.8754095346827282,
+     "se": 0.2579290814999632,
+     "intercept": -0.004947519691575584,
+     "r2": 0.1813497553812466,
+     "p_value": 0.001325109582785861
+    }
+   },
+   "open_1000": {
+    "n": 54,
+    "mean": 1.4693668684600334,
+    "median": 1.280065406291654,
+    "slope": {
+     "n": 54,
+     "pdr": 1.1636253589397374,
+     "se": 0.28148456096104885,
+     "intercept": -0.0029484704069337505,
+     "r2": 0.24734785812969434,
+     "p_value": 0.00013026937070349096
+    }
+   },
+   "close_1600": {
+    "n": 54,
+    "mean": 1.971876031773711,
+    "median": 1.417456369116481,
+    "slope": {
+     "n": 54,
+     "pdr": 1.2359808073189136,
+     "se": 0.3853338746613462,
+     "intercept": -0.003755555470335896,
+     "r2": 0.16517400365369755,
+     "p_value": 0.002292550316032991
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 54,
+   "mean": 1.5015452490836183,
+   "median": 0.9904146269614171,
+   "slope": {
+    "n": 54,
+    "pdr": 0.816397024352727,
+    "se": 0.2589324023941282,
+    "intercept": -0.004205038855347577,
+    "r2": 0.16049142016165874,
+    "p_value": 0.002683542839017795
+   }
+  },
+  "underlying": {
+   "n": 54,
+   "mean": 1.3541456173992847,
+   "median": 0.9706531722001551,
+   "slope": {
+    "n": 54,
+    "pdr": 0.8543751143794497,
+    "se": 0.276917564647724,
+    "intercept": -0.00319552720216529,
+    "r2": 0.15473414367471636,
+    "p_value": 0.0032545972597669303
+   }
+  }
+ },
+ "floor_0.5": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": 0.5,
+  "clean_2000": false,
+  "confounder_clean": false,
+  "n_after_floor": 30,
+  "robustness_2000": {
+   "n": 30,
+   "loo_min": 0.2687760305268081,
+   "loo_max": 1.1554353108744733,
+   "drop_top3_yield": {
+    "n": 27,
+    "pdr": 1.491381979689145,
+    "se": 0.37305494011073526,
+    "intercept": 0.007916106366091335,
+    "r2": 0.3899766705832449,
+    "p_value": 0.0004983093218392945
+   },
+   "ratio_of_sums": 0.42208738010474417,
+   "top3_symbols": [
+    "rBITI",
+    "rBITI",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 30,
+    "mean": 0.47233512368404834,
+    "median": 0.26457975986277443,
+    "slope": {
+     "n": 30,
+     "pdr": 0.5994155168105789,
+     "se": 0.17152479349253866,
+     "intercept": 0.00018791079975218321,
+     "r2": 0.30369791791515244,
+     "p_value": 0.0015986412745878922
+    }
+   },
+   "premarket_0400": {
+    "n": 30,
+    "mean": 1.1895656173262583,
+    "median": 1.0031665328694943,
+    "slope": {
+     "n": 30,
+     "pdr": 0.8656698854076843,
+     "se": 0.2750082455083279,
+     "intercept": -0.0028709005188377844,
+     "r2": 0.2613817189402349,
+     "p_value": 0.0038846138921228806
+    }
+   },
+   "open_0930": {
+    "n": 30,
+    "mean": 1.7673174996078207,
+    "median": 1.0912101682778363,
+    "slope": {
+     "n": 30,
+     "pdr": 0.7467244184502759,
+     "se": 0.2744143313214018,
+     "intercept": -0.008389816148065079,
+     "r2": 0.20914441963273114,
+     "p_value": 0.011058117574721547
+    }
+   },
+   "open_1000": {
+    "n": 30,
+    "mean": 2.0912397430646696,
+    "median": 1.3646824364281525,
+    "slope": {
+     "n": 30,
+     "pdr": 0.9090956984666928,
+     "se": 0.360439486048111,
+     "intercept": -0.009907090583532981,
+     "r2": 0.18513277158356012,
+     "p_value": 0.01762794161353606
+    }
+   },
+   "close_1600": {
+    "n": 30,
+    "mean": 1.9623039735927301,
+    "median": 1.417456369116481,
+    "slope": {
+     "n": 30,
+     "pdr": 1.1362995129436735,
+     "se": 0.5116913805306211,
+     "intercept": -0.006757185027866449,
+     "r2": 0.1497474249351734,
+     "p_value": 0.03463798818757511
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 30,
+   "mean": 1.5889944774498046,
+   "median": 1.0979314070489816,
+   "slope": {
+    "n": 30,
+    "pdr": 0.7007149554473777,
+    "se": 0.27271447018664674,
+    "intercept": -0.007331683738848826,
+    "r2": 0.1907949808675802,
+    "p_value": 0.015803039796291586
+   }
+  },
+  "underlying": {
+   "n": 30,
+   "mean": 1.3978403772061065,
+   "median": 1.1815291471203813,
+   "slope": {
+    "n": 30,
+    "pdr": 0.7811982451078459,
+    "se": 0.26510782276249134,
+    "intercept": -0.005097680711993241,
+    "r2": 0.23670682483786326,
+    "p_value": 0.00640608698879878
+   }
+  }
+ },
+ "clean_2000": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": null,
+  "clean_2000": true,
+  "confounder_clean": false,
+  "n_after_floor": 38,
+  "robustness_2000": {
+   "n": 38,
+   "loo_min": 0.9025371440372627,
+   "loo_max": 1.0577235651138124,
+   "drop_top3_yield": {
+    "n": 35,
+    "pdr": 0.8082866189503765,
+    "se": 0.3551941631158489,
+    "intercept": 0.0025924596076041047,
+    "r2": 0.13563786122225155,
+    "p_value": 0.029490367982051624
+   },
+   "ratio_of_sums": 0.35625968521318113,
+   "top3_symbols": [
+    "rSQQQ",
+    "rBITI",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 38,
+    "mean": -1.0901873569156593,
+    "median": 0.5169296081482344,
+    "slope": {
+     "n": 38,
+     "pdr": 1.0186932889254425,
+     "se": 0.13296693143269078,
+     "intercept": 0.0034919719211936014,
+     "r2": 0.6198312734525175,
+     "p_value": 4.544125811405484e-09
+    }
+   },
+   "premarket_0400": {
+    "n": 38,
+    "mean": -0.03277240435226553,
+    "median": 0.9239420870619997,
+    "slope": {
+     "n": 38,
+     "pdr": 1.2607658071083496,
+     "se": 0.4615749850546032,
+     "intercept": 0.002215499075890695,
+     "r2": 0.17166698704921143,
+     "p_value": 0.009705260316691193
+    }
+   },
+   "open_0930": {
+    "n": 38,
+    "mean": 2.3514100160573217,
+    "median": 1.1335151882535153,
+    "slope": {
+     "n": 38,
+     "pdr": 1.0572270412529854,
+     "se": 0.48645919682178085,
+     "intercept": -0.004090802608660025,
+     "r2": 0.11598476280707573,
+     "p_value": 0.03641548596273525
+    }
+   },
+   "open_1000": {
+    "n": 38,
+    "mean": 0.7288069172382597,
+    "median": 1.3727926732129545,
+    "slope": {
+     "n": 38,
+     "pdr": 1.4347181940316167,
+     "se": 0.529683249709096,
+     "intercept": -0.0014342771784431677,
+     "r2": 0.1692952994510573,
+     "p_value": 0.010274593692079153
+    }
+   },
+   "close_1600": {
+    "n": 38,
+    "mean": 4.223396807939866,
+    "median": 1.5644216010940521,
+    "slope": {
+     "n": 38,
+     "pdr": 1.273094187382896,
+     "se": 0.620538832121442,
+     "intercept": -0.005480735324979221,
+     "r2": 0.10467896713891997,
+     "p_value": 0.047538197447442865
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 38,
+   "mean": 2.5365708824250777,
+   "median": 1.1338442088554743,
+   "slope": {
+    "n": 38,
+    "pdr": 0.9660730096305844,
+    "se": 0.48419683506515815,
+    "intercept": -0.004628479191897397,
+    "r2": 0.09956895814967831,
+    "p_value": 0.05363164509574175
+   }
+  },
+  "underlying": {
+   "n": 38,
+   "mean": 1.9760137386120118,
+   "median": 1.1815291471203813,
+   "slope": {
+    "n": 38,
+    "pdr": 0.9677293226323023,
+    "se": 0.4798853488000251,
+    "intercept": -0.0026828248164771067,
+    "r2": 0.10149629537619155,
+    "p_value": 0.05124580003356259
+   }
+  }
+ },
+ "clean_2000_floor_0.2": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": 0.2,
+  "clean_2000": true,
+  "confounder_clean": false,
+  "n_after_floor": 29,
+  "robustness_2000": {
+   "n": 29,
+   "loo_min": 0.7449264950032259,
+   "loo_max": 1.0238007297969474,
+   "drop_top3_yield": {
+    "n": 26,
+    "pdr": 0.48292320867336846,
+    "se": 0.3615673318074863,
+    "intercept": 0.00011305437204620289,
+    "r2": 0.06918766508327481,
+    "p_value": 0.19419675930690786
+   },
+   "ratio_of_sums": 0.4424498589291995,
+   "top3_symbols": [
+    "rSQQQ",
+    "rBITI",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 29,
+    "mean": 0.44051530043187515,
+    "median": 0.5519315054531055,
+    "slope": {
+     "n": 29,
+     "pdr": 0.9866842123584317,
+     "se": 0.11696839627165155,
+     "intercept": 0.0028989601575456995,
+     "r2": 0.7249312297152742,
+     "p_value": 4.775589478897638e-09
+    }
+   },
+   "premarket_0400": {
+    "n": 29,
+    "mean": 0.5784532299847551,
+    "median": 1.0553809241796122,
+    "slope": {
+     "n": 29,
+     "pdr": 1.234864154031307,
+     "se": 0.44904382108479135,
+     "intercept": 0.0016116778248148455,
+     "r2": 0.21880475092398663,
+     "p_value": 0.010504052308296716
+    }
+   },
+   "open_0930": {
+    "n": 29,
+    "mean": 1.4587813483716179,
+    "median": 1.2099999999999795,
+    "slope": {
+     "n": 29,
+     "pdr": 1.085271106833769,
+     "se": 0.41578377150334667,
+     "intercept": -0.0035979249017699163,
+     "r2": 0.20149167137107427,
+     "p_value": 0.01458491679627033
+    }
+   },
+   "open_1000": {
+    "n": 29,
+    "mean": 1.4547761043805112,
+    "median": 1.295585346425854,
+    "slope": {
+     "n": 29,
+     "pdr": 1.3415309687623715,
+     "se": 0.5104101731436299,
+     "intercept": -0.003334654892278379,
+     "r2": 0.20373163084059162,
+     "p_value": 0.01398182648250275
+    }
+   },
+   "close_1600": {
+    "n": 29,
+    "mean": 2.201361480788297,
+    "median": 1.6410151870349747,
+    "slope": {
+     "n": 29,
+     "pdr": 1.2946128927355631,
+     "se": 0.6445584324384938,
+     "intercept": -0.005318010719871015,
+     "r2": 0.12999151118354985,
+     "p_value": 0.05468550552036344
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 29,
+   "mean": 1.293344280450578,
+   "median": 1.168316831683161,
+   "slope": {
+    "n": 29,
+    "pdr": 1.0348368186070487,
+    "se": 0.404536314324955,
+    "intercept": -0.00329774255270986,
+    "r2": 0.1950817807063915,
+    "p_value": 0.01645238300057389
+   }
+  },
+  "underlying": {
+   "n": 29,
+   "mean": 0.8944380398973569,
+   "median": 1.2145398169047477,
+   "slope": {
+    "n": 29,
+    "pdr": 1.0637132857832168,
+    "se": 0.416463706067768,
+    "intercept": -0.0008179862740246933,
+    "r2": 0.19459995428278218,
+    "p_value": 0.016601712323756252
+   }
+  }
+ },
+ "confounder_clean": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": null,
+  "clean_2000": false,
+  "confounder_clean": true,
+  "n_after_floor": 41,
+  "robustness_2000": {
+   "n": 41,
+   "loo_min": 0.22268866913040536,
+   "loo_max": 0.5716235614375209,
+   "drop_top3_yield": {
+    "n": 38,
+    "pdr": 0.3960158153786096,
+    "se": 0.2919162566094027,
+    "intercept": -0.0003877431906582087,
+    "r2": 0.04863545251035273,
+    "p_value": 0.18335280576133042
+   },
+   "ratio_of_sums": 0.5596442108189962,
+   "top3_symbols": [
+    "rCMCSA",
+    "rMO",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 41,
+    "mean": 1.1398210947696303,
+    "median": 0.5519315054531055,
+    "slope": {
+     "n": 41,
+     "pdr": 0.4603235270311655,
+     "se": 0.17010057346337512,
+     "intercept": -0.00010965305386232945,
+     "r2": 0.15809350918614404,
+     "p_value": 0.010043780863678374
+    }
+   },
+   "premarket_0400": {
+    "n": 41,
+    "mean": 0.5699585609727291,
+    "median": 0.4727272727272799,
+    "slope": {
+     "n": 41,
+     "pdr": 1.2490270079002996,
+     "se": 0.3197975224578118,
+     "intercept": 0.0035426853674925033,
+     "r2": 0.28116351950638174,
+     "p_value": 0.00036268048460774954
+    }
+   },
+   "open_0930": {
+    "n": 41,
+    "mean": 2.868122877808515,
+    "median": 1.188118811881191,
+    "slope": {
+     "n": 41,
+     "pdr": 1.262113619023586,
+     "se": 0.5432798574276182,
+     "intercept": -0.000740347092732116,
+     "r2": 0.12156159920112669,
+     "p_value": 0.02547821955221407
+    }
+   },
+   "open_1000": {
+    "n": 41,
+    "mean": 3.625478226497022,
+    "median": 1.4133648728563026,
+    "slope": {
+     "n": 41,
+     "pdr": 1.3960679790238424,
+     "se": 0.5784409303146582,
+     "intercept": 0.0018490769968734916,
+     "r2": 0.12994958882951974,
+     "p_value": 0.020596479752259034
+    }
+   },
+   "close_1600": {
+    "n": 41,
+    "mean": 7.008795031860553,
+    "median": 1.3267326732673301,
+    "slope": {
+     "n": 41,
+     "pdr": 0.7205474536956387,
+     "se": 0.6491000611265052,
+     "intercept": -0.002563154832303079,
+     "r2": 0.030628622195156167,
+     "p_value": 0.27376597467664204
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 41,
+   "mean": 2.7915997758934226,
+   "median": 1.0964912280701755,
+   "slope": {
+    "n": 41,
+    "pdr": 1.0506783765380507,
+    "se": 0.5279155872334654,
+    "intercept": -0.0014250435394720287,
+    "r2": 0.09220101541534735,
+    "p_value": 0.053606919145200424
+   }
+  },
+  "underlying": {
+   "n": 41,
+   "mean": 2.01258674673152,
+   "median": 1.2249540828198346,
+   "slope": {
+    "n": 41,
+    "pdr": 0.9763021261197335,
+    "se": 0.4339694094548482,
+    "intercept": -0.0016582424974145894,
+    "r2": 0.11486673846589932,
+    "p_value": 0.030185914021578556
+   }
+  }
+ },
+ "confounder_clean_2000": {
+  "events_total": 185,
+  "events_usable": 125,
+  "yield_floor_pct": null,
+  "clean_2000": true,
+  "confounder_clean": true,
+  "n_after_floor": 24,
+  "robustness_2000": {
+   "n": 24,
+   "loo_min": 0.4056561826529842,
+   "loo_max": 0.8868122050568183,
+   "drop_top3_yield": {
+    "n": 21,
+    "pdr": 0.6520176467114825,
+    "se": 0.42559834174086614,
+    "intercept": 0.0011786468222408806,
+    "r2": 0.10994648834887284,
+    "p_value": 0.1420034849618381
+   },
+   "ratio_of_sums": 0.6038241494996244,
+   "top3_symbols": [
+    "rPM",
+    "rMO",
+    "rBITI"
+   ]
+  },
+  "exclusions": [
+   {
+    "event_id": "rBITI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rBITO-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCLOI-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rHYS-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSGOV-2026-06-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTLT-2026-06-01-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-06-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-16-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-17-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSOXS-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTZA-2026-06-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-15 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rNXPI-2026-06-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-06-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-06-26-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-06-30-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-01-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-02-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-07-06-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSATA-2026-07-07-1",
+    "reason": "no bar at or before the pre-event cutoff"
+   },
+   {
+    "event_id": "rSOXS-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rTZA-2026-07-15-1",
+    "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rAPH-2026-09-03-1",
+    "reason": "event type SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rNXPI-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCRM-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rHPE-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-17-1",
+    "reason": "no post-event bars on the ex-date"
+   },
+   {
+    "event_id": "rSATA-2026-09-18-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAVGO-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rVST-2026-09-21-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rAPH-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-09-22-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rGFS-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rLRCX-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-23-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTX-2026-09-24-1",
+    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMDT-2026-09-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-25-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-28-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSATA-2026-09-29-1",
+    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rMPWR-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTRC-2026-09-30-1",
+    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rPWR-2026-10-01-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCSCO-2026-10-02-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rCMCSA-2026-10-07-1",
+    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rINTU-2026-10-08-1",
+    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rTSM-2026-12-10-1",
+    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2026-12-15-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   },
+   {
+    "event_id": "rSTM-2027-03-16-1",
+    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+   }
+  ],
+  "rungs": {
+   "overnight_2000": {
+    "n": 24,
+    "mean": 0.31777352148826127,
+    "median": 0.7660396039603992,
+    "slope": {
+     "n": 24,
+     "pdr": 0.6601348051491587,
+     "se": 0.20535294477744373,
+     "intercept": 0.001146130797319833,
+     "r2": 0.3195991216710665,
+     "p_value": 0.003991963527302742
+    }
+   },
+   "premarket_0400": {
+    "n": 24,
+    "mean": -2.744146808862554,
+    "median": 0.8634796505813127,
+    "slope": {
+     "n": 24,
+     "pdr": 1.7555392351561365,
+     "se": 0.42372146237895614,
+     "intercept": 0.006978152710087576,
+     "r2": 0.4382832360798132,
+     "p_value": 0.00042534652975845575
+    }
+   },
+   "open_0930": {
+    "n": 24,
+    "mean": -0.3654413698406005,
+    "median": 1.1990594059405852,
+    "slope": {
+     "n": 24,
+     "pdr": 1.390048981784925,
+     "se": 0.6777055256925744,
+     "intercept": 0.0003219642793298163,
+     "r2": 0.16053138034695152,
+     "p_value": 0.05235173400732528
+    }
+   },
+   "open_1000": {
+    "n": 24,
+    "mean": -2.471952839915451,
+    "median": 1.2754950495049755,
+    "slope": {
+     "n": 24,
+     "pdr": 1.5379252373486572,
+     "se": 0.7290965623265032,
+     "intercept": 0.004350368277829067,
+     "r2": 0.16822274197863368,
+     "p_value": 0.046522389662397245
+    }
+   },
+   "close_1600": {
+    "n": 24,
+    "mean": 2.80700360065865,
+    "median": 1.4736979052449013,
+    "slope": {
+     "n": 24,
+     "pdr": 0.3000412383893025,
+     "se": 0.6536922358236797,
+     "intercept": -0.005347734870577738,
+     "r2": 0.00948535231669581,
+     "p_value": 0.650740705314373
+    }
+   }
+  },
+  "rtoken_literature_convention": {
+   "n": 24,
+   "mean": -0.03862551932646063,
+   "median": 1.4728915662650448,
+   "slope": {
+    "n": 24,
+    "pdr": 1.0545614658060172,
+    "se": 0.6891768009018858,
+    "intercept": -0.0017274631457891597,
+    "r2": 0.0961914078727206,
+    "p_value": 0.1402263998928117
+   }
+  },
+  "underlying": {
+   "n": 24,
+   "mean": -0.570377860071765,
+   "median": 1.462258141320031,
+   "slope": {
+    "n": 24,
+    "pdr": 0.983955963324357,
+    "se": 0.5401687999374427,
+    "intercept": -0.0010817485991287028,
+    "r2": 0.1310571883978138,
+    "p_value": 0.08214651181667597
+   }
+  }
+ }
+}
