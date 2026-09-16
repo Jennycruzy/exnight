@@ -22,14 +22,14 @@ def test_rtoken_universe_is_large_and_usdt_quoted(api):
 
 
 def test_known_batch_tokens_resolve(api):
-    for t in ("MU", "QQQ", "TSM"):
-        s = api.rtoken_symbol(t)
-        assert s.underlying == t
+    for symbol, code in (("RMUUSDT", "MU"), ("RQQQUSDT", "QQQ"), ("RTSMUSDT", "TSM")):
+        s = api.rtoken_symbol(symbol)
+        assert s.underlying == code
         assert s.status == "online"
 
 
 def test_one_minute_history_covers_july_batch(api):
-    s = api.rtoken_symbol("MU")
+    s = api.rtoken_symbol("RMUUSDT")
     start = dt.datetime(2026, 7, 24, 0, 0, tzinfo=dt.UTC)
     end = dt.datetime(2026, 7, 25, 0, 0, tzinfo=dt.UTC)
     df = api.candles_v3(s.symbol, "1m", start, end)

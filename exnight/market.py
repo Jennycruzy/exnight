@@ -15,9 +15,8 @@ Rate limit is documented as 20 req/s/IP; this client caps itself at 10.
 from __future__ import annotations
 
 import datetime as dt
-import re
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from decimal import Decimal
 
 import httpx
@@ -27,11 +26,6 @@ from .errors import BitgetAPIError
 
 BASE_URL = "https://api.bitget.com"
 
-# OBSERVED 2026-09-16: rToken base coins are 'r' + upper-case ticker (rAAPL, rMU, rQQQ)
-# and the spot symbol is upper(baseCoin) + quoteCoin (RAAPLUSDT). The documented identifier
-# is symbolType == "stock" and isReality == "yes" on v3 instruments; the regex is kept as a
-# cross-check and the client raises if the two ever disagree.
-_RTOKEN_BASE = re.compile(r"^r[A-Z][A-Z0-9.]*$")
 HISTORY_CUTOFF = dt.timedelta(days=85)   # documented: history-candles serves data > 90 days old
 _MIN_INTERVAL_S = 0.1
 
@@ -59,6 +53,8 @@ class SpotSymbol:
     open_time: dt.datetime
     symbol_type: str = ""
     is_reality: bool = False
+    is_rwa: str | None = None
+    reality_code: str | None = None
 
     @property
     def is_rtoken(self) -> bool:
@@ -68,7 +64,9 @@ class SpotSymbol:
     def underlying(self) -> str:
         if not self.is_rtoken:
             raise ValueError(f"{self.symbol} is not an rToken")
-        return self.base_coin[1:]
+        if not self.reality_code:
+            raise ValueError(f"{self.symbol} has no Reality code; resolve it from stock-info first")
+        return self.reality_code
 
     @property
     def tick_size(self) -> Decimal:
@@ -80,6 +78,7 @@ class BitgetPublic:
         self._client = client or httpx.Client(base_url=BASE_URL, timeout=30.0)
 
         self._last = 0.0
+        self._stock_info_cache: dict[str, dict] = {}
 
     def _get(self, path: str, params: dict) -> list | dict:
         wait = self._last + _MIN_INTERVAL_S - time.monotonic()
@@ -119,28 +118,109 @@ class BitgetPublic:
                     open_time=dt.datetime.fromtimestamp(int(x["launchTime"]) / 1000, dt.UTC),
                     symbol_type=x.get("symbolType", ""),
                     is_reality=x.get("isReality") == "yes",
+                    is_rwa=x.get("isRwa"),
                 )
             )
         return out
 
     def rtokens(self) -> dict[str, SpotSymbol]:
-        """Live rToken universe keyed by base coin (e.g. 'rMU')."""
+        """Live Reality instruments keyed by the API-returned base coin."""
         syms = self.spot_symbols()
-        by_flag = {s.base_coin: s for s in syms if s.is_rtoken}
-        by_regex = {s.base_coin for s in syms if _RTOKEN_BASE.match(s.base_coin)}
-        if set(by_flag) != by_regex:
-            raise BitgetAPIError("/api/v3/market/instruments", "universe",
-                                 f"symbolType/isReality set differs from r-prefix set by "
-                                 f"{sorted(set(by_flag) ^ by_regex)[:10]}")
-        return by_flag
+        return {s.base_coin: s for s in syms if s.is_rtoken}
 
-    def rtoken_symbol(self, ticker: str) -> SpotSymbol:
-        """Resolve an underlying ticker ('MU') to its live rToken spot symbol."""
+    def rtoken_symbol(self, identifier: str) -> SpotSymbol:
+        """Resolve an instrument identifier returned by instruments.
+
+        identifier must be the live symbol or baseCoin value. The underlying equity
+        code is loaded from Reality's public stock-info endpoint; it is never
+        reconstructed from the token name.
+        """
         universe = self.rtokens()
-        key = f"r{ticker.upper()}"
-        if key not in universe:
-            raise KeyError(f"no rToken for {ticker!r} in live symbol list ({len(universe)} rTokens)")
-        return universe[key]
+        needle = identifier.casefold()
+        for candidate in universe.values():
+            if needle in {candidate.symbol.casefold(), candidate.base_coin.casefold()}:
+                info = self.reality_stock_info(candidate.symbol)
+                code = info.get("code")
+                if not code:
+                    raise BitgetAPIError("/api/v3/reality/market/stock-info", "schema",
+                                         f"{candidate.symbol} has no code")
+                return replace(candidate, reality_code=str(code))
+        raise KeyError(
+            f"no rToken for identifier {identifier!r}; use a symbol or baseCoin returned by instruments"
+        )
+
+    # ---- Reality market data -------------------------------------------------------
+
+    def _dict_data(self, path: str, params: dict) -> dict:
+        data = self._get(path, params)
+        if not isinstance(data, dict):
+            raise BitgetAPIError(path, "schema", f"expected object, got {type(data).__name__}")
+        return data
+
+    def reality_stock_info(self, symbol: str) -> dict:
+        if symbol not in self._stock_info_cache:
+            data = self._get("/api/v3/reality/market/stock-info", {"symbol": symbol})
+            if isinstance(data, dict):
+                info = data
+            elif isinstance(data, list) and len(data) == 1 and isinstance(data[0], dict):
+                info = data[0]
+            else:
+                raise BitgetAPIError("/api/v3/reality/market/stock-info", "schema",
+                                     "expected one stock-info object")
+            self._stock_info_cache[symbol] = info
+        return self._stock_info_cache[symbol]
+
+    def reality_dividends(self, code: str, limit: int = 100, cursor: str | None = None) -> dict:
+        params: dict[str, str | int] = {"code": code, "limit": limit}
+        if cursor:
+            params["cursor"] = cursor
+        data = self._dict_data("/api/v3/reality/market/dividends", params)
+        if not isinstance(data.get("list"), list):
+            raise BitgetAPIError("/api/v3/reality/market/dividends", "schema", "list is not an array")
+        return data
+
+    def cash_dividend_records(self, symbol: str, record_type: str = "paid",
+                              limit: int = 100, cursor: str | None = None) -> dict:
+        if record_type not in {"pending", "paid"}:
+            raise ValueError("record_type must be 'pending' or 'paid'")
+        params: dict[str, str | int] = {"symbol": symbol, "type": record_type, "limit": limit}
+        if cursor:
+            params["cursor"] = cursor
+        data = self._dict_data("/api/v3/market/cash-dividend-records", params)
+        if not isinstance(data.get("list"), list):
+            raise BitgetAPIError("/api/v3/market/cash-dividend-records", "schema", "list is not an array")
+        return data
+
+    def split_records(self) -> list[dict]:
+        data = self._get("/api/v3/market/split-records", {})
+        if not isinstance(data, list):
+            raise BitgetAPIError("/api/v3/market/split-records", "schema", "expected array")
+        return data
+
+    def market_states(self) -> dict:
+        return self._dict_data("/api/v3/reality/market/states", {})
+
+    def market_calendar(self) -> dict:
+        return self._dict_data("/api/v3/reality/market/calendar", {})
+
+    def tickers(self, symbol: str | None = None) -> list[dict]:
+        params = {"category": "SPOT"}
+        if symbol:
+            params["symbol"] = symbol
+        data = self._get("/api/v3/market/tickers", params)
+        if not isinstance(data, list):
+            raise BitgetAPIError("/api/v3/market/tickers", "schema", "expected array")
+        return data
+
+    def orderbook(self, symbol: str, limit: int = 1000) -> dict:
+        if not 1 <= limit <= V3_MAX_LIMIT:
+            raise ValueError(f"limit must be between 1 and {V3_MAX_LIMIT}")
+        data = self._dict_data(
+            "/api/v3/market/orderbook", {"category": "SPOT", "symbol": symbol, "limit": limit}
+        )
+        if not isinstance(data.get("asks"), list) or not isinstance(data.get("bids"), list):
+            raise BitgetAPIError("/api/v3/market/orderbook", "schema", "asks/bids are not arrays")
+        return data
 
     # ---- candles -------------------------------------------------------------------
 
@@ -176,7 +256,7 @@ class BitgetPublic:
             rows = self._get(
                 "/api/v3/market/history-candles" if old else "/api/v3/market/candles",
                 dict(category="SPOT", symbol=symbol, interval=interval,
-                     endTime=cursor_end, limit=page),
+                     type="market", endTime=cursor_end, limit=page),
             )
             if not rows:
                 break
