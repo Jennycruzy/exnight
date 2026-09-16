@@ -132,11 +132,18 @@ def load_depth(path: Path = RESULTS / "depth_samples.csv") -> pd.DataFrame:
 
 
 def main() -> None:
-    results = json.loads((RESULTS / "event_results.json").read_text())
-    ledger = {e.event_id: e.model_dump(mode="json") for e in read_ledger()}
+    import argparse
+    from .calendar import LEDGER_PATH
+    ap = argparse.ArgumentParser(description="Price round-trip costs for an event-results file")
+    ap.add_argument("--results", type=Path, default=RESULTS / "event_results.json")
+    ap.add_argument("--ledger", type=Path, default=LEDGER_PATH)
+    ap.add_argument("--output", type=Path, default=RESULTS / "event_costs.csv")
+    args = ap.parse_args()
+    results = json.loads(args.results.read_text())
+    ledger = {e.event_id: e.model_dump(mode="json") for e in read_ledger(args.ledger)}
     rows = cost_rows(results, load_depth(), ledger)
     df = pd.DataFrame(rows)
-    df.to_csv(RESULTS / "event_costs.csv", index=False)
+    df.to_csv(args.output, index=False)
     priced = df.dropna(subset=["exit_net_per_share"])
     print(f"{len(df)} (event, rung, notional) rows; {len(priced)} fully priced, "
           f"{df.cost_reason.notna().sum()} with a cost_reason")

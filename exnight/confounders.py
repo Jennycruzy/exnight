@@ -102,16 +102,23 @@ def flags_for(r: dict, notice: dict, reality: list[dict]) -> dict:
 
 
 def build(results: list[dict], notice_ledger: list[dict], reality_ledger: list[dict]) -> pd.DataFrame:
-    notice_by_id = {e["event_id"]: e for e in notice_ledger}
-    return pd.DataFrame([flags_for(r, notice_by_id.get(r["event_id"], {}), reality_ledger) for r in results])
+    # Notice and Reality ledgers number same-day events differently (rSATA), so match on the
+    # API symbol and the ex-date rather than on event_id.
+    notice_by_key = {(e["symbol"], e["exchange_ex_date"]): e for e in notice_ledger}
+    return pd.DataFrame([flags_for(r, notice_by_key.get((r["symbol"], r["ex_date"]), {}), reality_ledger) for r in results])
 
 
 def main() -> None:
-    results = json.loads((RESULTS / "event_results.json").read_text())
+    import argparse
+    ap = argparse.ArgumentParser(description="Flag confounders for an event-results file")
+    ap.add_argument("--results", type=Path, default=RESULTS / "event_results.json")
+    ap.add_argument("--output", type=Path, default=RESULTS / "confounders.csv")
+    args = ap.parse_args()
+    results = json.loads(args.results.read_text())
     notice = [e.model_dump(mode="json") for e in read_ledger(LEDGER_PATH)]
     reality = [e.model_dump(mode="json") for e in read_ledger(REALITY_LEDGER)]
     df = build(results, notice, reality)
-    df.to_csv(RESULTS / "confounders.csv", index=False)
+    df.to_csv(args.output, index=False)
     print(f"{len(df)} events; {int(df.usable.sum())} usable; {int(df.clean.sum())} clean (no flag)")
     counts = {k: int(df[k].sum()) for k in FLAG_LABELS}
     for k, v in counts.items():

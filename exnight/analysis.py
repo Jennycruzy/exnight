@@ -115,17 +115,23 @@ def summarize(df: pd.DataFrame, yield_floor_pct: float | None = None,
 
 
 def main() -> None:
-    df = frame(load())
-    df.to_csv(RESULTS / "event_table.csv", index=False)
+    import argparse
+    ap = argparse.ArgumentParser(description="Summarise an event-results file")
+    ap.add_argument("--results", type=Path, default=RESULTS / "event_results.json")
+    ap.add_argument("--confounders", type=Path, default=RESULTS / "confounders.csv")
+    ap.add_argument("--tag", default="", help="suffix for event_table/summary outputs")
+    args = ap.parse_args()
+    df = frame(json.loads(args.results.read_text()))
+    df.to_csv(RESULTS / f"event_table{args.tag}.csv", index=False)
     report = {f"floor_{f}": summarize(df, f) for f in (None, 0.2, 0.5)}
     report["clean_2000"] = summarize(df, None, clean_2000=True)
     report["clean_2000_floor_0.2"] = summarize(df, 0.2, clean_2000=True)
-    conf = RESULTS / "confounders.csv"
+    conf = args.confounders
     if conf.exists():   # written by exnight.confounders; absent -> no clean-sample block, never a default
         clean_ids = set(pd.read_csv(conf).query("clean").event_id)
         report["confounder_clean"] = summarize(df, None, keep_ids=clean_ids)
         report["confounder_clean_2000"] = summarize(df, None, clean_2000=True, keep_ids=clean_ids)
-    (RESULTS / "summary.json").write_text(json.dumps(report, indent=1, default=str))
+    (RESULTS / f"summary{args.tag}.json").write_text(json.dumps(report, indent=1, default=str))
     for name, s in report.items():
         print(f"\n== {name}: {s['n_after_floor']} of {s['events_usable']} usable of {s['events_total']} events")
         print(f"{'rung':16s} {'n':>3s} {'mean':>8s} {'median':>8s} | {'slope PDR':>9s} {'se':>7s} {'n':>3s}")

@@ -18,7 +18,7 @@ def _reality(*rows):
     return out
 
 
-NOTICE = [dict(event_id="rX-2026-06-24-1", gross_dividend_per_share="0.8619")]
+NOTICE = [dict(event_id="rX-2026-06-24-1", symbol="rX", exchange_ex_date="2026-06-24", gross_dividend_per_share="0.8619")]
 
 
 def test_clean_event_has_no_flags(monkeypatch):
