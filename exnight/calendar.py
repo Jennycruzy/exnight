@@ -115,7 +115,19 @@ def build_ledger(universe: dict[str, SpotSymbol]) -> list[CorporateAction]:
                 source_key=src.key,
                 source_url=src.url,
                 label="DOCUMENTED",
-                notes=notes,
+                notes=notes + [
+                    "ex-date timezone is not stated in the notice; ET treatment is ASSUMED for price windows",
+                ],
+                ex_date_timezone="UNVERIFIED",
+                cash_dividend_per_share=gross,
+                cash_dividend_basis="GROSS",
+                cash_dividend_timestamp=None,
+                adjustment_ratio=None,
+                trading_halt_start=None,
+                trading_halt_end=None,
+                status="completed",
+                source_endpoint=src.url,
+                source_fetched_at=None,
             )
         )
     return events

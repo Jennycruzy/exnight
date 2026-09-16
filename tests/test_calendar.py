@@ -47,3 +47,7 @@ def test_no_event_is_eligibility_verified_yet():
         assert e.eligibility_verified is False
         assert e.bitget_snapshot_time is None
         assert e.net_dividend_per_share == e.gross_dividend_per_share * Decimal("0.70")
+        assert e.ex_dividend_date == e.exchange_ex_date
+        assert e.cash_dividend_per_share == e.gross_dividend_per_share
+        assert e.cash_dividend_basis == "GROSS"
+        assert e.status == "completed"
