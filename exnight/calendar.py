@@ -16,6 +16,7 @@ import json
 import re
 from decimal import Decimal
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from .events import CorporateAction, EventType
 from .market import BitgetPublic, SpotSymbol
@@ -26,6 +27,7 @@ LEDGER_PATH = ROOT / "data" / "ledger" / "events.jsonl"
 REALITY_RAW_DIR = ROOT / "data" / "raw" / "corporate_actions" / "reality"
 REALITY_DIVIDENDS_ENDPOINT = "/api/v3/reality/market/dividends"
 STOCK_INFO_ENDPOINT = "/api/v3/reality/market/stock-info"
+REALITY_DATE_ZONE = ZoneInfo("Asia/Shanghai")
 
 # DOCUMENTED in the 2026-07-24 notice: "the securities custodian will deduct a 30% federal
 # withholding tax on dividend income. Actual Received Amount = Shares × Dividend × 70%".
@@ -150,6 +152,10 @@ def _timestamp_ms(value: str | int | None, field: str, required: bool = False) -
     return timestamp
 
 
+def _date_in_reality_zone(value: dt.datetime) -> dt.date:
+    return value.astimezone(REALITY_DATE_ZONE).date()
+
+
 def _decimal(value: str | int | float | Decimal | None, field: str) -> Decimal | None:
     if value in (None, ""):
         return None
@@ -191,14 +197,14 @@ def _reality_action(
 ) -> CorporateAction:
     action_type = str(row.get("type") or "").lower()
     ex_ts = _timestamp_ms(row.get("exrightDate"), "exrightDate", required=True)
-    ex_date = ex_ts.date()
+    ex_date = _date_in_reality_zone(ex_ts)
     announcement = _timestamp_ms(row.get("announcementDate"), "announcementDate")
     record = _timestamp_ms(row.get("recordDate"), "recordDate")
     payment = _timestamp_ms(row.get("dividendDate"), "dividendDate")
     source_notes = [
         "Reality market data response OBSERVED at fetch time",
-        "Reality timestamp fields were converted from Unix milliseconds to UTC dates",
-        "Reality endpoint does not state an ET timezone for exrightDate; ET treatment is ASSUMED",
+        "Reality timestamps are retained as UTC instants; date fields use the empirically matching Asia/Shanghai calendar date",
+        "Reality endpoint does not document the date timezone; the Asia/Shanghai convention is OBSERVED on matched notice dates and remains ASSUMED",
         "Bitget snapshot time is not present; eligibility remains unverified",
     ]
     common = dict(
@@ -206,11 +212,11 @@ def _reality_action(
         symbol=spot.base_coin,
         underlying=code,
         spot_symbol=spot.symbol,
-        announcement_date=announcement.date() if announcement else None,
+        announcement_date=_date_in_reality_zone(announcement) if announcement else None,
         exchange_ex_date=ex_date,
-        exchange_record_date=record.date() if record else None,
+        exchange_record_date=_date_in_reality_zone(record) if record else None,
         bitget_snapshot_time=None,
-        payment_date=payment.date() if payment else None,
+        payment_date=_date_in_reality_zone(payment) if payment else None,
         eligibility_verified=False,
         weekend_list_2026_07_17=spot.base_coin in weekend,
         source_key=f"reality_dividends_{code}",
@@ -305,6 +311,8 @@ def build_reality_ledger(
     """Build spot actions from Reality market data for the supplied live universe.
 
     start_date is explicit so a rebuild cannot silently change its historical sample.
+    Reality date fields are decoded in the empirically matching UTC+8 calendar zone;
+    the raw Unix milliseconds remain in the saved response.
     The saved notice is only an amount-basis reconciliation source; it does not define
     the event universe. Future ex-dates are retained with pending status.
     """
@@ -331,10 +339,11 @@ def build_reality_ledger(
                 if not isinstance(row, dict):
                     raise ValueError(f"{code}: Reality action row is not an object")
                 ex_ts = _timestamp_ms(row.get("exrightDate"), "exrightDate", required=True)
-                if ex_ts.date() < start_date:
+                ex_date = _date_in_reality_zone(ex_ts)
+                if ex_date < start_date:
                     continue
                 action_type = str(row.get("type") or "").lower()
-                key = (ex_ts.date(), action_type)
+                key = (ex_date, action_type)
                 ordinal_by_key[key] = ordinal_by_key.get(key, 0) + 1
                 events.append(_reality_action(
                     row, spot, str(code), ordinal_by_key[key], fetched_at,

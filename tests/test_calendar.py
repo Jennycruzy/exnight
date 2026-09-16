@@ -88,6 +88,7 @@ def test_reality_ledger_uses_api_rows_and_keeps_unresolved_basis(tmp_path):
         as_of=dt.datetime(2026, 9, 16, tzinfo=dt.UTC), raw_dir=tmp_path, notice_rows=[],
     )
     assert [e.event_type for e in events] == [EventType.CASH_DIV, EventType.SPLIT]
+    assert events[0].exchange_ex_date == dt.date(2026, 7, 6)
     cash = events[0]
     assert cash.symbol == "asset-token" and cash.underlying == "ASSET"
     assert cash.cash_dividend_per_share == Decimal("0.15")
