@@ -15,10 +15,8 @@ Both unauthenticated; the client joins them at runtime.
 
 | Fact | Observation |
 |---|---|
-| rToken identifier (documented) | `symbolType = "stock"` and `isReality = "yes"` on v3 instruments; 1,653 symbols. Identical to the set with `baseCoin` matching `^r[A-Z]`; the client raises if the two sets ever differ |
-
-| rToken identifier (observed) | `baseCoin` is `r` + upper-case ticker: `rAAPL`, `rMU`, `rQQQ`, `rTSM` |
-| Spot symbol format | `upper(baseCoin) + quoteCoin`, e.g. `RMUUSDT`. Holds for every rToken in the list |
+| rToken filter | `symbolType = "stock"` and `isReality = "yes"` on v3 instruments; 1,653 symbols. The current response omits `isRwa` for these rows, so it is recorded when present but is not a filter |
+| API identifiers | `baseCoin` and `symbol` are retained exactly as returned by `instruments`; no name pattern is used to build the universe |
 | Quote currency | USDT only |
 | Universe size | **1,653** rTokens online (the spec said "600+"; the live list is larger) |
 | Fee fields | `makerFeeRate = takerFeeRate = 0.001` on every rToken symbol. BTCUSDT shows 0.002 on the same endpoint, so the field is symbol-specific and not a placeholder |
@@ -112,25 +110,38 @@ Consequences for the code:
    a token stays listed (no re-list) is back-adjusted in place remains **ASSUMED**; no such
    case exists in the sample.
 
-## Corporate-action endpoints — OBSERVED 2026-09-16 (spec v2 ambiguities A and B)
+## Corporate-action endpoints — OBSERVED 2026-09-16
+
+The working specification named two different public APIs. The live product has a third, newer Reality endpoint that is the correct source for spot actions.
 
 | Endpoint | Observation |
 |---|---|
-| `GET /api/v3/market/cash-dividend-records?symbol=RMUUSDT&type=paid` | `40034 Parameter RMUUSDT does not exist`. With the **perps** symbol `MUUSDT` it returns `{exDividendDate: 2026-07-06, cashDividendPerShare: 0.15, cashDividendTimestamp: 1783036800000}`. **The endpoint serves RWA stock perps only, as its documentation says; it does not cover spot rTokens.** Ambiguity A: C1 for spot stays on Bitget's published distribution notice (DOCUMENTED, parsed deterministically). The perps endpoint is used as a cross-check and, with `type=pending`, as a forward calendar for underlyings that have a perp |
-| `cashDividendPerShare` gross or net? | For the 4 sample events that have a perps record (rAVGO 0.65, rMU 0.15, rCSCO 0.42, rCMCSA 0.33) it equals the spot notice's figure to the cent, and the spot notice applies ×70% *on top of* that figure. MU's declared dividend is $0.15. **Ambiguity B: gross.** Only 25 of 59 sample underlyings have a perp and only 4 of those have a June/July record, so the cross-check covers 4 events |
-| `cashDividendTimestamp` | 1783036800000 = 2026-07-03 00:00 UTC = Thu 2026-07-02 20:00 ET for a Mon 2026-07-06 ex-date with Fri 07-03 an NYSE holiday: the perps settlement time, holiday-aware, at the US after-hours close. Consistent with article 12560603895292 |
-| `GET /api/v3/market/split-records` | 4 records, all `status=completed`: KORUUSDT 20 (ex 2026-07-15), MUUUSDT 20 (07-15), SOXSUSDT 0.1 (07-15), MSTUUSDT 0.1 (08-24); `exDividendDateTimezone=ET`; halt windows of 7–13 h ending 13:35 UTC (09:35 ET). **All four symbols are `USDT-FUTURES` instruments; none is a spot symbol, and Amphenol's 2:1 (spot rAPH, 2026-09-03) is absent.** The spot rToken for each is (re-)listed *after* the halt ends: RSOXSUSDT `launchTime` 14:37 UTC vs halt end 13:35; RMSTUUSDT 2026-08-25 02:42 vs halt end 08-24 13:35 |
-| Spot series across a split | There is none. The pre-split spot token's intraday history ends; the new listing starts after the halt. The spec's "halt then gap in one series" describes the perps; for spot it is "old token gone, new token listed". The normaliser therefore (a) drops bars before `launchTime`, (b) is halt-aware for any series that does span a `split-records` window, (c) still asserts no split-shaped gap in what remains |
-| `GET /api/v3/market/tickers?category=SPOT` | Carries `platformTurnover24h` (on-platform rToken turnover) beside `turnover24h` (US tape). RMUUSDT: **$290,798** platform vs $11.0B tape. For the 59 sample symbols on 2026-09-16: median platform turnover **$119**, 28 of 63 events' tokens at **$0**, 51 below $10k; the largest are rAVGO $393k, rMU $291k, rQQQ $228k, rTLT $109k. This is the liquidity of the market that produced the measured prices |
-| `GET /api/v3/market/fee-group?category=SPOT` | Three groups with MM1–MM5 and PRO1–PRO6 tiers; an `rtoken` label (1,668 symbols, weight 1.00) sits in GROUP_A with `core_mainstream`. The response carries no ordinary-user base tier; the 0.10% base still comes from v2 symbols. What `weight` means is not documented — **ASSUMED** to be a multiplier and not used |
+| GET /api/v3/reality/market/stock-info?symbol=RMUUSDT | HTTP 200. The response data is a one-element list containing the Reality code, trading sessions and weekend flag. |
+| GET /api/v3/reality/market/dividends?code=MU | HTTP 200. The response data is an object with list and cursor. Rows include cash_dividend, stock_dividend and stock_split records with announcement, record, ex-right, payment and split fields. This is the observed spot corporate-action source. |
+| GET /api/v3/market/cash-dividend-records?symbol=RMUUSDT&type=paid | HTTP 40034, symbol does not exist. The same request with the futures symbol MUUSDT returns a record. The endpoint remains futures-only, as its documentation says; it is a cross-check, not the spot calendar. |
+| GET /api/v3/market/split-records | Four completed records were returned and all were USDT-FUTURES symbols. No corresponding spot split record was returned. The records include adjustmentRatio, an ET date and halt timestamps. |
+| cashDividendPerShare basis | Four futures records match the saved spot notice amounts exactly: rAVGO 0.65, rMU 0.15, rCSCO 0.42 and rCMCSA 0.33. The notice applies the documented 70% credit factor separately. This is gross evidence for those four observations only. |
 
-## US market calendar — DOCUMENTED (NYSE), not a Bitget parameter
+The Reality dividend endpoint does not state an ET timezone for its timestamp fields. Its date conversion is therefore labelled ASSUMED until Bitget confirms the convention. The spot builder must retain the raw timestamp, the response time and the conversion label.
 
-The last cum-dividend session is the last NYSE trading day before the ex-date. NYSE 2026
-full-day closures are hardcoded in `eventstudy.py` from the NYSE holiday calendar; the two
-inside the sample are Fri 2026-06-19 (Juneteenth) and Fri 2026-07-03 (Independence Day
-observed). Bitget rTokens printed bars on both days (OBSERVED), which is why the calendar
-cannot be inferred from the candle data.
+The saved July notice remains useful as a first-party cross-check and as the only source that states the snapshot wording and the 30% deduction for that distribution. It should not remain the only spot event source now that Reality market data is public.
+
+### Splits and listing continuity
+
+The four live split-records rows are futures rows. The spot observations for rAPH, rSOXS and rTZA show a listing boundary around the corporate action, not a continuous spot series through the halt. The halt-and-ratio normaliser is therefore applicable when a series actually spans a split record, but its completed-spot path is not verified by the current sample. A spot re-list boundary must be represented as a symbol-history discontinuity and must not be treated as a zero-return split transition.
+
+### Turnover and executable liquidity
+
+The tickers response labels platformTurnover24h as rToken-only platform turnover and also carries turnover24h for the reference tape. Platform turnover is not order-book depth and cannot establish whether StockRoute liquidity is present. The existing depth observation must be split by session before it is used for a framing decision.
+
+## US market calendar — OBSERVED from Bitget and the exchange
+
+The last cum-dividend session is the last US trading session before the ex-date. Bitget's
+Reality calendar endpoint currently returns a timezone label and explicit holiday windows;
+the market-state endpoint returns pre-market, regular and after-hours boundaries. The code
+still contains a fixed NYSE holiday set, so the next event-study run must consume the live
+calendar response and retain its timezone label. Bitget rTokens printed bars on the two
+known 2026 exchange holidays inside the sample, so candle presence is not a holiday source.
 
 ## Still ASSUMED (blocks the paths listed)
 
