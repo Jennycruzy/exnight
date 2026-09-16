@@ -84,6 +84,9 @@ class BitgetPublic:
         self._last = 0.0
         self._last_by_path: dict[str, float] = {}
         self._stock_info_cache: dict[str, dict] = {}
+        self.last_fetch_at: dt.datetime | None = None
+        self.last_request: dict | None = None
+        self.last_raw_response: str | None = None
 
     def _get(self, path: str, params: dict) -> list | dict:
         now = time.monotonic()
@@ -95,6 +98,9 @@ class BitgetPublic:
         self._last = time.monotonic()
         self._last_by_path[path] = self._last
         r = self._client.get(path, params=params)
+        self.last_fetch_at = dt.datetime.now(dt.UTC)
+        self.last_request = {"path": path, "params": dict(params)}
+        self.last_raw_response = r.text
         try:
             body = r.json()
         except ValueError as e:
@@ -184,8 +190,8 @@ class BitgetPublic:
         if cursor:
             params["cursor"] = cursor
         data = self._dict_data("/api/v3/reality/market/dividends", params)
-        if not isinstance(data.get("list"), list):
-            raise BitgetAPIError("/api/v3/reality/market/dividends", "schema", "list is not an array")
+        if data.get("list") is not None and not isinstance(data.get("list"), list):
+            raise BitgetAPIError("/api/v3/reality/market/dividends", "schema", "list is not an array or null")
         return data
 
     def cash_dividend_records(self, symbol: str, record_type: str = "paid",
@@ -196,9 +202,25 @@ class BitgetPublic:
         if cursor:
             params["cursor"] = cursor
         data = self._dict_data("/api/v3/market/cash-dividend-records", params)
-        if not isinstance(data.get("list"), list):
-            raise BitgetAPIError("/api/v3/market/cash-dividend-records", "schema", "list is not an array")
+        if data.get("list") is not None and not isinstance(data.get("list"), list):
+            raise BitgetAPIError("/api/v3/market/cash-dividend-records", "schema", "list is not an array or null")
         return data
+
+    def iter_reality_dividends(self, code: str, limit: int = 100):
+        cursor: str | None = None
+        seen: set[str] = set()
+        while True:
+            data = self.reality_dividends(code, limit=limit, cursor=cursor)
+            rows = data.get("list") or []
+            yield data, rows
+            next_cursor = data.get("cursor")
+            if not next_cursor:
+                return
+            next_cursor = str(next_cursor)
+            if next_cursor in seen:
+                raise BitgetAPIError("/api/v3/reality/market/dividends", "cursor", "cursor repeated")
+            seen.add(next_cursor)
+            cursor = next_cursor
 
     def split_records(self) -> list[dict]:
         data = self._get("/api/v3/market/split-records", {})

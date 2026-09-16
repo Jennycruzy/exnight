@@ -62,3 +62,19 @@ def test_market_requests_have_explicit_market_type():
     api.candles_v3("ASSETUSDT", "1m", dt.datetime(2026, 9, 16, tzinfo=dt.UTC),
                    dt.datetime(2026, 9, 16, 0, 1, tzinfo=dt.UTC))
     assert seen and seen[0]["type"] == "market"
+
+
+def test_reality_dividend_iterator_accepts_null_terminal_list():
+    calls = 0
+
+    class FakeAPI(BitgetPublic):
+        def reality_dividends(self, code, limit=100, cursor=None):
+            nonlocal calls
+            calls += 1
+            if calls == 1:
+                return {"list": [{"type": "cash_dividend"}], "cursor": "next"}
+            return {"list": None, "cursor": None}
+
+    api = FakeAPI.__new__(FakeAPI)
+    pages = list(api.iter_reality_dividends("ASSET"))
+    assert [len(rows) for _, rows in pages] == [1, 0]
