@@ -249,9 +249,13 @@ class BitgetPublic:
         data = self._dict_data(
             "/api/v3/market/orderbook", {"category": "SPOT", "symbol": symbol, "limit": limit}
         )
-        if not isinstance(data.get("asks"), list) or not isinstance(data.get("bids"), list):
+        # OBSERVED 2026-09-16: the live response uses short keys ``a``/``b`` (docs show
+        # ``asks``/``bids``). Accept either and normalise to the documented names.
+        asks = data.get("asks", data.get("a"))
+        bids = data.get("bids", data.get("b"))
+        if not isinstance(asks, list) or not isinstance(bids, list):
             raise BitgetAPIError("/api/v3/market/orderbook", "schema", "asks/bids are not arrays")
-        return data
+        return {"asks": asks, "bids": bids, "ts": data.get("ts")}
 
     # ---- candles -------------------------------------------------------------------
 

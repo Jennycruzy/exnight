@@ -78,3 +78,15 @@ def test_reality_dividend_iterator_accepts_null_terminal_list():
     api = FakeAPI.__new__(FakeAPI)
     pages = list(api.iter_reality_dividends("ASSET"))
     assert [len(rows) for _, rows in pages] == [1, 0]
+
+
+def test_orderbook_accepts_live_short_keys_and_normalises():
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.url.path == "/api/v3/market/orderbook"
+        assert request.url.params["category"] == "SPOT"
+        return httpx.Response(200, json={"code": "00000", "data": {
+            "a": [[331.5, 1.0]], "b": [[331.2, 2.0]], "ts": "1789586222884"}})
+
+    api = BitgetPublic(httpx.Client(transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
+    ob = api.orderbook("rAAPLUSDT", limit=5)
+    assert ob["asks"] == [[331.5, 1.0]] and ob["bids"] == [[331.2, 2.0]] and ob["ts"] == "1789586222884"
