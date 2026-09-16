@@ -338,7 +338,16 @@ def build_reality_ledger(
             for row in rows:
                 if not isinstance(row, dict):
                     raise ValueError(f"{code}: Reality action row is not an object")
-                ex_ts = _timestamp_ms(row.get("exrightDate"), "exrightDate", required=True)
+                ex_ts = _timestamp_ms(row.get("exrightDate"), "exrightDate")
+                if ex_ts is None:
+                    # OBSERVED 2026-09-16: KO's 1965-1996 splits carry no exrightDate, only a
+                    # (negative-epoch) recordDate. Such rows may be skipped only when another
+                    # dated field proves they precede start_date; otherwise fail loudly.
+                    fallback = [_timestamp_ms(row.get(f), f) for f in ("recordDate", "splitValidDate")]
+                    fallback = [t for t in fallback if t is not None]
+                    if fallback and max(_date_in_reality_zone(t) for t in fallback) < start_date:
+                        continue
+                    raise ValueError(f"{code}: Reality action has no exrightDate and no dated field before {start_date}")
                 ex_date = _date_in_reality_zone(ex_ts)
                 if ex_date < start_date:
                     continue

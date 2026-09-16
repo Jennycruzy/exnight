@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T19:49:55.463573+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588195334,\"data\":[{\"symbol\":\"RVSTUSDT\",\"code\":\"VST\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RVSTUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

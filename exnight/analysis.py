@@ -77,17 +77,22 @@ def robustness(u: pd.DataFrame, k: str) -> dict:
 
 
 def summarize(df: pd.DataFrame, yield_floor_pct: float | None = None,
-              clean_2000: bool = False, max_gap_min: float = 5.0) -> dict:
+              clean_2000: bool = False, max_gap_min: float = 5.0,
+              keep_ids: set[str] | None = None) -> dict:
     """clean_2000 restricts to events whose 20:00 ET pre and post bars are within
     `max_gap_min` minutes and whose ex-date follows a normal trading day, so that the
-    rung measures the adjustment itself and not a weekend or an illiquid gap."""
+    rung measures the adjustment itself and not a weekend or an illiquid gap.
+    keep_ids restricts to an explicit event set (the confounder-clean sample)."""
     u = df[df.usable].copy()
     if yield_floor_pct is not None:
         u = u[u.yield_pct >= yield_floor_pct]
     if clean_2000:
         u = u[(u.gap_min <= max_gap_min) & (~u.monday.astype(bool))]
+    if keep_ids is not None:
+        u = u[u.event_id.isin(keep_ids)]
     out = dict(events_total=int(len(df)), events_usable=int(df.usable.sum()),
-               yield_floor_pct=yield_floor_pct, clean_2000=clean_2000, n_after_floor=int(len(u)),
+               yield_floor_pct=yield_floor_pct, clean_2000=clean_2000,
+               confounder_clean=keep_ids is not None, n_after_floor=int(len(u)),
                robustness_2000=robustness(u, "overnight_2000"),
                exclusions=df[~df.usable][["event_id", "reason"]].to_dict("records"), rungs={})
     for k in RUNG_ORDER:
@@ -115,6 +120,11 @@ def main() -> None:
     report = {f"floor_{f}": summarize(df, f) for f in (None, 0.2, 0.5)}
     report["clean_2000"] = summarize(df, None, clean_2000=True)
     report["clean_2000_floor_0.2"] = summarize(df, 0.2, clean_2000=True)
+    conf = RESULTS / "confounders.csv"
+    if conf.exists():   # written by exnight.confounders; absent -> no clean-sample block, never a default
+        clean_ids = set(pd.read_csv(conf).query("clean").event_id)
+        report["confounder_clean"] = summarize(df, None, keep_ids=clean_ids)
+        report["confounder_clean_2000"] = summarize(df, None, clean_2000=True, keep_ids=clean_ids)
     (RESULTS / "summary.json").write_text(json.dumps(report, indent=1, default=str))
     for name, s in report.items():
         print(f"\n== {name}: {s['n_after_floor']} of {s['events_usable']} usable of {s['events_total']} events")

@@ -1,0 +1,64 @@
+event_id,symbol,ex_date,usable,notice_amount,reality_amount,notice_over_reality,reality_matched,nearest_cash_days,nearest_noncash_days,open_time,listing_age_days,instrument_type,long_name,gross_basis_conflict,adjacent_cash_event,noncash_action_30d,relisted_after_event,ex_date_after_gap,pre_bar_stale_24h,market_move_1pct,high_yield_2pct,underlying_check_failed,leveraged_name_hint,flags,n_flags,clean
+rAVGO-2026-06-22-1,rAVGO,2026-06-22,True,0.65,0.65,1.0,True,91.0,,2026-06-01,21,EQUITY,Broadcom Inc.,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rAVL-2026-06-23-1,rAVL,2026-06-23,True,0.20039,0.20039,1.0,True,,,2026-06-08,15,ETF,Direxion Daily AVGO Bull 2X Shares,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rCRCA-2026-06-24-1,rCRCA,2026-06-24,True,0.181138,0.181138,1.0,True,,,2026-06-08,16,ETF,ProShares Ultra CRCL,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rFTGC-2026-06-25-1,rFTGC,2026-06-25,True,0.1691,0.1691,1.0,True,,,2026-06-09,16,ETF,First Trust Global Tactical Commodity Strategy Fund,False,False,False,False,False,False,False,False,False,False,,0,True
+rLABD-2026-06-23-1,rLABD,2026-06-23,True,0.07523,0.07523,1.0,True,,,2026-06-05,18,ETF,Direxion Daily S&P Biotech Bear 3X Shares,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rPSQ-2026-06-24-1,rPSQ,2026-06-24,True,0.228579,0.228579,1.0,True,,,2026-06-04,20,ETF,ProShares Short QQQ,False,False,False,False,False,False,False,False,False,False,,0,True
+rSOXS-2026-06-23-1,rSOXS,2026-06-23,False,0.0375,0.0375,1.0,True,,22.0,2026-07-15,-22,ETF,Direxion Daily Semiconductor Bear 3X Shares,False,False,True,True,False,False,False,False,True,True,noncash_action_30d;relisted_after_event;underlying_check_failed;leveraged_name_hint,4,False
+rSPXU-2026-06-24-1,rSPXU,2026-06-24,True,0.391445,0.391445,1.0,True,,,2026-06-05,19,ETF,ProShares UltraPro Short S&P500,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rSQQQ-2026-06-24-1,rSQQQ,2026-06-24,True,0.637637,0.637637,1.0,True,,,2026-06-02,22,ETF,ProShares UltraPro Short QQQ,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rSTM-2026-06-23-1,rSTM,2026-06-23,True,0.0765,0.0765,1.0,True,91.0,,2026-06-08,15,EQUITY,STMicroelectronics N.V.,False,False,False,False,False,False,False,False,True,False,underlying_check_failed,1,False
+rTQQQ-2026-06-24-1,rTQQQ,2026-06-24,True,0.171229,0.171229,1.0,True,,,2026-06-02,22,ETF,ProShares UltraPro QQQ,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rTZA-2026-06-23-1,rTZA,2026-06-23,False,0.03768,0.03768,1.0,True,,22.0,2026-07-15,-22,ETF,Direxion Daily Small Cap Bear 3X Shares,False,False,True,True,False,False,False,False,True,True,noncash_action_30d;relisted_after_event;underlying_check_failed;leveraged_name_hint,4,False
+rUPRO-2026-06-24-1,rUPRO,2026-06-24,True,0.298729,0.299,0.9990936454849499,True,,,2026-06-05,19,ETF,ProShares UltraPro S&P500,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rVOO-2026-06-26-1,rVOO,2026-06-26,True,1.9622,1.9622,1.0,True,,,2026-06-09,17,ETF,Vanguard S&P 500 ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rVST-2026-06-22-1,rVST,2026-06-22,True,0.229,0.229,1.0,True,91.0,,2026-06-02,20,EQUITY,Vistra Corp.,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rVTV-2026-06-26-1,rVTV,2026-06-26,True,1.0818,1.0818,1.0,True,,,2026-06-09,17,ETF,Vanguard Morningstar Value ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rYANG-2026-06-23-1,rYANG,2026-06-23,True,0.16314,0.16314,1.0,True,,,2026-06-05,18,ETF,Direxion Daily FTSE China Bear 3X Shares,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rYINN-2026-06-23-1,rYINN,2026-06-23,True,0.20943,0.20943,1.0,True,,,2026-06-05,18,ETF,Direxion Daily FTSE China Bull 3X Shares,False,False,False,False,False,False,False,False,False,True,leveraged_name_hint,1,False
+rDGRW-2026-06-25-1,rDGRW,2026-06-25,True,0.16,0.16,1.0,True,33.0,,2026-06-09,16,ETF,WisdomTree U.S. Quality Dividend Growth Fund,False,False,False,False,False,False,False,False,False,False,,0,True
+rSCHD-2026-06-24-1,rSCHD,2026-06-24,True,0.2525,0.2525,1.0,True,,,2026-06-23,1,ETF,Schwab U.S. Dividend Equity ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rKO-2026-06-15-1,rKO,2026-06-15,True,0.53,0.53,1.0,True,92.0,,2026-06-08,7,EQUITY,The Coca-Cola Company,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rCRM-2026-06-11-1,rCRM,2026-06-11,True,0.44,0.44,1.0,True,98.0,,2026-06-02,9,EQUITY,"Salesforce, Inc.",False,False,False,False,False,False,False,False,False,False,,0,True
+rPAVE-2026-06-29-1,rPAVE,2026-06-29,True,0.102695,0.1027,0.9999513145082765,True,,,2026-06-09,20,ETF,Global X U.S. Infrastructure Development ETF,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rFLQL-2026-06-26-1,rFLQL,2026-06-26,True,0.2235,0.2235,1.0,True,,,2026-06-09,17,ETF,Franklin U.S. Large Cap Multifactor Index ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rHYS-2026-07-01-1,rHYS,2026-07-01,True,0.57,0.57,1.0,True,30.0,,2026-06-09,22,ETF,PIMCO 0-5 Year High Yield Corporate Bond Index Exchange-Traded Fund,False,False,False,False,False,False,False,False,False,False,,0,True
+rSTX-2026-06-24-1,rSTX,2026-06-24,True,0.74,0.74,1.0,True,92.0,,2026-06-02,22,EQUITY,Seagate Technology Holdings plc,False,False,False,False,False,False,False,False,False,False,,0,True
+rSGOV-2026-07-01-1,rSGOV,2026-07-01,True,0.295765,0.295765,1.0,True,30.0,,2026-06-09,22,ETF,iShares 0-3 Month Treasury Bond ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rCLOI-2026-07-01-1,rCLOI,2026-07-01,True,0.2051,0.2051,1.0,True,30.0,,2026-06-09,22,ETF,VanEck CLO ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rCOPX-2026-06-29-1,rCOPX,2026-06-29,True,0.257976,0.257976,1.0,True,,,2026-06-05,24,ETF,Global X Copper Miners ETF,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rLIT-2026-06-29-1,rLIT,2026-06-29,True,0.324862,0.324862,1.0,True,,,2026-06-05,24,ETF,Global X Lithium & Battery Tech ETF,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rTLT-2026-07-01-1,rTLT,2026-07-01,True,0.31803,0.31803,1.0,True,30.0,,2026-06-02,29,ETF,iShares 20+ Year Treasury Bond ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rBOTZ-2026-06-29-1,rBOTZ,2026-06-29,True,0.017986,0.017986,1.0,True,,,2026-06-09,20,ETF,Global X Robotics & Artificial Intelligence ETF,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rBITI-2026-07-01-1,rBITI,2026-07-01,True,1.448766,1.448766,1.0,True,30.0,,2026-06-09,22,ETF,ProShares Short Bitcoin ETF,False,False,False,False,False,False,False,True,False,False,high_yield_2pct,1,False
+rLRCX-2026-06-17-1,rLRCX,2026-06-17,True,0.26,0.26,1.0,True,98.0,,2026-06-02,15,EQUITY,Lam Research Corporation,False,False,False,False,False,False,False,False,False,False,,0,True
+rBITO-2026-07-01-1,rBITO,2026-07-01,True,0.010375,0.010375,1.0,True,30.0,,2026-06-09,22,ETF,ProShares Bitcoin ETF,False,False,False,False,False,False,False,False,False,False,,0,True
+rNXPI-2026-06-24-1,rNXPI,2026-06-24,True,0.8619,1.014,0.85,True,84.0,,2026-06-02,22,EQUITY,NXP Semiconductors N.V.,True,False,False,False,False,False,False,False,True,False,gross_basis_conflict;underlying_check_failed,2,False
+rTSM-2026-06-11-1,rTSM,2026-06-11,True,0.742067,0.742067,1.0,True,97.0,,2026-06-01,10,EQUITY,Taiwan Semiconductor Manufacturing Company Limited,False,False,False,False,False,False,False,False,True,False,underlying_check_failed,1,False
+rMO-2026-06-15-1,rMO,2026-06-15,True,1.06,1.06,1.0,True,92.0,,2026-06-10,5,EQUITY,"Altria Group, Inc.",False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rHIMX-2026-06-30-1,rHIMX,2026-06-30,True,0.242,0.242,1.0,True,,,2026-06-08,22,EQUITY,"Himax Technologies, Inc.",False,False,False,False,False,False,False,False,True,False,underlying_check_failed,1,False
+rQQQ-2026-06-22-1,rQQQ,2026-06-22,True,0.81349,0.81349,1.0,True,,,2026-06-01,21,ETF,Invesco QQQ Trust,False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rSATA-2026-07-09-1,rSATA,2026-07-09,True,0.0493,0.0493,1.0,True,1.0,,2026-07-07,2,EQUITY,"Strive, Inc.",False,True,False,False,False,False,False,False,False,False,adjacent_cash_event,1,False
+rSATA-2026-07-10-2,rSATA,2026-07-10,True,0.0493,0.0493,1.0,True,1.0,,2026-07-07,3,EQUITY,"Strive, Inc.",False,True,False,False,False,False,False,False,False,False,adjacent_cash_event,1,False
+rPWR-2026-07-01-1,rPWR,2026-07-01,True,0.11,0.11,1.0,True,92.0,,2026-06-10,21,EQUITY,"Quanta Services, Inc.",False,False,False,False,False,False,False,False,False,False,,0,True
+rBABA-2026-06-11-1,rBABA,2026-06-11,True,1.03,1.03,1.0,True,,,2026-06-02,9,EQUITY,Alibaba Group Holding Limited,False,False,False,False,False,False,False,False,True,False,underlying_check_failed,1,False
+rGEV-2026-06-16-1,rGEV,2026-06-16,True,0.5,0.5,1.0,True,,,2026-06-02,14,EQUITY,GE Vernova Inc.,False,False,False,False,False,False,False,False,False,False,,0,True
+rGFS-2026-06-24-1,rGFS,2026-06-24,True,0.12,0.12,1.0,True,91.0,,2026-06-11,13,EQUITY,GLOBALFOUNDRIES Inc.,False,False,False,False,False,False,False,False,False,False,,0,True
+rSATA-2026-07-13-3,rSATA,2026-07-13,True,0.0493,0.0493,1.0,True,1.0,,2026-07-07,6,EQUITY,"Strive, Inc.",False,True,False,False,True,False,False,False,False,False,adjacent_cash_event;ex_date_after_gap,2,False
+rHPE-2026-06-16-1,rHPE,2026-06-16,True,0.1425,0.1425,1.0,True,93.0,,2026-06-08,8,EQUITY,Hewlett Packard Enterprise Company,False,False,False,False,False,False,False,False,False,False,,0,True
+rMPWR-2026-06-30-1,rMPWR,2026-06-30,True,2.0,2.0,1.0,True,92.0,,2026-06-11,19,EQUITY,"Monolithic Power Systems, Inc.",False,False,False,False,False,False,False,False,False,False,,0,True
+rHEI-2026-07-01-1,rHEI,2026-07-01,True,0.13,0.13,1.0,True,,,2026-06-11,20,EQUITY,HEICO Corporation,False,False,False,False,False,False,False,False,False,False,,0,True
+rAPH-2026-06-23-1,rAPH,2026-06-23,False,0.25,0.25,1.0,True,91.0,72.0,2026-09-03,-72,EQUITY,Amphenol Corporation,False,False,False,True,False,False,False,False,True,False,relisted_after_event;underlying_check_failed,2,False
+rSTRC-2026-06-30-1,rSTRC,2026-06-30,True,0.479166,0.47916667,0.9999986017391401,True,15.0,,2026-06-23,7,EQUITY,Strategy Inc,False,False,False,False,False,False,False,False,False,False,,0,True
+rPCG-2026-06-30-1,rPCG,2026-06-30,True,0.05,0.05,1.0,True,,,2026-06-10,20,EQUITY,PG&E Corporation,False,False,False,False,False,False,False,False,False,False,,0,True
+rSATA-2026-07-14-4,rSATA,2026-07-14,True,0.0493,0.0493,1.0,True,1.0,,2026-07-07,7,EQUITY,"Strive, Inc.",False,True,False,False,False,False,False,False,False,False,adjacent_cash_event,1,False
+rOPRA-2026-07-07-1,rOPRA,2026-07-07,True,0.39,0.39,1.0,True,,,2026-06-04,33,EQUITY,Opera Limited,False,False,False,False,False,False,False,False,True,False,underlying_check_failed,1,False
+rINTU-2026-07-09-1,rINTU,2026-07-09,True,1.2,1.2,1.0,True,91.0,,2026-06-04,35,EQUITY,Intuit Inc.,False,False,False,False,False,False,False,False,False,False,,0,True
+rMDT-2026-06-26-1,rMDT,2026-06-26,True,0.54,0.72,0.7500000000000001,True,91.0,,2026-06-10,16,EQUITY,Medtronic plc,True,False,False,False,False,False,False,False,True,False,gross_basis_conflict;underlying_check_failed,2,False
+rPM-2026-06-25-1,rPM,2026-06-25,True,1.47,1.47,1.0,True,,,2026-06-10,15,EQUITY,Philip Morris International Inc.,False,False,False,False,False,False,False,False,False,False,,0,True
+rMU-2026-07-06-1,rMU,2026-07-06,True,0.15,0.15,1.0,True,,,2026-06-01,35,EQUITY,"Micron Technology, Inc.",False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rSATA-2026-07-21-5,rSATA,2026-07-21,True,0.0493,0.0493,1.0,True,1.0,,2026-07-07,14,EQUITY,"Strive, Inc.",False,True,False,False,False,False,False,False,False,False,adjacent_cash_event,1,False
+rCSCO-2026-07-06-1,rCSCO,2026-07-06,True,0.42,0.42,1.0,True,88.0,,2026-06-04,32,EQUITY,"Cisco Systems, Inc.",False,False,False,False,True,False,False,False,False,False,ex_date_after_gap,1,False
+rCMCSA-2026-07-01-1,rCMCSA,2026-07-01,True,0.33,0.33,1.0,True,98.0,,2026-06-10,21,EQUITY,Comcast Corporation,False,False,False,False,False,False,False,False,False,False,,0,True
+rDIS-2026-06-30-1,rDIS,2026-06-30,True,0.75,0.75,1.0,True,,,2026-06-08,22,EQUITY,The Walt Disney Company,False,False,False,False,False,False,False,False,False,False,,0,True

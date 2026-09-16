@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T19:48:37.733299+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588117610,\"data\":[{\"symbol\":\"RHYSUSDT\",\"code\":\"HYS\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RHYSUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

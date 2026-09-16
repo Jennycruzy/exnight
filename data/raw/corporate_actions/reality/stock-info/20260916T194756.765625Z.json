@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T19:47:56.765625+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588076641,\"data\":[{\"symbol\":\"RBITIUSDT\",\"code\":\"BITI\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RBITIUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

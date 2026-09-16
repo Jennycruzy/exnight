@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T19:44:13.846537+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789587853725,\"data\":[{\"symbol\":\"RCLOIUSDT\",\"code\":\"CLOI\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RCLOIUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

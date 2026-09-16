@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-16T19:48:49.014473+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588128893,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "LABD",
+      "cursor": "259375",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

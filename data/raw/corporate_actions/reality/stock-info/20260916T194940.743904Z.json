@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-16T19:49:40.743904+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789588180621,\"data\":[{\"symbol\":\"RTLTUSDT\",\"code\":\"TLT\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"yes\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RTLTUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}
