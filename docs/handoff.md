@@ -23,6 +23,7 @@ Use the repository virtual environment:
     .venv/bin/python -m exnight.calendar
     .venv/bin/python -m exnight.eventstudy
     .venv/bin/python -m exnight.analysis
+    .venv/bin/python -m exnight.costs
     .venv/bin/python scripts/render_m0.py
     .venv/bin/pytest -q
 
@@ -49,7 +50,7 @@ The default calendar command rebuilds the saved-notice ledger. The Reality sourc
 1. Build a separate Reality ledger for the live spot universe, starting with the 59 notice assets and then expanding to the full API universe. Compare dates, codes, amounts, action types, and listing continuity without inferring identifiers.
 2. Replace the fixed holiday logic with the live Reality calendar and keep its timezone label in every result.
 3. Run `scripts/depth_snapshot.py` again in after-hours, overnight, pre-market and weekend windows (regular is done once). Report ±0.5% and ±2% depth and walk costs at $1k, $5k, and $25k by session and by `book_source`.
-4. Add deterministic fee, spread, depth-walk, slippage, holding-period, and withholding fields to each event result. Keep current-book scenarios separate from event-time observations.
+4. `exnight/costs.py` (done 2026-09-16) writes `data/results/event_costs.csv`: one row per (event, rung, $1k/$5k/$25k) with event-time fee/prices/holding hours/withholding and an OBSERVED-NOW walk cost from the latest depth sample in the rung's session. Every unpriced cell carries a `cost_reason`. As of the first run nothing is fully priced because no `after_hours` sample (the sell leg's session) existed yet; re-run `.venv/bin/python -m exnight.costs` after the hourly sampler has covered after_hours, overnight and pre_market.
 5. Rebuild the event study from the Reality ledger, retain the full and clean samples, and complete the confounder review. Do not publish a trading verdict from the notice-only result.
 6. Implement BUY, EXIT, and HOLD only after eligibility, gross/net basis, and net costs are resolved. Keep BUY suppressed when eligibility is unknown.
 7. Confirm the standard UTA order surface accepts Reality spot symbols, then demonstrate paper execution with the evidence chain attached.
