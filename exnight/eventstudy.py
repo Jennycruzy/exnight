@@ -49,7 +49,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from .candles import fetch_cached, window_for_event
-from .events import CorporateAction
+from .events import CorporateAction, EventType
 from .market import BitgetPublic, SpotSymbol
 from .normalizer import normalize
 from .underlying import daily as underlying_daily, dividends as underlying_dividends
@@ -100,8 +100,8 @@ class EventResult:
     symbol: str
     underlying: str
     ex_date: str
-    gross_dividend: float
-    net_dividend: float
+    gross_dividend: float | None
+    net_dividend: float | None
     usable: bool
     exclusion_reason: str | None
     bars_in_window: int
@@ -140,11 +140,11 @@ def _fee_for(ex_date: dt.date, live: SpotSymbol) -> tuple[Decimal, str]:
 
 
 def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
-                proxy: SpotSymbol | None) -> EventResult:
+                proxy: SpotSymbol | None, ledger: list[CorporateAction]) -> EventResult:
     d_pre = prev_us_trading_day(e.exchange_ex_date)
     start, end = window_for_event(d_pre, e.exchange_ex_date)
     raw = fetch_cached(api, e.spot_symbol, "1m", start, end)
-    norm = normalize(e.spot_symbol, raw, live.open_time)
+    norm = normalize(e.spot_symbol, raw, ledger, live.open_time)
     bars = norm.bars
     gross = float(e.gross_dividend_per_share)
     fee, fee_label = _fee_for(e.exchange_ex_date, live)
@@ -199,7 +199,7 @@ def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
     proxy_bars = None
     if proxy is not None:
         praw = fetch_cached(api, proxy.symbol, "1m", start, end)
-        proxy_bars = normalize(proxy.symbol, praw, proxy.open_time).bars
+        proxy_bars = normalize(proxy.symbol, praw, ledger, proxy.open_time).bars
         m_pre, _ = _at(proxy_bars, t_pre, "before")
 
     for name, day_off, tod in RUNGS:
@@ -246,8 +246,12 @@ def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
 def _excluded(e: CorporateAction, reason: str) -> EventResult:
     return EventResult(
         event_id=e.event_id, symbol=e.symbol, underlying=e.underlying,
-        ex_date=e.exchange_ex_date.isoformat(), gross_dividend=float(e.gross_dividend_per_share),
-        net_dividend=float(e.net_dividend_per_share), usable=False, exclusion_reason=reason,
+        ex_date=e.exchange_ex_date.isoformat(),
+        gross_dividend=(float(e.gross_dividend_per_share)
+                        if e.gross_dividend_per_share is not None else None),
+        net_dividend=(float(e.net_dividend_per_share)
+                      if e.net_dividend_per_share is not None else None),
+        usable=False, exclusion_reason=reason,
         bars_in_window=0, open_time="", p_pre=None, p_pre_ts=None, p_pre_staleness_h=None,
         dividend_yield_pct=None, p_post={}, p_post_ts={}, pdr={}, market_move_pct={},
         abnormal_move_pct={}, underlying_close_pre=None, underlying_open_ex=None,
@@ -261,10 +265,23 @@ def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[
     proxy = uni.get(MARKET_PROXY)
     out = []
     for e in ledger:
+        if e.event_type is not EventType.CASH_DIV:
+            out.append(_excluded(e, f"event type {e.event_type} is not a cash dividend"))
+            continue
+        if e.cash_dividend_basis != "GROSS":
+            out.append(_excluded(e, f"cash amount basis is {e.cash_dividend_basis}; gross basis required"))
+            continue
+        if e.gross_dividend_per_share is None or e.net_dividend_per_share is None:
+            out.append(_excluded(e, "cash dividend amount is incomplete"))
+            continue
         live = uni.get(e.symbol)
         if live is None:
             out.append(_excluded(e, "symbol not in live universe"))
-        out.append(study_event(api, e, live, proxy))
+            continue
+        if e.spot_symbol is None:
+            out.append(_excluded(e, "event has no live spot symbol"))
+            continue
+        out.append(study_event(api, e, live, proxy, ledger))
     return out
 
 
