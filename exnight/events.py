@@ -36,7 +36,7 @@ class CorporateAction(BaseModel):
     withholding_rate: Decimal | None
     net_dividend_per_share: Decimal | None
     eligibility_verified: bool
-    weekend_trading: bool | None     # in Bitget's 24/7 list at the time of the event
+    weekend_list_2026_07_17: bool | None     # on Bitget's weekend-trading list published 2026-07-17; not the list at event time
     source_key: str
     source_url: str
     label: Label

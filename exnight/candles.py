@@ -13,11 +13,11 @@ from .market import BitgetPublic
 RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw" / "candles"
 
 
-def window_for_event(ex_date: dt.date, days_before: int = 3, days_after: int = 2) -> tuple[dt.datetime, dt.datetime]:
-    """UTC window around a US ex-date wide enough to cover the prior close and the next
-    US open regardless of DST: from midnight UTC `days_before` days earlier to midnight
-    UTC `days_after` days later."""
-    start = dt.datetime.combine(ex_date - dt.timedelta(days=days_before), dt.time(), dt.UTC)
+def window_for_event(pre_trading_day: dt.date, ex_date: dt.date, days_after: int = 2) -> tuple[dt.datetime, dt.datetime]:
+    """UTC window from midnight UTC on the last US trading day before the ex-date (so that
+    day's whole session, which ends 20:00 ET = 00:00 UTC next day, is inside) to midnight
+    UTC `days_after` days after the ex-date."""
+    start = dt.datetime.combine(pre_trading_day, dt.time(), dt.UTC)
     end = dt.datetime.combine(ex_date + dt.timedelta(days=days_after), dt.time(), dt.UTC)
     return start, end
 

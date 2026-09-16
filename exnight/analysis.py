@@ -39,8 +39,10 @@ def frame(rows: list[dict]) -> pd.DataFrame:
                  reason=r["exclusion_reason"], gross=r["gross_dividend"], p_pre=r["p_pre"],
                  yield_pct=r["dividend_yield_pct"], u_pdr=r["underlying_pdr"],
                  u_close=r["underlying_close_pre"], u_open=r["underlying_open_ex"],
-                 div_check=r["underlying_div_check"], weekend=r["weekend_trading"],
-                 p_close_pre=r.get("p_close_pre"), pdr_literature=r.get("pdr_literature"))
+                 div_check=r["underlying_div_check"], weekend=r["weekend_list_2026_07_17"],
+                 p_close_pre=r.get("p_close_pre"), pdr_literature=r.get("pdr_literature"),
+                 gap_min=r.get("gap_pre_to_2000_min"), monday=r.get("ex_date_is_monday"),
+                 jump_ts=r.get("jump_ts"), jump_over_div=r.get("jump_over_dividend"))
         for k in RUNG_ORDER:
             d[f"pdr_{k}"] = r["pdr"].get(k)
             d[f"p_{k}"] = r["p_post"].get(k)
@@ -60,12 +62,33 @@ def slope_pdr(p_pre: pd.Series, p_post: pd.Series, gross: pd.Series) -> dict:
                 r2=res.rvalue ** 2, p_value=res.pvalue)
 
 
-def summarize(df: pd.DataFrame, yield_floor_pct: float | None = None) -> dict:
+def robustness(u: pd.DataFrame, k: str) -> dict:
+    """How much the slope depends on a few high-yield points."""
+    base = slope_pdr(u.p_pre, u[f"p_{k}"], u.gross)
+    if base["pdr"] is None:
+        return dict(n=base["n"])
+    loo = [slope_pdr(u.drop(i).p_pre, u.drop(i)[f"p_{k}"], u.drop(i).gross)["pdr"] for i in u.index]
+    top3 = u.sort_values("yield_pct").iloc[:-3]
+    m = u.p_pre.notna() & u[f"p_{k}"].notna()
+    return dict(n=base["n"], loo_min=float(min(loo)), loo_max=float(max(loo)),
+                drop_top3_yield=slope_pdr(top3.p_pre, top3[f"p_{k}"], top3.gross),
+                ratio_of_sums=float((u.p_pre[m] - u[f"p_{k}"][m]).sum() / u.gross[m].sum()),
+                top3_symbols=list(u.sort_values("yield_pct").symbol.iloc[-3:]))
+
+
+def summarize(df: pd.DataFrame, yield_floor_pct: float | None = None,
+              clean_2000: bool = False, max_gap_min: float = 5.0) -> dict:
+    """clean_2000 restricts to events whose 20:00 ET pre and post bars are within
+    `max_gap_min` minutes and whose ex-date follows a normal trading day, so that the
+    rung measures the adjustment itself and not a weekend or an illiquid gap."""
     u = df[df.usable].copy()
     if yield_floor_pct is not None:
         u = u[u.yield_pct >= yield_floor_pct]
+    if clean_2000:
+        u = u[(u.gap_min <= max_gap_min) & (~u.monday.astype(bool))]
     out = dict(events_total=int(len(df)), events_usable=int(df.usable.sum()),
-               yield_floor_pct=yield_floor_pct, n_after_floor=int(len(u)),
+               yield_floor_pct=yield_floor_pct, clean_2000=clean_2000, n_after_floor=int(len(u)),
+               robustness_2000=robustness(u, "overnight_2000"),
                exclusions=df[~df.usable][["event_id", "reason"]].to_dict("records"), rungs={})
     for k in RUNG_ORDER:
         col = u[f"pdr_{k}"].dropna()
@@ -90,6 +113,8 @@ def main() -> None:
     df = frame(load())
     df.to_csv(RESULTS / "event_table.csv", index=False)
     report = {f"floor_{f}": summarize(df, f) for f in (None, 0.2, 0.5)}
+    report["clean_2000"] = summarize(df, None, clean_2000=True)
+    report["clean_2000_floor_0.2"] = summarize(df, 0.2, clean_2000=True)
     (RESULTS / "summary.json").write_text(json.dumps(report, indent=1, default=str))
     for name, s in report.items():
         print(f"\n== {name}: {s['n_after_floor']} of {s['events_usable']} usable of {s['events_total']} events")
@@ -103,6 +128,11 @@ def main() -> None:
         lt = s["rtoken_literature_convention"]; sl = lt["slope"]
         print(f"{'rTOKEN close->open':16s} {lt['n']:3d} {lt['mean']:8.3f} {lt['median']:8.3f} | "
               f"{sl['pdr']:9.3f} {sl['se']:7.3f} {sl['n']:3d}")
+        rb = s["robustness_2000"]
+        if "loo_min" in rb:
+            d3 = rb["drop_top3_yield"]
+            print(f"  20:00 robustness: LOO [{rb['loo_min']:.2f}, {rb['loo_max']:.2f}]; drop top-3 yield {rb['top3_symbols']} -> "
+                  f"{d3['pdr']:.2f} ± {d3['se']:.2f} (n={d3['n']}); ratio of sums {rb['ratio_of_sums']:.2f}")
         uu = s["underlying"]; sl = uu["slope"]
         print(f"{'UNDERLYING':16s} {uu['n']:3d} {uu['mean']:8.3f} {uu['median']:8.3f} | "
               f"{sl['pdr']:9.3f} {sl['se']:7.3f} {sl['n']:3d}")

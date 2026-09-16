@@ -111,7 +111,7 @@ def build_ledger(universe: dict[str, SpotSymbol]) -> list[CorporateAction]:
                 withholding_rate=WITHHOLDING_2026_07_24,
                 net_dividend_per_share=gross * (1 - WITHHOLDING_2026_07_24),
                 eligibility_verified=False,
-                weekend_trading=sym in weekend,
+                weekend_list_2026_07_17=sym in weekend,
                 source_key=src.key,
                 source_url=src.url,
                 label="DOCUMENTED",
@@ -139,7 +139,7 @@ def main() -> None:
     missing = [e.symbol for e in events if e.spot_symbol is None]
     print(f"{len(events)} events written to {LEDGER_PATH}")
     print(f"{len({e.symbol for e in events})} distinct rTokens; "
-          f"{sum(e.weekend_trading for e in events)} events on weekend-trading tokens; "
+          f"{sum(e.weekend_list_2026_07_17 for e in events)} events on weekend-trading tokens; "
           f"{len(missing)} without a live spot symbol: {missing}")
     print("eligibility_verified: 0 of", len(events), "(snapshot time not published)")
 

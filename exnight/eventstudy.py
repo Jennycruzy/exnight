@@ -64,12 +64,16 @@ PROMO_FEE_END = dt.date(2026, 8, 31)
 PROMO_FEE = Decimal("0.0005")   # DOCUMENTED, Academy FAQ: 0.05% through 2026-08-31
 
 
+# NYSE 2026 full-day closures (NYSE holiday calendar; not a Bitget parameter). The two inside
+# the sample are Juneteenth (Fri 06-19) and Independence Day observed (Fri 07-03).
+NYSE_HOLIDAYS_2026 = {dt.date(2026, 1, 1), dt.date(2026, 1, 19), dt.date(2026, 2, 16), dt.date(2026, 4, 3),
+                      dt.date(2026, 5, 25), dt.date(2026, 6, 19), dt.date(2026, 7, 3), dt.date(2026, 9, 7),
+                      dt.date(2026, 11, 26), dt.date(2026, 12, 25)}
+
+
 def prev_us_trading_day(d: dt.date) -> dt.date:
-    # Weekend-aware only. US holidays inside the sample (2026-06-19 Juneteenth, 2026-07-03
-    # Independence Day observed) are handled by the staleness check: a P_pre from the day
-    # before a holiday is still the last cum-dividend after-hours close.
     d -= dt.timedelta(days=1)
-    while d.weekday() >= 5:
+    while d.weekday() >= 5 or d in NYSE_HOLIDAYS_2026:
         d -= dt.timedelta(days=1)
     return d
 
@@ -117,8 +121,13 @@ class EventResult:
     underlying_div_check: str
     fee_rate: float
     fee_label: str
-    weekend_trading: bool | None
+    weekend_list_2026_07_17: bool | None
     stale_extremes: int
+    pre_trading_day: str = ""
+    ex_date_is_monday: bool = False          # ex-date follows a weekend or holiday: the 20:00 rung spans it
+    gap_pre_to_2000_min: float | None = None  # minutes between the pre bar and the first post-cutoff bar
+    jump_ts: str | None = None               # largest single-bar drop between the cutoff and 09:30 ET (timing only)
+    jump_over_dividend: float | None = None
     # literature convention on the rToken: last bar before 16:00 ET on D-1 -> first bar at/after 09:30 ET on D
     p_close_pre: float | None = None
     pdr_literature: float | None = None
@@ -132,7 +141,8 @@ def _fee_for(ex_date: dt.date, live: SpotSymbol) -> tuple[Decimal, str]:
 
 def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
                 proxy: SpotSymbol | None) -> EventResult:
-    start, end = window_for_event(e.exchange_ex_date)
+    d_pre = prev_us_trading_day(e.exchange_ex_date)
+    start, end = window_for_event(d_pre, e.exchange_ex_date)
     raw = fetch_cached(api, e.spot_symbol, "1m", start, end)
     norm = normalize(e.spot_symbol, raw, live.open_time)
     bars = norm.bars
@@ -143,7 +153,7 @@ def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
                 ex_date=e.exchange_ex_date.isoformat(), gross_dividend=gross,
                 net_dividend=float(e.net_dividend_per_share), bars_in_window=len(bars),
                 open_time=live.open_time.isoformat(), fee_rate=float(fee), fee_label=fee_label,
-                weekend_trading=e.weekend_trading, stale_extremes=len(norm.stale_extremes),
+                weekend_list_2026_07_17=e.weekend_list_2026_07_17, stale_extremes=len(norm.stale_extremes),
                 p_post={}, p_post_ts={}, pdr={}, market_move_pct={}, abnormal_move_pct={},
                 underlying_close_pre=None, underlying_open_ex=None, underlying_pdr=None,
                 underlying_div_check="not checked", p_pre=None, p_pre_ts=None,
@@ -176,7 +186,6 @@ def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
             f"no 1m bars at/after openTime {live.open_time:%Y-%m-%d} in window"
             f" ({norm.dropped_before_open} pre-listing bars dropped)"), **base)
 
-    d_pre = prev_us_trading_day(e.exchange_ex_date)
     t_pre = dt.datetime.combine(d_pre, dt.time(20, 0), ET)
     p_pre, ts_pre = _at(bars, t_pre, "before")
     if p_pre is None:
@@ -210,6 +219,20 @@ def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
         base["market_move_pct"][name] = None
         base["abnormal_move_pct"][name] = None
 
+    base["pre_trading_day"] = d_pre.isoformat()
+    base["ex_date_is_monday"] = (e.exchange_ex_date - d_pre).days > 1
+    ts_2000 = base["p_post_ts"].get("overnight_2000")
+    if ts_2000:
+        base["gap_pre_to_2000_min"] = (pd.Timestamp(ts_2000) - ts_pre).total_seconds() / 60
+    # Timing of the repricing: the largest one-bar drop between the cutoff and the US open.
+    # Selecting the maximum is biased, so this is reported for *when*, never used as an estimate of how much.
+    seg = bars[(bars["ts"] >= ts_pre) & (bars["ts"] <= dt.datetime.combine(e.exchange_ex_date, dt.time(9, 30), ET))]
+    if len(seg) >= 2:
+        drops = seg["close"].diff()
+        i = drops.idxmin()
+        base["jump_ts"] = seg.loc[i, "ts"].isoformat()
+        base["jump_over_dividend"] = float(-drops[i] / gross)
+
     p_c, _ = _at(bars, dt.datetime.combine(d_pre, dt.time(16, 0), ET), "before")
     p_o = base["p_post"].get("open_0930")
     base["p_close_pre"] = p_c
@@ -220,6 +243,18 @@ def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol,
                        exclusion_reason=None if usable else "no post-event bars on the ex-date", **base)
 
 
+def _excluded(e: CorporateAction, reason: str) -> EventResult:
+    return EventResult(
+        event_id=e.event_id, symbol=e.symbol, underlying=e.underlying,
+        ex_date=e.exchange_ex_date.isoformat(), gross_dividend=float(e.gross_dividend_per_share),
+        net_dividend=float(e.net_dividend_per_share), usable=False, exclusion_reason=reason,
+        bars_in_window=0, open_time="", p_pre=None, p_pre_ts=None, p_pre_staleness_h=None,
+        dividend_yield_pct=None, p_post={}, p_post_ts={}, pdr={}, market_move_pct={},
+        abnormal_move_pct={}, underlying_close_pre=None, underlying_open_ex=None,
+        underlying_pdr=None, underlying_div_check="not checked", fee_rate=0.0, fee_label="n/a",
+        weekend_list_2026_07_17=e.weekend_list_2026_07_17, stale_extremes=0)
+
+
 def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[EventResult]:
     api = api or BitgetPublic()
     uni = api.rtokens()
@@ -228,18 +263,7 @@ def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[
     for e in ledger:
         live = uni.get(e.symbol)
         if live is None:
-            out.append(EventResult(usable=False, exclusion_reason="symbol not in live universe",
-                                   **{k: None for k in []}, event_id=e.event_id, symbol=e.symbol,
-                                   underlying=e.underlying, ex_date=e.exchange_ex_date.isoformat(),
-                                   gross_dividend=float(e.gross_dividend_per_share),
-                                   net_dividend=float(e.net_dividend_per_share), bars_in_window=0,
-                                   open_time="", p_pre=None, p_pre_ts=None, p_pre_staleness_h=None,
-                                   dividend_yield_pct=None, p_post={}, p_post_ts={}, pdr={},
-                                   market_move_pct={}, abnormal_move_pct={}, underlying_close_pre=None,
-                                   underlying_open_ex=None, underlying_pdr=None,
-                                   underlying_div_check="not checked", fee_rate=0.0, fee_label="n/a",
-                                   weekend_trading=e.weekend_trading, stale_extremes=0))
-            continue
+            out.append(_excluded(e, "symbol not in live universe"))
         out.append(study_event(api, e, live, proxy))
     return out
 

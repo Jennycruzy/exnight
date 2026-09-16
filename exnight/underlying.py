@@ -15,6 +15,7 @@ from pathlib import Path
 
 import httpx
 import pandas as pd
+from zoneinfo import ZoneInfo
 
 from .errors import ExnightError
 
@@ -61,8 +62,7 @@ def dividends(ticker: str, start: dt.date, end: dt.date) -> list[dict]:
     res = _fetch(ticker, start, end)
     out = []
     for v in (res.get("events") or {}).get("dividends", {}).values():
-        d = dt.datetime.fromtimestamp(v["date"], dt.UTC).astimezone(
-            dt.timezone(dt.timedelta(hours=-4))).date()
+        d = dt.datetime.fromtimestamp(v["date"], dt.UTC).astimezone(ZoneInfo("America/New_York")).date()
         out.append(dict(ex_date=d, amount=float(v["amount"])))
     return sorted(out, key=lambda x: x["ex_date"])
 
