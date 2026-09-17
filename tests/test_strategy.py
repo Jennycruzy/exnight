@@ -62,3 +62,16 @@ def test_estimate_requires_slope():
     assert estimate(s, "floor_None")["pdr_hat"] == 0.66
     with pytest.raises(ValueError):
         estimate({"x": {"rungs": {"overnight_2000": {"slope": {"pdr": None, "se": None, "n": 2}}}}}, "x")
+
+
+def test_frozen_rule_loads_and_rejects_drift(tmp_path):
+    import json
+    from pathlib import Path
+    from exnight.strategy import load_rule
+    rule = json.loads(Path("strategy/strategy_v1.json").read_text())
+    assert load_rule(Path("strategy/strategy_v1.json"))["rung"] == "premarket_0400"
+    for key, bad in (("z", 1.5), ("withholding_high", "0.35"), ("rung", "open_1200"), ("notionals_usd", [1000])):
+        p = tmp_path / "r.json"
+        p.write_text(json.dumps(dict(rule, **{key: bad})))
+        with pytest.raises(ValueError):
+            load_rule(p)

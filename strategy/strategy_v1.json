@@ -1,0 +1,57 @@
+{
+ "rule_id": "exnight-strategy-v1",
+ "frozen_at_utc": "2026-09-17T09:28:37+00:00",
+ "applies_to": "cash dividend events on Bitget Reality spot rTokens with exchange_ex_date after frozen_at_utc; first untouched events rAVGO and rVST ex 2026-09-21",
+ "decision": {
+  "EXIT": "sell before the 20:00 ET cutoff on ex-date eve and buy back at the rung; issued only if (pdr_hat - z*se)*gross - net_high - cost_per_share > 0, i.e. even if the holder would have kept the most",
+  "HOLD": "issued only if (pdr_hat - z*se)*gross - net_low - cost_per_share <= 0, i.e. not justified even if the holder would have kept the least",
+  "NO_SIGNAL": "any unresolved input: basis, price, depth for the notional, or a verdict that changes across the net range",
+  "BUY": "suppressed on every event while Bitget's eligibility snapshot time is unpublished"
+ },
+ "rung": "premarket_0400",
+ "rung_rationale": "the 04:00 ET drop equals the gross dividend in every sample cut and period (docs/m2.md); the 20:00 ET print is fully adjusted only in June/early July",
+ "estimate": {
+  "summary_file": "data/results/summary_resolved.json",
+  "sample": "floor_None",
+  "rung": "premarket_0400",
+  "pdr_hat": 0.9656110633409245,
+  "se": 0.18323952822276032,
+  "n": 127,
+  "r2": 0.1817731898851244,
+  "description": "OLS slope of ex-day return on dividend yield, all 127 usable events of the issuer-verified ledger"
+ },
+ "z": 2.0,
+ "ledger_file": "data/ledger/reality_notice59_resolved.jsonl",
+ "basis_tiers_allowed": [
+  1,
+  2,
+  3
+ ],
+ "withholding_base": "0.30",
+ "withholding_low": "0",
+ "withholding_high": "0.30",
+ "withholding_note": "documented 30% only for events matched to the 2026-07-24 notice; otherwise ASSUMED with the range, per rtoken_faq_2026_06_23",
+ "sell_session": "after_hours",
+ "buy_session": "overnight",
+ "notionals_usd": [
+  1000,
+  5000,
+  25000
+ ],
+ "fees": "live takerFeeRate of the spot symbol at run time on both legs",
+ "liquidity": "per-share walk from the latest sampled book of each session; NO_SIGNAL when the notional exceeds the visible top-of-book on a ticker-only symbol",
+ "universe": "v3 instruments with symbolType=stock and isReality=yes at run time",
+ "code": {
+  "exnight/strategy.py": "9104ec1507d0988c82f088da5618263037387090e2d8b49815919223b584f59c",
+  "exnight/basis.py": "1e4e529f6179ffe043e59bcbb7abb5f76c99a4aa6262420f3ed3934462d9318a",
+  "exnight/costs.py": "470964b283d9448d1928aa7b045f319e6398d8093d5fdfe29e54dcb1bd474654",
+  "exnight/analysis.py": "bda4bff758cabe3cd33bd483231a010c24b650962d62002b37e723c3bac56310",
+  "exnight/eventstudy.py": "995c7fc66615bc2cc9813f5f205a75aaeb9d4030de2e079639fc7aba4a040ced"
+ },
+ "inputs": {
+  "data/results/summary_resolved.json": "92b06c60585201572480bca392de9cb0c64ccaf9f5daf90ff42ff70c2b5e2f3f",
+  "data/ledger/reality_notice59_resolved.jsonl": "9de4df544c9e3651465ad8bff9f25977a8a85d413f2750102dabb9c7db69e359",
+  "data/results/event_results_resolved.json": "0d8f9371c9ab33b645f29b9fd1637f7b56d1dcd3a2c5c1c8f9245e15ef188d6d"
+ },
+ "amendment_policy": "this file is never edited; a changed rule is a new file strategy_v2.json"
+}

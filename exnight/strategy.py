@@ -47,15 +47,33 @@ RESULTS = ROOT / "data" / "results"
 Z = 2.0
 EXIT_RUNG = "overnight_2000"
 SELL_SESSION, BUY_SESSION = "after_hours", "overnight"   # sell before 20:00 ET, buy back after
+RULES = ROOT / "strategy"
 
 
-def estimate(summary: dict, sample: str) -> dict:
-    s = summary[sample]["rungs"][EXIT_RUNG]["slope"]
+def load_rule(path: Path) -> dict:
+    """A frozen rule file. Its constants must equal the code's; a mismatch is an error so
+    that a rule cannot silently mean something different from what was committed."""
+    from . import basis
+    rule = json.loads(path.read_text())
+    for key, actual in (("z", Z), ("sell_session", SELL_SESSION), ("buy_session", BUY_SESSION),
+                        ("notionals_usd", list(NOTIONALS)),
+                        ("withholding_base", str(basis.WITHHOLDING_BASE)),
+                        ("withholding_low", str(basis.WITHHOLDING_LOW)),
+                        ("withholding_high", str(basis.WITHHOLDING_HIGH))):
+        if rule[key] != actual:
+            raise ValueError(f"{path.name}: {key}={rule[key]!r} but the code uses {actual!r}")
+    if rule["rung"] not in ("overnight_2000", "premarket_0400", "open_0930", "open_1000", "close_1600"):
+        raise ValueError(f"{path.name}: unknown rung {rule['rung']}")
+    return rule
+
+
+def estimate(summary: dict, sample: str, rung: str = EXIT_RUNG) -> dict:
+    s = summary[sample]["rungs"][rung]["slope"]
     if (s["pdr"] is None or s["se"] is None or s.get("n", 0) < 3
             or not math.isfinite(float(s["pdr"])) or not math.isfinite(float(s["se"]))
             or float(s["se"]) < 0):
-        raise ValueError(f"{sample}: no {EXIT_RUNG} slope estimate")
-    return dict(pdr_hat=float(s["pdr"]), se=float(s["se"]), n=int(s["n"]), sample=sample)
+        raise ValueError(f"{sample}: no {rung} slope estimate")
+    return dict(pdr_hat=float(s["pdr"]), se=float(s["se"]), n=int(s["n"]), sample=sample, rung=rung)
 
 
 def round_trip_cost(samples: dict, spot: str | None, sell_price: float, fee: float,
@@ -148,8 +166,10 @@ def net_bounds(e: dict) -> dict:
                 net_verified=False, basis_tier=e.get("basis_tier"))
 
 
-def ex_ante(pending: list[dict], tickers: dict[str, dict], samples: dict, est: dict, fee_by_spot: dict[str, float]) -> pd.DataFrame:
+def ex_ante(pending: list[dict], tickers: dict[str, dict], samples: dict, est: dict, fee_by_spot: dict[str, float],
+            rule_id: str | None = None) -> pd.DataFrame:
     rows = []
+    rung = est.get("rung", EXIT_RUNG)
     for e in pending:
         spot = e["spot_symbol"]
         t = tickers.get(spot, {})
@@ -163,28 +183,29 @@ def ex_ante(pending: list[dict], tickers: dict[str, dict], samples: dict, est: d
                 price=last, price_label="OBSERVED ticker lastPrice at run time",
                 fee=fee_by_spot[spot], fee_label="OBSERVED live symbol takerFeeRate",
                 drop_ratio=est["pdr_hat"], drop_se=est["se"],
-                drop_label=f"ESTIMATED M1 {est['sample']} {EXIT_RUNG} slope, n={est['n']}",
-                samples=samples, notional=n))
+                drop_label=f"ESTIMATED {est['sample']} {rung} slope, n={est['n']}",
+                samples=samples, notional=n) | dict(rule=rule_id))
     return pd.DataFrame(rows)
 
 
-def ex_post(results: list[dict], ledger_by_id: dict[str, dict], samples: dict) -> pd.DataFrame:
+def ex_post(results: list[dict], ledger_by_id: dict[str, dict], samples: dict, rung: str = EXIT_RUNG,
+            rule_id: str | None = None) -> pd.DataFrame:
     rows = []
     for r in results:
-        if not r["usable"] or r["pdr"].get(EXIT_RUNG) is None:
+        if not r["usable"] or r["pdr"].get(rung) is None:
             continue
         e = ledger_by_id[r["event_id"]]
         post_price = None
         if r["p_pre"] is not None and r["gross_dividend"] is not None:
-            post_price = r["p_pre"] - float(r["pdr"][EXIT_RUNG]) * r["gross_dividend"]
+            post_price = r["p_pre"] - float(r["pdr"][rung]) * r["gross_dividend"]
         for n in NOTIONALS:
             rows.append(verdict_row(
                 event_id=r["event_id"], symbol=r["symbol"], spot=e["spot_symbol"], ex_date=r["ex_date"],
                 gross=r["gross_dividend"], **net_bounds(e), basis=e["cash_dividend_basis"],
                 eligible=bool(e["eligibility_verified"]), price=r["p_pre"], price_label="OBSERVED p_pre",
                 fee=float(r["fee_rate"]), fee_label=r["fee_label"],
-                drop_ratio=float(r["pdr"][EXIT_RUNG]), drop_se=0.0, drop_label=f"REALISED {EXIT_RUNG} PDR",
-                samples=samples, notional=n, buy_price=post_price))
+                drop_ratio=float(r["pdr"][rung]), drop_se=0.0, drop_label=f"REALISED {rung} PDR",
+                samples=samples, notional=n, buy_price=post_price) | dict(rule=rule_id))
     return pd.DataFrame(rows)
 
 
@@ -196,13 +217,25 @@ def main() -> None:
                     help="ledger after exnight.basis; carries basis tiers and withholding ranges")
     ap.add_argument("--results", type=Path, default=RESULTS / "event_results_reality.json")
     ap.add_argument("--summary", type=Path, default=RESULTS / "summary_reality.json")
-    ap.add_argument("--sample", default="floor_None", help="summary block supplying the 20:00 estimate")
+    ap.add_argument("--sample", default="floor_None", help="summary block supplying the estimate")
+    ap.add_argument("--rule", type=Path, help="frozen rule file (strategy/strategy_v1.json); overrides --summary/--sample and the rung")
+    ap.add_argument("--tag", default="", help="suffix for signals outputs")
     args = ap.parse_args()
+    rule = load_rule(args.rule) if args.rule else None
+    rung = rule["rung"] if rule else EXIT_RUNG
+    if rule:
+        args.summary = ROOT / rule["estimate"]["summary_file"]
+        args.sample = rule["estimate"]["sample"]
+        args.ledger = ROOT / rule["ledger_file"]
 
     ledger = [e.model_dump(mode="json") for e in read_ledger(args.ledger)]
     by_id = {e["event_id"]: e for e in ledger}
     samples = latest_samples(load_depth())
-    est = estimate(json.loads(args.summary.read_text()), args.sample)
+    est = estimate(json.loads(args.summary.read_text()), args.sample, rung)
+    if rule:
+        want = rule["estimate"]
+        if abs(est["pdr_hat"] - want["pdr_hat"]) > 1e-9 or abs(est["se"] - want["se"]) > 1e-9 or est["n"] != want["n"]:
+            raise ValueError(f"{args.rule.name}: summary estimate {est} differs from the frozen {want}")
 
     api = BitgetPublic()
     uni = api.rtokens()
@@ -210,13 +243,14 @@ def main() -> None:
     tickers = {t["symbol"]: t for t in api.tickers()}
     today = dt.datetime.now(dt.UTC).astimezone(ZoneInfo("America/New_York")).date().isoformat()
     pending = [e for e in ledger if e["event_type"] == "CASH_DIV" and e["exchange_ex_date"] > today and e["spot_symbol"] in fee_by_spot]
-    ante = ex_ante(pending, tickers, samples, est, fee_by_spot)
-    ante.to_csv(RESULTS / "signals.csv", index=False)
+    rule_id = rule["rule_id"] if rule else None
+    ante = ex_ante(pending, tickers, samples, est, fee_by_spot, rule_id)
+    ante.to_csv(RESULTS / f"signals{args.tag}.csv", index=False)
 
-    post = ex_post(json.loads(args.results.read_text()), by_id, samples)
-    post.to_csv(RESULTS / "signals_expost.csv", index=False)
+    post = ex_post(json.loads(args.results.read_text()), by_id, samples, rung, rule_id)
+    post.to_csv(RESULTS / f"signals_expost{args.tag}.csv", index=False)
 
-    print(f"estimate: {est['sample']} {EXIT_RUNG} pdr_hat={est['pdr_hat']:.3f} se={est['se']:.3f} (n={est['n']}), Z={Z}")
+    print(f"rule: {rule_id or 'none'}; estimate: {est['sample']} {rung} pdr_hat={est['pdr_hat']:.3f} se={est['se']:.3f} (n={est['n']}), Z={Z}")
     print(f"ex-ante: {len(pending)} pending events -> {ante.verdict.value_counts().to_dict()}; BUY: {ante.buy.value_counts().to_dict()}")
     print(ante[ante.notional_usd == 5000][["event_id", "ex_date", "price", "gross_dividend", "net_dividend", "cost_per_share", "exit_edge_lower", "verdict", "reason"]]
           .sort_values("ex_date").head(12).to_string(index=False))
