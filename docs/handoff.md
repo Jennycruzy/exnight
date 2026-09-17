@@ -4,6 +4,11 @@ EXNIGHT is a research and guarded execution prototype for Bitget Reality rTokens
 not a blanket production trading system. The saved event-study outputs are measurement
 artifacts and must be regenerated after source-rule changes.
 
+Current code commit: `888a12a`. Validation on the VPS: 56 tests pass. A no-submit live-market
+dry run for `RAVGOUSDT` completed and produced the expected order payload/evidence; no real
+order was sent. A $10 request was correctly rejected after precision rounding put it below
+the exchange minimum, and a $15 request passed the dry-run guard.
+
 ## Verified foundation
 
 - The live Bitget instruments response selects Reality stock tokens; token names are not
@@ -35,6 +40,11 @@ Use the VPS virtual environment:
 Depth collection can run repeatedly; it stores raw responses in a microsecond-stamped run
 directory and deduplicates the results CSV by timestamp, symbol and session.
 
+The saved Reality ledger and Reality event-study reports still contain the pre-fix derived
+artifacts. A temporary post-fix rebuild validated 185 actions, 124 unresolved cash bases and
+58 usable events, but it was intentionally not installed when this handoff was stopped.
+Regenerate and review the downstream reports before using any strategy output.
+
 ## Important limits
 
 - No historical order book exists for the event dates. Current book/ticker observations do
@@ -58,3 +68,6 @@ quantity, it requires:
 
 Use a small IOC/FOK limit order first. Confirm the live symbol, available balance, minimum
 notional, displayed quote and exact computed quantity immediately before submission.
+
+During this session the SSH service remained active, two SSH sessions and two Claude
+processes remained present, and the hourly depth task was not disabled or modified.

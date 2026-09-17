@@ -159,7 +159,12 @@ not a holiday source.
 
 | Fact | Observation |
 |---|---|
-| Reality symbols on the UTA surface | `bgc market --action tickers/orderbook --category SPOT --symbol RAVGOUSDT` returns data; `order --action place` maps to `POST /api/v3/trade/place-order` with `category=SPOT`. No Reality-specific order endpoint |
+| Reality symbols on the UTA surface | `bgc market --action tickers/orderbook --category SPOT --symbol RAVGOUSDT` returns data; `order --action place` maps to `POST /api/v3/trade/place-order` with `category=SPOT`. Bitget's current docs also list a Reality-specific order endpoint; this project uses the installed generic UTA surface |
 | Demo (`--paper-trading`) with a demo key | `account_overview` authenticates (UTA hybrid mode). `order --action place ... --symbol BTCUSDT` → `Insufficient balance` (path works; demo wallet unfunded) |
 | **Reality symbols in demo** | `order --action place --category SPOT --symbol RAVGOUSDT` → **`HTTP 400: Parameter RAVGOUSDT does not exist`**, although the demo `instruments` response lists 1,655 Reality rows. The demo matching engine does not accept rToken spot orders. Evidence: `data/raw/paper/20260916T220013Z/` |
 | Consequence | A paper fill on an rToken cannot be produced. The executable-liquidity question for ticker-only symbols (§ depth) therefore stays OBSERVED-NOW book only; any live demonstration would need a real (funded) account and is a user decision, not a default |
+
+On 2026-09-17 the guarded project path completed a no-submit live dry run for `RAVGOUSDT`
+(`buy`, requested $15, IOC) and recorded the computed quantity, precision-valid price and
+`wouldSend` payload. No live credentials were used and no order was placed. The path requires
+an explicit `--live --confirm-live` string for a real order.
