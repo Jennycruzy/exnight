@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import fcntl
 import html
 import json
 import re
@@ -204,7 +205,6 @@ def _reality_action(
     notice_by_key: dict[tuple[str, dt.date], dict],
     weekend: set[str],
     as_of: dt.datetime,
-    verified_symbols: frozenset[str] = frozenset(),
 ) -> CorporateAction:
     action_type = str(row.get("type") or "").lower()
     ex_ts = _timestamp_ms(row.get("exrightDate"), "exrightDate", required=True)
@@ -248,7 +248,6 @@ def _reality_action(
         if amount is None:
             raise ValueError(f"{common['event_id']}: cash dividend has no dividendPerShare")
         notice = notice_by_key.get((spot.base_coin, ex_date))
-        symbol_verified = spot.base_coin in verified_symbols
         if notice is not None and _amounts_match(amount, notice["gross_dividend_per_share"]):
             gross = amount
             basis = "GROSS"
@@ -257,21 +256,12 @@ def _reality_action(
             common["notes"].append("source amount matches the saved Bitget notice within rounding; gross basis is OBSERVED for this row"
                                    + ("" if amount == notice["gross_dividend_per_share"]
                                       else f"; notice value {notice['gross_dividend_per_share']} differs by rounding only"))
-        elif notice is None and symbol_verified:
-            # Every notice row for this symbol matched Reality's dividendPerShare exactly, so the
-            # field carries the gross basis for this symbol. OBSERVED at symbol level; the
-            # per-event Yahoo cross-check in the event study is the second confirmation.
-            gross = amount
-            basis = "GROSS"
-            withholding = WITHHOLDING_2026_07_24
-            net = gross * (1 - withholding)
-            common["notes"].append("no notice row for this date; gross basis OBSERVED for this symbol via exact notice matches on its other dates")
         else:
             gross = None
             basis = "UNRESOLVED"
             withholding = None
             net = None
-            common["notes"].append("gross versus net basis is unresolved; this row cannot enter PDR calculations")
+            common["notes"].append("gross versus net basis is unresolved; exact notice match required; this row cannot enter PDR calculations")
         return CorporateAction(
             event_type=EventType.CASH_DIV,
             gross_dividend_per_share=gross,
@@ -360,14 +350,6 @@ def build_reality_ledger(
             if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
                 raise ValueError(f"{code}: Reality action page is not a list of objects")
             pages.append((api.last_fetch_at or as_of, rows))
-        # Symbol-level basis check: every saved notice row for this symbol must match a Reality
-        # cash row exactly (same date, same amount) before unmatched dates inherit the basis.
-        reality_cash = {(_date_in_reality_zone(_timestamp_ms(r["exrightDate"], "exrightDate")), _decimal(r.get("dividendPerShare"), "dividendPerShare"))
-                        for _, rows in pages for r in rows
-                        if str(r.get("type") or "").lower() == "cash_dividend" and r.get("exrightDate") not in (None, "")}
-        notice_rows_sym = [(d, n["gross_dividend_per_share"]) for (s, d), n in notice_by_key.items() if s == base_coin]
-        verified = frozenset({base_coin}) if notice_rows_sym and all(
-            any(d == rd and _amounts_match(ra, n_amt) for rd, ra in reality_cash) for d, n_amt in notice_rows_sym) else frozenset()
         ordinal_by_key: dict[tuple[dt.date, str], int] = {}
         for fetched_at, rows in pages:
             for row in rows:
@@ -391,7 +373,7 @@ def build_reality_ledger(
                 ordinal_by_key[key] = ordinal_by_key.get(key, 0) + 1
                 events.append(_reality_action(
                     row, spot, str(code), ordinal_by_key[key], fetched_at,
-                    notice_by_key, weekend, as_of, verified,
+                    notice_by_key, weekend, as_of,
                 ))
     return sorted(events, key=lambda e: (e.exchange_ex_date, e.symbol, e.event_id))
 
@@ -400,8 +382,10 @@ def write_ledger(events: list[CorporateAction], path: Path = LEDGER_PATH) -> Non
     """Append new event rows and reject changes to an existing event id."""
     path.parent.mkdir(parents=True, exist_ok=True)
     existing: dict[str, str] = {}
-    if path.exists():
-        for line in path.read_text().splitlines(keepends=True):
+    with path.open("a+", encoding="utf-8") as f:
+        fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+        f.seek(0)
+        for line in f.read().splitlines(keepends=True):
             if not line.strip():
                 continue
             payload = json.loads(line)
@@ -409,8 +393,7 @@ def write_ledger(events: list[CorporateAction], path: Path = LEDGER_PATH) -> Non
             if not event_id or event_id in existing:
                 raise ValueError(f"invalid or duplicate event id in {path}: {event_id!r}")
             existing[event_id] = line
-    mode = "a" if path.exists() else "w"
-    with path.open(mode) as f:
+        f.seek(0, 2)
         for event in events:
             line = json.dumps(event.model_dump(mode="json"), sort_keys=True) + "\n"
             previous = existing.get(event.event_id)
@@ -420,6 +403,8 @@ def write_ledger(events: list[CorporateAction], path: Path = LEDGER_PATH) -> Non
                 continue
             f.write(line)
             existing[event.event_id] = line
+        f.flush()
+        fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 
 
 def read_ledger(path: Path = LEDGER_PATH) -> list[CorporateAction]:

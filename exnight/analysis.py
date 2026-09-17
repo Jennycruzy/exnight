@@ -9,7 +9,9 @@ ex-day effect cross-sectionally: regress the ex-day return on the dividend yield
 
 so PDR is the slope, every event contributes in proportion to how much it can tell us, and
 the standard error is honest. The same regression is run for the underlying so the two are
-compared on identical footing. Simple mean and median of the raw ratios are reported too,
+compared on identical footing. A second regression uses the saved market-adjusted return
+for each rung as an analytic confounder check; it is not substituted into the execution
+strategy, which must price the actual token move. Simple mean and median of the raw ratios are reported too,
 with and without a yield floor, so the reader can see how much the estimator choice moves
 the answer (it moves it a lot; that is a finding, not a nuisance).
 
@@ -46,6 +48,7 @@ def frame(rows: list[dict]) -> pd.DataFrame:
         for k in RUNG_ORDER:
             d[f"pdr_{k}"] = r["pdr"].get(k)
             d[f"p_{k}"] = r["p_post"].get(k)
+            d[f"abnormal_{k}"] = (r.get("abnormal_move_pct") or {}).get(k)
         out.append(d)
     return pd.DataFrame(out)
 
@@ -55,6 +58,18 @@ def slope_pdr(p_pre: pd.Series, p_post: pd.Series, gross: pd.Series) -> dict:
     m = p_pre.notna() & p_post.notna() & gross.notna()
     x = (gross[m] / p_pre[m]).to_numpy(float)
     y = (p_post[m] / p_pre[m] - 1).to_numpy(float)
+    if len(x) < 3:
+        return dict(n=int(len(x)), pdr=None, se=None, intercept=None, r2=None)
+    res = stats.linregress(x, y)
+    return dict(n=int(len(x)), pdr=-res.slope, se=res.stderr, intercept=res.intercept,
+                r2=res.rvalue ** 2, p_value=res.pvalue)
+
+
+def slope_market_adjusted(p_pre: pd.Series, abnormal_pct: pd.Series, gross: pd.Series) -> dict:
+    """Estimate PDR after subtracting the saved proxy return for the same interval."""
+    m = p_pre.notna() & abnormal_pct.notna() & gross.notna()
+    x = (gross[m] / p_pre[m]).to_numpy(float)
+    y = (abnormal_pct[m] / 100).to_numpy(float)
     if len(x) < 3:
         return dict(n=int(len(x)), pdr=None, se=None, intercept=None, r2=None)
     res = stats.linregress(x, y)
@@ -101,6 +116,7 @@ def summarize(df: pd.DataFrame, yield_floor_pct: float | None = None,
             n=int(len(col)), mean=float(col.mean()) if len(col) else None,
             median=float(col.median()) if len(col) else None,
             slope=slope_pdr(u.p_pre, u[f"p_{k}"], u.gross),
+            market_adjusted_slope=slope_market_adjusted(u.p_pre, u[f"abnormal_{k}"], u.gross),
         )
     lit = u.pdr_literature.dropna()
     out["rtoken_literature_convention"] = dict(

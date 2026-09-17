@@ -97,7 +97,13 @@ class BitgetPublic:
             time.sleep(wait)
         self._last = time.monotonic()
         self._last_by_path[path] = self._last
-        r = self._client.get(path, params=params)
+        try:
+            r = self._client.get(path, params=params)
+            r.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise BitgetAPIError(path, str(exc.response.status_code), "HTTP status error") from exc
+        except httpx.HTTPError as exc:
+            raise BitgetAPIError(path, "transport", str(exc)) from exc
         self.last_fetch_at = dt.datetime.now(dt.UTC)
         self.last_request = {"path": path, "params": dict(params)}
         self.last_raw_response = r.text
@@ -105,8 +111,12 @@ class BitgetPublic:
             body = r.json()
         except ValueError as e:
             raise BitgetAPIError(path, str(r.status_code), r.text[:200]) from e
+        if not isinstance(body, dict):
+            raise BitgetAPIError(path, str(r.status_code), f"expected object, got {type(body).__name__}")
         if body.get("code") != "00000":
             raise BitgetAPIError(path, str(body.get("code")), str(body.get("msg")))
+        if "data" not in body:
+            raise BitgetAPIError(path, "schema", "success response has no data field")
         return body["data"]
 
     # ---- symbols -------------------------------------------------------------------
@@ -276,6 +286,8 @@ class BitgetPublic:
             raise ValueError(f"interval {interval!r} not in {V3_INTERVALS}")
         if start.tzinfo is None or end.tzinfo is None:
             raise ValueError("start and end must be timezone-aware")
+        if start > end:
+            raise ValueError("start must not be after end")
         # OBSERVED 2026-09-16: /candles returns bars with ts <= endTime; /history-candles
         # returns bars that *close* at or before endTime (ts + interval <= endTime). Paging
         # therefore asks for one interval past the boundary and dedupes, which is correct
@@ -296,7 +308,15 @@ class BitgetPublic:
             if not rows:
                 break
             n_raw = len(rows)
-            oldest = int(rows[0][0])
+            timestamps: list[int] = []
+            for row in rows:
+                if not isinstance(row, (list, tuple)) or len(row) < len(CANDLE_COLUMNS):
+                    raise BitgetAPIError("/api/v3/market/candles", "schema", "candle row has fewer than 7 fields")
+                try:
+                    timestamps.append(int(row[0]))
+                except (TypeError, ValueError, OverflowError) as exc:
+                    raise BitgetAPIError("/api/v3/market/candles", "schema", f"invalid candle timestamp: {row[0]!r}") from exc
+            oldest = min(timestamps)
             rows = [r for r in rows if start_ms <= int(r[0]) <= end_ms]
             pages.append(rows)
             if oldest <= start_ms or n_raw < page:

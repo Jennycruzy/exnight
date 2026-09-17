@@ -309,7 +309,12 @@ def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[
         if e.spot_symbol is None:
             out.append(_excluded(e, "event has no live spot symbol"))
             continue
-        out.append(study_event(api, e, live, cal, proxy, ledger))
+        try:
+            out.append(study_event(api, e, live, cal, proxy, ledger))
+        except Exception as exc:
+            # One malformed event or transient source failure must be recorded as an
+            # exclusion, not discard the rest of the batch.
+            out.append(_excluded(e, f"{type(exc).__name__}: {exc}"))
     return out
 
 

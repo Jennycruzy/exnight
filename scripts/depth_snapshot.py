@@ -8,7 +8,10 @@ $1k / $5k / $25k, or NaN if the book cannot fill it. OBSERVED-at-sample-time onl
 statement about any event.
 """
 import datetime as dt
+import fcntl
 import json
+import math
+import os
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -28,13 +31,39 @@ NOTIONALS = (1_000, 5_000, 25_000)
 def vwap_for(levels, notional):
     remaining = notional; qty_total = 0.0
     for px, qty in levels:
-        px, qty = float(px), float(qty)
+        try:
+            px, qty = float(px), float(qty)
+        except (TypeError, ValueError):
+            continue
+        if not math.isfinite(px) or not math.isfinite(qty) or px <= 0 or qty <= 0:
+            continue
         take_notional = min(qty * px, remaining)
         qty_total += take_notional / px
         remaining -= take_notional
         if remaining <= 1e-9:
             return notional / qty_total
     return None
+
+
+def _valid_levels(levels) -> list[tuple[float, float]]:
+    out = []
+    for level in levels or []:
+        if not isinstance(level, (list, tuple)) or len(level) < 2:
+            continue
+        try:
+            price, quantity = float(level[0]), float(level[1])
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(price) and math.isfinite(quantity) and price > 0 and quantity > 0:
+            out.append((price, quantity))
+    return out
+
+
+def _positive(value) -> bool:
+    try:
+        return math.isfinite(float(value)) and float(value) > 0
+    except (TypeError, ValueError):
+        return False
 
 
 def _hm(s: str) -> dt.time:
@@ -63,15 +92,18 @@ def sample_book(api: BitgetPublic, sym: str, ticker: dict | None) -> tuple[dict,
     empty public book while the ticker still carries bid1/ask1 with sizes (routed liquidity,
     cf. platformTurnover24h). ``book_source`` records which surface the quote came from."""
     ob = api.orderbook(sym, limit=1000)
-    a, b = ob["asks"], ob["bids"]
+    a, b = _valid_levels(ob["asks"]), _valid_levels(ob["bids"])
+    tb, ta = (ticker or {}).get("bid1Price"), (ticker or {}).get("ask1Price")
+    ticker_valid = (_positive(tb) and _positive(ta) and float(ta) >= float(tb)
+                    and _positive((ticker or {}).get("bid1Size"))
+                    and _positive((ticker or {}).get("ask1Size")))
     r = dict(symbol=sym, book_ts=ob.get("ts"), levels_ask=len(a), levels_bid=len(b),
-             book_source="public_book" if (a and b) else ("ticker_only" if ticker and ticker.get("bid1Price") else "none"))
+             book_source="public_book" if (a and b) else ("ticker_only" if ticker_valid else "none"))
     if ticker:
-        tb, ta = ticker.get("bid1Price"), ticker.get("ask1Price")
         r.update(ticker_bid1=tb, ticker_ask1=ta, ticker_bid1_size=ticker.get("bid1Size"),
                  ticker_ask1_size=ticker.get("ask1Size"), ticker_last=ticker.get("lastPrice"),
                  platform_turnover_24h=ticker.get("platformTurnover24h"))
-        if tb and ta and float(tb) > 0 and float(ta) > 0:
+        if _positive(tb) and _positive(ta):
             tmid = (float(ta) + float(tb)) / 2
             r["ticker_spread_bp"] = 1e4 * (float(ta) - float(tb)) / tmid
             r["ticker_ask1_notional"] = float(ta) * float(ticker.get("ask1Size") or 0)
@@ -94,7 +126,7 @@ def main():
     now = dt.datetime.now(dt.UTC); et = now.astimezone(ET)
     states, calendar = api.market_states(), api.market_calendar()
     session = session_label(et, states, calendar)
-    run_dir = RAW / now.strftime("%Y%m%dT%H%M%SZ"); run_dir.mkdir(parents=True, exist_ok=True)
+    run_dir = RAW / now.strftime("%Y%m%dT%H%M%S.%fZ"); run_dir.mkdir(parents=True, exist_ok=False)
     (run_dir / "market_states.json").write_text(json.dumps(states))
     (run_dir / "market_calendar.json").write_text(json.dumps(calendar))
     tickers = {t["symbol"]: t for t in api.tickers()}
@@ -105,9 +137,21 @@ def main():
         (run_dir / f"{sym}.json").write_text(json.dumps(ob))
         rows.append(dict(ts=now.isoformat(), et=et.strftime("%Y-%m-%d %H:%M"), session=session, **r))
     df = pd.DataFrame(rows)
-    df.to_csv(OUT, mode="a", header=not OUT.exists(), index=False)
+    if not df.empty:
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        lock_path = OUT.with_name(OUT.name + ".lock")
+        with lock_path.open("a+") as lock:
+            fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+            prior = pd.read_csv(OUT) if OUT.exists() else pd.DataFrame()
+            combined = pd.concat([prior, df], ignore_index=True)
+            combined = combined.drop_duplicates(subset=["ts", "symbol", "session"], keep="last")
+            tmp = OUT.with_name(f".{OUT.name}.{os.getpid()}.tmp")
+            combined.to_csv(tmp, index=False)
+            tmp.replace(OUT)
+            fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
     q = df.dropna(subset=["spread_bp"]) if "spread_bp" in df else df.iloc[0:0]
-    print(f"{et:%Y-%m-%d %H:%M ET} session={session}: {len(df)} symbols; book_source: {df.book_source.value_counts().to_dict()}; raw -> {run_dir}")
+    sources = df["book_source"].value_counts().to_dict() if "book_source" in df else {}
+    print(f"{et:%Y-%m-%d %H:%M ET} session={session}: {len(df)} symbols; book_source: {sources}; raw -> {run_dir}")
     if "ticker_spread_bp" in df:
         print("ticker spread bp median", round(df.ticker_spread_bp.median(), 1),
               "| median ask1 notional $", round(df.ticker_ask1_notional.median()))

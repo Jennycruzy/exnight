@@ -89,8 +89,10 @@ def normalize(
     if df["ts"].dt.tz is None:
         raise ValueError("candle timestamps must be timezone-aware")
     before = 0
+    open_date = None
     if open_time is not None:
         open_ts = pd.Timestamp(open_time)
+        open_date = open_ts.tz_convert(ET).date()
         before = int((df["ts"] < open_ts).sum())
         df = df[df["ts"] >= open_ts].reset_index(drop=True)
     if df.empty:
@@ -106,13 +108,33 @@ def normalize(
         ratio_value = getattr(event, "adjustment_ratio", None)
         halt_start_value = getattr(event, "trading_halt_start", None)
         halt_end_value = getattr(event, "trading_halt_end", None)
-        if ratio_value is None or halt_start_value is None or halt_end_value is None:
+        if ratio_value is None:
             raise UnverifiedRuleError(
-                f"{getattr(event, 'event_id', symbol)}: split ratio and both halt timestamps are required"
+                f"{getattr(event, 'event_id', symbol)}: split ratio is required"
             )
-        ratio = Decimal(str(ratio_value))
-        if ratio <= 0:
+        # Reality's split rows currently describe a relisted symbol and have no halt.  If
+        # that action is at or before the current listing boundary, the open_time filter
+        # already selected the new symbol incarnation; applying it would invent a continuous
+        # transition across two different listings.  A post-listing split without halt data
+        # remains unverified and is rejected below.
+        event_date = getattr(event, "exchange_ex_date", None)
+        if (halt_start_value is None and halt_end_value is None and open_date is not None
+                and event_date is not None and event_date <= open_date):
+            continue
+        if halt_start_value is None or halt_end_value is None:
+            raise UnverifiedRuleError(
+                f"{getattr(event, 'event_id', symbol)}: both halt timestamps are required for an in-listing split"
+            )
+        try:
+            ratio = Decimal(str(ratio_value))
+        except Exception as exc:
+            raise UnverifiedRuleError(f"{getattr(event, 'event_id', symbol)}: invalid split ratio") from exc
+        if not ratio.is_finite() or ratio <= 0:
             raise UnverifiedRuleError(f"{getattr(event, 'event_id', symbol)}: split ratio must be positive")
+        # Reality expresses a split as new shares / old shares.  Prices move by the inverse
+        # factor: a 2-for-1 split maps old prices to 1/2, while a 1-for-10 reverse split maps
+        # old prices to 10x.
+        price_factor = Decimal(1) / ratio
         halt_start = _as_aware_timestamp(halt_start_value, "trading_halt_start")
         halt_end = _as_aware_timestamp(halt_end_value, "trading_halt_end")
         if halt_start >= halt_end:
@@ -132,13 +154,13 @@ def normalize(
         before_halt = df["ts"] < halt_start
         for column in PRICE_COLUMNS:
             if column in df:
-                df.loc[before_halt, column] = df.loc[before_halt, column] * float(ratio)
-        normalised_pre = pre_close * float(ratio)
+                df.loc[before_halt, column] = df.loc[before_halt, column] * float(price_factor)
+        normalised_pre = pre_close * float(price_factor)
         residual = post_open / normalised_pre - 1.0
         if abs(residual) > SPLIT_RESIDUAL_TOLERANCE:
             raise UnadjustedSeriesError(
                 f"{symbol}: split {getattr(event, 'event_id', symbol)} leaves "
-                f"{residual:.2%} boundary move after ratio {ratio}"
+                f"{residual:.2%} boundary move after ratio {ratio} (price factor {price_factor})"
             )
 
         in_halt = (df["ts"] >= halt_start) & (df["ts"] < halt_end)

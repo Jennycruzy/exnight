@@ -137,11 +137,11 @@ The tickers response labels platformTurnover24h as rToken-only platform turnover
 ## US market calendar — OBSERVED from Bitget and the exchange
 
 The last cum-dividend session is the last US trading session before the ex-date. Bitget's
-Reality calendar endpoint currently returns a timezone label and explicit holiday windows;
-the market-state endpoint returns pre-market, regular and after-hours boundaries. The code
-still contains a fixed NYSE holiday set, so the next event-study run must consume the live
-calendar response and retain its timezone label. Bitget rTokens printed bars on the two
-known 2026 exchange holidays inside the sample, so candle presence is not a holiday source.
+Reality calendar endpoint returns a timezone label and explicit holiday windows; the
+market-state endpoint returns pre-market, regular, after-hours and overnight boundaries.
+The event-study path consumes that live calendar and retains the source label. Bitget rTokens
+printed bars on the two known 2026 exchange holidays inside the sample, so candle presence is
+not a holiday source.
 
 ## Still ASSUMED (blocks the paths listed)
 

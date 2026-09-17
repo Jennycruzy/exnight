@@ -33,12 +33,18 @@ def _fetch(ticker: str, start: dt.date, end: dt.date) -> dict:
         return json.loads(p.read_text())
     p1 = int(dt.datetime.combine(start, dt.time(), dt.UTC).timestamp())
     p2 = int(dt.datetime.combine(end, dt.time(), dt.UTC).timestamp())
-    r = httpx.get(
-        f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}",
-        params=dict(period1=p1, period2=p2, interval="1d", events="div,splits"),
-        headers=_UA, timeout=30,
-    )
-    body = r.json()
+    try:
+        r = httpx.get(
+            f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}",
+            params=dict(period1=p1, period2=p2, interval="1d", events="div,splits"),
+            headers=_UA, timeout=30,
+        )
+        r.raise_for_status()
+        body = r.json()
+    except (httpx.HTTPError, ValueError) as exc:
+        raise UnderlyingDataError(f"{ticker}: Yahoo request failed: {exc}") from exc
+    if not isinstance(body, dict):
+        raise UnderlyingDataError(f"{ticker}: Yahoo response is not an object")
     res = (body.get("chart") or {}).get("result")
     if not res:
         raise UnderlyingDataError(f"{ticker}: {body.get('chart', {}).get('error')}")

@@ -1,7 +1,9 @@
 import datetime as dt
 
 import httpx
+import pytest
 
+from exnight.errors import BitgetAPIError
 from exnight.market import BitgetPublic
 
 
@@ -90,3 +92,19 @@ def test_orderbook_accepts_live_short_keys_and_normalises():
     api = BitgetPublic(httpx.Client(transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
     ob = api.orderbook("rAAPLUSDT", limit=5)
     assert ob["asks"] == [[331.5, 1.0]] and ob["bids"] == [[331.2, 2.0]] and ob["ts"] == "1789586222884"
+
+
+def test_candles_rejects_reversed_window():
+    api = BitgetPublic(httpx.Client(transport=httpx.MockTransport(lambda request: httpx.Response(200))))
+    with pytest.raises(ValueError, match="start must not be after end"):
+        api.candles_v3("ASSETUSDT", "1m", dt.datetime(2026, 9, 16, 0, 1, tzinfo=dt.UTC),
+                       dt.datetime(2026, 9, 16, tzinfo=dt.UTC))
+
+
+def test_http_status_is_reported_as_bitget_error():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(503, text="temporarily unavailable")
+
+    api = BitgetPublic(httpx.Client(transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
+    with pytest.raises(BitgetAPIError, match="code=503"):
+        api.tickers("ASSETUSDT")

@@ -35,6 +35,12 @@ def test_exit_only_on_lower_bound():
     assert r["verdict"] == "HOLD"
 
 
+def test_ex_post_cost_uses_distinct_buy_price():
+    r = verdict_row(**BASE, drop_ratio=0.2, samples=_samples(), buy_price=80.0)
+    assert r["cost_per_share"] == pytest.approx(0.36)
+    assert r["buy_price"] == 80.0
+
+
 def test_no_signal_paths():
     r = verdict_row(**dict(BASE, basis="UNRESOLVED", gross=None, net=None), drop_ratio=0.66, samples=_samples())
     assert r["verdict"] == "NO_SIGNAL" and "UNRESOLVED" in r["reason"]

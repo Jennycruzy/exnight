@@ -33,7 +33,7 @@ class Source:
             raise RuntimeError(
                 f"source {self.key} changed on disk: sha256 {digest} != registered {self.sha256}"
             )
-        return raw.decode("utf-8", errors="ignore")
+        return raw.decode("utf-8")
 
 
 SOURCES: dict[str, Source] = {

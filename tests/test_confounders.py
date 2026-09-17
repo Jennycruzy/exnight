@@ -46,7 +46,9 @@ def test_adjacent_noncash_relisted_and_name_hint(monkeypatch):
                         underlying_div_check="AMOUNT MISMATCH")], NOTICE, reality)
     r = df.iloc[0]
     for k in FLAG_LABELS:
-        assert r[k], k
+        if k != "reality_row_ambiguous":
+            assert r[k], k
+    assert not r.reality_row_ambiguous
     assert r.nearest_cash_days == 1 and r.nearest_noncash_days == 21 and not r.clean
 
 

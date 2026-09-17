@@ -64,6 +64,13 @@ class CorporateAction(BaseModel):
 
     @model_validator(mode="after")
     def _validate_fields(self):
+        for name in ("cash_dividend_per_share", "gross_dividend_per_share",
+                     "net_dividend_per_share", "withholding_rate", "adjustment_ratio"):
+            value = getattr(self, name)
+            if value is not None and (not value.is_finite() or value < 0):
+                raise ValueError(f"{self.event_id}: {name} must be finite and non-negative")
+        if self.withholding_rate is not None and self.withholding_rate > 1:
+            raise ValueError(f"{self.event_id}: withholding_rate must be between 0 and 1")
         if self.event_type is EventType.CASH_DIV:
             # Migrate the original notice schema without inventing an amount.
             if self.cash_dividend_per_share is None and self.gross_dividend_per_share is not None:
@@ -86,7 +93,7 @@ class CorporateAction(BaseModel):
                 elif self.net_dividend_per_share != self.cash_dividend_per_share:
                     raise ValueError(f"{self.event_id}: source amount does not match net amount")
         if self.event_type in (EventType.SPLIT, EventType.REVERSE_SPLIT):
-            if self.adjustment_ratio is None or self.adjustment_ratio <= 0:
+            if self.adjustment_ratio is None or not self.adjustment_ratio.is_finite() or self.adjustment_ratio <= 0:
                 raise ValueError(f"{self.event_id}: split requires a positive adjustment ratio")
             if self.event_type is EventType.SPLIT and self.adjustment_ratio <= 1:
                 raise ValueError(f"{self.event_id}: split ratio must be greater than one")

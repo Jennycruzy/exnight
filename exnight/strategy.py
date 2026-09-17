@@ -23,7 +23,9 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import math
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -39,13 +41,25 @@ SELL_SESSION, BUY_SESSION = "after_hours", "overnight"   # sell before 20:00 ET,
 
 def estimate(summary: dict, sample: str) -> dict:
     s = summary[sample]["rungs"][EXIT_RUNG]["slope"]
-    if s["pdr"] is None or s["se"] is None:
+    if (s["pdr"] is None or s["se"] is None or s.get("n", 0) < 3
+            or not math.isfinite(float(s["pdr"])) or not math.isfinite(float(s["se"]))
+            or float(s["se"]) < 0):
         raise ValueError(f"{sample}: no {EXIT_RUNG} slope estimate")
     return dict(pdr_hat=float(s["pdr"]), se=float(s["se"]), n=int(s["n"]), sample=sample)
 
 
-def round_trip_cost(samples: dict, spot: str | None, price: float, fee: float, notional: int) -> tuple[float | None, str | None, dict]:
-    """Per-share cost of selling in after-hours and buying back overnight at `price`."""
+def round_trip_cost(samples: dict, spot: str | None, sell_price: float, fee: float,
+                    notional: int, buy_price: float | None = None) -> tuple[float | None, str | None, dict]:
+    """Per-share cost with the actual sell and buy prices when both are known.
+
+    Ex-ante mode has no post-event price, so it intentionally falls back to the current
+    reference price for both legs. Ex-post mode passes its realised post price.
+    """
+    if buy_price is None:
+        buy_price = sell_price
+    if (not math.isfinite(sell_price) or sell_price <= 0 or not math.isfinite(buy_price)
+            or buy_price <= 0):
+        return None, "invalid reference price", {}
     sell_s = samples.get((spot, SELL_SESSION)) if spot else None
     buy_s = samples.get((spot, BUY_SESSION)) if spot else None
     ws, why_s = walk_cost(sell_s, "sell", notional)
@@ -54,14 +68,16 @@ def round_trip_cost(samples: dict, spot: str | None, price: float, fee: float, n
                 buy_book_ts=getattr(buy_s, "ts", None), buy_book_source=getattr(buy_s, "book_source", None))
     if ws is None or wb is None:
         return None, "; ".join(x for x in (why_s and f"sell: {why_s}", why_b and f"buy: {why_b}") if x), meta
-    return 2 * fee * price + (ws + wb) * price, None, meta
+    return fee * (sell_price + buy_price) + ws * sell_price + wb * buy_price, None, meta
 
 
 def verdict_row(*, event_id: str, symbol: str, spot: str | None, ex_date: str, gross: float | None, net: float | None,
                 basis: str, eligible: bool, price: float | None, price_label: str, fee: float, fee_label: str,
-                drop_ratio: float, drop_se: float, drop_label: str, samples: dict, notional: int) -> dict:
+                drop_ratio: float, drop_se: float, drop_label: str, samples: dict, notional: int,
+                buy_price: float | None = None) -> dict:
     row = dict(event_id=event_id, symbol=symbol, spot_symbol=spot, ex_date=ex_date, notional_usd=notional,
-               gross_dividend=gross, net_dividend=net, basis=basis, price=price, price_label=price_label,
+               gross_dividend=gross, net_dividend=net, basis=basis, price=price, buy_price=buy_price,
+               price_label=price_label,
                fee_rate=fee, fee_label=fee_label, drop_ratio=drop_ratio, drop_se=drop_se, drop_label=drop_label,
                cost_per_share=None, exit_edge_lower=None, exit_edge_point=None, buy_edge_point=None,
                verdict="NO_SIGNAL", buy="SUPPRESSED: eligibility snapshot time unpublished" if not eligible else None,
@@ -70,7 +86,13 @@ def verdict_row(*, event_id: str, symbol: str, spot: str | None, ex_date: str, g
         row["reason"] = f"cash basis {basis}; gross basis required"; return row
     if price is None:
         row["reason"] = "no reference price"; return row
-    cost, why, meta = round_trip_cost(samples, spot, price, fee, notional)
+    if not math.isfinite(price) or price <= 0:
+        row["reason"] = "invalid reference price"; return row
+    if buy_price is not None and (not math.isfinite(buy_price) or buy_price <= 0):
+        row["reason"] = "invalid post-event price"; return row
+    if not math.isfinite(drop_ratio) or not math.isfinite(drop_se) or drop_se < 0:
+        row["reason"] = "invalid price-drop estimate"; return row
+    cost, why, meta = round_trip_cost(samples, spot, price, fee, notional, buy_price)
     row.update(meta)
     if cost is None:
         row["reason"] = why; return row
@@ -110,6 +132,9 @@ def ex_post(results: list[dict], ledger_by_id: dict[str, dict], samples: dict) -
         if not r["usable"] or r["pdr"].get(EXIT_RUNG) is None:
             continue
         e = ledger_by_id[r["event_id"]]
+        post_price = None
+        if r["p_pre"] is not None and r["gross_dividend"] is not None:
+            post_price = r["p_pre"] - float(r["pdr"][EXIT_RUNG]) * r["gross_dividend"]
         for n in NOTIONALS:
             rows.append(verdict_row(
                 event_id=r["event_id"], symbol=r["symbol"], spot=e["spot_symbol"], ex_date=r["ex_date"],
@@ -117,7 +142,7 @@ def ex_post(results: list[dict], ledger_by_id: dict[str, dict], samples: dict) -
                 eligible=bool(e["eligibility_verified"]), price=r["p_pre"], price_label="OBSERVED p_pre",
                 fee=float(r["fee_rate"]), fee_label=r["fee_label"],
                 drop_ratio=float(r["pdr"][EXIT_RUNG]), drop_se=0.0, drop_label=f"REALISED {EXIT_RUNG} PDR",
-                samples=samples, notional=n))
+                samples=samples, notional=n, buy_price=post_price))
     return pd.DataFrame(rows)
 
 
@@ -140,7 +165,7 @@ def main() -> None:
     uni = api.rtokens()
     fee_by_spot = {s.symbol: float(s.taker_fee) for s in uni.values()}
     tickers = {t["symbol"]: t for t in api.tickers()}
-    today = dt.date.today().isoformat()
+    today = dt.datetime.now(dt.UTC).astimezone(ZoneInfo("America/New_York")).date().isoformat()
     pending = [e for e in ledger if e["event_type"] == "CASH_DIV" and e["exchange_ex_date"] > today and e["spot_symbol"] in fee_by_spot]
     ante = ex_ante(pending, tickers, samples, est, fee_by_spot)
     ante.to_csv(RESULTS / "signals.csv", index=False)

@@ -50,14 +50,15 @@ FLAG_LABELS = {
     "ex_date_after_gap": "OBSERVED (event study)", "pre_bar_stale_24h": "OBSERVED (event study)",
     "market_move_1pct": "OBSERVED (rSPY proxy, beta=1 ASSUMED)", "high_yield_2pct": "OBSERVED (event study)",
     "underlying_check_failed": "OBSERVED (third-party Yahoo)", "leveraged_name_hint": "ASSUMED (third-party name heuristic)",
+    "reality_row_ambiguous": "OBSERVED (multiple Reality rows on same symbol/date)",
 }
 
 
 def yahoo_meta(ticker: str) -> dict:
-    files = sorted(UNDERLYING_RAW.glob(f"{ticker}_*.json"))
+    files = list(UNDERLYING_RAW.glob(f"{ticker}_*.json"))
     if not files:
         return {}
-    return json.loads(files[-1].read_text()).get("meta", {})
+    return json.loads(max(files, key=lambda p: p.stat().st_mtime).read_text()).get("meta", {})
 
 
 def flags_for(r: dict, notice: dict, reality: list[dict]) -> dict:
@@ -65,7 +66,7 @@ def flags_for(r: dict, notice: dict, reality: list[dict]) -> dict:
     sym = r["symbol"]
     same = [a for a in reality if a["symbol"] == sym]
     match = [a for a in same if a["event_type"] == "CASH_DIV" and a["exchange_ex_date"] == r["ex_date"]]
-    reality_amt = float(match[0]["cash_dividend_per_share"]) if match else None
+    reality_amt = float(match[0]["cash_dividend_per_share"]) if len(match) == 1 and match[0].get("cash_dividend_per_share") is not None else None
     notice_amt = float(notice["gross_dividend_per_share"]) if notice.get("gross_dividend_per_share") is not None else None
     ratio = (notice_amt / reality_amt) if (reality_amt and notice_amt) else None
     cash_days = sorted(abs((dt.date.fromisoformat(a["exchange_ex_date"]) - ex).days)
@@ -78,7 +79,8 @@ def flags_for(r: dict, notice: dict, reality: list[dict]) -> dict:
     f = dict(
         event_id=r["event_id"], symbol=sym, ex_date=r["ex_date"], usable=r["usable"],
         notice_amount=notice_amt, reality_amount=reality_amt, notice_over_reality=ratio,
-        reality_matched=bool(match), nearest_cash_days=cash_days[0] if cash_days else None,
+        reality_matched=len(match) == 1, reality_row_ambiguous=len(match) > 1,
+        nearest_cash_days=cash_days[0] if cash_days else None,
         nearest_noncash_days=noncash_days[0] if noncash_days else None,
         open_time=open_time.isoformat() if open_time else None,
         listing_age_days=(ex - open_time).days if open_time else None,
