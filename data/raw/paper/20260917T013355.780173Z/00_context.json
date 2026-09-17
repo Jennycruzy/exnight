@@ -1,0 +1,18 @@
+{
+ "symbol": "RAVGOUSDT",
+ "base_coin": "rAVGO",
+ "side": "buy",
+ "notional_requested": 15.0,
+ "actual_notional": 14.989974,
+ "band": 0.005,
+ "session": "overnight",
+ "price": "343.02",
+ "qty": "0.0437",
+ "resting_in_band": 50.1094,
+ "liquidity_source": "public_book",
+ "time_in_force": "ioc",
+ "mode": "dry-run",
+ "taker_fee": "0.001",
+ "maker_fee": "0.001",
+ "note": "end-to-end-dry-run"
+}

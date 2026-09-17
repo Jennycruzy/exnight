@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-17T01:42:30.562150+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609350420,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "CRCA",
+      "cursor": "30898640",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

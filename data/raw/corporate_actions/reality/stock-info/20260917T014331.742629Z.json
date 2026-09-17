@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:43:31.742629+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609411599,\"data\":[{\"symbol\":\"RPMUSDT\",\"code\":\"PM\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RPMUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

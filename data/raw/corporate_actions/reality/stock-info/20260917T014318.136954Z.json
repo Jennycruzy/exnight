@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:43:18.136954+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609397993,\"data\":[{\"symbol\":\"RMPWRUSDT\",\"code\":\"MPWR\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RMPWRUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

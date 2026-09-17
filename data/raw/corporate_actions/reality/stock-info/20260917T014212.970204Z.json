@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:42:12.970204+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609332828,\"data\":[{\"symbol\":\"RBABAUSDT\",\"code\":\"BABA\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"yes\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RBABAUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

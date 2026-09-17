@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:42:28.702413+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609348582,\"data\":[{\"symbol\":\"RCRCAUSDT\",\"code\":\"CRCA\",\"name\":null,\"tradingPeriod\":[\"regular\",\"pre_market\",\"after_hours\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RCRCAUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "endpoint": "/api/v3/reality/market/dividends",
+  "fetched_at": "2026-09-17T01:44:19.771658+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609459648,\"data\":{\"list\":null,\"cursor\":null}}",
+  "request": {
+    "params": {
+      "code": "YANG",
+      "cursor": "128557",
+      "limit": 100
+    },
+    "path": "/api/v3/reality/market/dividends"
+  }
+}

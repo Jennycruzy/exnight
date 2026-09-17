@@ -42,13 +42,25 @@ Use the VPS virtual environment:
 Depth collection can run repeatedly; it stores raw responses in a microsecond-stamped run
 directory and deduplicates the results CSV by timestamp, symbol and session.
 
-The corrected Reality artifacts are now installed and downstream reports have been regenerated:
-185 actions, 124 unresolved cash bases, 58 usable event rows, and 27 confounder-clean rows.
-The current cost report has 870 event/rung/notional scenarios, 351 fully priced. The current
-strategy report has 174 ex-post rows, 81 priced rows, 6 EXIT rows and 75 HOLD rows; pending
-BUY decisions remain suppressed because the eligibility snapshot time is unpublished and/or
-the cash basis is unresolved. These are still measurement and guarded-execution outputs, not
-proof of a profitable or historically executable strategy.
+The corrected Reality artifacts are installed and downstream reports regenerated (2026-09-17):
+185 actions, 124 unresolved cash bases, 58 usable event rows, 27 confounder-clean rows.
+Headline: 20:00 ET slope 1.11 ± 0.12 (all usable), leave-one-out [1.02, 1.23] — the rToken
+reprices by the gross dividend in the first overnight bar, the same as the underlying. The
+pre-fix 0.66 result is withdrawn (docs/m1.md §3). Cost report: 870 event/rung/notional
+scenarios, 351 fully priced. Strategy report: 174 ex-post rows (58 events × notionals), 81
+priced, EXIT on 3 events (rLABD, rSPXU, rSTRC), HOLD otherwise; the EXIT edge clears the
+20 bp round-trip fee only on yield ≥ 1 % events. Ex-ante: 75 pending events, all NO_SIGNAL,
+because no Reality row after the July notice window has a resolved gross basis — a basis
+rule for Reality rows is required before any forward verdict can be issued. BUY remains
+suppressed (snapshot time unpublished). These are measurement and guarded-execution
+outputs, not proof of a profitable or historically executable strategy.
+
+Tardis (probed 2026-09-17, free first-of-month sample): Bitget Reality symbols are archived
+(RAVGO from 2026-06-05, RTSM 06-08, RSPY 06-10, RKO 07-01, RBABA 07-30). `books`/`books1`
+carry a real Reality book only for symbols with a public book and only ≈12:00–23:00 UTC;
+empty 00:00–10:00 UTC (the overnight window) and empty all day for routed-liquidity symbols
+(RSPY, RBITI). `publicTrade`/`trade` are empty everywhere. Usable for the 19:59 ET sell-leg
+spread on real-book symbols only.
 
 ## Important limits
 

@@ -8,3 +8,6 @@ __pycache__/
 .mypy_cache/
 *.log
 .DS_Store
+p.html
+exnight.egg-info/
+*.lock

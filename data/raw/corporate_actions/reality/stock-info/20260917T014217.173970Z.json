@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:42:17.173970+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609337031,\"data\":[{\"symbol\":\"RBITOUSDT\",\"code\":\"BITO\",\"name\":null,\"tradingPeriod\":[\"after_hours\",\"regular\",\"pre_market\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RBITOUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

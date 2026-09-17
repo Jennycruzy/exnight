@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:44:09.544982+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609449414,\"data\":[{\"symbol\":\"RUPROUSDT\",\"code\":\"UPRO\",\"name\":null,\"tradingPeriod\":[\"overnight\",\"pre_market\",\"regular\",\"after_hours\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RUPROUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

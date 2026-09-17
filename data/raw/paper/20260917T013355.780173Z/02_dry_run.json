@@ -1,0 +1,21 @@
+{
+ "endpoint": "POST /api/v3/trade/place-order",
+ "requestTime": "2026-09-17T01:33:56.950Z",
+ "data": {
+  "dryRun": true,
+  "operationId": "placeOrder",
+  "method": "POST",
+  "path": "/api/v3/trade/place-order",
+  "riskLevel": "write",
+  "wouldSend": {
+   "category": "SPOT",
+   "symbol": "RAVGOUSDT",
+   "side": "buy",
+   "orderType": "limit",
+   "qty": "0.0437",
+   "price": "343.02",
+   "timeInForce": "ioc",
+   "clientOid": "e759916c-01b5-4113-bc95-737cb6917799"
+  }
+ }
+}

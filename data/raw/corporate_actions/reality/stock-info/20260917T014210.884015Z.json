@@ -1,0 +1,11 @@
+{
+  "endpoint": "/api/v3/reality/market/stock-info",
+  "fetched_at": "2026-09-17T01:42:10.884015+00:00",
+  "raw_response": "{\"code\":\"00000\",\"msg\":\"success\",\"requestTime\":1789609330751,\"data\":[{\"symbol\":\"RAVLUSDT\",\"code\":\"AVL\",\"name\":null,\"tradingPeriod\":[\"regular\",\"pre_market\",\"after_hours\",\"overnight\"],\"weekendTradable\":\"no\"}]}",
+  "request": {
+    "params": {
+      "symbol": "RAVLUSDT"
+    },
+    "path": "/api/v3/reality/market/stock-info"
+  }
+}

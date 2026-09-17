@@ -1,82 +1,82 @@
 {
  "floor_None": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": null,
   "clean_2000": false,
   "confounder_clean": false,
-  "n_after_floor": 125,
+  "n_after_floor": 58,
   "robustness_2000": {
-   "n": 125,
-   "loo_min": 0.4681463288774609,
-   "loo_max": 1.005549469147658,
+   "n": 58,
+   "loo_min": 1.0207852470987828,
+   "loo_max": 1.234814500213592,
    "drop_top3_yield": {
-    "n": 122,
-    "pdr": 0.9777898020924669,
-    "se": 0.15866297609180066,
-    "intercept": 0.0023030568998328835,
-    "r2": 0.24040380996133973,
-    "p_value": 9.893085639200475e-09
+    "n": 55,
+    "pdr": 0.7386695254447179,
+    "se": 0.21872277906279367,
+    "intercept": 0.0018313599279609948,
+    "r2": 0.17708824369649806,
+    "p_value": 0.0013782849705273673
    },
-   "ratio_of_sums": 0.11503182636455468,
+   "ratio_of_sums": 0.3488643466076213,
    "top3_symbols": [
-    "rBITI",
-    "rBITI",
+    "rHIMX",
+    "rOPRA",
     "rBITI"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -84,7 +84,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -100,11 +100,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -112,107 +112,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -220,225 +488,265 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 125,
-    "mean": -1.1431103717979527,
-    "median": 0.010000000000019327,
+    "n": 58,
+    "mean": -0.7994843974970252,
+    "median": 0.3537940490685718,
     "slope": {
-     "n": 125,
-     "pdr": 0.6556617566914946,
-     "se": 0.0924386292394527,
-     "intercept": 0.0013921311015696965,
-     "r2": 0.2902883160341276,
-     "p_value": 9.080501667693327e-11
+     "n": 58,
+     "pdr": 1.1080447638167523,
+     "se": 0.12179338131603072,
+     "intercept": 0.0028211462075853505,
+     "r2": 0.5964513953186684,
+     "p_value": 1.253926967946485e-12
+    },
+    "market_adjusted_slope": {
+     "n": 58,
+     "pdr": 1.1107639758341978,
+     "se": 0.12116956994249503,
+     "intercept": 0.002552285545282793,
+     "r2": 0.6000978947058276,
+     "p_value": 9.697071686593897e-13
     }
    },
    "premarket_0400": {
-    "n": 125,
-    "mean": -0.18229237329729728,
-    "median": 0.0,
+    "n": 58,
+    "mean": -2.676326132893816,
+    "median": 0.0022371364653350667,
     "slope": {
-     "n": 125,
-     "pdr": 0.9716034882694613,
-     "se": 0.18520821488820358,
-     "intercept": 0.00027419720763434104,
-     "r2": 0.18283601436085947,
-     "p_value": 6.572581761499219e-07
+     "n": 58,
+     "pdr": 1.085969988371976,
+     "se": 0.38500382520969134,
+     "intercept": 0.001426219414311444,
+     "r2": 0.12440072817429991,
+     "p_value": 0.006617252813869472
+    },
+    "market_adjusted_slope": {
+     "n": 58,
+     "pdr": 1.0442609099672473,
+     "se": 0.37737808041124665,
+     "intercept": 0.0010678914976097152,
+     "r2": 0.12028675383813398,
+     "p_value": 0.007649224425249315
     }
    },
    "open_0930": {
-    "n": 125,
-    "mean": 0.09959506561880216,
-    "median": 0.5620155038761739,
+    "n": 58,
+    "mean": 0.20127170829873392,
+    "median": 1.074738912922003,
     "slope": {
-     "n": 125,
-     "pdr": 1.0773129038583278,
-     "se": 0.2003789536737494,
-     "intercept": -0.0008949953645983194,
-     "r2": 0.190285721327565,
-     "p_value": 3.673613007998807e-07
+     "n": 58,
+     "pdr": 1.0808615513621218,
+     "se": 0.41734497886742694,
+     "intercept": -0.002746164098310428,
+     "r2": 0.10696247249029868,
+     "p_value": 0.012215508576379517
+    },
+    "market_adjusted_slope": {
+     "n": 58,
+     "pdr": 1.0506917316191968,
+     "se": 0.407361261571,
+     "intercept": -0.002932592161039929,
+     "r2": 0.10618229357595584,
+     "p_value": 0.012554394745364966
     }
    },
    "open_1000": {
-    "n": 125,
-    "mean": 0.8780983375338205,
-    "median": 0.7541663844955407,
+    "n": 58,
+    "mean": 1.6303545195392326,
+    "median": 1.4316824364281788,
     "slope": {
-     "n": 125,
-     "pdr": 1.3065131821464158,
-     "se": 0.20797768742381004,
-     "intercept": 2.1818283174438596e-05,
-     "r2": 0.24290623406362,
-     "p_value": 5.25842773900631e-09
+     "n": 58,
+     "pdr": 1.4443178329004993,
+     "se": 0.4339275485638374,
+     "intercept": -0.0006266874520233908,
+     "r2": 0.16516046017771588,
+     "p_value": 0.0015481693348320972
+    },
+    "market_adjusted_slope": {
+     "n": 58,
+     "pdr": 1.4092049043365165,
+     "se": 0.43441275646896993,
+     "intercept": -0.0019408026143690098,
+     "r2": 0.1581869889000925,
+     "p_value": 0.0019901738989789963
     }
    },
    "close_1600": {
-    "n": 125,
-    "mean": 2.3928559880192135,
-    "median": 0.5727272623140457,
+    "n": 58,
+    "mean": 4.478927790398895,
+    "median": 1.417456369116481,
     "slope": {
-     "n": 125,
-     "pdr": 1.3787996980302386,
-     "se": 0.2690419148360303,
-     "intercept": -0.0007170875634403308,
-     "r2": 0.1759572280075613,
-     "p_value": 1.1202638793859523e-06
+     "n": 58,
+     "pdr": 1.4612459328871843,
+     "se": 0.5566829824948962,
+     "intercept": -0.002464346346131229,
+     "r2": 0.10955895556596804,
+     "p_value": 0.011151884063353087
+    },
+    "market_adjusted_slope": {
+     "n": 58,
+     "pdr": 1.4310694688087773,
+     "se": 0.5374826669364225,
+     "intercept": -0.0038588625190510793,
+     "r2": 0.11236680078667227,
+     "p_value": 0.010105089913804195
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 125,
-   "mean": -0.17769718557501785,
-   "median": 0.3534996465003606,
+   "n": 58,
+   "mean": -0.17456969021243432,
+   "median": 0.9687189487275665,
    "slope": {
-    "n": 125,
-    "pdr": 0.991947186469561,
-    "se": 0.20134069783283148,
-    "intercept": -0.0007169430944993305,
-    "r2": 0.16481335197180152,
-    "p_value": 2.6373803055227226e-06
+    "n": 58,
+    "pdr": 0.9817885713452672,
+    "se": 0.4188868367657928,
+    "intercept": -0.0025311107660481776,
+    "r2": 0.08933340681783912,
+    "p_value": 0.022662667839542086
    }
   },
   "underlying": {
-   "n": 125,
-   "mean": -0.7079775268854248,
-   "median": 0.41818791409402656,
+   "n": 58,
+   "mean": -1.1062690492169336,
+   "median": 0.9194429949722148,
    "slope": {
-    "n": 125,
-    "pdr": 0.9958999045773625,
-    "se": 0.20338177529508597,
-    "intercept": -0.00042371437862854123,
-    "r2": 0.1631382881021284,
-    "p_value": 2.9972509307957233e-06
+    "n": 58,
+    "pdr": 1.0064792037991095,
+    "se": 0.42365482425597006,
+    "intercept": -0.0020689586950242127,
+    "r2": 0.09155765136140717,
+    "p_value": 0.020962298943574764
    }
   }
  },
  "floor_0.2": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": 0.2,
   "clean_2000": false,
   "confounder_clean": false,
-  "n_after_floor": 54,
+  "n_after_floor": 36,
   "robustness_2000": {
-   "n": 54,
-   "loo_min": 0.35080221604702017,
-   "loo_max": 1.079311495720713,
+   "n": 36,
+   "loo_min": 1.0125465085688223,
+   "loo_max": 1.297667990459197,
    "drop_top3_yield": {
-    "n": 51,
-    "pdr": 1.1600602206207984,
-    "se": 0.2219714881506525,
-    "intercept": 0.003957537438802708,
-    "r2": 0.357906124243554,
-    "p_value": 3.546031481962944e-06
+    "n": 33,
+    "pdr": 0.5240492910214035,
+    "se": 0.2802619741786072,
+    "intercept": 1.5493452525085216e-05,
+    "r2": 0.10135441534134355,
+    "p_value": 0.07097427344516503
    },
-   "ratio_of_sums": 0.3906729356500987,
+   "ratio_of_sums": 0.5681167702726267,
    "top3_symbols": [
-    "rBITI",
-    "rBITI",
+    "rHIMX",
+    "rOPRA",
     "rBITI"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -446,7 +754,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -462,11 +770,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -474,107 +782,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -582,225 +1158,265 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 54,
-    "mean": 0.38831294109788683,
-    "median": 0.26457975986277443,
+    "n": 36,
+    "mean": 0.5487258627753037,
+    "median": 0.6259541593605833,
     "slope": {
-     "n": 54,
-     "pdr": 0.6182736186061677,
-     "se": 0.11848954082941737,
-     "intercept": 0.0006443880602904507,
-     "r2": 0.34365893109143375,
-     "p_value": 3.1983310855084175e-06
+     "n": 36,
+     "pdr": 1.1023386071934185,
+     "se": 0.14172530457989782,
+     "intercept": 0.002719844310210825,
+     "r2": 0.6402009600525237,
+     "p_value": 4.7459371788013906e-09
+    },
+    "market_adjusted_slope": {
+     "n": 36,
+     "pdr": 1.0911967981443498,
+     "se": 0.14198795381157245,
+     "intercept": 0.00221667278669198,
+     "r2": 0.6346495061350232,
+     "p_value": 6.181648261764619e-09
     }
    },
    "premarket_0400": {
-    "n": 54,
-    "mean": 0.7304987377219058,
-    "median": 0.850124855415108,
+    "n": 36,
+    "mean": 0.8553436333075297,
+    "median": 0.9239420870619997,
     "slope": {
-     "n": 54,
-     "pdr": 0.9876378436024136,
-     "se": 0.26396313589739756,
-     "intercept": 0.0005810149943760038,
-     "r2": 0.21211384331729283,
-     "p_value": 0.00045768370494959313
+     "n": 36,
+     "pdr": 1.0127459673023531,
+     "se": 0.44989833565006654,
+     "intercept": 0.00017108631539154186,
+     "r2": 0.12970581233267814,
+     "p_value": 0.030958275081917813
+    },
+    "market_adjusted_slope": {
+     "n": 36,
+     "pdr": 0.9804741783930123,
+     "se": 0.46817102778187114,
+     "intercept": 3.08774215304862e-05,
+     "r2": 0.11425915493593192,
+     "p_value": 0.04376384861775257
     }
    },
    "open_0930": {
-    "n": 54,
-    "mean": 1.7031712663562817,
-    "median": 1.0912101682778363,
+    "n": 36,
+    "mean": 2.2172440134025297,
+    "median": 1.3888805381233529,
     "slope": {
-     "n": 54,
-     "pdr": 0.8754095346827282,
-     "se": 0.2579290814999632,
-     "intercept": -0.004947519691575584,
-     "r2": 0.1813497553812466,
-     "p_value": 0.001325109582785861
+     "n": 36,
+     "pdr": 0.7990066968152304,
+     "se": 0.4294882760581652,
+     "intercept": -0.007780537623025075,
+     "r2": 0.09238876436789528,
+     "p_value": 0.07150131783413867
+    },
+    "market_adjusted_slope": {
+     "n": 36,
+     "pdr": 0.8250672076492314,
+     "se": 0.45444992750776814,
+     "intercept": -0.006939894326782477,
+     "r2": 0.08837768220549082,
+     "p_value": 0.07827114396754595
     }
    },
    "open_1000": {
-    "n": 54,
-    "mean": 1.4693668684600334,
-    "median": 1.280065406291654,
+    "n": 36,
+    "mean": 1.8286368588959232,
+    "median": 1.552776576953165,
     "slope": {
-     "n": 54,
-     "pdr": 1.1636253589397374,
-     "se": 0.28148456096104885,
-     "intercept": -0.0029484704069337505,
-     "r2": 0.24734785812969434,
-     "p_value": 0.00013026937070349096
+     "n": 36,
+     "pdr": 1.226954865733123,
+     "se": 0.4719743764927941,
+     "intercept": -0.004602097903553147,
+     "r2": 0.1658086224455699,
+     "p_value": 0.01370818535965701
+    },
+    "market_adjusted_slope": {
+     "n": 36,
+     "pdr": 1.2172980418739925,
+     "se": 0.49651972259676186,
+     "intercept": -0.0054492583904331895,
+     "r2": 0.1502260755791972,
+     "p_value": 0.019512341594448385
     }
    },
    "close_1600": {
-    "n": 54,
-    "mean": 1.971876031773711,
-    "median": 1.417456369116481,
+    "n": 36,
+    "mean": 2.5302495458845704,
+    "median": 2.2351630135643927,
     "slope": {
-     "n": 54,
-     "pdr": 1.2359808073189136,
-     "se": 0.3853338746613462,
-     "intercept": -0.003755555470335896,
-     "r2": 0.16517400365369755,
-     "p_value": 0.002292550316032991
+     "n": 36,
+     "pdr": 1.264532161901154,
+     "se": 0.6498847841028834,
+     "intercept": -0.006198788089908773,
+     "r2": 0.10019717079535774,
+     "p_value": 0.05998587361837776
+    },
+    "market_adjusted_slope": {
+     "n": 36,
+     "pdr": 1.2160064169161662,
+     "se": 0.6504766491024165,
+     "intercept": -0.007866823233733035,
+     "r2": 0.09320486392822992,
+     "p_value": 0.07019901143468764
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 54,
-   "mean": 1.5015452490836183,
-   "median": 0.9904146269614171,
+   "n": 36,
+   "mean": 1.9628524409791015,
+   "median": 1.1338442088554743,
    "slope": {
-    "n": 54,
-    "pdr": 0.816397024352727,
-    "se": 0.2589324023941282,
-    "intercept": -0.004205038855347577,
-    "r2": 0.16049142016165874,
-    "p_value": 0.002683542839017795
+    "n": 36,
+    "pdr": 0.7330372922010289,
+    "se": 0.43037890512106,
+    "intercept": -0.006935144364176284,
+    "r2": 0.07861616547705724,
+    "p_value": 0.09764965615082238
    }
   },
   "underlying": {
-   "n": 54,
-   "mean": 1.3541456173992847,
-   "median": 0.9706531722001551,
+   "n": 36,
+   "mean": 1.7730190920945548,
+   "median": 1.2197469498622913,
    "slope": {
-    "n": 54,
-    "pdr": 0.8543751143794497,
-    "se": 0.276917564647724,
-    "intercept": -0.00319552720216529,
-    "r2": 0.15473414367471636,
-    "p_value": 0.0032545972597669303
+    "n": 36,
+    "pdr": 0.8063550903575326,
+    "se": 0.464344590226841,
+    "intercept": -0.005564792239287918,
+    "r2": 0.08146803489601567,
+    "p_value": 0.09152184691872872
    }
   }
  },
  "floor_0.5": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": 0.5,
   "clean_2000": false,
   "confounder_clean": false,
-  "n_after_floor": 30,
+  "n_after_floor": 19,
   "robustness_2000": {
-   "n": 30,
-   "loo_min": 0.2687760305268081,
-   "loo_max": 1.1554353108744733,
+   "n": 19,
+   "loo_min": 1.0537595181163377,
+   "loo_max": 1.6737351581204558,
    "drop_top3_yield": {
-    "n": 27,
-    "pdr": 1.491381979689145,
-    "se": 0.37305494011073526,
-    "intercept": 0.007916106366091335,
-    "r2": 0.3899766705832449,
-    "p_value": 0.0004983093218392945
+    "n": 16,
+    "pdr": 0.22036097925453685,
+    "se": 0.5653930184349721,
+    "intercept": -0.003025241166119115,
+    "r2": 0.010733803440150586,
+    "p_value": 0.702587497660768
    },
-   "ratio_of_sums": 0.42208738010474417,
+   "ratio_of_sums": 0.6881767096708455,
    "top3_symbols": [
-    "rBITI",
-    "rBITI",
+    "rHIMX",
+    "rOPRA",
     "rBITI"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -808,7 +1424,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -824,11 +1440,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -836,107 +1452,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -944,225 +1828,265 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 30,
-    "mean": 0.47233512368404834,
-    "median": 0.26457975986277443,
+    "n": 19,
+    "mean": 0.7345559172413253,
+    "median": 0.7920792079207892,
     "slope": {
-     "n": 30,
-     "pdr": 0.5994155168105789,
-     "se": 0.17152479349253866,
-     "intercept": 0.00018791079975218321,
-     "r2": 0.30369791791515244,
-     "p_value": 0.0015986412745878922
+     "n": 19,
+     "pdr": 1.1323959303423845,
+     "se": 0.21023029035676777,
+     "intercept": 0.003465744001778159,
+     "r2": 0.630546373402383,
+     "p_value": 4.922188401526021e-05
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 1.1135017294798972,
+     "se": 0.2126758443767211,
+     "intercept": 0.002780564081925717,
+     "r2": 0.6172231480855261,
+     "p_value": 6.712507097007142e-05
     }
    },
    "premarket_0400": {
-    "n": 30,
-    "mean": 1.1895656173262583,
-    "median": 1.0031665328694943,
+    "n": 19,
+    "mean": 1.3821311141817878,
+    "median": 1.0553809241796122,
     "slope": {
-     "n": 30,
-     "pdr": 0.8656698854076843,
-     "se": 0.2750082455083279,
-     "intercept": -0.0028709005188377844,
-     "r2": 0.2613817189402349,
-     "p_value": 0.0038846138921228806
+     "n": 19,
+     "pdr": 0.8018279458256957,
+     "se": 0.5050679226233997,
+     "intercept": -0.004995139307625754,
+     "r2": 0.1291144802609435,
+     "p_value": 0.13080893868724794
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 0.7458417687466928,
+     "se": 0.5196276548039209,
+     "intercept": -0.0058548081362064675,
+     "r2": 0.10808899764668706,
+     "p_value": 0.1693343835270892
     }
    },
    "open_0930": {
-    "n": 30,
-    "mean": 1.7673174996078207,
-    "median": 1.0912101682778363,
+    "n": 19,
+    "mean": 2.1234634846777145,
+    "median": 1.1035087719298333,
     "slope": {
-     "n": 30,
-     "pdr": 0.7467244184502759,
-     "se": 0.2744143313214018,
-     "intercept": -0.008389816148065079,
-     "r2": 0.20914441963273114,
-     "p_value": 0.011058117574721547
+     "n": 19,
+     "pdr": 0.5650871797404319,
+     "se": 0.48803174646420966,
+     "intercept": -0.01320737959932439,
+     "r2": 0.07310020987388868,
+     "p_value": 0.26291826026850507
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 0.540592257994252,
+     "se": 0.5159200518471864,
+     "intercept": -0.013709735044229482,
+     "r2": 0.060666077211904194,
+     "p_value": 0.3093904377208967
     }
    },
    "open_1000": {
-    "n": 30,
-    "mean": 2.0912397430646696,
-    "median": 1.3646824364281525,
+    "n": 19,
+    "mean": 2.583949211835897,
+    "median": 1.4615384615384621,
     "slope": {
-     "n": 30,
-     "pdr": 0.9090956984666928,
-     "se": 0.360439486048111,
-     "intercept": -0.009907090583532981,
-     "r2": 0.18513277158356012,
-     "p_value": 0.01762794161353606
+     "n": 19,
+     "pdr": 0.7418782979649796,
+     "se": 0.641315555099569,
+     "intercept": -0.016024727044337994,
+     "r2": 0.0729734746403996,
+     "p_value": 0.26334863476365844
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 0.7427756761479354,
+     "se": 0.6620310347088799,
+     "intercept": -0.01675050761981589,
+     "r2": 0.06894238217644269,
+     "p_value": 0.2774750851690788
     }
    },
    "close_1600": {
-    "n": 30,
-    "mean": 1.9623039735927301,
-    "median": 1.417456369116481,
+    "n": 19,
+    "mean": 2.294186575635814,
+    "median": 1.5081800649656318,
     "slope": {
-     "n": 30,
-     "pdr": 1.1362995129436735,
-     "se": 0.5116913805306211,
-     "intercept": -0.006757185027866449,
-     "r2": 0.1497474249351734,
-     "p_value": 0.03463798818757511
+     "n": 19,
+     "pdr": 1.0869999800735113,
+     "se": 0.9360784979372916,
+     "intercept": -0.010855338778760352,
+     "r2": 0.0734911720555855,
+     "p_value": 0.26159572654290636
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 1.0481557593545268,
+     "se": 0.9168805635252512,
+     "intercept": -0.012431139181127997,
+     "r2": 0.07138590460458541,
+     "p_value": 0.26880961015447824
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 30,
-   "mean": 1.5889944774498046,
-   "median": 1.0979314070489816,
+   "n": 19,
+   "mean": 1.9873170271988485,
+   "median": 1.168316831683161,
    "slope": {
-    "n": 30,
-    "pdr": 0.7007149554473777,
-    "se": 0.27271447018664674,
-    "intercept": -0.007331683738848826,
-    "r2": 0.1907949808675802,
-    "p_value": 0.015803039796291586
+    "n": 19,
+    "pdr": 0.48482130501366405,
+    "se": 0.47568279186722906,
+    "intercept": -0.012776639126175849,
+    "r2": 0.05758655054154495,
+    "p_value": 0.3223891225435691
    }
   },
   "underlying": {
-   "n": 30,
-   "mean": 1.3978403772061065,
-   "median": 1.1815291471203813,
+   "n": 19,
+   "mean": 1.7341272055046018,
+   "median": 1.2249540828198346,
    "slope": {
-    "n": 30,
-    "pdr": 0.7811982451078459,
-    "se": 0.26510782276249134,
-    "intercept": -0.005097680711993241,
-    "r2": 0.23670682483786326,
-    "p_value": 0.00640608698879878
+    "n": 19,
+    "pdr": 0.6427397343917657,
+    "se": 0.4695773905652838,
+    "intercept": -0.009325631346287113,
+    "r2": 0.09926662889752433,
+    "p_value": 0.18889004063652295
    }
   }
  },
  "clean_2000": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": null,
   "clean_2000": true,
   "confounder_clean": false,
-  "n_after_floor": 38,
+  "n_after_floor": 27,
   "robustness_2000": {
-   "n": 38,
-   "loo_min": 0.9025371440372627,
-   "loo_max": 1.0577235651138124,
+   "n": 27,
+   "loo_min": 1.0053228601517419,
+   "loo_max": 1.1987272660269308,
    "drop_top3_yield": {
-    "n": 35,
-    "pdr": 0.8082866189503765,
-    "se": 0.3551941631158489,
-    "intercept": 0.0025924596076041047,
-    "r2": 0.13563786122225155,
-    "p_value": 0.029490367982051624
+    "n": 24,
+    "pdr": 1.2595006114629883,
+    "se": 0.5463450694694469,
+    "intercept": 0.004035041857171579,
+    "r2": 0.19456709566814587,
+    "p_value": 0.030958289307746342
    },
-   "ratio_of_sums": 0.35625968521318113,
+   "ratio_of_sums": 0.470132665119725,
    "top3_symbols": [
+    "rSPXU",
     "rSQQQ",
-    "rBITI",
     "rBITI"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -1170,7 +2094,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -1186,11 +2110,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -1198,107 +2122,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -1306,225 +2498,265 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 38,
-    "mean": -1.0901873569156593,
-    "median": 0.5169296081482344,
+    "n": 27,
+    "mean": -1.6380209304695885,
+    "median": 0.7920792079207892,
     "slope": {
-     "n": 38,
-     "pdr": 1.0186932889254425,
-     "se": 0.13296693143269078,
-     "intercept": 0.0034919719211936014,
-     "r2": 0.6198312734525175,
-     "p_value": 4.544125811405484e-09
+     "n": 27,
+     "pdr": 1.0735695659460518,
+     "se": 0.1561407897557378,
+     "intercept": 0.003245294785892186,
+     "r2": 0.6540968969430851,
+     "p_value": 3.308151061024906e-07
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.0608705258588473,
+     "se": 0.15493376893411948,
+     "intercept": 0.0025498902543532494,
+     "r2": 0.6522216076956638,
+     "p_value": 3.544014445651946e-07
     }
    },
    "premarket_0400": {
-    "n": 38,
-    "mean": -0.03277240435226553,
-    "median": 0.9239420870619997,
+    "n": 27,
+    "mean": -0.3030700482604889,
+    "median": 0.9128869203591035,
     "slope": {
-     "n": 38,
-     "pdr": 1.2607658071083496,
-     "se": 0.4615749850546032,
-     "intercept": 0.002215499075890695,
-     "r2": 0.17166698704921143,
-     "p_value": 0.009705260316691193
+     "n": 27,
+     "pdr": 1.2653209274818085,
+     "se": 0.5884861378538166,
+     "intercept": 0.002410897115036127,
+     "r2": 0.15606268929788814,
+     "p_value": 0.04141015799825067
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.2198059024048276,
+     "se": 0.5868338900279901,
+     "intercept": 0.0032607343353607075,
+     "r2": 0.14735918097190787,
+     "p_value": 0.04806864908636461
     }
    },
    "open_0930": {
-    "n": 38,
-    "mean": 2.3514100160573217,
-    "median": 1.1335151882535153,
+    "n": 27,
+    "mean": 2.6588773804658734,
+    "median": 1.0789115646258396,
     "slope": {
-     "n": 38,
-     "pdr": 1.0572270412529854,
-     "se": 0.48645919682178085,
-     "intercept": -0.004090802608660025,
-     "r2": 0.11598476280707573,
-     "p_value": 0.03641548596273525
+     "n": 27,
+     "pdr": 1.0665430252997963,
+     "se": 0.6138656229425838,
+     "intercept": -0.00530848346550314,
+     "r2": 0.10773658629529788,
+     "p_value": 0.09461942905698346
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.0453831971820229,
+     "se": 0.6047353980221936,
+     "intercept": -0.0036726154292973925,
+     "r2": 0.10676874799697667,
+     "p_value": 0.096202575900197
     }
    },
    "open_1000": {
-    "n": 38,
-    "mean": 0.7288069172382597,
-    "median": 1.3727926732129545,
+    "n": 27,
+    "mean": 0.47424696448467013,
+    "median": 1.450000000000055,
     "slope": {
-     "n": 38,
-     "pdr": 1.4347181940316167,
-     "se": 0.529683249709096,
-     "intercept": -0.0014342771784431677,
-     "r2": 0.1692952994510573,
-     "p_value": 0.010274593692079153
+     "n": 27,
+     "pdr": 1.4967950634008582,
+     "se": 0.6688122438105004,
+     "intercept": -0.0024399872617013145,
+     "r2": 0.16690545668459517,
+     "p_value": 0.034369701071179634
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.4625497639173668,
+     "se": 0.6646447937260228,
+     "intercept": -0.002620299095094118,
+     "r2": 0.1622599567596832,
+     "p_value": 0.037229789599914735
     }
    },
    "close_1600": {
-    "n": 38,
-    "mean": 4.223396807939866,
-    "median": 1.5644216010940521,
+    "n": 27,
+    "mean": 4.958723029341893,
+    "median": 1.5081800649656318,
     "slope": {
-     "n": 38,
-     "pdr": 1.273094187382896,
-     "se": 0.620538832121442,
-     "intercept": -0.005480735324979221,
-     "r2": 0.10467896713891997,
-     "p_value": 0.047538197447442865
+     "n": 27,
+     "pdr": 1.4352142045438299,
+     "se": 0.7779636470897319,
+     "intercept": -0.006771088208782895,
+     "r2": 0.11982413142822643,
+     "p_value": 0.07694156312789888
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.4269203718938754,
+     "se": 0.7697214230272743,
+     "intercept": -0.0059133780564208736,
+     "r2": 0.12085211504932675,
+     "p_value": 0.07560200897790861
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 38,
-   "mean": 2.5365708824250777,
-   "median": 1.1338442088554743,
+   "n": 27,
+   "mean": 2.808410240881025,
+   "median": 1.168316831683161,
    "slope": {
-    "n": 38,
-    "pdr": 0.9660730096305844,
-    "se": 0.48419683506515815,
-    "intercept": -0.004628479191897397,
-    "r2": 0.09956895814967831,
-    "p_value": 0.05363164509574175
+    "n": 27,
+    "pdr": 1.0102237091549386,
+    "se": 0.6056263526123149,
+    "intercept": -0.0060090206046823,
+    "r2": 0.10015098435910431,
+    "p_value": 0.10778203830086891
    }
   },
   "underlying": {
-   "n": 38,
-   "mean": 1.9760137386120118,
-   "median": 1.1815291471203813,
+   "n": 27,
+   "mean": 2.1209053966293063,
+   "median": 1.2145398169047477,
    "slope": {
-    "n": 38,
-    "pdr": 0.9677293226323023,
-    "se": 0.4798853488000251,
-    "intercept": -0.0026828248164771067,
-    "r2": 0.10149629537619155,
-    "p_value": 0.05124580003356259
+    "n": 27,
+    "pdr": 1.0313550983209843,
+    "se": 0.602922773289236,
+    "intercept": -0.0035545368472383607,
+    "r2": 0.10478095826190012,
+    "p_value": 0.09953976562463639
    }
   }
  },
  "clean_2000_floor_0.2": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": 0.2,
   "clean_2000": true,
   "confounder_clean": false,
-  "n_after_floor": 29,
+  "n_after_floor": 19,
   "robustness_2000": {
-   "n": 29,
-   "loo_min": 0.7449264950032259,
-   "loo_max": 1.0238007297969474,
+   "n": 19,
+   "loo_min": 0.8766566200149192,
+   "loo_max": 1.0269085366405817,
    "drop_top3_yield": {
-    "n": 26,
-    "pdr": 0.48292320867336846,
-    "se": 0.3615673318074863,
-    "intercept": 0.00011305437204620289,
-    "r2": 0.06918766508327481,
-    "p_value": 0.19419675930690786
+    "n": 16,
+    "pdr": 0.7455778718818123,
+    "se": 0.6132801271992309,
+    "intercept": 0.0005381391878366204,
+    "r2": 0.09548914080149988,
+    "p_value": 0.24419401577207553
    },
-   "ratio_of_sums": 0.4424498589291995,
+   "ratio_of_sums": 0.6282438189945485,
    "top3_symbols": [
+    "rSPXU",
     "rSQQQ",
-    "rBITI",
     "rBITI"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -1532,7 +2764,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -1548,11 +2780,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -1560,107 +2792,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -1668,225 +3168,265 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 29,
-    "mean": 0.44051530043187515,
-    "median": 0.5519315054531055,
+    "n": 19,
+    "mean": 0.598058011733993,
+    "median": 0.8108061483257762,
     "slope": {
-     "n": 29,
-     "pdr": 0.9866842123584317,
-     "se": 0.11696839627165155,
-     "intercept": 0.0028989601575456995,
-     "r2": 0.7249312297152742,
-     "p_value": 4.775589478897638e-09
+     "n": 19,
+     "pdr": 1.0107609367811956,
+     "se": 0.12970595238825672,
+     "intercept": 0.0018664119149996543,
+     "r2": 0.7812839163912227,
+     "p_value": 5.208501468280904e-07
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 0.9963065909916518,
+     "se": 0.12754779490254667,
+     "intercept": 0.0011318888554268372,
+     "r2": 0.7820945534448135,
+     "p_value": 5.044390641155867e-07
     }
    },
    "premarket_0400": {
-    "n": 29,
-    "mean": 0.5784532299847551,
+    "n": 19,
+    "mean": 0.5177686174689891,
     "median": 1.0553809241796122,
     "slope": {
-     "n": 29,
-     "pdr": 1.234864154031307,
-     "se": 0.44904382108479135,
-     "intercept": 0.0016116778248148455,
-     "r2": 0.21880475092398663,
-     "p_value": 0.010504052308296716
+     "n": 19,
+     "pdr": 1.2349817527791975,
+     "se": 0.6025336764497181,
+     "intercept": 0.0015803270833701678,
+     "r2": 0.1981531341140167,
+     "p_value": 0.056152870690642766
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 1.1910931474103934,
+     "se": 0.6547406206438907,
+     "intercept": 0.0025298670929877693,
+     "r2": 0.16295031256302922,
+     "p_value": 0.08654216255585004
     }
    },
    "open_0930": {
-    "n": 29,
-    "mean": 1.4587813483716179,
-    "median": 1.2099999999999795,
+    "n": 19,
+    "mean": 1.862056086185145,
+    "median": 1.5418060200669323,
     "slope": {
-     "n": 29,
-     "pdr": 1.085271106833769,
-     "se": 0.41578377150334667,
-     "intercept": -0.0035979249017699163,
-     "r2": 0.20149167137107427,
-     "p_value": 0.01458491679627033
+     "n": 19,
+     "pdr": 1.042327428031196,
+     "se": 0.5449806285895912,
+     "intercept": -0.005925681538157427,
+     "r2": 0.17707509575474573,
+     "p_value": 0.07279954275841309
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 1.0385432104917545,
+     "se": 0.5969011283029665,
+     "intercept": -0.0038639582029297466,
+     "r2": 0.15115538345886384,
+     "p_value": 0.09994875683940002
     }
    },
    "open_1000": {
-    "n": 29,
-    "mean": 1.4547761043805112,
-    "median": 1.295585346425854,
+    "n": 19,
+    "mean": 1.8506106286735267,
+    "median": 1.5202323922128533,
     "slope": {
-     "n": 29,
-     "pdr": 1.3415309687623715,
-     "se": 0.5104101731436299,
-     "intercept": -0.003334654892278379,
-     "r2": 0.20373163084059162,
-     "p_value": 0.01398182648250275
+     "n": 19,
+     "pdr": 1.32994633995479,
+     "se": 0.6697327775640854,
+     "intercept": -0.006340086277183703,
+     "r2": 0.18828642734394566,
+     "p_value": 0.06342755805564114
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 1.3044241140346535,
+     "se": 0.6988226162458296,
+     "intercept": -0.006270813015259688,
+     "r2": 0.17009228467351686,
+     "p_value": 0.07930308577756995
     }
    },
    "close_1600": {
-    "n": 29,
-    "mean": 2.201361480788297,
-    "median": 1.6410151870349747,
+    "n": 19,
+    "mean": 2.87998617469596,
+    "median": 2.1592233009708774,
     "slope": {
-     "n": 29,
-     "pdr": 1.2946128927355631,
-     "se": 0.6445584324384938,
-     "intercept": -0.005318010719871015,
-     "r2": 0.12999151118354985,
-     "p_value": 0.05468550552036344
+     "n": 19,
+     "pdr": 1.3746528489950518,
+     "se": 0.845348299622844,
+     "intercept": -0.00850093309294817,
+     "r2": 0.13461008929278426,
+     "p_value": 0.12231290046563356
+    },
+    "market_adjusted_slope": {
+     "n": 19,
+     "pdr": 1.3387593569218457,
+     "se": 0.8743974902146938,
+     "intercept": -0.008126792660326962,
+     "r2": 0.12118178912647243,
+     "p_value": 0.1441494929503029
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 29,
-   "mean": 1.293344280450578,
-   "median": 1.168316831683161,
+   "n": 19,
+   "mean": 1.719502450955856,
+   "median": 1.2032341708286058,
    "slope": {
-    "n": 29,
-    "pdr": 1.0348368186070487,
-    "se": 0.404536314324955,
-    "intercept": -0.00329774255270986,
-    "r2": 0.1950817807063915,
-    "p_value": 0.01645238300057389
+    "n": 19,
+    "pdr": 1.0134144948625006,
+    "se": 0.5221856854200836,
+    "intercept": -0.005944876462589706,
+    "r2": 0.18136917273850883,
+    "p_value": 0.06906130659646342
    }
   },
   "underlying": {
-   "n": 29,
-   "mean": 0.8944380398973569,
-   "median": 1.2145398169047477,
+   "n": 19,
+   "mean": 1.1574063386687077,
+   "median": 1.41146377308548,
    "slope": {
-    "n": 29,
-    "pdr": 1.0637132857832168,
-    "se": 0.416463706067768,
-    "intercept": -0.0008179862740246933,
-    "r2": 0.19459995428278218,
-    "p_value": 0.016601712323756252
+    "n": 19,
+    "pdr": 1.0825274350825387,
+    "se": 0.5454135606459146,
+    "intercept": -0.002398051925736394,
+    "r2": 0.1881319262488676,
+    "p_value": 0.06354839334031312
    }
   }
  },
  "confounder_clean": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": null,
   "clean_2000": false,
   "confounder_clean": true,
-  "n_after_floor": 41,
+  "n_after_floor": 27,
   "robustness_2000": {
-   "n": 41,
-   "loo_min": 0.22268866913040536,
-   "loo_max": 0.5716235614375209,
+   "n": 27,
+   "loo_min": 0.5236021444706399,
+   "loo_max": 0.8984271622846134,
    "drop_top3_yield": {
-    "n": 38,
-    "pdr": 0.3960158153786096,
-    "se": 0.2919162566094027,
-    "intercept": -0.0003877431906582087,
-    "r2": 0.04863545251035273,
-    "p_value": 0.18335280576133042
+    "n": 24,
+    "pdr": 0.8225359918469548,
+    "se": 0.30774124085973364,
+    "intercept": 0.0010862682343842237,
+    "r2": 0.2451263527662834,
+    "p_value": 0.013899798331825397
    },
-   "ratio_of_sums": 0.5596442108189962,
+   "ratio_of_sums": 0.6215394658964031,
    "top3_symbols": [
-    "rCMCSA",
-    "rMO",
-    "rBITI"
+    "rPM",
+    "rPSQ",
+    "rCMCSA"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -1894,7 +3434,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -1910,11 +3450,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -1922,107 +3462,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -2030,225 +3838,265 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 41,
-    "mean": 1.1398210947696303,
-    "median": 0.5519315054531055,
+    "n": 27,
+    "mean": 0.47530638643357725,
+    "median": 0.699976813268061,
     "slope": {
-     "n": 41,
-     "pdr": 0.4603235270311655,
-     "se": 0.17010057346337512,
-     "intercept": -0.00010965305386232945,
-     "r2": 0.15809350918614404,
-     "p_value": 0.010043780863678374
+     "n": 27,
+     "pdr": 0.6223652850240238,
+     "se": 0.21005817259380413,
+     "intercept": 0.0004486945791995563,
+     "r2": 0.259880366519115,
+     "p_value": 0.006601137251849681
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 0.6250419978773847,
+     "se": 0.20602441465444957,
+     "intercept": 0.00022635401711103634,
+     "r2": 0.2690933320380899,
+     "p_value": 0.005566052865253124
     }
    },
    "premarket_0400": {
-    "n": 41,
-    "mean": 0.5699585609727291,
-    "median": 0.4727272727272799,
+    "n": 27,
+    "mean": -0.6048999562030212,
+    "median": 0.0044742729306701335,
     "slope": {
-     "n": 41,
-     "pdr": 1.2490270079002996,
-     "se": 0.3197975224578118,
-     "intercept": 0.0035426853674925033,
-     "r2": 0.28116351950638174,
-     "p_value": 0.00036268048460774954
+     "n": 27,
+     "pdr": 1.4170205471467043,
+     "se": 0.5569135358476022,
+     "intercept": 0.005812657343323406,
+     "r2": 0.2056951131525927,
+     "p_value": 0.017500890179700412
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.3833156827504747,
+     "se": 0.5697471775134255,
+     "intercept": 0.005609069243986137,
+     "r2": 0.190805592729908,
+     "p_value": 0.022717374044984567
     }
    },
    "open_0930": {
-    "n": 41,
-    "mean": 2.868122877808515,
-    "median": 1.188118811881191,
+    "n": 27,
+    "mean": 2.541704604812391,
+    "median": 1.1035087719298333,
     "slope": {
-     "n": 41,
-     "pdr": 1.262113619023586,
-     "se": 0.5432798574276182,
-     "intercept": -0.000740347092732116,
-     "r2": 0.12156159920112669,
-     "p_value": 0.02547821955221407
+     "n": 27,
+     "pdr": 1.908057037783433,
+     "se": 1.0253918248354872,
+     "intercept": 0.002062047527434506,
+     "r2": 0.12165454886034502,
+     "p_value": 0.07457272127510402
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.9200544773938784,
+     "se": 1.0421588732122855,
+     "intercept": 0.0027398828686692796,
+     "r2": 0.1195437833814448,
+     "p_value": 0.07731101883958641
     }
    },
    "open_1000": {
-    "n": 41,
-    "mean": 3.625478226497022,
-    "median": 1.4133648728563026,
+    "n": 27,
+    "mean": 3.926328373180629,
+    "median": 1.450000000000055,
     "slope": {
-     "n": 41,
-     "pdr": 1.3960679790238424,
-     "se": 0.5784409303146582,
-     "intercept": 0.0018490769968734916,
-     "r2": 0.12994958882951974,
-     "p_value": 0.020596479752259034
+     "n": 27,
+     "pdr": 2.0702408333597417,
+     "se": 1.0882297163592267,
+     "intercept": 0.005412708872027391,
+     "r2": 0.12645750444765702,
+     "p_value": 0.06869991174495872
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.9173885382735232,
+     "se": 1.1622380158822907,
+     "intercept": 0.00510638369812548,
+     "r2": 0.09817733470149292,
+     "p_value": 0.1115066496911017
     }
    },
    "close_1600": {
-    "n": 41,
-    "mean": 7.008795031860553,
-    "median": 1.3267326732673301,
+    "n": 27,
+    "mean": 8.58544177821989,
+    "median": 0.9473684210526426,
     "slope": {
-     "n": 41,
-     "pdr": 0.7205474536956387,
-     "se": 0.6491000611265052,
-     "intercept": -0.002563154832303079,
-     "r2": 0.030628622195156167,
-     "p_value": 0.27376597467664204
+     "n": 27,
+     "pdr": 1.4519273193534123,
+     "se": 1.228114711547001,
+     "intercept": 0.0013305281145961573,
+     "r2": 0.05294755467187351,
+     "p_value": 0.24823313628572988
+    },
+    "market_adjusted_slope": {
+     "n": 27,
+     "pdr": 1.5579973091665826,
+     "se": 1.3065918223233481,
+     "intercept": 0.0016989796994407863,
+     "r2": 0.05381338680681564,
+     "p_value": 0.24429485204666723
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 41,
-   "mean": 2.7915997758934226,
-   "median": 1.0964912280701755,
+   "n": 27,
+   "mean": 3.4073490159057944,
+   "median": 1.168316831683161,
    "slope": {
-    "n": 41,
-    "pdr": 1.0506783765380507,
-    "se": 0.5279155872334654,
-    "intercept": -0.0014250435394720287,
-    "r2": 0.09220101541534735,
-    "p_value": 0.053606919145200424
+    "n": 27,
+    "pdr": 1.658402392801328,
+    "se": 0.9927078513111621,
+    "intercept": 0.0005296545786844286,
+    "r2": 0.10042342874389301,
+    "p_value": 0.10727808690711546
    }
   },
   "underlying": {
-   "n": 41,
-   "mean": 2.01258674673152,
+   "n": 27,
+   "mean": 2.185138411968263,
    "median": 1.2249540828198346,
    "slope": {
-    "n": 41,
-    "pdr": 0.9763021261197335,
-    "se": 0.4339694094548482,
-    "intercept": -0.0016582424974145894,
-    "r2": 0.11486673846589932,
-    "p_value": 0.030185914021578556
+    "n": 27,
+    "pdr": 1.777671312896637,
+    "se": 0.7948167664473164,
+    "intercept": 0.0008314388047947338,
+    "r2": 0.16673028019465588,
+    "p_value": 0.034473550083654284
    }
   }
  },
  "confounder_clean_2000": {
   "events_total": 185,
-  "events_usable": 125,
+  "events_usable": 58,
   "yield_floor_pct": null,
   "clean_2000": true,
   "confounder_clean": true,
-  "n_after_floor": 24,
+  "n_after_floor": 14,
   "robustness_2000": {
-   "n": 24,
-   "loo_min": 0.4056561826529842,
-   "loo_max": 0.8868122050568183,
+   "n": 14,
+   "loo_min": 1.0047569825145732,
+   "loo_max": 1.3623338850651836,
    "drop_top3_yield": {
-    "n": 21,
-    "pdr": 0.6520176467114825,
-    "se": 0.42559834174086614,
-    "intercept": 0.0011786468222408806,
-    "r2": 0.10994648834887284,
-    "p_value": 0.1420034849618381
+    "n": 11,
+    "pdr": 1.5034284387873305,
+    "se": 0.9020130105302743,
+    "intercept": 0.0025385017216406087,
+    "r2": 0.2358666603069759,
+    "p_value": 0.1299144100992571
    },
-   "ratio_of_sums": 0.6038241494996244,
+   "ratio_of_sums": 0.9076890013622352,
    "top3_symbols": [
-    "rPM",
-    "rMO",
-    "rBITI"
+    "rDIS",
+    "rSCHD",
+    "rPM"
    ]
   },
   "exclusions": [
    {
     "event_id": "rBITI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rBITO-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCLOI-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHYS-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSGOV-2026-06-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-09 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTLT-2026-06-01-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-06-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-16-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-17-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-06-23-1",
@@ -2256,7 +4104,7 @@
    },
    {
     "event_id": "rSATA-2026-06-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-06-23-1",
@@ -2272,11 +4120,11 @@
    },
    {
     "event_id": "rSATA-2026-06-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-06-26-1",
@@ -2284,107 +4132,375 @@
    },
    {
     "event_id": "rSATA-2026-06-26-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-06-30-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-01-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-02-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-06-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-07-07-1",
-    "reason": "no bar at or before the pre-event cutoff"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSOXS-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSTRC-2026-07-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rTZA-2026-07-15-1",
     "reason": "event type REVERSE_SPLIT is not a cash dividend"
+   },
+   {
+    "event_id": "rSATA-2026-07-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-22-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-23-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-29-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-30-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-07-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-08-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-05-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-06-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-07-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-12-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-13-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-17-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-18-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-19-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-20-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-21-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-24-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-25-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rDGRW-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-26-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-27-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-28-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-08-31-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rBITO-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rCLOI-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rHYS-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSGOV-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTLT-2026-09-01-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-02-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-03-1",
     "reason": "event type SPLIT is not a cash dividend"
    },
    {
+    "event_id": "rSATA-2026-09-03-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-04-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-08-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-09-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-10-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-11-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-14-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rKO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rMO-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSATA-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rSTRC-2026-09-15-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rNXPI-2026-09-16-1",
     "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
+    "event_id": "rSATA-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
+    "event_id": "rTSM-2026-09-16-1",
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
+   },
+   {
     "event_id": "rCRM-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rHPE-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-17-1",
-    "reason": "no post-event bars on the ex-date"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-18-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAVGO-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rVST-2026-09-21-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rAPH-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-09-03 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-09-22-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rGFS-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rLRCX-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-23-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTX-2026-09-24-1",
-    "reason": "no 1m bars at/after openTime 2026-06-02 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMDT-2026-09-25-1",
@@ -2392,144 +4508,184 @@
    },
    {
     "event_id": "rSATA-2026-09-25-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-28-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSATA-2026-09-29-1",
-    "reason": "no 1m bars at/after openTime 2026-07-07 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rMPWR-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-11 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTRC-2026-09-30-1",
-    "reason": "no 1m bars at/after openTime 2026-06-23 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rPWR-2026-10-01-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCSCO-2026-10-02-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rCMCSA-2026-10-07-1",
-    "reason": "no 1m bars at/after openTime 2026-06-10 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rINTU-2026-10-08-1",
-    "reason": "no 1m bars at/after openTime 2026-06-04 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rTSM-2026-12-10-1",
-    "reason": "no 1m bars at/after openTime 2026-06-01 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2026-12-15-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    },
    {
     "event_id": "rSTM-2027-03-16-1",
-    "reason": "no 1m bars at/after openTime 2026-06-08 in window (0 pre-listing bars dropped)"
+    "reason": "cash amount basis is UNRESOLVED; gross basis required"
    }
   ],
   "rungs": {
    "overnight_2000": {
-    "n": 24,
-    "mean": 0.31777352148826127,
-    "median": 0.7660396039603992,
+    "n": 14,
+    "mean": 0.3454473552115111,
+    "median": 0.9215627835162036,
     "slope": {
-     "n": 24,
-     "pdr": 0.6601348051491587,
-     "se": 0.20535294477744373,
-     "intercept": 0.001146130797319833,
-     "r2": 0.3195991216710665,
-     "p_value": 0.003991963527302742
+     "n": 14,
+     "pdr": 1.2218752666773305,
+     "se": 0.3956621568864649,
+     "intercept": 0.002005774187659767,
+     "r2": 0.4428153214385634,
+     "p_value": 0.009394077085211606
+    },
+    "market_adjusted_slope": {
+     "n": 14,
+     "pdr": 1.218432373161717,
+     "se": 0.3739734095323359,
+     "intercept": 0.0016476035548167829,
+     "r2": 0.4693795411282492,
+     "p_value": 0.006853087972459994
     }
    },
    "premarket_0400": {
-    "n": 24,
-    "mean": -2.744146808862554,
-    "median": 0.8634796505813127,
+    "n": 14,
+    "mean": -5.454794016932678,
+    "median": 0.11499999999999962,
     "slope": {
-     "n": 24,
-     "pdr": 1.7555392351561365,
-     "se": 0.42372146237895614,
-     "intercept": 0.006978152710087576,
-     "r2": 0.4382832360798132,
-     "p_value": 0.00042534652975845575
+     "n": 14,
+     "pdr": 2.913825920409546,
+     "se": 1.080647376652472,
+     "intercept": 0.012849810162584633,
+     "r2": 0.3772837772609903,
+     "p_value": 0.01943943958329965
+    },
+    "market_adjusted_slope": {
+     "n": 14,
+     "pdr": 3.044062770188064,
+     "se": 1.0905680407330673,
+     "intercept": 0.012693576711001416,
+     "r2": 0.3936684416986078,
+     "p_value": 0.01630629673430555
     }
    },
    "open_0930": {
-    "n": 24,
-    "mean": -0.3654413698406005,
-    "median": 1.1990594059405852,
+    "n": 14,
+    "mean": -2.2085863430597277,
+    "median": 1.1335151882535153,
     "slope": {
-     "n": 24,
-     "pdr": 1.390048981784925,
-     "se": 0.6777055256925744,
-     "intercept": 0.0003219642793298163,
-     "r2": 0.16053138034695152,
-     "p_value": 0.05235173400732528
+     "n": 14,
+     "pdr": 3.09998254689302,
+     "se": 1.8552454247455605,
+     "intercept": 0.006485728834286599,
+     "r2": 0.18875079769427067,
+     "p_value": 0.12058941586527046
+    },
+    "market_adjusted_slope": {
+     "n": 14,
+     "pdr": 3.2639231377914797,
+     "se": 1.882121553565371,
+     "intercept": 0.007117284703530671,
+     "r2": 0.20039200532071202,
+     "p_value": 0.1084761993029681
     }
    },
    "open_1000": {
-    "n": 24,
-    "mean": -2.471952839915451,
+    "n": 14,
+    "mean": -5.602630491137929,
     "median": 1.2754950495049755,
     "slope": {
-     "n": 24,
-     "pdr": 1.5379252373486572,
-     "se": 0.7290965623265032,
-     "intercept": 0.004350368277829067,
-     "r2": 0.16822274197863368,
-     "p_value": 0.046522389662397245
+     "n": 14,
+     "pdr": 2.773243573884104,
+     "se": 2.0061034206096244,
+     "intercept": 0.010560327588307819,
+     "r2": 0.1373756774412606,
+     "p_value": 0.19203581611575796
+    },
+    "market_adjusted_slope": {
+     "n": 14,
+     "pdr": 2.487872001262309,
+     "se": 2.2486054584015416,
+     "intercept": 0.009109320975046537,
+     "r2": 0.09256829160155082,
+     "p_value": 0.29023774740310526
     }
    },
    "close_1600": {
-    "n": 24,
-    "mean": 2.80700360065865,
-    "median": 1.4736979052449013,
+    "n": 14,
+    "mean": 2.603794673647421,
+    "median": 1.1198097968132168,
     "slope": {
-     "n": 24,
-     "pdr": 0.3000412383893025,
-     "se": 0.6536922358236797,
-     "intercept": -0.005347734870577738,
-     "r2": 0.00948535231669581,
-     "p_value": 0.650740705314373
+     "n": 14,
+     "pdr": 0.6512621047906286,
+     "se": 1.8393011999493214,
+     "intercept": -0.0023535284610508565,
+     "r2": 0.010339767702135858,
+     "p_value": 0.729421656474428
+    },
+    "market_adjusted_slope": {
+     "n": 14,
+     "pdr": 1.3425706780382693,
+     "se": 2.2249595199034036,
+     "intercept": 0.00025482079009538344,
+     "r2": 0.02944877960412793,
+     "p_value": 0.5574673786048644
     }
    }
   },
   "rtoken_literature_convention": {
-   "n": 24,
-   "mean": -0.03862551932646063,
-   "median": 1.4728915662650448,
+   "n": 14,
+   "mean": -1.8942027794221101,
+   "median": 1.5160888451766072,
    "slope": {
-    "n": 24,
-    "pdr": 1.0545614658060172,
-    "se": 0.6891768009018858,
-    "intercept": -0.0017274631457891597,
-    "r2": 0.0961914078727206,
-    "p_value": 0.1402263998928117
+    "n": 14,
+    "pdr": 3.0816323331248103,
+    "se": 1.8261390867221645,
+    "intercept": 0.0050426586305402825,
+    "r2": 0.1917939098238993,
+    "p_value": 0.11730239665325212
    }
   },
   "underlying": {
-   "n": 24,
-   "mean": -0.570377860071765,
-   "median": 1.462258141320031,
+   "n": 14,
+   "mean": -2.61425131995727,
+   "median": 1.7146875290643602,
    "slope": {
-    "n": 24,
-    "pdr": 0.983955963324357,
-    "se": 0.5401687999374427,
-    "intercept": -0.0010817485991287028,
-    "r2": 0.1310571883978138,
-    "p_value": 0.08214651181667597
+    "n": 14,
+    "pdr": 3.209679595064402,
+    "se": 1.3128180976985906,
+    "intercept": 0.0064359860932887624,
+    "r2": 0.3324962320553396,
+    "p_value": 0.03088117759137605
    }
   }
  }
