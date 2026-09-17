@@ -4,7 +4,7 @@ EXNIGHT is a research and guarded execution prototype for Bitget Reality rTokens
 not a blanket production trading system. The saved event-study outputs are measurement
 artifacts and must be regenerated after source-rule changes.
 
-Current code commit: `888a12a`. Validation on the VPS: 56 tests pass. A no-submit live-market
+Current code/docs commit: `fd40d61`. Validation on the VPS: 56 tests pass. A no-submit live-market
 dry run for `RAVGOUSDT` completed and produced the expected order payload/evidence; no real
 order was sent. A $10 request was correctly rejected after precision rounding put it below
 the exchange minimum, and a $15 request passed the dry-run guard.
@@ -32,18 +32,23 @@ the exchange minimum, and a $15 request passed the dry-run guard.
 Use the VPS virtual environment:
 
     .venv/bin/python -m pytest -q
-    .venv/bin/python -m exnight.calendar --source reality --start-date 2026-06-01 --output /tmp/reality.jsonl
-    .venv/bin/python -m exnight.eventstudy --ledger /tmp/reality.jsonl
-    .venv/bin/python -m exnight.analysis --results data/results/event_results.json
-    .venv/bin/python -m exnight.costs
+    .venv/bin/python -m exnight.calendar --source reality --start-date 2026-06-01 --output data/ledger/reality_notice59.jsonl
+    .venv/bin/python -m exnight.eventstudy --ledger data/ledger/reality_notice59.jsonl --output data/results/event_results_reality.json
+    .venv/bin/python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv
+    .venv/bin/python -m exnight.analysis --results data/results/event_results_reality.json --confounders data/results/confounders_reality.csv --tag _reality
+    .venv/bin/python -m exnight.costs --results data/results/event_results_reality.json --ledger data/ledger/reality_notice59.jsonl --output data/results/event_costs_reality.csv
+    .venv/bin/python -m exnight.strategy
 
 Depth collection can run repeatedly; it stores raw responses in a microsecond-stamped run
 directory and deduplicates the results CSV by timestamp, symbol and session.
 
-The saved Reality ledger and Reality event-study reports still contain the pre-fix derived
-artifacts. A temporary post-fix rebuild validated 185 actions, 124 unresolved cash bases and
-58 usable events, but it was intentionally not installed when this handoff was stopped.
-Regenerate and review the downstream reports before using any strategy output.
+The corrected Reality artifacts are now installed and downstream reports have been regenerated:
+185 actions, 124 unresolved cash bases, 58 usable event rows, and 27 confounder-clean rows.
+The current cost report has 870 event/rung/notional scenarios, 351 fully priced. The current
+strategy report has 174 ex-post rows, 81 priced rows, 6 EXIT rows and 75 HOLD rows; pending
+BUY decisions remain suppressed because the eligibility snapshot time is unpublished and/or
+the cash basis is unresolved. These are still measurement and guarded-execution outputs, not
+proof of a profitable or historically executable strategy.
 
 ## Important limits
 
@@ -69,5 +74,6 @@ quantity, it requires:
 Use a small IOC/FOK limit order first. Confirm the live symbol, available balance, minimum
 notional, displayed quote and exact computed quantity immediately before submission.
 
-During this session the SSH service remained active, two SSH sessions and two Claude
-processes remained present, and the hourly depth task was not disabled or modified.
+During this work no SSH service, login key, sudo rule, firewall, VSCode connection, Claude
+process, or scheduled task was disabled, restarted, or modified. Existing SSH sessions were
+left untouched; process counts can change naturally when a task finishes.
