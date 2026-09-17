@@ -4,7 +4,7 @@ EXNIGHT is a research and guarded execution prototype for Bitget Reality rTokens
 not a blanket production trading system. The saved event-study outputs are measurement
 artifacts and must be regenerated after source-rule changes.
 
-Current code/docs commit: `fd40d61`. Validation on the VPS: 56 tests pass. A no-submit live-market
+Current project commit: `052ef07` (source hardening in `888a12a`). Validation on the VPS: 56 tests pass. A no-submit live-market
 dry run for `RAVGOUSDT` completed and produced the expected order payload/evidence; no real
 order was sent. A $10 request was correctly rejected after precision rounding put it below
 the exchange minimum, and a $15 request passed the dry-run guard.
