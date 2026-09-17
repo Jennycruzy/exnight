@@ -75,7 +75,7 @@ def test_expected_impact_uses_real_new_york_timezone():
         bitget_snapshot_time=None, payment_date=None,
         gross_dividend_per_share=Decimal("0.15"), withholding_rate=Decimal("0.30"),
         net_dividend_per_share=Decimal("0.105"), cash_dividend_per_share=Decimal("0.15"),
-        cash_dividend_basis="GROSS", eligibility_verified=False, weekend_list_2026_07_17=None,
+        cash_dividend_basis="GROSS", net_dividend_verified=True, eligibility_verified=False, weekend_list_2026_07_17=None,
         source_key="test", source_url="https://example.test", label="OBSERVED",
     )
     assert expected_impact("RTESTUSDT", dt.datetime(2026, 1, 6, 4, 30, tzinfo=dt.UTC), [event]) == Decimal(0)

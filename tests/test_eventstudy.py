@@ -35,6 +35,7 @@ def _event(*, basis="UNRESOLVED", event_type=EventType.CASH_DIV):
         label="OBSERVED",
         cash_dividend_per_share=Decimal("0.15") if event_type is EventType.CASH_DIV else None,
         cash_dividend_basis=basis,
+        net_dividend_verified=basis == "GROSS",
         adjustment_ratio=Decimal("2") if event_type is EventType.SPLIT else None,
     )
 

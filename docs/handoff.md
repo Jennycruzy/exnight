@@ -33,6 +33,7 @@ Use the VPS virtual environment:
 
     .venv/bin/python -m pytest -q
     .venv/bin/python -m exnight.calendar --source reality --start-date 2026-06-01 --output data/ledger/reality_notice59.jsonl
+    .venv/bin/python -m exnight.basis          # -> data/ledger/reality_notice59_resolved.jsonl, data/results/basis_resolution.csv
     .venv/bin/python -m exnight.eventstudy --ledger data/ledger/reality_notice59.jsonl --output data/results/event_results_reality.json
     .venv/bin/python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv
     .venv/bin/python -m exnight.analysis --results data/results/event_results_reality.json --confounders data/results/confounders_reality.csv --tag _reality
@@ -61,6 +62,35 @@ carry a real Reality book only for symbols with a public book and only ≈12:00�
 empty 00:00–10:00 UTC (the overnight window) and empty all day for routed-liquidity symbols
 (RSPY, RBITI). `publicTrade`/`trade` are empty everywhere. Usable for the 19:59 ET sell-leg
 spread on real-book symbols only.
+
+## Basis resolution and forward verdicts (2026-09-17, item 2)
+
+`exnight/basis.py` resolves gross basis for rows the builder left UNRESOLVED, without
+changing the builder rule. Gross and net are separate questions:
+
+- Gross tiers: 1 = 2026-07-24 notice match (builder); 2 = Reality amount and ex-date match
+  an issuer-declared (Nasdaq) or realised (Yahoo) dividend; 3 = no issuer row yet, but the
+  perp settlement notice (first-party, amount only), the issuer's announced next ex-date and
+  the prior realised amount all agree (ASSUMED "unchanged"). Agreement between Bitget
+  surfaces alone never resolves a basis. Issuer disagreement always leaves UNRESOLVED.
+- Net: only tier 1 has a documented rate (30%). Others carry withholding base 0.30 with
+  range [0, 0.30] (ASSUMED, per the rToken FAQ saved as `rtoken_faq_2026_06_23`). A verdict
+  is issued only if unchanged across the range; `exit_edge_lower_zero_net` shows whether
+  HOLD would survive full withholding.
+- Result on the Reality ledger: 182 cash rows -> tier 1: 61, tier 2: 109, tier 3: 1,
+  unresolved 11 (rTSM 2026-09-16 issuer ratio 0.79; rCRM/rHPE 2026-09-17 no issuer row yet
+  and no first-party corroboration; rAPH, rSTM, rMDT, rMPWR, rPWR, rTSM Dec, rSTM Dec/Mar
+  likewise). Raw evidence under `data/raw/basis/`.
+- Ex-ante (`signals.csv`, 25 pending events): 24 HOLD rows, 51 NO_SIGNAL. rAVGO 2026-09-21
+  (tier 2): HOLD at $1k/$5k/$25k, invariant to withholding and negative even at zero net
+  (-0.55/-1.47/-3.17 per share; cost 1.12-3.73 vs 0.65 dividend). rVST 2026-09-21 (tier 3):
+  HOLD at $1k (zero-net edge -0.18), NO_SIGNAL at $5k/$25k because only $1,410 is visible at
+  bid1 on a ticker-only book. Remaining NO_SIGNAL reasons: 24 rows basis UNRESOLVED (8
+  events), 27 rows notional exceeds visible top-of-book on ticker-only symbols. The only
+  HOLD that depends on the withholding assumption is rSTRC 2026-09-30 at $1k.
+- The ex-post study (`event_results_reality.json`) still uses the 58 tier-1 events; the
+  resolved ledger admits up to 170 GROSS rows and has not yet been re-run through the
+  event study.
 
 ## Important limits
 

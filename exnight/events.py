@@ -12,6 +12,10 @@ Label = Literal["DOCUMENTED", "OBSERVED", "ASSUMED"]
 CashDividendBasis = Literal["GROSS", "NET", "UNRESOLVED"]
 EventStatus = Literal["pending", "ongoing", "completed", "paid", "unknown"]
 
+NOTICE_MATCH_NOTE = "source amount matches the saved Bitget notice"
+NOTICE_TABLE_NOTE = "withholding 30% DOCUMENTED from the notice's Distribution Rules"
+NOTICE_EVIDENCE = "bitget_notice_2026_07_24: amount and ex-date match; 30% withholding DOCUMENTED"
+
 
 class EventType(StrEnum):
     CASH_DIV = "CASH_DIV"
@@ -57,6 +61,17 @@ class CorporateAction(BaseModel):
     source_endpoint: str | None = None
     source_fetched_at: dt.datetime | None = None
 
+    # Basis resolution (exnight.basis). The gross question and the net question are kept
+    # separate: basis_tier says how the gross amount was established, and
+    # net_dividend_verified says whether the withholding applied to it is documented for
+    # this event rather than assumed. When it is assumed, the withholding range gives
+    # the bounds a verdict must be invariant to.
+    basis_tier: int | None = None
+    basis_evidence: list[str] = Field(default_factory=list)
+    net_dividend_verified: bool = False
+    withholding_rate_low: Decimal | None = None
+    withholding_rate_high: Decimal | None = None
+
     @property
     def ex_dividend_date(self) -> dt.date:
         """Spec-facing name for the existing exchange ex-date field."""
@@ -80,6 +95,13 @@ class CorporateAction(BaseModel):
             if self.cash_dividend_per_share is None:
                 raise ValueError(f"{self.event_id}: cash dividend without source amount")
             if self.cash_dividend_basis == "GROSS":
+                if self.basis_tier is None and any(n.startswith(NOTICE_MATCH_NOTE) or n == NOTICE_TABLE_NOTE
+                                                   for n in self.notes):
+                    # Rows written before basis resolution existed: the only GROSS source
+                    # was the 2026-07-24 notice, which documents the 30% withholding.
+                    self.basis_tier = 1
+                    self.net_dividend_verified = True
+                    self.basis_evidence = list(self.basis_evidence) or [NOTICE_EVIDENCE]
                 if self.gross_dividend_per_share is None or self.withholding_rate is None:
                     raise ValueError(f"{self.event_id}: gross cash dividend without withholding")
                 if self.cash_dividend_per_share != self.gross_dividend_per_share:
@@ -87,6 +109,12 @@ class CorporateAction(BaseModel):
                 expect = self.gross_dividend_per_share * (1 - self.withholding_rate)
                 if self.net_dividend_per_share != expect:
                     raise ValueError(f"{self.event_id}: net {self.net_dividend_per_share} != {expect}")
+                if not self.net_dividend_verified:
+                    lo, hi = self.withholding_rate_low, self.withholding_rate_high
+                    if lo is None or hi is None:
+                        raise ValueError(f"{self.event_id}: unverified net dividend needs a withholding range")
+                    if not (0 <= lo <= self.withholding_rate <= hi <= 1):
+                        raise ValueError(f"{self.event_id}: withholding range must bracket the base rate")
             elif self.cash_dividend_basis == "NET":
                 if self.net_dividend_per_share is None:
                     self.net_dividend_per_share = self.cash_dividend_per_share

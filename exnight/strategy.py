@@ -16,6 +16,16 @@ carries NO_SIGNAL and the reason. Nothing is defaulted.
           while `eligibility_verified` is false, because Bitget has not published the
           snapshot time; the row shows what the arithmetic would be, labelled suppressed.
 
+Net entitlement. Only events matched to the 2026-07-24 notice have a documented
+withholding rate. For the rest the ledger carries a range (exnight.basis), and the
+holder's net is bounded by net_low = gross x (1 - w_high) and net_high = gross x (1 - w_low).
+A verdict is issued only if it is the same across that range:
+  EXIT  if the lower-bound edge is positive even at net_high (the most the holder forfeits)
+  HOLD  if the lower-bound edge is not positive even at net_low (the least they forfeit)
+  otherwise NO_SIGNAL "net entitlement unresolved" with both edges shown.
+`exit_edge_lower_zero_net` reports the edge if the dividend were withheld entirely; when
+that is negative, HOLD does not depend on the withholding assumption at all.
+
 Ex-post mode applies the same rule to realised events, replacing the estimate with the
 realised 20:00 PDR, so the rule's hit rate can be reported instead of asserted.
 """
@@ -74,16 +84,26 @@ def round_trip_cost(samples: dict, spot: str | None, sell_price: float, fee: flo
 def verdict_row(*, event_id: str, symbol: str, spot: str | None, ex_date: str, gross: float | None, net: float | None,
                 basis: str, eligible: bool, price: float | None, price_label: str, fee: float, fee_label: str,
                 drop_ratio: float, drop_se: float, drop_label: str, samples: dict, notional: int,
-                buy_price: float | None = None) -> dict:
+                buy_price: float | None = None, net_low: float | None = None, net_high: float | None = None,
+                net_verified: bool = True, basis_tier: int | None = None) -> dict:
+    if net_low is None:
+        net_low = net
+    if net_high is None:
+        net_high = net
     row = dict(event_id=event_id, symbol=symbol, spot_symbol=spot, ex_date=ex_date, notional_usd=notional,
-               gross_dividend=gross, net_dividend=net, basis=basis, price=price, buy_price=buy_price,
+               gross_dividend=gross, net_dividend=net, net_low=net_low, net_high=net_high, net_verified=net_verified,
+               basis=basis, basis_tier=basis_tier, price=price, buy_price=buy_price,
                price_label=price_label,
                fee_rate=fee, fee_label=fee_label, drop_ratio=drop_ratio, drop_se=drop_se, drop_label=drop_label,
-               cost_per_share=None, exit_edge_lower=None, exit_edge_point=None, buy_edge_point=None,
+               cost_per_share=None, exit_edge_lower=None, exit_edge_point=None,
+               exit_edge_lower_net_low=None, exit_edge_lower_net_high=None, exit_edge_lower_zero_net=None,
+               buy_edge_point=None,
                verdict="NO_SIGNAL", buy="SUPPRESSED: eligibility snapshot time unpublished" if not eligible else None,
                reason=None, **{k: None for k in ("sell_book_ts", "sell_book_source", "buy_book_ts", "buy_book_source")})
     if basis != "GROSS" or gross is None or net is None:
         row["reason"] = f"cash basis {basis}; gross basis required"; return row
+    if not all(math.isfinite(x) for x in (net_low, net_high)) or not (net_low <= net <= net_high):
+        row["reason"] = "net entitlement range must bracket the base net"; return row
     if price is None:
         row["reason"] = "no reference price"; return row
     if not math.isfinite(price) or price <= 0:
@@ -97,13 +117,35 @@ def verdict_row(*, event_id: str, symbol: str, spot: str | None, ex_date: str, g
     if cost is None:
         row["reason"] = why; return row
     row["cost_per_share"] = cost
+    lower_drop = (drop_ratio - Z * drop_se) * gross
     row["exit_edge_point"] = drop_ratio * gross - net - cost
-    row["exit_edge_lower"] = (drop_ratio - Z * drop_se) * gross - net - cost
+    row["exit_edge_lower"] = lower_drop - net - cost
+    row["exit_edge_lower_net_low"] = lower_drop - net_low - cost
+    row["exit_edge_lower_net_high"] = lower_drop - net_high - cost
+    row["exit_edge_lower_zero_net"] = lower_drop - cost
     row["buy_edge_point"] = net - drop_ratio * gross - cost
-    row["verdict"] = "EXIT" if row["exit_edge_lower"] > 0 else "HOLD"
+    if row["exit_edge_lower_net_high"] > 0:
+        row["verdict"] = "EXIT"          # justified even if the holder would have kept the most
+    elif row["exit_edge_lower_net_low"] <= 0:
+        row["verdict"] = "HOLD"          # not justified even if the holder would have kept the least
+    else:
+        row["reason"] = (f"net entitlement unresolved: EXIT edge {row['exit_edge_lower_net_low']:+.4f}/share at "
+                         f"net={net_low:.4f} but {row['exit_edge_lower_net_high']:+.4f} at net={net_high:.4f}")
     if eligible and row["buy_edge_point"] > 0:
         row["buy"] = "BUY"
     return row
+
+
+def net_bounds(e: dict) -> dict:
+    """net / net_low / net_high / net_verified / basis_tier from a ledger row (JSON form)."""
+    gross = float(e["gross_dividend_per_share"]) if e.get("gross_dividend_per_share") is not None else None
+    net = float(e["net_dividend_per_share"]) if e.get("net_dividend_per_share") is not None else None
+    verified = bool(e.get("net_dividend_verified"))
+    lo, hi = e.get("withholding_rate_low"), e.get("withholding_rate_high")
+    if gross is None or net is None or verified or lo is None or hi is None:
+        return dict(net=net, net_low=net, net_high=net, net_verified=verified, basis_tier=e.get("basis_tier"))
+    return dict(net=net, net_low=gross * (1 - float(hi)), net_high=gross * (1 - float(lo)),
+                net_verified=False, basis_tier=e.get("basis_tier"))
 
 
 def ex_ante(pending: list[dict], tickers: dict[str, dict], samples: dict, est: dict, fee_by_spot: dict[str, float]) -> pd.DataFrame:
@@ -116,7 +158,7 @@ def ex_ante(pending: list[dict], tickers: dict[str, dict], samples: dict, est: d
             rows.append(verdict_row(
                 event_id=e["event_id"], symbol=e["symbol"], spot=spot, ex_date=e["exchange_ex_date"],
                 gross=float(e["gross_dividend_per_share"]) if e["gross_dividend_per_share"] is not None else None,
-                net=float(e["net_dividend_per_share"]) if e["net_dividend_per_share"] is not None else None,
+                **net_bounds(e),
                 basis=e["cash_dividend_basis"], eligible=bool(e["eligibility_verified"]),
                 price=last, price_label="OBSERVED ticker lastPrice at run time",
                 fee=fee_by_spot[spot], fee_label="OBSERVED live symbol takerFeeRate",
@@ -138,7 +180,7 @@ def ex_post(results: list[dict], ledger_by_id: dict[str, dict], samples: dict) -
         for n in NOTIONALS:
             rows.append(verdict_row(
                 event_id=r["event_id"], symbol=r["symbol"], spot=e["spot_symbol"], ex_date=r["ex_date"],
-                gross=r["gross_dividend"], net=r["net_dividend"], basis=e["cash_dividend_basis"],
+                gross=r["gross_dividend"], **net_bounds(e), basis=e["cash_dividend_basis"],
                 eligible=bool(e["eligibility_verified"]), price=r["p_pre"], price_label="OBSERVED p_pre",
                 fee=float(r["fee_rate"]), fee_label=r["fee_label"],
                 drop_ratio=float(r["pdr"][EXIT_RUNG]), drop_se=0.0, drop_label=f"REALISED {EXIT_RUNG} PDR",
@@ -150,7 +192,8 @@ def main() -> None:
     import argparse
     from .market import BitgetPublic
     ap = argparse.ArgumentParser(description="Issue BUY/EXIT/HOLD verdicts")
-    ap.add_argument("--ledger", type=Path, default=ROOT / "data" / "ledger" / "reality_notice59.jsonl")
+    ap.add_argument("--ledger", type=Path, default=ROOT / "data" / "ledger" / "reality_notice59_resolved.jsonl",
+                    help="ledger after exnight.basis; carries basis tiers and withholding ranges")
     ap.add_argument("--results", type=Path, default=RESULTS / "event_results_reality.json")
     ap.add_argument("--summary", type=Path, default=RESULTS / "summary_reality.json")
     ap.add_argument("--sample", default="floor_None", help="summary block supplying the 20:00 estimate")

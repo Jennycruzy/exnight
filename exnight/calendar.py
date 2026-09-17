@@ -19,7 +19,7 @@ from decimal import Decimal
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from .events import CorporateAction, EventType
+from .events import NOTICE_EVIDENCE, NOTICE_MATCH_NOTE, CorporateAction, EventType
 from .market import BitgetPublic, SpotSymbol
 from .sources import SOURCES
 
@@ -139,6 +139,9 @@ def build_ledger(universe: dict[str, SpotSymbol]) -> list[CorporateAction]:
                 ex_date_timezone="UNVERIFIED",
                 cash_dividend_per_share=gross,
                 cash_dividend_basis="GROSS",
+                basis_tier=1,
+                basis_evidence=[NOTICE_EVIDENCE],
+                net_dividend_verified=True,
                 cash_dividend_timestamp=None,
                 adjustment_ratio=None,
                 trading_halt_start=None,
@@ -253,9 +256,10 @@ def _reality_action(
             basis = "GROSS"
             withholding = WITHHOLDING_2026_07_24
             net = gross * (1 - withholding)
-            common["notes"].append("source amount matches the saved Bitget notice within rounding; gross basis is OBSERVED for this row"
+            common["notes"].append(NOTICE_MATCH_NOTE + " within rounding; gross basis is OBSERVED for this row"
                                    + ("" if amount == notice["gross_dividend_per_share"]
                                       else f"; notice value {notice['gross_dividend_per_share']} differs by rounding only"))
+            common.update(basis_tier=1, basis_evidence=[NOTICE_EVIDENCE], net_dividend_verified=True)
         else:
             gross = None
             basis = "UNRESOLVED"
