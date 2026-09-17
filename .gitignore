@@ -11,3 +11,4 @@ __pycache__/
 p.html
 exnight.egg-info/
 *.lock
+data/raw/recorder/cron.log

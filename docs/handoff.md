@@ -92,6 +92,25 @@ changing the builder rule. Gross and net are separate questions:
   resolved ledger admits up to 170 GROSS rows and has not yet been re-run through the
   event study.
 
+## Frozen rule and forward recording (2026-09-17)
+
+- `strategy/strategy_v1.json` is the first frozen rule: 04:00 ET rung, estimate from all 127
+  issuer-verified events (0.966 ± 0.183), Z = 2, net range [0, 0.30], sessions, notionals and
+  the sha256 of the code and inputs. It is never edited; a change is `strategy_v2.json`.
+  `python -m exnight.strategy --rule strategy/strategy_v1.json --results data/results/event_results_resolved.json --tag _v1`
+  writes `signals_v1.csv` / `signals_expost_v1.csv`; `run_manifest_v1.json` records the commit
+  and hashes of that run. Decisions on record before the events: rAVGO 2026-09-21 HOLD at all
+  notionals; rVST 2026-09-21 HOLD at $1k, NO_SIGNAL above.
+- `scripts/record_event.py` samples ticker + public book for RAVGOUSDT, RVSTUSDT, RSATAUSDT once
+  a minute from a system crontab (`crontab -l`), 2026-09-17 09:00Z to 2026-09-21 14:30Z, into
+  `data/raw/recorder/20260921_rAVGO_rVST/<date>.jsonl` (append-only, raw). Commit the files at
+  milestones; `cron.log` is ignored. rVST and rSATA show an empty public book with a live
+  ticker (routed liquidity), rAVGO a real book — as in the depth samples.
+- Scoring after 2026-09-21: fetch the 1m candles, rerun the event study for the two events,
+  apply the rule with the realised 04:00 PDR, compare with `signals_v1.csv`. The rule file and
+  the recorded signals are not touched. A Monday ex-date: the adjustment may land in the
+  weekend session (rAVGO is on the 24/7 list; rVST is not) rather than Friday 20:00.
+
 ## Important limits
 
 - No historical order book exists for the event dates. Current book/ticker observations do
