@@ -74,6 +74,19 @@ def _levels(row: dict, side: str) -> tuple[list[tuple[float, float]], str]:
     return [], "none"
 
 
+def _mid(row: dict) -> float | None:
+    book = row.get("orderbook") or {}
+    asks = [_number(level[0]) for level in book.get("asks") or [] if isinstance(level, (list, tuple)) and len(level) >= 2]
+    bids = [_number(level[0]) for level in book.get("bids") or [] if isinstance(level, (list, tuple)) and len(level) >= 2]
+    asks = [value for value in asks if value is not None]
+    bids = [value for value in bids if value is not None]
+    if asks and bids:
+        return (min(asks) + max(bids)) / 2
+    ticker = row.get("ticker") or {}
+    bid, ask = _number(ticker.get("bid1Price")), _number(ticker.get("ask1Price"))
+    return (bid + ask) / 2 if bid is not None and ask is not None and ask >= bid else None
+
+
 def walk(row: dict | None, side: str, notional: int) -> tuple[float | None, str | None, str]:
     if row is None:
         return None, "missing sample", "none"
@@ -86,7 +99,7 @@ def walk(row: dict | None, side: str, notional: int) -> tuple[float | None, str 
         quantity_total += take / price
         remaining -= take
         if remaining <= 1e-9:
-            mid = _price(row)[0]
+            mid = _mid(row)
             if mid is None or mid <= 0:
                 return None, "no valid mid price", source
             return (notional / quantity_total / mid - 1) if side == "buy" else (1 - notional / quantity_total / mid), None, source
@@ -189,11 +202,13 @@ def main() -> int:
     wanted = set(args.symbols)
     events = [e for e in read_ledger(args.ledger)
               if e.spot_symbol in wanted and e.exchange_ex_date == args.event_date]
+    missing_events = sorted(wanted - {e.spot_symbol for e in events})
     scored = [score_event(e, sorted(by_symbol.get(e.spot_symbol or "", [])), rule, frozen,
                           max_lateness_seconds=args.max_lateness_seconds,
                           notionals=tuple(rule["notionals_usd"])) for e in events]
-    report.update(rule_id=rule["rule_id"], results=scored,
-                  status="PASS" if report["status"] == "PASS" and all(r["complete"] for r in scored) else "INCOMPLETE")
+    report.update(rule_id=rule["rule_id"], results=scored, missing_events=missing_events,
+                  status="PASS" if report["status"] == "PASS" and not missing_events
+                  and all(r["complete"] for r in scored) else "INCOMPLETE")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     tmp = args.output.with_name(args.output.name + ".tmp")
     tmp.write_text(json.dumps(report, indent=1, default=str) + "\n")
