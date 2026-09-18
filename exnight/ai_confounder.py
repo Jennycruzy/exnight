@@ -220,8 +220,17 @@ def user_prompt(e: CorporateAction, as_of: dt.datetime, docs: list[dict]) -> str
             f"Decision time (as-of): {as_of.isoformat()}\n\n"
             f"Documents available at decision time ({len(docs)}):\n")
     parts = [head]
-    for d in docs:
-        parts.append(f"\n=== document id: {d['id']} | published_at: {d['published_at']} ===\n{d['text']}\n")
+    budget = 24000
+    ordered = sorted(docs, key=lambda d: (not d["id"].startswith("ledger_row:"), d["id"]))
+    for d in ordered:
+        if budget <= 0:
+            break
+        text = d["text"][: min(6000, budget)]
+        if len(text) < len(d["text"]):
+            text += "\n[document truncated for the hackathon proxy budget]"
+        part = f"\n=== document id: {d['id']} | published_at: {d['published_at']} ===\n{text}\n"
+        parts.append(part)
+        budget -= len(part)
     parts.append("\nAnalyse whether the event window is contaminated. Cite only these documents.")
     return "".join(parts)
 
@@ -241,7 +250,7 @@ def analyse(client: httpx.Client, e: CorporateAction, *, api_key: str, base_url:
     payload = {
         "model": model,
         "temperature": 0,
-        "max_tokens": 4096,
+        "max_tokens": 2048,
         "messages": [
             {"role": "system", "content": SYSTEM + " Return valid JSON only."},
             {"role": "user", "content": prompt},
