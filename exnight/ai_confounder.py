@@ -241,7 +241,7 @@ def analyse(client: httpx.Client, e: CorporateAction, *, api_key: str, base_url:
     payload = {
         "model": model,
         "temperature": 0,
-        "max_tokens": 16000,
+        "max_tokens": 4096,
         "messages": [
             {"role": "system", "content": SYSTEM + " Return valid JSON only."},
             {"role": "user", "content": prompt},
@@ -300,10 +300,10 @@ def to_row(record: dict) -> dict:
 def main() -> None:
     import csv
     load_dotenv(ROOT / ".env")
-    api_key = os.environ.get("QWEN_API_KEY")
+    api_key = os.environ.get("BITGET_QWEN_API_KEY") or os.environ.get("QWEN_API_KEY")
     base_url = os.environ.get("QWEN_BASE_URL")
     model = os.environ.get("QWEN_MODEL")
-    missing = [name for name, value in (("QWEN_API_KEY", api_key), ("QWEN_BASE_URL", base_url), ("QWEN_MODEL", model)) if not value]
+    missing = [name for name, value in (("BITGET_QWEN_API_KEY", api_key), ("QWEN_BASE_URL", base_url), ("QWEN_MODEL", model)) if not value]
     if missing:
         raise SystemExit(f"missing {', '.join(missing)} in .env; refusing to call Qwen")
     ap = argparse.ArgumentParser(description="AI confounder analyst over the documents available at decision time")
@@ -322,7 +322,7 @@ def main() -> None:
             raise SystemExit(f"unknown or unresolved events: {sorted(missing)}")
     if args.limit:
         events = events[:args.limit]
-    client = httpx.Client(timeout=httpx.Timeout(60.0, connect=10.0))
+    client = httpx.Client(timeout=httpx.Timeout(180.0, connect=10.0))
     rows = []
     prior = {}
     if args.output.exists():
