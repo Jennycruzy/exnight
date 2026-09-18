@@ -253,7 +253,7 @@ def analyse(client: httpx.Client, e: CorporateAction, *, api_key: str, base_url:
         "enable_thinking": False,
         "max_tokens": 2048,
         "messages": [
-            {"role": "system", "content": SYSTEM + " Return valid JSON only."},
+            {"role": "system", "content": SYSTEM + "\nReturn valid JSON matching this schema exactly. The top-level keys must be status, abstain, confidence, contaminants, evidence, and rationale; do not add event_id or reasons.\nSchema: " + json.dumps(Analysis.model_json_schema(), separators=(",", ":"))},
             {"role": "user", "content": prompt},
         ],
         "response_format": {"type": "json_object"},
