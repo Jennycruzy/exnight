@@ -32,7 +32,9 @@ realised 20:00 PDR, so the rule's hit rate can be reported instead of asserted.
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
+import subprocess
 import math
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -47,7 +49,37 @@ RESULTS = ROOT / "data" / "results"
 Z = 2.0
 EXIT_RUNG = "overnight_2000"
 SELL_SESSION, BUY_SESSION = "after_hours", "overnight"   # sell before 20:00 ET, buy back after
+MAX_DEPTH_AGE_SECONDS = 26 * 60 * 60
 RULES = ROOT / "strategy"
+
+
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as f:
+        for block in iter(lambda: f.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def write_run_manifest(rule: dict | None, *, rule_path: Path | None, inputs: list[Path], outputs: list[Path], tag: str) -> Path:
+    """Save the exact rule/input/output hashes used for one strategy run."""
+    try:
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True,
+                                text=True, check=True, timeout=5).stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        commit = None
+    payload = dict(
+        generated_at=dt.datetime.now(dt.UTC).isoformat(), commit=commit,
+        rule_id=rule.get("rule_id") if rule else None,
+        rule_file=str(rule_path.relative_to(ROOT)) if rule_path else None,
+        inputs={str(p.relative_to(ROOT)): _sha256(p) for p in inputs if p.exists()},
+        outputs={str(p.relative_to(ROOT)): _sha256(p) for p in outputs if p.exists()},
+    )
+    path = RESULTS / f"run_manifest{tag}.json"
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(payload, indent=1, sort_keys=True) + "\n")
+    tmp.replace(path)
+    return path
 
 
 def load_rule(path: Path) -> dict:
@@ -80,8 +112,8 @@ def round_trip_cost(samples: dict, spot: str | None, sell_price: float, fee: flo
                     notional: int, buy_price: float | None = None) -> tuple[float | None, str | None, dict]:
     """Per-share cost with the actual sell and buy prices when both are known.
 
-    Ex-ante mode has no post-event price, so it intentionally falls back to the current
-    reference price for both legs. Ex-post mode passes its realised post price.
+    Ex-ante mode projects the post-event price from the estimated drop. Ex-post mode passes
+    its realised post price. The two legs are never silently priced at the same value.
     """
     if buy_price is None:
         buy_price = sell_price
@@ -126,10 +158,13 @@ def verdict_row(*, event_id: str, symbol: str, spot: str | None, ex_date: str, g
         row["reason"] = "no reference price"; return row
     if not math.isfinite(price) or price <= 0:
         row["reason"] = "invalid reference price"; return row
-    if buy_price is not None and (not math.isfinite(buy_price) or buy_price <= 0):
-        row["reason"] = "invalid post-event price"; return row
     if not math.isfinite(drop_ratio) or not math.isfinite(drop_se) or drop_se < 0:
         row["reason"] = "invalid price-drop estimate"; return row
+    if buy_price is None:
+        buy_price = price - drop_ratio * gross
+        row["buy_price"] = buy_price
+    if not math.isfinite(buy_price) or buy_price <= 0:
+        row["reason"] = "invalid post-event price"; return row
     cost, why, meta = round_trip_cost(samples, spot, price, fee, notional, buy_price)
     row.update(meta)
     if cost is None:
@@ -230,7 +265,8 @@ def main() -> None:
 
     ledger = [e.model_dump(mode="json") for e in read_ledger(args.ledger)]
     by_id = {e["event_id"]: e for e in ledger}
-    samples = latest_samples(load_depth())
+    samples = latest_samples(load_depth(), as_of=dt.datetime.now(dt.UTC),
+                             max_age_seconds=MAX_DEPTH_AGE_SECONDS)
     est = estimate(json.loads(args.summary.read_text()), args.sample, rung)
     if rule:
         want = rule["estimate"]
@@ -249,8 +285,15 @@ def main() -> None:
 
     post = ex_post(json.loads(args.results.read_text()), by_id, samples, rung, rule_id)
     post.to_csv(RESULTS / f"signals_expost{args.tag}.csv", index=False)
+    manifest = write_run_manifest(
+        rule, rule_path=args.rule if rule else None,
+        inputs=[args.summary, args.ledger, args.results],
+        outputs=[RESULTS / f"signals{args.tag}.csv", RESULTS / f"signals_expost{args.tag}.csv"],
+        tag=args.tag,
+    )
 
     print(f"rule: {rule_id or 'none'}; estimate: {est['sample']} {rung} pdr_hat={est['pdr_hat']:.3f} se={est['se']:.3f} (n={est['n']}), Z={Z}")
+    print(f"run manifest: {manifest}")
     print(f"ex-ante: {len(pending)} pending events -> {ante.verdict.value_counts().to_dict()}; BUY: {ante.buy.value_counts().to_dict()}")
     print(ante[ante.notional_usd == 5000][["event_id", "ex_date", "price", "gross_dividend", "net_dividend", "cost_per_share", "exit_edge_lower", "verdict", "reason"]]
           .sort_values("ex_date").head(12).to_string(index=False))

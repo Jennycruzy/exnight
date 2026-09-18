@@ -108,3 +108,30 @@ def test_http_status_is_reported_as_bitget_error():
     api = BitgetPublic(httpx.Client(transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
     with pytest.raises(BitgetAPIError, match="code=503"):
         api.tickers("ASSETUSDT")
+
+
+def test_retryable_http_status_is_retried_then_succeeds():
+    calls = 0
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            return httpx.Response(503, text="temporary")
+        return httpx.Response(200, json={"code": "00000", "data": [{"symbol": "ASSETUSDT"}]})
+
+    api = BitgetPublic(
+        httpx.Client(transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"),
+        sleep=lambda _: None,
+    )
+    assert api.tickers("ASSETUSDT")[0]["symbol"] == "ASSETUSDT"
+    assert calls == 2
+
+
+def test_success_envelope_schema_rejects_ticker_without_symbol():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, json={"code": "00000", "data": [{"lastPrice": "1"}]})
+
+    api = BitgetPublic(httpx.Client(transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
+    with pytest.raises(BitgetAPIError, match="missing symbol"):
+        api.tickers("ASSETUSDT")

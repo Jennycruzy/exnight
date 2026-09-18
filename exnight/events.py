@@ -61,6 +61,11 @@ class CorporateAction(BaseModel):
     source_endpoint: str | None = None
     source_fetched_at: dt.datetime | None = None
 
+    # Immutable instrument metadata captured when the ledger row was built. Event-study
+    # code may use the current universe to locate an API symbol, but it must not silently
+    # use today's listing time, fee, precision or status for a historical row.
+    instrument_snapshot: dict = Field(default_factory=dict, exclude_if=lambda value: not value)
+
     # Basis resolution (exnight.basis). The gross question and the net question are kept
     # separate: basis_tier says how the gross amount was established, and
     # net_dividend_verified says whether the withholding applied to it is documented for

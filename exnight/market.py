@@ -15,9 +15,11 @@ Rate limit is documented as 20 req/s/IP; this client caps itself at 10.
 from __future__ import annotations
 
 import datetime as dt
+import math
 import time
 from dataclasses import dataclass, replace
 from decimal import Decimal
+from typing import Callable
 
 import httpx
 import pandas as pd
@@ -28,6 +30,8 @@ BASE_URL = "https://api.bitget.com"
 
 HISTORY_CUTOFF = dt.timedelta(days=85)   # documented: history-candles serves data > 90 days old
 _MIN_INTERVAL_S = 0.1
+_RETRYABLE_HTTP = {429, 500, 502, 503, 504}
+_RETRYABLE_CODES = {"429", "500", "502", "503", "504"}
 _ENDPOINT_INTERVAL_S = {
     "/api/v3/reality/market/stock-info": 1.05,
     "/api/v3/reality/market/dividends": 1.05,
@@ -78,8 +82,11 @@ class SpotSymbol:
 
 
 class BitgetPublic:
-    def __init__(self, client: httpx.Client | None = None):
+    def __init__(self, client: httpx.Client | None = None, *, max_retries: int = 2,
+                 sleep: Callable[[float], None] = time.sleep):
         self._client = client or httpx.Client(base_url=BASE_URL, timeout=30.0)
+        self._max_retries = max(0, max_retries)
+        self._sleep = sleep
 
         self._last = 0.0
         self._last_by_path: dict[str, float] = {}
@@ -89,46 +96,74 @@ class BitgetPublic:
         self.last_raw_response: str | None = None
 
     def _get(self, path: str, params: dict) -> list | dict:
-        now = time.monotonic()
-        path_interval = _ENDPOINT_INTERVAL_S.get(path, _MIN_INTERVAL_S)
-        wait = max(self._last + _MIN_INTERVAL_S,
-                   self._last_by_path.get(path, 0.0) + path_interval) - now
-        if wait > 0:
-            time.sleep(wait)
-        self._last = time.monotonic()
-        self._last_by_path[path] = self._last
-        try:
-            r = self._client.get(path, params=params)
-            r.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            raise BitgetAPIError(path, str(exc.response.status_code), "HTTP status error") from exc
-        except httpx.HTTPError as exc:
-            raise BitgetAPIError(path, "transport", str(exc)) from exc
-        self.last_fetch_at = dt.datetime.now(dt.UTC)
-        self.last_request = {"path": path, "params": dict(params)}
-        self.last_raw_response = r.text
-        try:
-            body = r.json()
-        except ValueError as e:
-            raise BitgetAPIError(path, str(r.status_code), r.text[:200]) from e
-        if not isinstance(body, dict):
-            raise BitgetAPIError(path, str(r.status_code), f"expected object, got {type(body).__name__}")
-        if body.get("code") != "00000":
-            raise BitgetAPIError(path, str(body.get("code")), str(body.get("msg")))
-        if "data" not in body:
-            raise BitgetAPIError(path, "schema", "success response has no data field")
-        return body["data"]
+        for attempt in range(self._max_retries + 1):
+            now = time.monotonic()
+            path_interval = _ENDPOINT_INTERVAL_S.get(path, _MIN_INTERVAL_S)
+            wait = max(self._last + _MIN_INTERVAL_S,
+                       self._last_by_path.get(path, 0.0) + path_interval) - now
+            if wait > 0:
+                self._sleep(wait)
+            self._last = time.monotonic()
+            self._last_by_path[path] = self._last
+            try:
+                r = self._client.get(path, params=params)
+                status = r.status_code
+                if status in _RETRYABLE_HTTP and attempt < self._max_retries:
+                    self._sleep(0.25 * (2 ** attempt))
+                    continue
+                r.raise_for_status()
+            except httpx.HTTPStatusError as exc:
+                raise BitgetAPIError(path, str(exc.response.status_code), "HTTP status error") from exc
+            except httpx.HTTPError as exc:
+                if attempt < self._max_retries:
+                    self._sleep(0.25 * (2 ** attempt))
+                    continue
+                raise BitgetAPIError(path, "transport", str(exc)) from exc
+            self.last_fetch_at = dt.datetime.now(dt.UTC)
+            self.last_request = {"path": path, "params": dict(params)}
+            self.last_raw_response = r.text
+            try:
+                body = r.json()
+            except ValueError as e:
+                raise BitgetAPIError(path, str(r.status_code), r.text[:200]) from e
+            if not isinstance(body, dict):
+                raise BitgetAPIError(path, str(r.status_code), f"expected object, got {type(body).__name__}")
+            if body.get("code") != "00000":
+                code = str(body.get("code"))
+                if code in _RETRYABLE_CODES and attempt < self._max_retries:
+                    self._sleep(0.25 * (2 ** attempt))
+                    continue
+                raise BitgetAPIError(path, code, str(body.get("msg")))
+            if "data" not in body:
+                raise BitgetAPIError(path, "schema", "success response has no data field")
+            return body["data"]
+        raise BitgetAPIError(path, "retry", "request exhausted retries")
 
     # ---- symbols -------------------------------------------------------------------
 
     def spot_symbols(self) -> list[SpotSymbol]:
         """v3 instruments joined with v2 fee rates. Every field is live."""
-        fees = {x["symbol"]: x for x in self._get("/api/v2/spot/public/symbols", {})}
+        fee_rows = self._get("/api/v2/spot/public/symbols", {})
+        if not isinstance(fee_rows, list) or not all(isinstance(x, dict) for x in fee_rows):
+            raise BitgetAPIError("/api/v2/spot/public/symbols", "schema", "data must be an array of objects")
+        fees = {x["symbol"]: x for x in fee_rows if x.get("symbol")}
         out = []
-        for x in self._get("/api/v3/market/instruments", {"category": "SPOT"}):
+        instruments = self._get("/api/v3/market/instruments", {"category": "SPOT"})
+        if not isinstance(instruments, list) or not all(isinstance(x, dict) for x in instruments):
+            raise BitgetAPIError("/api/v3/market/instruments", "schema", "data must be an array of objects")
+        required = ("symbol", "baseCoin", "quoteCoin", "pricePrecision", "quantityPrecision",
+                    "minOrderAmount", "status", "launchTime")
+        for x in instruments:
+            missing = [name for name in required if x.get(name) in (None, "")]
+            if missing:
+                raise BitgetAPIError("/api/v3/market/instruments", "schema",
+                                     f"instrument missing fields: {missing}")
             f = fees.get(x["symbol"])
             if f is None:
                 raise BitgetAPIError("/api/v2/spot/public/symbols", "join", f"{x['symbol']} has no fee record")
+            if f.get("makerFeeRate") in (None, "") or f.get("takerFeeRate") in (None, ""):
+                raise BitgetAPIError("/api/v2/spot/public/symbols", "schema",
+                                     f"{x['symbol']} has incomplete fee record")
             out.append(
                 SpotSymbol(
                     symbol=x["symbol"],
@@ -249,8 +284,10 @@ class BitgetPublic:
         if symbol:
             params["symbol"] = symbol
         data = self._get("/api/v3/market/tickers", params)
-        if not isinstance(data, list):
-            raise BitgetAPIError("/api/v3/market/tickers", "schema", "expected array")
+        if not isinstance(data, list) or not all(isinstance(row, dict) for row in data):
+            raise BitgetAPIError("/api/v3/market/tickers", "schema", "expected array of objects")
+        if any(not row.get("symbol") for row in data):
+            raise BitgetAPIError("/api/v3/market/tickers", "schema", "ticker is missing symbol")
         return data
 
     def orderbook(self, symbol: str, limit: int = 1000) -> dict:
@@ -329,4 +366,6 @@ class BitgetPublic:
         df["ts"] = pd.to_datetime(df["ts"].astype("int64"), unit="ms", utc=True)
         for c in CANDLE_COLUMNS[1:]:
             df[c] = df[c].astype(float)
+            if not df[c].map(math.isfinite).all():
+                raise BitgetAPIError("/api/v3/market/candles", "schema", f"{c} contains non-finite values")
         return df.drop_duplicates("ts").sort_values("ts").reset_index(drop=True)

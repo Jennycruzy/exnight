@@ -43,12 +43,22 @@ RUNG_SESSION = {"overnight_2000": "overnight", "premarket_0400": "pre_market",
 PRE_SESSION = "after_hours"   # p_pre is the last bar before 20:00 ET, i.e. inside after-hours
 
 
-def latest_samples(depth: pd.DataFrame) -> dict[tuple[str, str], pd.Series]:
-    """Most recent sample row per (spot_symbol, session)."""
+def latest_samples(depth: pd.DataFrame, *, as_of: dt.datetime | None = None,
+                   max_age_seconds: int | None = None) -> dict[tuple[str, str], pd.Series]:
+    """Most recent sample row per (spot_symbol, session), optionally freshness-gated."""
     if depth.empty:
         return {}
     d = depth.sort_values("ts")
-    return {(r.symbol, r.session): r for r in d.itertuples(index=False)}
+    out = {(r.symbol, r.session): r for r in d.itertuples(index=False)}
+    if as_of is None or max_age_seconds is None:
+        return out
+    now = pd.Timestamp(as_of)
+    if now.tzinfo is None:
+        raise ValueError("as_of must be timezone-aware")
+    return {
+        key: row for key, row in out.items()
+        if now - pd.Timestamp(row.ts).tz_convert("UTC") <= dt.timedelta(seconds=max_age_seconds)
+    }
 
 
 def walk_cost(sample: pd.Series | None, side: str, notional: int) -> tuple[float | None, str | None]:

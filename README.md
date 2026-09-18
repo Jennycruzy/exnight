@@ -1,55 +1,73 @@
 # EXNIGHT
 
-Some price moves are news. Some are arithmetic. EXNIGHT measures which is which on tokenized stocks.
+EXNIGHT measures how Bitget Reality rTokens reprice scheduled corporate actions and exposes
+guarded HOLD / EXIT / BUY arithmetic. It is a research system with a manually confirmed order
+path, not an unattended trading bot.
 
-A corporate-action factor for Bitget Reality rTokens: how the 24/5 market reprices the ex-dividend
-date, and whether a holder should HOLD through it or EXIT and re-enter.
+## Current status — 2026-09-18
 
-## Result (2026-09-17, `docs/m1.md`)
+- **79 tests pass** on the VPS.
+- `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
+  records corrected projected-buy-price and fresh-depth semantics for later use.
+- The one-minute forward recorder is active for the September 21 events. The scoring script is
+  offline and will not substitute a new quote or place an order.
+- Optional Qwen evidence analysis is configured with `BITGET_QWEN_API_KEY`,
+  `QWEN_BASE_URL=https://hackathon.bitgetops.com/v1`, and `QWEN_MODEL=qwen3.8-max`. Qwen never
+  changes strategy verdicts.
 
-- 185 Reality corporate actions on 59 rTokens since 2026-06-01; 58 events with a verified gross basis.
-- At 20:00 ET on ex-date eve the rToken has already dropped by **1.11 ± 0.12 ×** the gross dividend
-  (leave-one-out 1.02–1.23), the same as the underlying share (1.01 ± 0.42). The adjustment is complete
-  in the first overnight bar; 04:00 and 09:30 add nothing.
-- The holder receives 0.70 × gross (30 % withholding, DOCUMENTED). Selling before 20:00 and buying back
-  after therefore captures ≈ 0.4 D at the point estimate — about 12 bp of price at the median 0.29 % yield,
-  against a 20 bp round-trip taker fee. **Verdict: HOLD on the broad universe; EXIT clears costs only on
-  yield ≥ 1 % events (6 of 58).** With the realised drop known, EXIT has a positive net edge on 3 of 38
-  priced events (`data/results/signals_expost.csv`).
-- BUY is suppressed on every event: Bitget has not published the eligibility snapshot time.
-- Forward verdicts (`data/results/signals.csv`, issued 2026-09-17 before the events): rAVGO ex
-  2026-09-21 **HOLD** at $1k/$5k/$25k, rVST ex 2026-09-21 **HOLD** at $1k — both invariant to the
-  withholding rate and negative even if the dividend were withheld entirely. Gross basis for these
-  comes from issuer evidence (`exnight/basis.py`), not from Bitget's own figures.
+## Modules
 
-## What is in the repository
-
-- `exnight/market.py` — public Bitget v3/v2 adapter; universe from `instruments` (`symbolType=stock, isReality=yes`), fees, candles with history pagination.
-- `exnight/calendar.py` — Reality corporate-action ledger with live market calendar; gross basis only on an exact notice match.
-- `exnight/basis.py` — tiered gross-basis resolver (issuer-declared / realised dividends, first-party corroboration) and net-entitlement bounds; verdicts must be invariant to the withholding range.
-- `exnight/eventstudy.py`, `analysis.py` — per-event PDR at session rungs, slope regressions, leave-one-out and drop-top-3 robustness, market-adjusted slope.
-- `exnight/confounders.py` — deterministic confounder flags with evidence labels.
-- `exnight/costs.py`, `strategy.py` — round-trip cost from sampled depth; BUY/EXIT/HOLD with NO_SIGNAL when any input is unresolved.
-- `scripts/depth_snapshot.py`, `scripts/paper_trade.py` — session-labelled depth sampler; Agent Hub dry-run / demo / guarded live order path with an evidence chain.
-- `docs/verification.md` — every product rule and API parameter, with how it was verified.
-
-Every claim is labelled DOCUMENTED (first-party Bitget page), OBSERVED (we ran it, date given) or ASSUMED.
+- `exnight/market.py` — validated Bitget public adapter with bounded retries and candle paging.
+- `exnight/calendar.py` — saved-source and Reality corporate-action ledgers.
+- `exnight/basis.py` — issuer evidence, gross-basis tiers, and event-level withholding bounds.
+- `exnight/normalizer.py` — inverse split-ratio adjustment with halt validation.
+- `exnight/eventstudy.py`, `exnight/analysis.py` — session-rung PDR, market adjustment and
+  OLS/robust diagnostics.
+- `exnight/confounders.py`, `exnight/ai_confounder.py` — deterministic flags and optional,
+  replayable Qwen prose evidence.
+- `exnight/costs.py`, `exnight/strategy.py` — freshness-gated round-trip costs and
+  deterministic BUY/EXIT/HOLD/NO_SIGNAL decisions.
+- `scripts/record_event.py` — locked, deduplicated forward recorder.
+- `scripts/depth_snapshot.py` — session-labelled depth with raw-response SHA-256 manifests.
+- `scripts/score_forward.py` — offline forward-window scorer.
+- `scripts/paper_trade.py` — precision-safe dry-run/demo/guarded-live order evidence chain.
+- `scripts/verify_evidence.py`, `scripts/healthcheck.py` — offline evidence and scheduler gates.
 
 ## Reproduce
 
-    python -m pytest -q
-    python -m exnight.calendar --source reality --start-date 2026-06-01 --output data/ledger/reality_notice59.jsonl
-    python -m exnight.basis
-    python -m exnight.eventstudy --ledger data/ledger/reality_notice59.jsonl --output data/results/event_results_reality.json
-    python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv
-    python -m exnight.analysis --results data/results/event_results_reality.json --confounders data/results/confounders_reality.csv --tag _reality
-    python -m exnight.costs --results data/results/event_results_reality.json --ledger data/ledger/reality_notice59.jsonl --output data/results/event_costs_reality.csv
-    python -m exnight.strategy
+    .venv/bin/python -m pytest -q
+    .venv/bin/python scripts/verify_evidence.py
+    .venv/bin/python -m exnight.calendar --source reality --start-date 2026-06-01 --output data/ledger/reality_notice59.jsonl
+    .venv/bin/python -m exnight.basis
+    .venv/bin/python -m exnight.eventstudy --ledger data/ledger/reality_notice59.jsonl --output data/results/event_results_reality.json
+    .venv/bin/python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv
+    .venv/bin/python -m exnight.analysis --results data/results/event_results_reality.json --confounders data/results/confounders_reality.csv --tag _reality
+    .venv/bin/python -m exnight.costs --results data/results/event_results_reality.json --ledger data/ledger/reality_notice59.jsonl --output data/results/event_costs_reality.csv
+    .venv/bin/python -m exnight.strategy --rule strategy/strategy_v1.json --tag _v1
 
-## Known limits
+## Score the September 21 forward window
 
-No historical order book exists for the event dates (Tardis carries the public Reality book only
-≈12:00–23:00 UTC for symbols with a real book, and no trades); current depth is an OBSERVED-NOW scenario.
-Forward events resolve only where issuer evidence exists; 8 pending events remain UNRESOLVED and most
-ticker-only symbols cannot be sized beyond $1k.
-The demo venue rejects Reality spot orders, so paper execution is dry-run only.
+Run only after the recorder window ends:
+
+    .venv/bin/python scripts/score_forward.py \
+      data/raw/recorder/20260921_rAVGO_rVST/*.jsonl \
+      --symbols RAVGOUSDT RVSTUSDT RSATAUSDT \
+      --event-date 2026-09-21 \
+      --rule strategy/strategy_v1.json \
+      --ledger data/ledger/reality_notice59_resolved.jsonl \
+      --signals data/results/signals_v1.csv \
+      --output data/results/forward_score_v1.json
+
+The result is incomplete if a cutoff sample is missing or late. Ticker-only quotes are labelled
+as such and are not treated as public-depth fill evidence.
+
+## Safety and limits
+
+- BUY remains suppressed because Bitget's eligibility snapshot time is unpublished.
+- Historical event-time order books do not exist; current depth is an `OBSERVED-NOW` scenario.
+- Unresolved issuer/tax rows remain explicit and cannot produce a non-invariant verdict.
+- A real order requires live credentials, a fresh displayed quote, the exact computed quantity,
+  and `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'`. One-order real notional is capped
+  at $100 by default.
+- See [`docs/handoff.md`](docs/handoff.md) for the full operational state and the host-security
+  boundary. SSH/login configuration is deliberately not modified by the application.

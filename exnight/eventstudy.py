@@ -166,6 +166,36 @@ def _fee_for(ex_date: dt.date, live: SpotSymbol) -> tuple[Decimal, str]:
     return live.taker_fee, "OBSERVED live symbol takerFeeRate"
 
 
+def _instrument_for_event(e: CorporateAction, current: SpotSymbol | None) -> SpotSymbol:
+    """Use the event's immutable instrument snapshot, falling back only for old rows."""
+    snap = e.instrument_snapshot or {}
+    if not snap:
+        if current is None:
+            raise ValueError(f"{e.event_id}: no current or snapshotted instrument metadata")
+        return current
+    if e.spot_symbol and snap.get("symbol") != e.spot_symbol:
+        raise ValueError(f"{e.event_id}: instrument snapshot symbol does not match ledger")
+    try:
+        return SpotSymbol(
+            symbol=str(snap["symbol"]),
+            base_coin=str(snap.get("base_coin", e.symbol)),
+            quote_coin=str(snap.get("quote_coin", "USDT")),
+            maker_fee=Decimal(str(snap["maker_fee"])),
+            taker_fee=Decimal(str(snap["taker_fee"])),
+            price_precision=int(snap["price_precision"]),
+            quantity_precision=int(snap["quantity_precision"]),
+            min_trade_usdt=Decimal(str(snap["min_trade_usdt"])),
+            status=str(snap["status"]),
+            open_time=dt.datetime.fromisoformat(str(snap["open_time"])),
+            symbol_type=str(snap.get("symbol_type", "")),
+            is_reality=bool(snap.get("is_reality", False)),
+            is_rwa=snap.get("is_rwa"),
+            reality_code=e.underlying,
+        )
+    except (KeyError, TypeError, ValueError, ArithmeticError) as exc:
+        raise ValueError(f"{e.event_id}: invalid instrument snapshot: {exc}") from exc
+
+
 def study_event(api: BitgetPublic, e: CorporateAction, live: SpotSymbol, cal: MarketCalendar,
                 proxy: SpotSymbol | None, ledger: list[CorporateAction]) -> EventResult:
     d_pre = prev_us_trading_day(e.exchange_ex_date, cal)
@@ -302,14 +332,15 @@ def run(ledger: list[CorporateAction], api: BitgetPublic | None = None) -> list[
         if e.gross_dividend_per_share is None or e.net_dividend_per_share is None:
             out.append(_excluded(e, "cash dividend amount is incomplete"))
             continue
-        live = uni.get(e.symbol)
-        if live is None:
+        current = uni.get(e.symbol)
+        if current is None and not e.instrument_snapshot:
             out.append(_excluded(e, "symbol not in live universe"))
             continue
         if e.spot_symbol is None:
             out.append(_excluded(e, "event has no live spot symbol"))
             continue
         try:
+            live = _instrument_for_event(e, current)
             out.append(study_event(api, e, live, cal, proxy, ledger))
         except Exception as exc:
             # One malformed event or transient source failure must be recorded as an

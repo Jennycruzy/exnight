@@ -26,7 +26,7 @@ def test_sample_and_append_are_append_only(tmp_path, monkeypatch):
     p = record_event.append("evt", rows, now)
     record_event.append("evt", rows, now)
     lines = [json.loads(l) for l in p.read_text().splitlines()]
-    assert p.name == "20260918.jsonl" and len(lines) == 4 and lines[0]["orderbook"]["bids"] == [["1", "1"]]
+    assert p.name == "20260918.jsonl" and len(lines) == 2 and lines[0]["orderbook"]["bids"] == [["1", "1"]]
 
 
 def test_window_parsing_requires_timezone():

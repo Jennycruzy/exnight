@@ -57,7 +57,8 @@ def test_no_event_is_eligibility_verified_yet():
 
 def test_reality_ledger_uses_api_rows_and_keeps_unresolved_basis(tmp_path):
     class FakeAPI:
-        def __init__(self):
+        def __init__(self, reverse=False):
+            self.reverse = reverse
             self.last_fetch_at = dt.datetime(2026, 9, 16, 12, tzinfo=dt.UTC)
             self.last_request = {"path": "/api/v3/reality/market/dividends", "params": {"code": "ASSET"}}
             self.last_raw_response = "{\"code\":\"00000\"}"
@@ -75,6 +76,8 @@ def test_reality_ledger_uses_api_rows_and_keeps_unresolved_basis(tmp_path):
                  "recordDate": None, "exrightDate": "1783267200000",
                  "dividendDate": None, "splitNumerator": "2", "splitDenominator": "1"},
             ]
+            if self.reverse:
+                rows.reverse()
             yield {"list": rows, "cursor": None}, rows
 
     spot = SpotSymbol(
@@ -94,8 +97,15 @@ def test_reality_ledger_uses_api_rows_and_keeps_unresolved_basis(tmp_path):
     assert cash.cash_dividend_per_share == Decimal("0.15")
     assert cash.cash_dividend_basis == "UNRESOLVED"
     assert cash.gross_dividend_per_share is None
+    assert cash.instrument_snapshot["open_time"] == "2026-06-02T00:00:00+00:00"
     assert events[1].adjustment_ratio == Decimal("2")
     assert list(tmp_path.rglob("*.json"))
+
+    reversed_events = build_reality_ledger(
+        FakeAPI(reverse=True), {spot.base_coin: spot}, dt.date(2026, 6, 1),
+        as_of=dt.datetime(2026, 9, 16, tzinfo=dt.UTC), raw_dir=tmp_path / "reverse", notice_rows=[],
+    )
+    assert [e.event_id for e in reversed_events] == [e.event_id for e in events]
 
 
 def test_ledger_writer_is_append_only(tmp_path):

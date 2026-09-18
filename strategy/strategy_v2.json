@@ -1,0 +1,38 @@
+{
+ "rule_id": "exnight-strategy-v2",
+ "parent_rule": "strategy_v1.json",
+ "frozen_at_utc": "2026-09-18T00:00:00+00:00",
+ "amendment": "execution-cost correction: ex-ante buy-leg cost uses the projected post-event price; stale depth is rejected by the live strategy path; v1 remains the untouched forward-validation rule",
+ "applies_to": "cash dividend events on Bitget Reality spot rTokens after this amendment",
+ "decision": {
+  "EXIT": "sell before the 20:00 ET cutoff and buy back at the selected rung only when the lower-bound edge is positive across the net-entitlement range",
+  "HOLD": "issued when the lower-bound edge is non-positive across the net-entitlement range",
+  "NO_SIGNAL": "any unresolved basis, stale/missing depth, invalid price, or verdict that changes across the net range",
+  "BUY": "suppressed while Bitget's eligibility snapshot time is unpublished"
+ },
+ "rung": "premarket_0400",
+ "estimate": {
+  "summary_file": "data/results/summary_resolved.json",
+  "sample": "floor_None",
+  "rung": "premarket_0400",
+  "pdr_hat": 0.9656110633409245,
+  "se": 0.18323952822276032,
+  "n": 127,
+  "r2": 0.1817731898851244,
+  "description": "same evidence estimate as v1; only execution-cost and freshness semantics are corrected"
+ },
+ "z": 2.0,
+ "ledger_file": "data/ledger/reality_notice59_resolved.jsonl",
+ "basis_tiers_allowed": [1, 2, 3],
+ "withholding_base": "0.30",
+ "withholding_low": "0",
+ "withholding_high": "0.30",
+ "withholding_note": "documented 30% only for events matched to the 2026-07-24 notice; otherwise assumed range",
+ "sell_session": "after_hours",
+ "buy_session": "overnight",
+ "notionals_usd": [1000, 5000, 25000],
+ "fees": "live takerFeeRate of the spot symbol at run time on both legs",
+ "liquidity": "fresh depth sample required; ticker-only quotes are labelled and never treated as public depth",
+ "universe": "immutable instrument snapshot on the ledger row, with current API presence used only for lookup",
+ "amendment_policy": "this file is never edited; a changed rule is strategy_v3.json"
+}

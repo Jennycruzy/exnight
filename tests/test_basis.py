@@ -113,18 +113,18 @@ def _row(drop_ratio, **over):
 
 
 def test_exit_only_when_positive_at_highest_net():
-    # cost is 0.4/share; lower-bound drop = (drop_ratio - 0.2) * 1.0
+    # The buy leg uses the projected post-event price, so cost varies slightly with drop.
     r = _row(1.7)                       # 1.5 - 1.0 - 0.4 = +0.1 at net_high -> EXIT
-    assert r["verdict"] == "EXIT" and r["exit_edge_lower_net_high"] == pytest.approx(0.1)
+    assert r["verdict"] == "EXIT" and r["exit_edge_lower_net_high"] == pytest.approx(0.1034)
     r = _row(1.5)                       # +0.2 at net_low, -0.1 at net_high -> no verdict
     assert r["verdict"] == "NO_SIGNAL" and r["reason"].startswith("net entitlement unresolved")
-    assert r["exit_edge_lower_net_low"] == pytest.approx(0.2) and r["exit_edge_lower_net_high"] == pytest.approx(-0.1)
+    assert r["exit_edge_lower_net_low"] == pytest.approx(0.203) and r["exit_edge_lower_net_high"] == pytest.approx(-0.097)
 
 
 def test_hold_only_when_not_positive_at_lowest_net():
     r = _row(1.2)                       # 1.0 - 0.7 - 0.4 = -0.1 at net_low -> HOLD
-    assert r["verdict"] == "HOLD" and r["exit_edge_lower_net_low"] == pytest.approx(-0.1)
-    assert r["exit_edge_lower_zero_net"] == pytest.approx(0.6)   # would EXIT if fully withheld; HOLD depends on entitlement
+    assert r["verdict"] == "HOLD" and r["exit_edge_lower_net_low"] == pytest.approx(-0.0976)
+    assert r["exit_edge_lower_zero_net"] == pytest.approx(0.6024)   # would EXIT if fully withheld; HOLD depends on entitlement
     r = _row(0.5)
     assert r["verdict"] == "HOLD" and r["exit_edge_lower_zero_net"] < 0   # HOLD regardless of withholding
 

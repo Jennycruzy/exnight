@@ -14,6 +14,7 @@ import datetime as dt
 import fcntl
 import html
 import json
+import os
 import re
 from decimal import Decimal
 from pathlib import Path
@@ -92,6 +93,33 @@ def parse_weekend_list_2026_07_17() -> set[str]:
     if len(tickers) != 61:
         raise RuntimeError(f"weekend notice says 61 tokens; parsed {len(tickers)}")
     return tickers
+
+
+def _instrument_snapshot(spot: SpotSymbol, captured_at: dt.datetime | None = None) -> dict:
+    """Serialize the instrument facts used by later analysis.
+
+    The snapshot intentionally contains only scalar API fields. It is kept on each event
+    so a future rebuild cannot silently replace a historical listing boundary or fee with
+    today's live metadata.
+    """
+    out = {
+        "symbol": spot.symbol,
+        "base_coin": spot.base_coin,
+        "quote_coin": spot.quote_coin,
+        "maker_fee": str(spot.maker_fee),
+        "taker_fee": str(spot.taker_fee),
+        "price_precision": spot.price_precision,
+        "quantity_precision": spot.quantity_precision,
+        "min_trade_usdt": str(spot.min_trade_usdt),
+        "status": spot.status,
+        "open_time": spot.open_time.isoformat(),
+        "symbol_type": spot.symbol_type,
+        "is_reality": spot.is_reality,
+        "is_rwa": spot.is_rwa,
+    }
+    if captured_at is not None:
+        out["captured_at"] = captured_at.isoformat()
+    return out
 
 
 def build_ledger(universe: dict[str, SpotSymbol]) -> list[CorporateAction]:
@@ -245,6 +273,7 @@ def _reality_action(
         status="completed" if ex_date <= as_of.date() else "pending",
         source_endpoint=REALITY_DIVIDENDS_ENDPOINT,
         source_fetched_at=fetched_at,
+        instrument_snapshot=_instrument_snapshot(spot, fetched_at),
     )
     if action_type == "cash_dividend":
         amount = _decimal(row.get("dividendPerShare"), "dividendPerShare")
@@ -354,7 +383,7 @@ def build_reality_ledger(
             if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
                 raise ValueError(f"{code}: Reality action page is not a list of objects")
             pages.append((api.last_fetch_at or as_of, rows))
-        ordinal_by_key: dict[tuple[dt.date, str], int] = {}
+        candidates: list[tuple[dt.date, str, str, dt.datetime, dict]] = []
         for fetched_at, rows in pages:
             for row in rows:
                 if not isinstance(row, dict):
@@ -373,12 +402,19 @@ def build_reality_ledger(
                 if ex_date < start_date:
                     continue
                 action_type = str(row.get("type") or "").lower()
-                key = (ex_date, action_type)
-                ordinal_by_key[key] = ordinal_by_key.get(key, 0) + 1
-                events.append(_reality_action(
-                    row, spot, str(code), ordinal_by_key[key], fetched_at,
-                    notice_by_key, weekend, as_of,
-                ))
+                # Sort by the canonical row contents before assigning ordinals. API page or
+                # row order is not stable, but identical rows are indistinguishable and may
+                # safely share the same deterministic ordering slot.
+                canonical = json.dumps(row, sort_keys=True, separators=(",", ":"), default=str)
+                candidates.append((ex_date, action_type, canonical, fetched_at, row))
+        ordinal_by_key: dict[tuple[dt.date, str], int] = {}
+        for ex_date, action_type, _, fetched_at, row in sorted(candidates, key=lambda x: x[:3]):
+            key = (ex_date, action_type)
+            ordinal_by_key[key] = ordinal_by_key.get(key, 0) + 1
+            events.append(_reality_action(
+                row, spot, str(code), ordinal_by_key[key], fetched_at,
+                notice_by_key, weekend, as_of,
+            ))
     return sorted(events, key=lambda e: (e.exchange_ex_date, e.symbol, e.event_id))
 
 
@@ -408,6 +444,7 @@ def write_ledger(events: list[CorporateAction], path: Path = LEDGER_PATH) -> Non
             f.write(line)
             existing[event.event_id] = line
         f.flush()
+        os.fsync(f.fileno())
         fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 
 

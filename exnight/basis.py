@@ -113,8 +113,11 @@ class IssuerSources:
         d = self.raw_dir / source
         d.mkdir(parents=True, exist_ok=True)
         stamp = dt.datetime.now(dt.UTC).strftime("%Y%m%dT%H%M%SZ")
-        (d / f"{ticker}_{stamp}.json").write_text(json.dumps(
+        path = d / f"{ticker}_{stamp}.json"
+        tmp = path.with_name(path.name + ".tmp")
+        tmp.write_text(json.dumps(
             dict(fetched_at=dt.datetime.now(dt.UTC).isoformat(), ticker=ticker, payload=payload)))
+        tmp.replace(path)
 
     def nasdaq_declared(self, ticker: str) -> list[dict] | None:
         """Declared dividends (ex-date, amount) or None when the feed has no rows/fails."""
@@ -126,8 +129,11 @@ class IssuerSources:
                 try:
                     r = httpx.get(f"https://api.nasdaq.com/api/quote/{ticker}/dividends",
                                   params=dict(assetclass=asset), headers=_UA, timeout=30)
+                    r.raise_for_status()
                     body = r.json()
                 except (httpx.HTTPError, ValueError):
+                    continue
+                if not isinstance(body, dict):
                     continue
                 rows = (((body.get("data") or {}).get("dividends") or {}).get("rows")) or []
                 if rows:
@@ -171,7 +177,10 @@ class IssuerSources:
                 s, crumb = self._yahoo
                 r = s.get(f"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{ticker}",
                           params=dict(modules="calendarEvents", crumb=crumb), timeout=30)
+                r.raise_for_status()
                 body = r.json()
+                if not isinstance(body, dict):
+                    raise ValueError("Yahoo calendar response is not an object")
                 res = ((body.get("quoteSummary") or {}).get("result") or [{}])[0]
                 raw = ((res.get("calendarEvents") or {}).get("exDividendDate") or {}).get("raw")
                 if raw:
@@ -310,11 +319,17 @@ def main() -> None:
     args = ap.parse_args()
     events = read_ledger(args.ledger)
     resolved, recs = resolve(events, IssuerSources(offline=args.offline))
-    args.output.write_text("".join(json.dumps(e.model_dump(mode="json"), sort_keys=True) + "\n" for e in resolved))
-    with args.table.open("w", newline="") as f:
+    output_text = "".join(json.dumps(e.model_dump(mode="json"), sort_keys=True) + "\n" for e in resolved)
+    tmp_output = args.output.with_name(args.output.name + ".tmp")
+    tmp_output.write_text(output_text)
+    tmp_output.replace(args.output)
+    args.table.parent.mkdir(parents=True, exist_ok=True)
+    tmp_table = args.table.with_name(args.table.name + ".tmp")
+    with tmp_table.open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(recs[0].keys()))
         w.writeheader()
         w.writerows(recs)
+    tmp_table.replace(args.table)
     cash = [r for r in recs if r["reason"] != "not a cash dividend"]
     tiers = {t: sum(r["tier"] == t for r in cash) for t in (1, 2, 3)}
     unresolved = [r for r in cash if r["basis_after"] == "UNRESOLVED"]

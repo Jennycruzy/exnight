@@ -39,6 +39,7 @@ from exnight.market import BitgetPublic  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw" / "paper"
 ET = dt.timezone(dt.timedelta(hours=-4), "ET")  # display only; session_label uses America/New_York
+MAX_LIVE_NOTIONAL_USD = 100.0
 
 
 def bgc(args: list[str], env: dict) -> dict:
@@ -171,12 +172,17 @@ def main() -> None:
     ap.add_argument("--live-paper", action="store_true", help="actually submit with --paper-trading (demo keys required)")
     ap.add_argument("--live", action="store_true", help="submit one real order; requires --confirm-live")
     ap.add_argument("--confirm-live", default="", help="must equal '<symbol> <side> <computed-quantity>' for --live")
+    ap.add_argument("--max-live-notional", type=float, default=MAX_LIVE_NOTIONAL_USD,
+                    help="hard cap for one real order (default: $100)")
     ap.add_argument("--note", default="")
     args = ap.parse_args()
 
     load_dotenv(ROOT / ".env")
     if args.live_paper and args.live:
         raise SystemExit("choose either --live-paper or --live, not both")
+    if args.live and (not math.isfinite(args.max_live_notional) or args.max_live_notional <= 0
+                      or args.notional > args.max_live_notional):
+        raise SystemExit(f"real order exceeds the ${args.max_live_notional:.2f} live notional cap")
     env = _safe_env()
     if args.live_paper or args.live:
         missing = [k for k in ("BITGET_API_KEY", "BITGET_SECRET_KEY", "BITGET_PASSPHRASE") if not env.get(k)]
@@ -218,6 +224,19 @@ def main() -> None:
 
     if args.live_paper or args.live:
         mode_label = "demo" if args.live_paper else "LIVE"
+        # The dry-run can be separated from the actual submit by network latency. Recheck
+        # the quote and refuse if the exact confirmed quantity/price is no longer current.
+        latest = book_with_ticker(api, args.symbol)
+        latest_price, latest_qty, _, latest_source = sized_qty(
+            latest, args.side, args.notional, args.band, live.quantity_precision,
+            live.price_precision, live.min_trade_usdt, args.time_in_force,
+        )
+        (run / "02b_book_pre_submit.json").write_text(json.dumps(latest))
+        if (latest_price, latest_qty) != (price, qty):
+            (run / "03_recheck_refused.json").write_text(json.dumps(
+                dict(initial_price=price, initial_qty=qty, latest_price=latest_price,
+                     latest_qty=latest_qty, latest_source=latest_source), indent=1))
+            raise SystemExit("quote changed after dry-run; refusing to submit")
         try:
             placed = bgc([*order_args, *mode_flags], env)
         except BgcError as exc:   # a rejection is evidence too; keep it (no credentials appear in bgc errors)
@@ -228,6 +247,9 @@ def main() -> None:
         oid = (placed.get("data") or {}).get("orderId") if placed else None
         if placed:
             print("placed:", json.dumps(placed.get("data")))
+        if placed and not oid:
+            (run / "04_order_status_error.json").write_text("placed response did not contain orderId\n")
+            print(f"{mode_label} response had no orderId; no status/cancel request was possible")
         if oid:
             status_args = ["order", "--action", "detail", "--orderId", str(oid), *mode_flags]
             status = None

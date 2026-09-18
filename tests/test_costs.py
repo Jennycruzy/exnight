@@ -38,6 +38,11 @@ def test_latest_sample_wins():
     assert s.sell_walk_bp_1000 == 10.0
 
 
+def test_latest_samples_can_reject_stale_rows():
+    s = latest_samples(_depth(), as_of=pd.Timestamp("2026-09-18T00:00:00Z"), max_age_seconds=3600)
+    assert s == {}
+
+
 def test_walk_cost_surfaces():
     s = latest_samples(_depth())
     assert walk_cost(s[("RXUSDT", "after_hours")], "sell", 1000) == (0.001, None)

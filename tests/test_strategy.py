@@ -22,7 +22,8 @@ BASE = dict(event_id="rX-2026-09-21-1", symbol="rX", spot="RXUSDT", ex_date="202
 
 def test_hold_when_lower_bound_does_not_beat_net_plus_cost():
     r = verdict_row(**BASE, drop_ratio=0.66, samples=_samples())
-    cost = 2 * 0.001 * 100 + (0.001 + 0.001) * 100          # 0.4 per share
+    projected_buy = 100 - 0.66
+    cost = 0.001 * (100 + projected_buy) + 0.001 * 100 + 0.001 * projected_buy
     assert r["cost_per_share"] == pytest.approx(cost)
     assert r["exit_edge_lower"] == pytest.approx((0.66 - 0.2) * 1.0 - 0.7 - cost)
     assert r["verdict"] == "HOLD" and r["buy"].startswith("SUPPRESSED")
@@ -30,7 +31,9 @@ def test_hold_when_lower_bound_does_not_beat_net_plus_cost():
 
 def test_exit_only_on_lower_bound():
     r = verdict_row(**BASE, drop_ratio=1.5, samples=_samples())
-    assert r["exit_edge_lower"] == pytest.approx(1.3 - 0.7 - 0.4) and r["verdict"] == "EXIT"
+    projected_buy = 100 - 1.5
+    cost = 0.001 * (100 + projected_buy) + 0.001 * 100 + 0.001 * projected_buy
+    assert r["exit_edge_lower"] == pytest.approx(1.3 - 0.7 - cost) and r["verdict"] == "EXIT"
     r = verdict_row(**dict(BASE, drop_se=0.5), drop_ratio=1.5, samples=_samples())   # 1.5 - 1.0 = 0.5 < 1.1
     assert r["verdict"] == "HOLD"
 
@@ -52,7 +55,9 @@ def test_no_signal_paths():
 
 def test_buy_needs_eligibility_and_positive_edge():
     r = verdict_row(**dict(BASE, eligible=True), drop_ratio=0.1, samples=_samples())
-    assert r["buy"] == "BUY" and r["buy_edge_point"] == pytest.approx(0.7 - 0.1 - 0.4)
+    projected_buy = 100 - 0.1
+    cost = 0.001 * (100 + projected_buy) + 0.001 * 100 + 0.001 * projected_buy
+    assert r["buy"] == "BUY" and r["buy_edge_point"] == pytest.approx(0.7 - 0.1 - cost)
     r = verdict_row(**dict(BASE, eligible=True), drop_ratio=0.66, samples=_samples())
     assert r["buy"] is None
 

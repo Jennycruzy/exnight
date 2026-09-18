@@ -9,6 +9,7 @@ statement about any event.
 """
 import datetime as dt
 import fcntl
+import hashlib
 import json
 import math
 import os
@@ -26,6 +27,28 @@ OUT = ROOT / "data" / "results" / "depth_samples.csv"
 RAW = ROOT / "data" / "raw" / "depth"
 BANDS = (0.005, 0.02)
 NOTIONALS = (1_000, 5_000, 25_000)
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as f:
+        for block in iter(lambda: f.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def write_manifest(run_dir: Path, *, sampled_at: dt.datetime, session: str, symbols: list[str]) -> Path:
+    """Link every raw response to its run metadata with a small replay manifest."""
+    files = []
+    for path in sorted(run_dir.iterdir()):
+        if path.name == "manifest.json" or not path.is_file():
+            continue
+        files.append(dict(path=path.name, bytes=path.stat().st_size, sha256=file_sha256(path)))
+    manifest = dict(run_id=run_dir.name, sampled_at=sampled_at.isoformat(), session=session,
+                    symbols=symbols, files=files)
+    path = run_dir / "manifest.json"
+    path.write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n")
+    return path
 
 
 def vwap_for(levels, notional):
@@ -136,6 +159,7 @@ def main():
         r, ob = sample_book(api, sym, tickers.get(sym))
         (run_dir / f"{sym}.json").write_text(json.dumps(ob))
         rows.append(dict(ts=now.isoformat(), et=et.strftime("%Y-%m-%d %H:%M"), session=session, **r))
+    write_manifest(run_dir, sampled_at=now, session=session, symbols=[r["symbol"] for r in rows])
     df = pd.DataFrame(rows)
     if not df.empty:
         OUT.parent.mkdir(parents=True, exist_ok=True)

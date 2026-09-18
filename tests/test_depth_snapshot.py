@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
-from depth_snapshot import ET, session_label, vwap_for  # noqa: E402
+from depth_snapshot import ET, file_sha256, session_label, vwap_for, write_manifest  # noqa: E402
 
 # Shapes OBSERVED from /api/v3/reality/market/states and /calendar on 2026-09-16.
 STATES = {"market": "US", "stateList": [
@@ -36,3 +36,17 @@ def test_vwap_walks_levels_and_returns_none_when_unfillable():
     assert vwap_for(levels, 1000) == pytest.approx(100.0)
     assert vwap_for(levels, 1500) == pytest.approx(1500 / (10 + 500 / 101))
     assert vwap_for(levels, 5000) is None
+
+
+def test_raw_run_manifest_hashes_files(tmp_path):
+    run = tmp_path / "20260918T000000.000000Z"
+    run.mkdir()
+    payload = run / "RTESTUSDT.json"
+    payload.write_text('{"bids": []}\n')
+    manifest_path = write_manifest(
+        run, sampled_at=dt.datetime(2026, 9, 18, tzinfo=dt.UTC),
+        session="overnight", symbols=["RTESTUSDT"],
+    )
+    manifest = __import__("json").loads(manifest_path.read_text())
+    assert manifest["files"] == [{"path": payload.name, "bytes": payload.stat().st_size,
+                                  "sha256": file_sha256(payload)}]

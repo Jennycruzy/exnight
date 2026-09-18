@@ -16,11 +16,8 @@ documents whose publication or fetch time is at or before that instant:
                        printed publication dates; the symbol's Reality corporate-action
                        rows and stock-info as fetched (fetch time recorded); the ledger
                        row itself. Every input is on disk, so a run is replayable.
-  web mode             adds Anthropic's web_search tool. Search results carry no reliable
-                       publication timestamp, so this mode is permitted only when the
-                       decision time is in the future (the event has not happened); any
-                       page that exists now was published before the decision. The run
-                       records `as_of_guaranteed` accordingly.
+  web mode             is intentionally disabled for the hackathon proxy. Qwen receives only
+                       the replayable disk evidence described above.
 
 Every call is logged under data/raw/ai_confounder/<event_id>/<run>.json with the model
 id, the full request text, sha256 of each input, the raw response, usage and stop reason,
@@ -291,8 +288,21 @@ def save(record: dict) -> Path:
     d = RAW / record["event_id"]
     d.mkdir(parents=True, exist_ok=True)
     p = d / f"{record['run_at'].replace(':', '').replace('+0000', 'Z')}_{record['mode']}.json"
-    p.write_text(json.dumps(record, indent=1, default=str))
+    tmp = p.with_name(p.name + ".tmp")
+    tmp.write_text(json.dumps(record, indent=1, default=str))
+    tmp.replace(p)
     return p
+
+
+def failed_record(e: CorporateAction, *, mode: str, model: str, error: Exception,
+                  now: dt.datetime) -> dict:
+    """Persist one event failure so a transient model/API error cannot abort the batch."""
+    as_of = decision_time(e)
+    return dict(event_id=e.event_id, mode=mode, as_of=as_of.isoformat(),
+                as_of_guaranteed=False, run_at=now.isoformat(), provider="qwen", model=model,
+                served_by=None, stop_reason=None, usage=None, system_sha256=hashlib.sha256(SYSTEM.encode()).hexdigest(),
+                prompt_sha256=None, documents=[], prompt=None, raw_response=None, analysis=None,
+                error=f"{type(error).__name__}: {error}")
 
 
 def to_row(record: dict) -> dict:
@@ -339,7 +349,11 @@ def main() -> None:
         with args.output.open() as f:
             prior = {(r["event_id"], r["mode"]): r for r in csv.DictReader(f)}
     for e in events:
-        rec = analyse(client, e, api_key=api_key, base_url=base_url, model=model, mode=args.mode)
+        now = dt.datetime.now(dt.UTC)
+        try:
+            rec = analyse(client, e, api_key=api_key, base_url=base_url, model=model, mode=args.mode, now=now)
+        except Exception as exc:
+            rec = failed_record(e, mode=args.mode, model=model, error=exc, now=now)
         p = save(rec)
         row = to_row(rec)
         prior[(row["event_id"], row["mode"])] = row

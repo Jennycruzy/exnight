@@ -53,33 +53,81 @@ def frame(rows: list[dict]) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
-def slope_pdr(p_pre: pd.Series, p_post: pd.Series, gross: pd.Series) -> dict:
-    """Slope estimator with standard error; returns n used."""
+def _robust_standard_errors(x: np.ndarray, y: np.ndarray, groups: np.ndarray | None = None) -> tuple[float | None, float | None]:
+    """Return HC3 and one-way cluster-by-group slope standard errors.
+
+    The frozen strategy keeps the original OLS `se`; these diagnostics make repeated
+    symbols and leverage visible without silently changing strategy_v1.
+    """
+    if len(x) < 3:
+        return None, None
+    X = np.column_stack((np.ones(len(x)), x))
+    try:
+        xtx_inv = np.linalg.inv(X.T @ X)
+        beta = xtx_inv @ X.T @ y
+        resid = y - X @ beta
+        leverage = np.einsum("ij,jk,ik->i", X, xtx_inv, X)
+        denom = np.maximum(1.0 - leverage, 1e-8)
+        meat_hc3 = X.T @ ((resid / denom)[:, None] ** 2 * X)
+        hc3 = xtx_inv @ meat_hc3 @ xtx_inv
+        hc3_se = float(np.sqrt(max(hc3[1, 1], 0.0)))
+        cluster_se = None
+        if groups is not None:
+            unique = np.unique(groups)
+            if len(unique) >= 2:
+                meat = np.zeros((2, 2))
+                for group in unique:
+                    z = X[groups == group].T @ resid[groups == group]
+                    meat += np.outer(z, z)
+                correction = (len(unique) / (len(unique) - 1)) * ((len(x) - 1) / (len(x) - 2))
+                clustered = correction * xtx_inv @ meat @ xtx_inv
+                cluster_se = float(np.sqrt(max(clustered[1, 1], 0.0)))
+        return hc3_se, cluster_se
+    except (FloatingPointError, np.linalg.LinAlgError, ValueError):
+        return None, None
+
+
+def slope_pdr(p_pre: pd.Series, p_post: pd.Series, gross: pd.Series,
+              groups: pd.Series | None = None) -> dict:
+    """OLS slope plus robust diagnostic errors; returns n used."""
     m = p_pre.notna() & p_post.notna() & gross.notna()
     x = (gross[m] / p_pre[m]).to_numpy(float)
     y = (p_post[m] / p_pre[m] - 1).to_numpy(float)
+    group_values = groups[m].to_numpy() if groups is not None else None
     if len(x) < 3:
-        return dict(n=int(len(x)), pdr=None, se=None, intercept=None, r2=None)
+        return dict(n=int(len(x)), pdr=None, se=None, hc3_se=None, cluster_se=None,
+                    intercept=None, r2=None)
+    if not np.isfinite(x).all() or not np.isfinite(y).all() or np.allclose(x, x[0]):
+        return dict(n=int(len(x)), pdr=None, se=None, hc3_se=None, cluster_se=None,
+                    intercept=None, r2=None)
     res = stats.linregress(x, y)
+    hc3_se, cluster_se = _robust_standard_errors(x, y, group_values)
     return dict(n=int(len(x)), pdr=-res.slope, se=res.stderr, intercept=res.intercept,
-                r2=res.rvalue ** 2, p_value=res.pvalue)
+                hc3_se=hc3_se, cluster_se=cluster_se, r2=res.rvalue ** 2, p_value=res.pvalue)
 
 
-def slope_market_adjusted(p_pre: pd.Series, abnormal_pct: pd.Series, gross: pd.Series) -> dict:
+def slope_market_adjusted(p_pre: pd.Series, abnormal_pct: pd.Series, gross: pd.Series,
+                          groups: pd.Series | None = None) -> dict:
     """Estimate PDR after subtracting the saved proxy return for the same interval."""
     m = p_pre.notna() & abnormal_pct.notna() & gross.notna()
     x = (gross[m] / p_pre[m]).to_numpy(float)
     y = (abnormal_pct[m] / 100).to_numpy(float)
+    group_values = groups[m].to_numpy() if groups is not None else None
     if len(x) < 3:
-        return dict(n=int(len(x)), pdr=None, se=None, intercept=None, r2=None)
+        return dict(n=int(len(x)), pdr=None, se=None, hc3_se=None, cluster_se=None,
+                    intercept=None, r2=None)
+    if not np.isfinite(x).all() or not np.isfinite(y).all() or np.allclose(x, x[0]):
+        return dict(n=int(len(x)), pdr=None, se=None, hc3_se=None, cluster_se=None,
+                    intercept=None, r2=None)
     res = stats.linregress(x, y)
+    hc3_se, cluster_se = _robust_standard_errors(x, y, group_values)
     return dict(n=int(len(x)), pdr=-res.slope, se=res.stderr, intercept=res.intercept,
-                r2=res.rvalue ** 2, p_value=res.pvalue)
+                hc3_se=hc3_se, cluster_se=cluster_se, r2=res.rvalue ** 2, p_value=res.pvalue)
 
 
 def robustness(u: pd.DataFrame, k: str) -> dict:
     """How much the slope depends on a few high-yield points."""
-    base = slope_pdr(u.p_pre, u[f"p_{k}"], u.gross)
+    base = slope_pdr(u.p_pre, u[f"p_{k}"], u.gross, u.symbol)
     if base["pdr"] is None:
         return dict(n=base["n"])
     loo = [slope_pdr(u.drop(i).p_pre, u.drop(i)[f"p_{k}"], u.drop(i).gross)["pdr"] for i in u.index]
@@ -115,18 +163,18 @@ def summarize(df: pd.DataFrame, yield_floor_pct: float | None = None,
         out["rungs"][k] = dict(
             n=int(len(col)), mean=float(col.mean()) if len(col) else None,
             median=float(col.median()) if len(col) else None,
-            slope=slope_pdr(u.p_pre, u[f"p_{k}"], u.gross),
-            market_adjusted_slope=slope_market_adjusted(u.p_pre, u[f"abnormal_{k}"], u.gross),
+                slope=slope_pdr(u.p_pre, u[f"p_{k}"], u.gross, u.symbol),
+            market_adjusted_slope=slope_market_adjusted(u.p_pre, u[f"abnormal_{k}"], u.gross, u.symbol),
         )
     lit = u.pdr_literature.dropna()
     out["rtoken_literature_convention"] = dict(
         n=int(len(lit)), mean=float(lit.mean()) if len(lit) else None,
         median=float(lit.median()) if len(lit) else None,
-        slope=slope_pdr(u.p_close_pre, u.p_open_0930, u.gross))
+               slope=slope_pdr(u.p_close_pre, u.p_open_0930, u.gross, u.symbol))
     ucol = u.u_pdr.dropna()
     out["underlying"] = dict(n=int(len(ucol)), mean=float(ucol.mean()) if len(ucol) else None,
                              median=float(ucol.median()) if len(ucol) else None,
-                             slope=slope_pdr(u.u_close, u.u_open, u.gross))
+                             slope=slope_pdr(u.u_close, u.u_open, u.gross, u.symbol))
     return out
 
 

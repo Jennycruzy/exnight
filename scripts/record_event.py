@@ -19,6 +19,7 @@ import argparse
 import datetime as dt
 import fcntl
 import json
+import os
 import sys
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -61,11 +62,27 @@ def append(label: str, rows: list[dict], now: dt.datetime) -> Path:
     d = RAW / label
     d.mkdir(parents=True, exist_ok=True)
     p = d / f"{now:%Y%m%d}.jsonl"
-    with p.open("a", encoding="utf-8") as f:
+    with p.open("a+", encoding="utf-8") as f:
         fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+        f.seek(0)
+        existing: set[tuple[str, str]] = set()
+        for line in f:
+            try:
+                prior = json.loads(line)
+                existing.add((str(prior.get("ts")), str(prior.get("symbol"))))
+            except (json.JSONDecodeError, AttributeError, TypeError):
+                # A malformed prior line is preserved; validation will report it.
+                continue
+        f.seek(0, 2)
+        written: set[tuple[str, str]] = set()
         for r in rows:
+            key = (str(r.get("ts")), str(r.get("symbol")))
+            if key in existing or key in written:
+                continue
             f.write(json.dumps(r, separators=(",", ":")) + "\n")
+            written.add(key)
         f.flush()
+        os.fsync(f.fileno())
         fcntl.flock(f.fileno(), fcntl.LOCK_UN)
     return p
 

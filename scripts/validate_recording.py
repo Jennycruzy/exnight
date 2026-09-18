@@ -65,17 +65,20 @@ def validate(
         rows = by_symbol.get(symbol, [])
         timestamps = [ts for ts, _ in rows]
         gaps = [int((right - left).total_seconds()) for left, right in zip(timestamps, timestamps[1:])]
+        too_fast = sum(0 < gap < max(1, interval_seconds // 2) for gap in gaps)
         duplicate_count = len(timestamps) - len(set(timestamps))
         out_of_order = sum(right < left for left, right in zip(timestamps, timestamps[1:]))
         last = max(timestamps) if timestamps else None
         ticker_rows = sum(bool(row.get("ticker")) for _, row in rows)
-        nonempty_books = sum(bool((row.get("orderbook") or {}).get("bids") or (row.get("orderbook") or {}).get("asks")) for _, row in rows)
+        nonempty_books = sum(bool((row.get("orderbook") or {}).get("bids")
+                                  and (row.get("orderbook") or {}).get("asks")) for _, row in rows)
         detail = {
             "rows": len(rows),
             "first_ts": timestamps[0].isoformat() if timestamps else None,
             "last_ts": last.isoformat() if last else None,
             "max_gap_seconds": max(gaps, default=None),
             "gaps_over_limit": sum(gap > max_gap_seconds for gap in gaps),
+            "samples_too_fast": too_fast,
             "duplicate_timestamps": duplicate_count,
             "out_of_order": out_of_order,
             "ticker_rows": ticker_rows,
@@ -91,6 +94,8 @@ def validate(
             failures.append(f"{symbol}: out-of-order timestamps={out_of_order}")
         if detail["gaps_over_limit"]:
             failures.append(f"{symbol}: gaps over {max_gap_seconds}s={detail['gaps_over_limit']}")
+        if too_fast:
+            failures.append(f"{symbol}: samples too close together={too_fast}")
         if max_age_seconds is not None and (last is None or detail["last_age_seconds"] > max_age_seconds):
             failures.append(f"{symbol}: latest sample is older than {max_age_seconds}s")
     return {
