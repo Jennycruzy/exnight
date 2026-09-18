@@ -250,6 +250,7 @@ def analyse(client: httpx.Client, e: CorporateAction, *, api_key: str, base_url:
     payload = {
         "model": model,
         "temperature": 0,
+        "enable_thinking": False,
         "max_tokens": 2048,
         "messages": [
             {"role": "system", "content": SYSTEM + " Return valid JSON only."},
