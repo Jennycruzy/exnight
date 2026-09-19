@@ -115,10 +115,12 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Flag confounders for an event-results file")
     ap.add_argument("--results", type=Path, default=RESULTS / "event_results.json")
     ap.add_argument("--output", type=Path, default=RESULTS / "confounders.csv")
+    ap.add_argument("--reality-ledger", type=Path, default=REALITY_LEDGER,
+                    help="Reality ledger matching the event-results run")
     args = ap.parse_args()
     results = json.loads(args.results.read_text())
     notice = [e.model_dump(mode="json") for e in read_ledger(LEDGER_PATH)]
-    reality = [e.model_dump(mode="json") for e in read_ledger(REALITY_LEDGER)]
+    reality = [e.model_dump(mode="json") for e in read_ledger(args.reality_ledger)]
     df = build(results, notice, reality)
     df.to_csv(args.output, index=False)
     print(f"{len(df)} events; {int(df.usable.sum())} usable; {int(df.clean.sum())} clean (no flag)")

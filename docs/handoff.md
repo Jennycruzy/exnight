@@ -21,6 +21,13 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
   Resume now validates existing output and archives failures only when every instrument in
   the failed batch is complete, including retries with different batch boundaries.
   `data/results/reality_full_build.json` preserves recovered failures for audit.
+- Full online basis resolution produced 1,374 gross-basis cash rows and 298 unresolved cash
+  rows in `data/ledger/reality_full_resolved_online.jsonl`.
+- The complete online event study produced 568 usable rows in
+  `data/results/event_results_full_online.json`. The matching summary, confounders, costs and
+  strategy outputs use the `full_online` suffix.
+- The cost run produced 8,520 scenarios; 754 are fully priced from current depth/ticker
+  evidence. The rest retain explicit missing-depth or insufficient-liquidity reasons.
 
 ## Implemented safeguards
 
@@ -39,7 +46,7 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 - Recorder writes are locked, flushed and deduplicated by `(timestamp, symbol)`. Recording
   validation checks gaps, duplicates, ordering, too-fast samples and fresh timestamps.
 - Depth runs write per-file SHA-256 manifests. `scripts/verify_evidence.py` verifies saved
-  source, depth and Qwen evidence offline.
+  source, ledger, depth and Qwen evidence offline.
 - `scripts/score_forward.py` scores the completed forward window from recorder data only; it
   never fetches a replacement quote or places an order.
 - Cached Nasdaq and Yahoo-calendar responses replay offline, and missing Yahoo dividend caches
@@ -76,9 +83,9 @@ an evidence limitation, not something to hide by filling the gap with synthetic 
 
 ## Current build and remaining work
 
-1. Full ledger ingestion and schema/duplicate validation are complete. Run basis resolution
-   and event-study artifacts against the complete output; ingestion alone does not verify
-   event-level tax treatment or executable liquidity.
+1. Full ledger ingestion, online basis resolution, event study, confounder analysis, cost
+   scenarios and exploratory strategy outputs are complete. The 298 unresolved cash rows and
+   current-book liquidity limits remain explicit in those artifacts.
 2. Keep the recorder running through the September 21 window and score the actual 04:00 ET
    result against the frozen `strategy_v1.json` rule.
 3. Treat a real order as a separate, manually confirmed preflight only. No unattended order,
@@ -108,8 +115,8 @@ converted into a fill assumption.
 - Bitget's dividend eligibility snapshot time is unpublished, so BUY remains suppressed.
 - Some issuer/basis rows remain `UNRESOLVED`; the strategy uses event-level withholding bounds
   and refuses a verdict when the answer changes across the range.
-- The current saved Reality ledger is the researched event set, not a complete rebuild of all
-  1,653 live rTokens.
+- The complete saved Reality ledger covers all 1,653 live rTokens; 999 instruments had at least
+  one event in the selected date range.
 - A real rToken fill has not been proven. The live path still requires credentials, displayed
   liquidity, a small notional, and the explicit confirmation string.
 

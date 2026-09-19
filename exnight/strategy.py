@@ -61,6 +61,14 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _manifest_name(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return str(resolved)
+
+
 def write_run_manifest(rule: dict | None, *, rule_path: Path | None, inputs: list[Path], outputs: list[Path], tag: str) -> Path:
     """Save the exact rule/input/output hashes used for one strategy run."""
     try:
@@ -71,9 +79,9 @@ def write_run_manifest(rule: dict | None, *, rule_path: Path | None, inputs: lis
     payload = dict(
         generated_at=dt.datetime.now(dt.UTC).isoformat(), commit=commit,
         rule_id=rule.get("rule_id") if rule else None,
-        rule_file=str(rule_path.relative_to(ROOT)) if rule_path else None,
-        inputs={str(p.relative_to(ROOT)): _sha256(p) for p in inputs if p.exists()},
-        outputs={str(p.relative_to(ROOT)): _sha256(p) for p in outputs if p.exists()},
+        rule_file=_manifest_name(rule_path) if rule_path else None,
+        inputs={_manifest_name(p): _sha256(p) for p in inputs if p.exists()},
+        outputs={_manifest_name(p): _sha256(p) for p in outputs if p.exists()},
     )
     path = RESULTS / f"run_manifest{tag}.json"
     tmp = path.with_name(path.name + ".tmp")

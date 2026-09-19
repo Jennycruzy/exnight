@@ -17,6 +17,10 @@ path, not an unattended trading bot.
 - The Reality rebuild completed for 1,653 instruments, producing 1,695 validated events in
   `data/ledger/reality_full.jsonl`. Progress and recovered failures are recorded in
   `data/results/reality_full_build.json`. Not every instrument has an event in the date range.
+- The full online basis pass resolved 1,374 cash rows and left 298 cash rows explicitly
+  unresolved. The full event study has 568 usable rows; its outputs are tagged `full_online`.
+- The online cost run produced 8,520 event/rung/notional scenarios, with 754 fully priced from
+  current depth/ticker evidence. The remaining rows carry explicit liquidity reasons.
 
 ## Modules
 
@@ -46,7 +50,7 @@ path, not an unattended trading bot.
     .venv/bin/python -m exnight.calendar --source reality --start-date 2026-06-01 --output data/ledger/reality_notice59.jsonl
     .venv/bin/python -m exnight.basis
     .venv/bin/python -m exnight.eventstudy --ledger data/ledger/reality_notice59.jsonl --output data/results/event_results_reality.json
-    .venv/bin/python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv
+    .venv/bin/python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv --reality-ledger data/ledger/reality_notice59_resolved.jsonl
     .venv/bin/python -m exnight.analysis --results data/results/event_results_reality.json --confounders data/results/confounders_reality.csv --tag _reality
     .venv/bin/python -m exnight.costs --results data/results/event_results_reality.json --ledger data/ledger/reality_notice59.jsonl --output data/results/event_costs_reality.csv
     .venv/bin/python -m exnight.strategy --rule strategy/strategy_v1.json --tag _v1
@@ -84,8 +88,8 @@ two-sided public books. The system reports those limits instead of inventing fil
 - The configured Bitget trading credential currently authenticates only with the documented demo
   header; the mainnet API returns environment error `40099`. A funded mainnet UTA trade key and
   Reality whitelist are required before the explicit live-confirmation step.
-- Remaining build work is tracked in [`docs/handoff.md`](docs/handoff.md): complete the hard
-  full-ledger artifacts, score the September 21 window, and perform a manually confirmed live
-  preflight only if the account is whitelisted for Reality orders.
+- Remaining work is tracked in [`docs/handoff.md`](docs/handoff.md): score the September 21
+  window and perform a manually confirmed live preflight only if the account is whitelisted
+  for Reality orders.
 - See [`docs/handoff.md`](docs/handoff.md) for the full operational state and the host-security
   boundary. SSH/login configuration is deliberately not modified by the application.
