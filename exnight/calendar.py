@@ -412,19 +412,18 @@ def build_reality_ledger(
                 # safely share the same deterministic ordering slot.
                 canonical = json.dumps(row, sort_keys=True, separators=(",", ":"), default=str)
                 candidates.append((ex_date, action_type, canonical, fetched_at, row))
-        ordinal_by_key: dict[tuple[dt.date, str], int] = {}
+        ordinal_by_date: dict[dt.date, int] = {}
         for ex_date, action_type, _, fetched_at, row in sorted(candidates, key=lambda x: x[:3]):
-            key = (ex_date, action_type)
-            ordinal_by_key[key] = ordinal_by_key.get(key, 0) + 1
+            ordinal_by_date[ex_date] = ordinal_by_date.get(ex_date, 0) + 1
             events.append(_reality_action(
-                row, spot, str(code), ordinal_by_key[key], fetched_at,
+                row, spot, str(code), ordinal_by_date[ex_date], fetched_at,
                 notice_by_key, weekend, as_of,
             ))
     return sorted(events, key=lambda e: (e.exchange_ex_date, e.symbol, e.event_id))
 
 
 def write_ledger(events: list[CorporateAction], path: Path = LEDGER_PATH) -> None:
-    """Append new event rows and reject changes to an existing event id."""
+    """Append new event rows after validating the complete batch."""
     path.parent.mkdir(parents=True, exist_ok=True)
     existing: dict[str, str] = {}
     with path.open("a+", encoding="utf-8") as f:
@@ -438,16 +437,23 @@ def write_ledger(events: list[CorporateAction], path: Path = LEDGER_PATH) -> Non
             if not event_id or event_id in existing:
                 raise ValueError(f"invalid or duplicate event id in {path}: {event_id!r}")
             existing[event_id] = line
-        f.seek(0, 2)
+        new_lines: list[tuple[str, str]] = []
+        batch_ids: set[str] = set()
         for event in events:
             line = json.dumps(event.model_dump(mode="json"), sort_keys=True) + "\n"
+            if event.event_id in batch_ids:
+                raise ValueError(f"duplicate event id in batch: {event.event_id!r}")
+            batch_ids.add(event.event_id)
             previous = existing.get(event.event_id)
             if previous is not None:
                 if previous != line:
                     raise ValueError(f"event {event.event_id} changed; append-only ledger refuses replacement")
-                continue
+            else:
+                new_lines.append((event.event_id, line))
+        f.seek(0, 2)
+        for event_id, line in new_lines:
             f.write(line)
-            existing[event.event_id] = line
+            existing[event_id] = line
         f.flush()
         os.fsync(f.fileno())
         fcntl.flock(f.fileno(), fcntl.LOCK_UN)

@@ -99,6 +99,7 @@ def test_reality_ledger_uses_api_rows_and_keeps_unresolved_basis(tmp_path):
     assert cash.gross_dividend_per_share is None
     assert cash.instrument_snapshot["open_time"] == "2026-06-02T00:00:00+00:00"
     assert events[1].adjustment_ratio == Decimal("2")
+    assert len({e.event_id for e in events}) == 2
     assert list(tmp_path.rglob("*.json"))
 
     reversed_events = build_reality_ledger(
