@@ -124,6 +124,16 @@ def test_ledger_writer_is_append_only(tmp_path):
         write_ledger([changed], path)
 
 
+def test_ledger_writer_validates_batch_before_writing(tmp_path):
+    from exnight.calendar import write_ledger
+    event = build_ledger(_universe_from_ledger())[0]
+    path = tmp_path / "events.jsonl"
+    import pytest
+    with pytest.raises(ValueError, match="duplicate event id"):
+        write_ledger([event, event], path)
+    assert path.read_text() == ""
+
+
 def test_amount_match_tolerates_reality_rounding_only():
     from decimal import Decimal
     from exnight.calendar import _amounts_match
