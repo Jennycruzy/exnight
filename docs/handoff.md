@@ -1,4 +1,4 @@
-# EXNIGHT handoff — 2026-09-18
+# EXNIGHT handoff — 2026-09-19
 
 EXNIGHT is a research and guarded-execution system for Bitget Reality rTokens. It is not
 an unattended trading bot. The strategy decision remains deterministic; Qwen is an optional
@@ -7,7 +7,7 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 ## Current verified state
 
 - VPS: `ubuntu@99.80.93.71`, project `/home/ubuntu/exnight`.
-- Full regression suite: **79 passed**.
+- Full regression suite: **84 passed** with `python -m pytest`.
 - Existing VS Code SSH access was preserved. No SSH config, authorized key, sudo rule,
   firewall, reboot, or login setting was changed.
 - `.env` is mode `600`; the supplied Bitget hackathon Qwen credential is read only as
@@ -16,6 +16,9 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
   schema-valid confounder record were saved under `data/raw/ai_confounder/`.
 - `strategy/strategy_v1.json` remains untouched. `strategy_v2.json` records the corrected
   projected-buy-price and fresh-depth semantics for later use.
+- The complete Reality rebuild is running in the background with append-only output at
+  `data/ledger/reality_full.jsonl` and resumable progress at
+  `data/results/reality_full_build.json`.
 
 ## Implemented safeguards
 
@@ -37,9 +40,15 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
   source, depth and Qwen evidence offline.
 - `scripts/score_forward.py` scores the completed forward window from recorder data only; it
   never fetches a replacement quote or places an order.
+- Cached Nasdaq and Yahoo-calendar responses replay offline, and missing Yahoo dividend caches
+  now fail closed without a network fallback. The offline resolver verified 182 cash rows from
+  the saved 185-action ledger: tier 1 = 61, tier 2 = 109, tier 3 = 1, unresolved = 11.
 - Paper/live order sizing uses the executable side, exchange precision and minimum notional,
-  performs a final quote recheck, caps one real order at $100 by default, polls status and
-  attempts cancellation when an order remains open.
+  requires a two-sided public book for live mode, performs a final quote and balance recheck,
+  caps one real order at $100 by default, polls status and cancels an unfilled Reality order.
+- The missing `bgc` dependency was removed. Native HMAC-signed calls use Bitget's Reality
+  placement, order-info and cancellation endpoints. The official Reality endpoint is
+  whitelist-only; `--live-paper` refuses because the generic demo path does not accept rTokens.
 
 ## Scheduler
 
@@ -51,6 +60,23 @@ jobs were added without touching SSH:
 
 The scheduler is not a guarantee of executable liquidity. Public books may be empty while a
 ticker still reports routed liquidity; those rows remain labelled `ticker_only`.
+
+## Current monitoring result
+
+The latest evidence check passed source, depth-manifest and Qwen-hash verification. The latest
+health report deliberately remains **red** for recorder cadence: all three forward symbols have
+one shared 3,419-second (about 57-minute) gap. Depth is fresh after a manual snapshot, but
+`RVSTUSDT` and `RSATAUSDT` still have ticker-only quotes with no two-sided public book. This is
+an evidence limitation, not something to hide by filling the gap with synthetic rows.
+
+## Current build and remaining work
+
+1. Let the full 1,653-instrument ledger finish; inspect its state file and failed batches, then
+   run basis resolution and event-study artifacts against the complete output.
+2. Keep the recorder running through the September 21 window and score the actual 04:00 ET
+   result against the frozen `strategy_v1.json` rule.
+3. Treat a real order as a separate, manually confirmed preflight only. No unattended order,
+   login change, firewall change, SSH restart, or key rotation is part of the application fix.
 
 ## September 21 forward score
 

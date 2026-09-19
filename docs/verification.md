@@ -153,18 +153,19 @@ not a holiday source.
 | 4 | Account-level fee tier vs the published 0.05% (to 31 Aug) / 0.1% (after) | cost model |
 | 5 | Overnight book depth at realistic size | slippage model |
 
-## Agent Hub order surface — OBSERVED 2026-09-16
+## Authenticated Reality order surface — OBSERVED 2026-09-19
 
-`bgc` (bitget-agent-cli 3.0.0, SDK 3.1.0) installed via the official installer.
+The old `bgc` dependency is not installed on the VPS and is no longer part of the active
+order path. The project now signs requests directly with the standard Bitget HMAC-SHA256
+scheme:
 
 | Fact | Observation |
 |---|---|
-| Reality symbols on the UTA surface | `bgc market --action tickers/orderbook --category SPOT --symbol RAVGOUSDT` returns data; `order --action place` maps to `POST /api/v3/trade/place-order` with `category=SPOT`. Bitget's current docs also list a Reality-specific order endpoint; this project uses the installed generic UTA surface |
-| Demo (`--paper-trading`) with a demo key | `account_overview` authenticates (UTA hybrid mode). `order --action place ... --symbol BTCUSDT` → `Insufficient balance` (path works; demo wallet unfunded) |
-| **Reality symbols in demo** | `order --action place --category SPOT --symbol RAVGOUSDT` → **`HTTP 400: Parameter RAVGOUSDT does not exist`**, although the demo `instruments` response lists 1,655 Reality rows. The demo matching engine does not accept rToken spot orders. Evidence: `data/raw/paper/20260916T220013Z/` |
-| Consequence | A paper fill on an rToken cannot be produced. The executable-liquidity question for ticker-only symbols (§ depth) therefore stays OBSERVED-NOW book only; any live demonstration would need a real (funded) account and is a user decision, not a default |
+| Reality placement endpoint | `POST /api/v3/trade/place-reality-order` with `category=SPOT`, symbol, side, limit price and quantity. Bitget's current documentation says this endpoint is for Reality pairs and requires a whitelisted UID. |
+| Order lifecycle | `GET /api/v3/trade/order-info` polls the order; `POST /api/v3/trade/cancel-reality-order` cancels an unfilled or partially filled order. |
+| Demo (`--live-paper`) | Refused explicitly. The official Reality endpoint has no generic demo-order path, and the prior generic demo engine rejected `RAVGOUSDT`. |
+| Dry-run | A public-data dry run for `RAVGOUSDT` at requested $20 recorded a precision-valid payload without credentials or order submission. A $5 attempt was correctly refused below the $10 exchange minimum. |
+| Live safeguards | Live mode requires a two-sided public book, final book recheck, available-balance preflight, the $100 one-order cap and the exact `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'` string. |
 
-On 2026-09-17 the guarded project path completed a no-submit live dry run for `RAVGOUSDT`
-(`buy`, requested $15, IOC) and recorded the computed quantity, precision-valid price and
-`wouldSend` payload. No live credentials were used and no order was placed. The path requires
-an explicit `--live --confirm-live` string for a real order.
+No live order has been submitted. A real fill still requires a funded, whitelisted account and
+the user's explicit confirmation at the moment of submission.

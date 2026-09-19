@@ -28,10 +28,12 @@ class UnderlyingDataError(ExnightError):
     pass
 
 
-def _fetch(ticker: str, start: dt.date, end: dt.date) -> dict:
+def _fetch(ticker: str, start: dt.date, end: dt.date, *, offline: bool = False) -> dict:
     p = RAW_DIR / f"{ticker}_{start:%Y%m%d}_{end:%Y%m%d}.json"
     if p.exists():
         return json.loads(p.read_text())
+    if offline:
+        raise UnderlyingDataError(f"{ticker}: cached Yahoo response is missing")
     p1 = int(dt.datetime.combine(start, dt.time(), dt.UTC).timestamp())
     p2 = int(dt.datetime.combine(end, dt.time(), dt.UTC).timestamp())
     body = None
@@ -81,8 +83,8 @@ def daily(ticker: str, start: dt.date, end: dt.date) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
-def dividends(ticker: str, start: dt.date, end: dt.date) -> list[dict]:
-    res = _fetch(ticker, start, end)
+def dividends(ticker: str, start: dt.date, end: dt.date, *, offline: bool = False) -> list[dict]:
+    res = _fetch(ticker, start, end, offline=offline)
     out = []
     for v in (res.get("events") or {}).get("dividends", {}).values():
         d = dt.datetime.fromtimestamp(v["date"], dt.UTC).astimezone(ZoneInfo("America/New_York")).date()

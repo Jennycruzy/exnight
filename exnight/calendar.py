@@ -224,7 +224,12 @@ def _save_raw_response(api: BitgetPublic, endpoint: str, raw_dir: Path | None) -
     name = f"{fetched:%Y%m%dT%H%M%S.%fZ}.json"
     path = raw_dir / endpoint.rsplit("/", 1)[-1]
     path.mkdir(parents=True, exist_ok=True)
-    (path / name).write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    target = path / name
+    tmp = target.with_name(target.name + ".tmp")
+    tmp.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    with tmp.open("rb") as f:
+        os.fsync(f.fileno())
+    tmp.replace(target)
 
 
 def _reality_action(

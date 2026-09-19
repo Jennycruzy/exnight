@@ -1,10 +1,12 @@
 import datetime as dt
+import json
 from decimal import Decimal
 
 import pytest
 
 from exnight.basis import (IssuerSources, _match, parse_perp_dividend_notice_2026_09_16, resolve_event)
 from exnight.events import CorporateAction, EventType
+from exnight import underlying
 from exnight.strategy import verdict_row
 from tests.test_strategy import BASE, _samples
 
@@ -43,6 +45,38 @@ def test_perp_notice_parses_both_pairs():
     rows = parse_perp_dividend_notice_2026_09_16()
     assert {(r["underlying"], str(r["amount"]), r["ex_date"]) for r in rows} == {
         ("VST", "0.23", EX), ("AVGO", "0.65", EX)}
+
+
+def test_offline_issuer_sources_replay_cached_responses(tmp_path):
+    nasdaq = {
+        "data": {"dividends": {"rows": [{
+            "exOrEffDate": "09/21/2026", "amount": "$0.65",
+            "declarationDate": "09/01/2026", "type": "Cash",
+        }]}}
+    }
+    yahoo = {"quoteSummary": {"result": [{
+        "calendarEvents": {"exDividendDate": {"raw": int(dt.datetime(2026, 9, 21, tzinfo=dt.UTC).timestamp())}}
+    }]}}
+    (tmp_path / "nasdaq").mkdir()
+    (tmp_path / "yahoo_calendar").mkdir()
+    (tmp_path / "nasdaq" / "AVGO_20260918T000000Z.json").write_text(
+        json.dumps({"ticker": "AVGO", "payload": nasdaq}))
+    (tmp_path / "yahoo_calendar" / "AVGO_20260918T000000Z.json").write_text(
+        json.dumps({"ticker": "AVGO", "payload": yahoo}))
+
+    src = IssuerSources(raw_dir=tmp_path, offline=True)
+    declared = src.nasdaq_declared("AVGO")
+    assert declared and declared[0]["ex_date"] == EX and declared[0]["amount"] == Decimal("0.65")
+    assert src.yahoo_calendar("AVGO") == EX
+
+
+def test_offline_issuer_sources_never_fetch_missing_yahoo_cache(monkeypatch, tmp_path):
+    def fail(*args, **kwargs):
+        raise AssertionError("offline lookup attempted a network request")
+
+    monkeypatch.setattr(underlying.httpx, "get", fail)
+    src = IssuerSources(raw_dir=tmp_path, offline=True)
+    assert src.yahoo_realised("ZZZEXNIGHT", EX) is None
 
 
 def test_match_allows_source_rounding_only():

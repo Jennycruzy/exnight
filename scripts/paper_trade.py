@@ -3,15 +3,16 @@
 Every run writes data/raw/paper/<UTC ts>/ containing, in order:
   00_context.json        symbol, side, size, session label, verdict row it acts on (if any)
   01_book_pre.json       public order book + ticker immediately before the order (adapter)
-  02_dry_run.json        bgc --dry-run payload (`wouldSend`) — what will be submitted
-  03_order.json          bgc response to the real --paper-trading placement (absent in dry-run)
-  04_order_status.json   bgc order query after placement (absent in dry-run)
+  02_dry_run.json        local signed-request payload — what will be submitted
+  03_order.json          Bitget Reality-order response (absent in dry-run)
+  04_order_status.json   Bitget order query after placement (absent in dry-run)
   05_book_post.json      public order book + ticker immediately after
 
 Credentials are read from the environment / .env (BITGET_API_KEY, BITGET_SECRET_KEY,
-BITGET_PASSPHRASE). The script never prints them. Without --live-paper or --live it stops
-after the dry run, which needs no credentials. Real orders require --live plus an exact
-confirmation string containing the computed quantity.
+BITGET_PASSPHRASE). The script never prints them. Without --live it stops after a local
+dry run, which needs no credentials. Bitget's official Reality endpoint has no generic
+demo-order path, so --live-paper refuses explicitly. Real orders require --live plus an
+exact confirmation string containing the computed quantity.
 Quantity is derived from the visible book: never more than the resting size inside the
 ±0.5% band at sample time, so the order is one the book could actually fill.
 """
@@ -22,10 +23,9 @@ import datetime as dt
 import json
 import math
 import os
-import shutil
-import subprocess
 import sys
 import time
+import uuid
 from decimal import Decimal, ROUND_DOWN, ROUND_UP
 from pathlib import Path
 
@@ -35,6 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from depth_snapshot import session_label  # noqa: E402
 
 from exnight.market import BitgetPublic  # noqa: E402
+from exnight.trading import BitgetPrivate, BitgetPrivateError  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw" / "paper"
@@ -42,24 +43,15 @@ ET = dt.timezone(dt.timedelta(hours=-4), "ET")  # display only; session_label us
 MAX_LIVE_NOTIONAL_USD = 100.0
 
 
-def bgc(args: list[str], env: dict) -> dict:
-    exe = shutil.which("bgc")
-    if exe is None:
-        raise SystemExit("bgc not on PATH (source ~/.nvm/nvm.sh)")
-    try:
-        p = subprocess.run([exe, *args], capture_output=True, text=True, env=env, timeout=60)
-    except subprocess.TimeoutExpired as exc:
-        raise BgcError("bgc timed out") from exc
-    if p.returncode != 0:
-        raise BgcError(p.stderr.strip() or p.stdout.strip())
-    try:
-        return json.loads(p.stdout)
-    except json.JSONDecodeError as exc:
-        raise BgcError(f"bgc returned non-JSON output: {p.stdout[:200]!r}") from exc
-
-
-class BgcError(RuntimeError):
-    pass
+def _dry_order_payload(symbol: str, side: str, qty: str, price: str, client_oid: str) -> dict:
+    return {
+        "code": "00000",
+        "msg": "dry-run; no request sent",
+        "data": {"wouldSend": {
+            "category": "SPOT", "symbol": symbol, "side": side,
+            "orderType": "limit", "qty": qty, "price": price, "clientOid": client_oid,
+        }},
+    }
 
 
 def book_with_ticker(api: BitgetPublic, symbol: str) -> dict:
@@ -180,6 +172,8 @@ def main() -> None:
     load_dotenv(ROOT / ".env")
     if args.live_paper and args.live:
         raise SystemExit("choose either --live-paper or --live, not both")
+    if args.live_paper:
+        raise SystemExit("Bitget's official Reality endpoint has no demo-order path; use dry-run or explicit --live")
     if args.live and (not math.isfinite(args.max_live_notional) or args.max_live_notional <= 0
                       or args.notional > args.max_live_notional):
         raise SystemExit(f"real order exceeds the ${args.max_live_notional:.2f} live notional cap")
@@ -205,25 +199,28 @@ def main() -> None:
     )
     if args.live and args.confirm_live != f"{args.symbol} {args.side} {qty}":
         raise SystemExit(f"refusing real order; repeat with --confirm-live '{args.symbol} {args.side} {qty}'")
+    if args.live and liquidity_source != "public_book":
+        (run / "03_liquidity_refused.json").write_text(json.dumps(
+            dict(reason="live orders require a two-sided public order book", source=liquidity_source), indent=1))
+        raise SystemExit("refusing live order: current quote is ticker-only, not verified public-book liquidity")
     ctx = dict(symbol=args.symbol, base_coin=live.base_coin, side=args.side, notional_requested=args.notional,
                actual_notional=float(Decimal(price) * Decimal(qty)), band=args.band, session=session,
                price=price, qty=qty, resting_in_band=resting, liquidity_source=liquidity_source,
                time_in_force=args.time_in_force,
+               api_endpoint="/api/v3/trade/place-reality-order", time_in_force_sent=False,
                mode="paper-trading" if args.live_paper else ("live" if args.live else "dry-run"),
                taker_fee=str(live.taker_fee), maker_fee=str(live.maker_fee), note=args.note)
     (run / "00_context.json").write_text(json.dumps(ctx, indent=1))
     (run / "01_book_pre.json").write_text(json.dumps(pre))
 
-    order_args = ["order", "--action", "place", "--category", "SPOT", "--symbol", args.symbol, "--side", args.side,
-                  "--orderType", "limit", "--qty", qty, "--price", price, "--timeInForce", args.time_in_force]
-    mode_flags = ["--paper-trading"] if args.live_paper else []
-    dry = bgc([*order_args, *mode_flags, "--dry-run"], env)
+    client_oid = "exnight-" + dt.datetime.now(dt.UTC).strftime("%Y%m%d%H%M%S") + "-" + uuid.uuid4().hex[:8]
+    dry = _dry_order_payload(args.symbol, args.side, qty, price, client_oid)
     (run / "02_dry_run.json").write_text(json.dumps(dry, indent=1))
-    print(f"{session}: {args.side} {qty} {args.symbol} @ {price} ({args.time_in_force}); "
+    print(f"{session}: {args.side} {qty} {args.symbol} @ {price} (sizing={args.time_in_force}); "
           f"visible {liquidity_source} qty {resting:.4f}; wouldSend={dry.get('data', {}).get('wouldSend')}")
 
-    if args.live_paper or args.live:
-        mode_label = "demo" if args.live_paper else "LIVE"
+    if args.live:
+        mode_label = "LIVE"
         # The dry-run can be separated from the actual submit by network latency. Recheck
         # the quote and refuse if the exact confirmed quantity/price is no longer current.
         latest = book_with_ticker(api, args.symbol)
@@ -237,9 +234,27 @@ def main() -> None:
                 dict(initial_price=price, initial_qty=qty, latest_price=latest_price,
                      latest_qty=latest_qty, latest_source=latest_source), indent=1))
             raise SystemExit("quote changed after dry-run; refusing to submit")
+        if latest_source != "public_book":
+            (run / "03_liquidity_refused.json").write_text(json.dumps(
+                dict(reason="live orders require a two-sided public order book", source=latest_source), indent=1))
+            raise SystemExit("refusing live order: recheck is ticker-only, not verified public-book liquidity")
+        private = BitgetPrivate(env["BITGET_API_KEY"], env["BITGET_SECRET_KEY"], env["BITGET_PASSPHRASE"])
+        balance_coin = "USDT" if args.side == "buy" else live.base_coin
+        required = Decimal(price) * Decimal(qty)
+        if args.side == "buy":
+            required *= 1 + max(live.taker_fee, Decimal("0"))
         try:
-            placed = bgc([*order_args, *mode_flags], env)
-        except BgcError as exc:   # a rejection is evidence too; keep it (no credentials appear in bgc errors)
+            available = Decimal(private.available(balance_coin))
+        except (BitgetPrivateError, ValueError, ArithmeticError) as exc:
+            (run / "03_balance_error.json").write_text(_error_text(exc) + "\n")
+            raise SystemExit(f"unable to verify {balance_coin} balance; refusing live order: {_error_text(exc)}") from exc
+        (run / "03_balance_preflight.json").write_text(json.dumps(
+            dict(coin=balance_coin, available=str(available), required=str(required)), indent=1))
+        if available < required:
+            raise SystemExit(f"insufficient available {balance_coin}: {available} < required {required}")
+        try:
+            placed = private.place_reality_limit(args.symbol, args.side, qty, price, client_oid)
+        except BitgetPrivateError as exc:   # a rejection is evidence too; credentials are never logged
             (run / "03_order_error.json").write_text(str(exc))
             print(f"{mode_label} REJECTED:", _error_text(exc))
             placed = None
@@ -251,13 +266,12 @@ def main() -> None:
             (run / "04_order_status_error.json").write_text("placed response did not contain orderId\n")
             print(f"{mode_label} response had no orderId; no status/cancel request was possible")
         if oid:
-            status_args = ["order", "--action", "detail", "--orderId", str(oid), *mode_flags]
             status = None
             terminal = {"filled", "canceled", "cancelled", "rejected", "expired", "failed"}
             for _ in range(8):
                 try:
-                    status = bgc(status_args, env)
-                except BgcError as exc:
+                    status = private.order_info(str(oid))
+                except BitgetPrivateError as exc:
                     (run / "04_order_status_error.json").write_text(str(exc))
                     break
                 if _status_name(status) in terminal:
@@ -267,12 +281,11 @@ def main() -> None:
             if status:
                 print("status:", json.dumps(status.get("data"))[:400])
             if status is None or _status_name(status) not in terminal:
-                cancel_args = ["order", "--action", "cancel", "--category", "SPOT", "--orderId", str(oid), *mode_flags]
                 try:
-                    canceled = bgc(cancel_args, env)
+                    canceled = private.cancel_reality(args.symbol, str(oid))
                     (run / "04_order_cancel.json").write_text(json.dumps(canceled, indent=1))
                     print("unfilled order canceled:", json.dumps(canceled.get("data"))[:400])
-                except BgcError as exc:
+                except BitgetPrivateError as exc:
                     (run / "04_order_cancel_error.json").write_text(str(exc))
                     print("CANCEL ERROR:", _error_text(exc))
 

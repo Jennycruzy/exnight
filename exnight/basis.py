@@ -119,12 +119,43 @@ class IssuerSources:
             dict(fetched_at=dt.datetime.now(dt.UTC).isoformat(), ticker=ticker, payload=payload)))
         tmp.replace(path)
 
+    def _cached_payload(self, source: str, ticker: str):
+        """Return the newest cached response payload, or None when no valid cache exists."""
+        paths = sorted((self.raw_dir / source).glob(f"{ticker}_*.json"), reverse=True)
+        for path in paths:
+            try:
+                body = json.loads(path.read_text())
+            except (OSError, ValueError):
+                continue
+            if isinstance(body, dict) and "payload" in body:
+                return body["payload"]
+            # Accept a raw response too, so an imported cache remains replayable.
+            return body
+        return None
+
+    @staticmethod
+    def _parse_nasdaq(body) -> list[dict] | None:
+        if not isinstance(body, dict):
+            return None
+        rows = (((body.get("data") or {}).get("dividends") or {}).get("rows")) or []
+        out = []
+        for x in rows:
+            try:
+                out.append(dict(ex_date=dt.datetime.strptime(x["exOrEffDate"], "%m/%d/%Y").date(),
+                                amount=Decimal(x["amount"].replace("$", "").replace(",", "")),
+                                declaration_date=x.get("declarationDate"), type=x.get("type")))
+            except (KeyError, ValueError, ArithmeticError, AttributeError):
+                continue
+        return out or None
+
     def nasdaq_declared(self, ticker: str) -> list[dict] | None:
         """Declared dividends (ex-date, amount) or None when the feed has no rows/fails."""
         if ticker in self._nasdaq:
             return self._nasdaq[ticker]
         out: list[dict] | None = None
-        if not self.offline:
+        if self.offline:
+            out = self._parse_nasdaq(self._cached_payload("nasdaq", ticker))
+        else:
             for asset in ("stocks", "etf"):
                 try:
                     r = httpx.get(f"https://api.nasdaq.com/api/quote/{ticker}/dividends",
@@ -138,14 +169,7 @@ class IssuerSources:
                 rows = (((body.get("data") or {}).get("dividends") or {}).get("rows")) or []
                 if rows:
                     self._save("nasdaq", ticker, body)
-                    out = []
-                    for x in rows:
-                        try:
-                            out.append(dict(ex_date=dt.datetime.strptime(x["exOrEffDate"], "%m/%d/%Y").date(),
-                                            amount=Decimal(x["amount"].replace("$", "").replace(",", "")),
-                                            declaration_date=x.get("declarationDate"), type=x.get("type")))
-                        except (KeyError, ValueError, ArithmeticError):
-                            continue
+                    out = self._parse_nasdaq(body)
                     break
         self._nasdaq[ticker] = out
         return out
@@ -155,7 +179,7 @@ class IssuerSources:
         start = ex_date - dt.timedelta(days=PRIOR_LOOKBACK_DAYS)
         end = ex_date + dt.timedelta(days=2)
         try:
-            rows = underlying.dividends(ticker, start, end)
+            rows = underlying.dividends(ticker, start, end, offline=self.offline)
         except underlying.UnderlyingDataError:
             return None
         return [dict(ex_date=r["ex_date"], amount=Decimal(str(r["amount"]))) for r in rows]
@@ -165,7 +189,16 @@ class IssuerSources:
         if ticker in self._calendar:
             return self._calendar[ticker]
         out = None
-        if not self.offline:
+        if self.offline:
+            body = self._cached_payload("yahoo_calendar", ticker)
+            try:
+                res = ((body.get("quoteSummary") or {}).get("result") or [{}])[0]
+                raw = ((res.get("calendarEvents") or {}).get("exDividendDate") or {}).get("raw")
+                if raw is not None:
+                    out = dt.datetime.fromtimestamp(int(raw), dt.UTC).date()
+            except (AttributeError, IndexError, TypeError, ValueError, OSError):
+                out = None
+        else:
             try:
                 if self._yahoo is None:
                     s = httpx.Client(headers=_UA, timeout=20)
