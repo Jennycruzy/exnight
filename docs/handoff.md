@@ -7,7 +7,7 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 ## Current verified state
 
 - VPS: `ubuntu@99.80.93.71`, project `/home/ubuntu/exnight`.
-- Full regression suite: **88 passed** with `python -m pytest`.
+- Full regression suite: **89 passed** with `python -m pytest`.
 - Existing VS Code SSH access was preserved. No SSH config, authorized key, sudo rule,
   firewall, reboot, or login setting was changed.
 - `.env` is mode `600`; the supplied Bitget hackathon Qwen credential is read only as
@@ -54,10 +54,14 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
   the saved 185-action ledger: tier 1 = 61, tier 2 = 109, tier 3 = 1, unresolved = 11.
 - Paper/live order sizing uses the executable side, exchange precision and minimum notional,
   requires a two-sided public book for live mode, performs a final quote and balance recheck,
-  caps one real order at $100 by default, polls status and cancels an unfilled Reality order.
-- The missing `bgc` dependency was removed. Native HMAC-signed calls use Bitget's Reality
-  placement, order-info and cancellation endpoints. The official Reality endpoint is
-  whitelist-only; `--live-paper` refuses because the generic demo path does not accept rTokens.
+  caps one real order at $100 by default, polls status and cancels an unfilled order.
+- The official Bitget Agent Hub CLI (`bgc`) is installed for the ubuntu user. EXNIGHT delegates
+  authenticated balance, standard UTA `place-order`, `order-info`, and `cancel-order` calls to
+  that local CLI; credentials are passed only to the child process and never logged. Bitget's
+  current Reality announcement says order placement/cancellation is open without whitelist
+  registration. Reality depth and platform-fills remain whitelist-gated, so the public
+  two-sided-book guard remains active. `--live-paper` still refuses because the generic demo
+  environment does not accept rTokens.
 - Read-only authenticated preflight identified the configured Bitget trading key as demo-only:
   mainnet account assets returns environment error `40099`, while the documented `paptrading: 1`
   header authenticates. No mainnet trading key is installed and no live order was attempted.
@@ -88,8 +92,10 @@ an evidence limitation, not something to hide by filling the gap with synthetic 
    current-book liquidity limits remain explicit in those artifacts.
 2. Keep the recorder running through the September 21 window and score the actual 04:00 ET
    result against the frozen `strategy_v1.json` rule.
-3. Treat a real order as a separate, manually confirmed preflight only. No unattended order,
-   login change, firewall change, SSH restart, or key rotation is part of the application fix.
+3. Treat a real order as a separate, manually confirmed preflight only. Install a funded live
+   UTA read+trade credential for Agent Hub (or complete Agentic OAuth on the chosen host); do
+   not enable withdrawals. No unattended order, login change, firewall change, SSH restart, or
+   key rotation is part of the application fix.
 
 ## September 21 forward score
 

@@ -1,46 +1,63 @@
 import json
+import subprocess
 
-import httpx
-
-from exnight.trading import BitgetPrivate, _signature
-
-
-def test_signature_matches_bitget_hmac_shape():
-    value = _signature("16273667805456", "POST", "/api/v3/trade/place-order",
-                       '{"category":"SPOT","symbol":"BTCUSDT"}', "secret")
-    assert value == "oExyf4gC3KWZZxcIuZ4Pw3EBTe/94M6vYR/q2SyMH5M="
+from exnight.trading import AgentHubClient, AgentHubError
 
 
-def test_private_client_sorts_get_query_and_validates_envelope(monkeypatch):
-    seen = {}
+def fake_runner(output: dict, *, returncode: int = 0, seen: list | None = None):
+    def run(command, **kwargs):
+        if seen is not None:
+            seen.append((command, kwargs))
+        return subprocess.CompletedProcess(command, returncode, json.dumps(output), "")
 
-    def handler(request: httpx.Request) -> httpx.Response:
-        seen["path"] = request.url.raw_path.decode()
-        seen["headers"] = dict(request.headers)
-        return httpx.Response(200, json={"code": "00000", "msg": "success", "data": [{"coin": "USDT", "available": "12"}]})
-
-    monkeypatch.setattr("exnight.trading.time.time", lambda: 16273667805.456)
-    client = BitgetPrivate("key", "secret", "pass", httpx.Client(
-        transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
-    assert client.available("USDT") == "12"
-    assert seen["path"] == "/api/v3/account/assets?coin=USDT"
-    assert seen["headers"]["access-key"] == "key"
-    assert seen["headers"]["access-sign"]
+    return run
 
 
-def test_place_reality_order_uses_documented_payload():
-    seen = {}
-
-    def handler(request: httpx.Request) -> httpx.Response:
-        seen["path"] = request.url.path
-        seen["body"] = json.loads(request.content)
-        return httpx.Response(200, json={"code": "00000", "msg": "success", "data": {"orderId": "1"}})
-
-    client = BitgetPrivate("key", "secret", "pass", httpx.Client(
-        transport=httpx.MockTransport(handler), base_url="https://api.bitget.com"))
-    out = client.place_reality_limit("rAAPLUSDT", "buy", "1", "100", "exnight-test")
+def test_agent_hub_place_uses_standard_uta_order_surface_without_exposing_credentials():
+    seen = []
+    client = AgentHubClient(
+        "key", "secret", "pass", executable="bgc", environment={"PATH": "/bin"},
+        runner=fake_runner({"endpoint": "POST /api/v3/trade/place-order", "data": {"orderId": "1"}}, seen=seen),
+    )
+    out = client.place_limit("RAVGOUSDT", "buy", "1", "100", "exnight-test", "ioc")
     assert out["data"]["orderId"] == "1"
-    assert seen == {"path": "/api/v3/trade/place-reality-order", "body": {
-        "category": "SPOT", "symbol": "rAAPLUSDT", "side": "buy", "orderType": "limit",
-        "qty": "1", "price": "100", "clientOid": "exnight-test",
-    }}
+    command, kwargs = seen[0]
+    assert command == [
+        "bgc", "order", "--action", "place", "--category", "SPOT", "--symbol", "RAVGOUSDT",
+        "--side", "buy", "--orderType", "limit", "--qty", "1", "--price", "100",
+        "--timeInForce", "ioc", "--clientOid", "exnight-test",
+    ]
+    assert kwargs["env"]["BITGET_API_KEY"] == "key"
+    assert "secret" not in command
+    assert "pass" not in command
+
+
+def test_agent_hub_available_reads_nested_account_snapshot():
+    client = AgentHubClient(
+        "key", "secret", "pass", runner=fake_runner({
+            "data": {"assets": [{"coin": "USDT", "available": "12"}]},
+        }),
+    )
+    assert client.available("USDT") == "12"
+
+
+def test_agent_hub_dry_run_is_forwarded_to_cli():
+    seen = []
+    client = AgentHubClient(
+        "key", "secret", "pass", runner=fake_runner({"data": {"dryRun": True}}, seen=seen),
+    )
+    client.place_limit("RAVGOUSDT", "sell", "1", "100", "exnight-test", "fok", dry_run=True)
+    assert seen[0][0][-1] == "--dry-run"
+
+
+def test_agent_hub_rejects_non_json_cli_output():
+    def run(command, **kwargs):
+        return subprocess.CompletedProcess(command, 0, "not-json", "")
+
+    client = AgentHubClient("key", "secret", "pass", runner=run)
+    try:
+        client.order_info("1")
+    except AgentHubError as exc:
+        assert "non-JSON" in str(exc)
+    else:
+        raise AssertionError("expected AgentHubError")

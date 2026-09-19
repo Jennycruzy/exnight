@@ -1,4 +1,4 @@
-"""C5: preview or place one tightly bounded Bitget spot order and save the evidence chain.
+"""C5: preview or place one tightly bounded Bitget Agent Hub spot order.
 
 Every run writes data/raw/paper/<UTC ts>/ containing, in order:
   00_context.json        symbol, side, size, session label, verdict row it acts on (if any)
@@ -9,10 +9,10 @@ Every run writes data/raw/paper/<UTC ts>/ containing, in order:
   05_book_post.json      public order book + ticker immediately after
 
 Credentials are read from the environment / .env (BITGET_API_KEY, BITGET_SECRET_KEY,
-BITGET_PASSPHRASE). The script never prints them. Without --live it stops after a local
-dry run, which needs no credentials. Bitget's official Reality endpoint has no generic
-demo-order path, so --live-paper refuses explicitly. Real orders require --live plus an
-exact confirmation string containing the computed quantity.
+BITGET_PASSPHRASE) and passed only to the local ``bgc`` process. The script never prints
+them. Without --live it stops after a local dry run, which needs no credentials. Bitget's
+generic demo environment does not accept Reality symbols, so --live-paper refuses explicitly.
+Real orders require --live plus an exact confirmation string containing the computed quantity.
 Quantity is derived from the visible book: never more than the resting size inside the
 ±0.5% band at sample time, so the order is one the book could actually fill.
 """
@@ -35,7 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from depth_snapshot import session_label  # noqa: E402
 
 from exnight.market import BitgetPublic  # noqa: E402
-from exnight.trading import BitgetPrivate, BitgetPrivateError  # noqa: E402
+from exnight.trading import AgentHubClient, AgentHubError  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw" / "paper"
@@ -43,13 +43,15 @@ ET = dt.timezone(dt.timedelta(hours=-4), "ET")  # display only; session_label us
 MAX_LIVE_NOTIONAL_USD = 100.0
 
 
-def _dry_order_payload(symbol: str, side: str, qty: str, price: str, client_oid: str) -> dict:
+def _dry_order_payload(symbol: str, side: str, qty: str, price: str, client_oid: str,
+                       time_in_force: str) -> dict:
     return {
         "code": "00000",
         "msg": "dry-run; no request sent",
         "data": {"wouldSend": {
             "category": "SPOT", "symbol": symbol, "side": side,
-            "orderType": "limit", "qty": qty, "price": price, "clientOid": client_oid,
+            "orderType": "limit", "qty": qty, "price": price,
+            "timeInForce": time_in_force, "clientOid": client_oid,
         }},
     }
 
@@ -136,8 +138,16 @@ def sized_qty(book: dict, side: str, notional: float, band: float, qty_precision
 
 def _safe_env() -> dict[str, str]:
     """Pass only the runtime and Bitget credentials to the order CLI."""
-    allowed = {"PATH", "HOME", "USER", "SHELL", "LANG", "LC_ALL", "NVM_DIR", "NPM_CONFIG_PREFIX", "NODE_PATH"}
-    return {k: v for k, v in os.environ.items() if k in allowed or k.startswith("BITGET_")}
+    allowed = {
+        "PATH", "HOME", "USER", "SHELL", "LANG", "LC_ALL", "NVM_DIR", "NPM_CONFIG_PREFIX",
+        "NODE_PATH", "AGENT_HUB_BIN",
+    }
+    safe = {k: v for k, v in os.environ.items() if k in allowed or k.startswith("BITGET_")}
+    if "AGENT_HUB_BIN" not in safe:
+        candidates = sorted(Path.home().glob(".nvm/versions/node/*/bin/bgc"), reverse=True)
+        if candidates:
+            safe["AGENT_HUB_BIN"] = str(candidates[0])
+    return safe
 
 
 def _status_name(payload: dict) -> str:
@@ -161,7 +171,7 @@ def main() -> None:
     ap.add_argument("--notional", type=float, default=1000.0)
     ap.add_argument("--band", type=float, default=0.005)
     ap.add_argument("--time-in-force", default="ioc", choices=("gtc", "post_only", "ioc", "fok"))
-    ap.add_argument("--live-paper", action="store_true", help="actually submit with --paper-trading (demo keys required)")
+    ap.add_argument("--live-paper", action="store_true", help="submit through Agent Hub demo (Reality symbols are unsupported)")
     ap.add_argument("--live", action="store_true", help="submit one real order; requires --confirm-live")
     ap.add_argument("--confirm-live", default="", help="must equal '<symbol> <side> <computed-quantity>' for --live")
     ap.add_argument("--max-live-notional", type=float, default=MAX_LIVE_NOTIONAL_USD,
@@ -173,7 +183,7 @@ def main() -> None:
     if args.live_paper and args.live:
         raise SystemExit("choose either --live-paper or --live, not both")
     if args.live_paper:
-        raise SystemExit("Bitget's official Reality endpoint has no demo-order path; use dry-run or explicit --live")
+        raise SystemExit("Bitget's demo environment does not accept Reality symbols; use dry-run or explicit --live")
     if args.live and (not math.isfinite(args.max_live_notional) or args.max_live_notional <= 0
                       or args.notional > args.max_live_notional):
         raise SystemExit(f"real order exceeds the ${args.max_live_notional:.2f} live notional cap")
@@ -207,14 +217,15 @@ def main() -> None:
                actual_notional=float(Decimal(price) * Decimal(qty)), band=args.band, session=session,
                price=price, qty=qty, resting_in_band=resting, liquidity_source=liquidity_source,
                time_in_force=args.time_in_force,
-               api_endpoint="/api/v3/trade/place-reality-order", time_in_force_sent=False,
+               execution_adapter="bitget-agent-hub", api_endpoint="/api/v3/trade/place-order",
+               time_in_force_sent=True, agent_hub_bin=env.get("AGENT_HUB_BIN", "bgc"),
                mode="paper-trading" if args.live_paper else ("live" if args.live else "dry-run"),
                taker_fee=str(live.taker_fee), maker_fee=str(live.maker_fee), note=args.note)
     (run / "00_context.json").write_text(json.dumps(ctx, indent=1))
     (run / "01_book_pre.json").write_text(json.dumps(pre))
 
     client_oid = "exnight-" + dt.datetime.now(dt.UTC).strftime("%Y%m%d%H%M%S") + "-" + uuid.uuid4().hex[:8]
-    dry = _dry_order_payload(args.symbol, args.side, qty, price, client_oid)
+    dry = _dry_order_payload(args.symbol, args.side, qty, price, client_oid, args.time_in_force)
     (run / "02_dry_run.json").write_text(json.dumps(dry, indent=1))
     print(f"{session}: {args.side} {qty} {args.symbol} @ {price} (sizing={args.time_in_force}); "
           f"visible {liquidity_source} qty {resting:.4f}; wouldSend={dry.get('data', {}).get('wouldSend')}")
@@ -238,14 +249,17 @@ def main() -> None:
             (run / "03_liquidity_refused.json").write_text(json.dumps(
                 dict(reason="live orders require a two-sided public order book", source=latest_source), indent=1))
             raise SystemExit("refusing live order: recheck is ticker-only, not verified public-book liquidity")
-        private = BitgetPrivate(env["BITGET_API_KEY"], env["BITGET_SECRET_KEY"], env["BITGET_PASSPHRASE"])
+        agent_hub = AgentHubClient(
+            env["BITGET_API_KEY"], env["BITGET_SECRET_KEY"], env["BITGET_PASSPHRASE"],
+            executable=env.get("AGENT_HUB_BIN", "bgc"), environment=env,
+        )
         balance_coin = "USDT" if args.side == "buy" else live.base_coin
         required = Decimal(price) * Decimal(qty)
         if args.side == "buy":
             required *= 1 + max(live.taker_fee, Decimal("0"))
         try:
-            available = Decimal(private.available(balance_coin))
-        except (BitgetPrivateError, ValueError, ArithmeticError) as exc:
+            available = Decimal(agent_hub.available(balance_coin))
+        except (AgentHubError, ValueError, ArithmeticError) as exc:
             (run / "03_balance_error.json").write_text(_error_text(exc) + "\n")
             raise SystemExit(f"unable to verify {balance_coin} balance; refusing live order: {_error_text(exc)}") from exc
         (run / "03_balance_preflight.json").write_text(json.dumps(
@@ -253,8 +267,10 @@ def main() -> None:
         if available < required:
             raise SystemExit(f"insufficient available {balance_coin}: {available} < required {required}")
         try:
-            placed = private.place_reality_limit(args.symbol, args.side, qty, price, client_oid)
-        except BitgetPrivateError as exc:   # a rejection is evidence too; credentials are never logged
+            placed = agent_hub.place_limit(
+                args.symbol, args.side, qty, price, client_oid, args.time_in_force,
+            )
+        except AgentHubError as exc:   # a rejection is evidence too; credentials are never logged
             (run / "03_order_error.json").write_text(str(exc))
             print(f"{mode_label} REJECTED:", _error_text(exc))
             placed = None
@@ -270,8 +286,8 @@ def main() -> None:
             terminal = {"filled", "canceled", "cancelled", "rejected", "expired", "failed"}
             for _ in range(8):
                 try:
-                    status = private.order_info(str(oid))
-                except BitgetPrivateError as exc:
+                    status = agent_hub.order_info(str(oid))
+                except AgentHubError as exc:
                     (run / "04_order_status_error.json").write_text(str(exc))
                     break
                 if _status_name(status) in terminal:
@@ -282,10 +298,10 @@ def main() -> None:
                 print("status:", json.dumps(status.get("data"))[:400])
             if status is None or _status_name(status) not in terminal:
                 try:
-                    canceled = private.cancel_reality(args.symbol, str(oid))
+                    canceled = agent_hub.cancel(args.symbol, str(oid))
                     (run / "04_order_cancel.json").write_text(json.dumps(canceled, indent=1))
                     print("unfilled order canceled:", json.dumps(canceled.get("data"))[:400])
-                except BitgetPrivateError as exc:
+                except AgentHubError as exc:
                     (run / "04_order_cancel_error.json").write_text(str(exc))
                     print("CANCEL ERROR:", _error_text(exc))
 

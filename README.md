@@ -6,7 +6,7 @@ path, not an unattended trading bot.
 
 ## Current status — 2026-09-19
 
-- **88 tests pass** on the VPS with `python -m pytest`.
+- **89 tests pass** on the VPS with `python -m pytest`.
 - `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
   records corrected projected-buy-price and fresh-depth semantics for later use.
 - The one-minute forward recorder is active for the September 21 events. The scoring script is
@@ -38,8 +38,8 @@ path, not an unattended trading bot.
 - `scripts/depth_snapshot.py` — session-labelled depth with raw-response SHA-256 manifests.
 - `scripts/score_forward.py` — offline forward-window scorer.
 - `scripts/build_reality_ledger.py` — resumable complete-universe Reality ledger builder.
-- `scripts/paper_trade.py` — precision-safe dry-run/guarded-live Reality-order evidence chain.
-- `exnight/trading.py` — minimal native HMAC-signed Bitget private client.
+- `scripts/paper_trade.py` — precision-safe dry-run/guarded-live Agent Hub order evidence chain.
+- `exnight/trading.py` — small wrapper around Bitget's official `bgc` Agent Hub CLI.
 - `scripts/verify_evidence.py`, `scripts/healthcheck.py` — offline evidence and scheduler gates.
 
 ## Reproduce
@@ -80,16 +80,20 @@ two-sided public books. The system reports those limits instead of inventing fil
 - BUY remains suppressed because Bitget's eligibility snapshot time is unpublished.
 - Historical event-time order books do not exist; current depth is an `OBSERVED-NOW` scenario.
 - Unresolved issuer/tax rows remain explicit and cannot produce a non-invariant verdict.
-- A real order requires live credentials, a fresh displayed quote, the exact computed quantity,
-  a two-sided public book, an available-balance check, and
+- A real order requires a funded live UTA trade credential (or authorized Agentic account), a
+  fresh displayed quote, the exact computed quantity, a two-sided public book, an
+  available-balance check, and
   `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'`. One-order real notional is capped at
   $100 by default. `--live-paper` is refused because Bitget's generic demo path does not accept
   Reality symbols.
-- The configured Bitget trading credential currently authenticates only with the documented demo
-  header; the mainnet API returns environment error `40099`. A funded mainnet UTA trade key and
-  Reality whitelist are required before the explicit live-confirmation step.
+- The configured Bitget credential currently authenticates only with the documented demo header;
+  the mainnet API returns environment error `40099`. Agent Hub is installed for the ubuntu user
+  and sends Reality orders through the regular UTA `/api/v3/trade/place-order` surface. Bitget's
+  current announcement says Reality order placement/cancellation does not require whitelist
+  registration; Reality depth and platform-fills endpoints still do. The two-sided public-book
+  guard therefore remains in force.
 - Remaining work is tracked in [`docs/handoff.md`](docs/handoff.md): score the September 21
-  window and perform a manually confirmed live preflight only if the account is whitelisted
-  for Reality orders.
+  window, install/authorize a funded live Agent Hub account, and perform a manually confirmed
+  live preflight.
 - See [`docs/handoff.md`](docs/handoff.md) for the full operational state and the host-security
   boundary. SSH/login configuration is deliberately not modified by the application.
