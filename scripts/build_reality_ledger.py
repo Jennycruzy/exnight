@@ -33,6 +33,19 @@ def _save_state(path: Path, state: dict) -> None:
     tmp.replace(path)
 
 
+def reconcile_failures(state: dict) -> None:
+    """Archive only failures whose entire batch subsequently completed."""
+    completed = set(state.get("completed", []))
+    pending = []
+    for failure in state.get("failed", []):
+        coins = failure.get("base_coins", [])
+        if coins and set(coins).issubset(completed):
+            state.setdefault("recovered_failures", []).append(failure)
+        else:
+            pending.append(failure)
+    state["failed"] = pending
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Resumable complete Reality ledger builder")
     ap.add_argument("--start-date", required=True, type=_date)
@@ -58,6 +71,13 @@ def main() -> int:
             state = json.loads(args.state.read_text())
             if state.get("start_date") != args.start_date.isoformat() or state.get("output") != str(args.output):
                 raise SystemExit("state file belongs to a different start date or output")
+        if state.get("completed"):
+            from verify_evidence import verify_ledger
+            errors = verify_ledger(args.output)
+            if errors:
+                raise SystemExit("cannot resume: " + "; ".join(errors[:5]))
+        reconcile_failures(state)
+        _save_state(args.state, state)
 
         api = BitgetPublic()
         universe = api.rtokens()
@@ -83,9 +103,8 @@ def main() -> int:
                 _save_state(args.state, state)
                 raise
             completed.update(batch)
-            state["failed"] = [failure for failure in state.get("failed", [])
-                                if failure.get("base_coins") != batch]
             state["completed"] = sorted(completed)
+            reconcile_failures(state)
             state["last_batch"] = batch
             state["last_event_count"] = len(events)
             _save_state(args.state, state)

@@ -17,6 +17,27 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def verify_ledger(path: Path) -> list[str]:
+    from exnight.events import CorporateAction
+    errors = []
+    seen = set()
+    try:
+        with path.open() as stream:
+            for number, line in enumerate(stream, 1):
+                try:
+                    event = CorporateAction.model_validate_json(line)
+                    if event.event_id in seen:
+                        errors.append(f"duplicate event ID {event.event_id}: {path}:{number}")
+                    seen.add(event.event_id)
+                except ValueError:
+                    errors.append(f"invalid ledger row: {path}:{number}")
+        if not seen:
+            errors.append(f"empty ledger: {path}")
+    except OSError as exc:
+        errors.append(f"unreadable ledger {path}: {exc}")
+    return errors
+
+
 def verify_sources(root: Path) -> list[str]:
     from exnight.sources import SOURCES
     errors = []
@@ -63,6 +84,8 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=ROOT)
     args = parser.parse_args()
     errors = verify_sources(args.root) + verify_depth_manifests(args.root) + verify_ai_records(args.root)
+    for path in sorted((args.root / "data" / "ledger").glob("*.jsonl")):
+        errors.extend(verify_ledger(path))
     report = {"status": "PASS" if not errors else "FAIL", "errors": errors}
     print(json.dumps(report, indent=1))
     return 0 if not errors else 1

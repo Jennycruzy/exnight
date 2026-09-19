@@ -6,7 +6,7 @@ path, not an unattended trading bot.
 
 ## Current status — 2026-09-19
 
-- **85 tests pass** on the VPS with `python -m pytest`.
+- **88 tests pass** on the VPS with `python -m pytest`.
 - `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
   records corrected projected-buy-price and fresh-depth semantics for later use.
 - The one-minute forward recorder is active for the September 21 events. The scoring script is
@@ -14,9 +14,9 @@ path, not an unattended trading bot.
 - Optional Qwen evidence analysis is configured with `BITGET_QWEN_API_KEY`,
   `QWEN_BASE_URL=https://hackathon.bitgetops.com/v1`, and `QWEN_MODEL=qwen3.8-max`. Qwen never
   changes strategy verdicts.
-- The complete 1,653-instrument Reality ledger is running in resumable batches; progress is
-  recorded in `data/results/reality_full_build.json` and rows append to
-  `data/ledger/reality_full.jsonl`.
+- The Reality rebuild completed for 1,653 instruments, producing 1,695 validated events in
+  `data/ledger/reality_full.jsonl`. Progress and recovered failures are recorded in
+  `data/results/reality_full_build.json`. Not every instrument has an event in the date range.
 
 ## Modules
 

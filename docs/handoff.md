@@ -7,7 +7,7 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 ## Current verified state
 
 - VPS: `ubuntu@99.80.93.71`, project `/home/ubuntu/exnight`.
-- Full regression suite: **85 passed** with `python -m pytest`.
+- Full regression suite: **88 passed** with `python -m pytest`.
 - Existing VS Code SSH access was preserved. No SSH config, authorized key, sudo rule,
   firewall, reboot, or login setting was changed.
 - `.env` is mode `600`; the supplied Bitget hackathon Qwen credential is read only as
@@ -16,9 +16,11 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
   schema-valid confounder record were saved under `data/raw/ai_confounder/`.
 - `strategy/strategy_v1.json` remains untouched. `strategy_v2.json` records the corrected
   projected-buy-price and fresh-depth semantics for later use.
-- The complete Reality rebuild is running in the background with append-only output at
-  `data/ledger/reality_full.jsonl` and resumable progress at
-  `data/results/reality_full_build.json`.
+- The Reality rebuild completed for 1,653 instruments with 1,695 schema-valid rows and no
+  duplicate event IDs in `data/ledger/reality_full.jsonl`. Not all instruments have events.
+  Resume now validates existing output and archives failures only when every instrument in
+  the failed batch is complete, including retries with different batch boundaries.
+  `data/results/reality_full_build.json` preserves recovered failures for audit.
 
 ## Implemented safeguards
 
@@ -74,8 +76,9 @@ an evidence limitation, not something to hide by filling the gap with synthetic 
 
 ## Current build and remaining work
 
-1. Let the full 1,653-instrument ledger finish; inspect its state file and failed batches, then
-   run basis resolution and event-study artifacts against the complete output.
+1. Full ledger ingestion and schema/duplicate validation are complete. Run basis resolution
+   and event-study artifacts against the complete output; ingestion alone does not verify
+   event-level tax treatment or executable liquidity.
 2. Keep the recorder running through the September 21 window and score the actual 04:00 ET
    result against the frozen `strategy_v1.json` rule.
 3. Treat a real order as a separate, manually confirmed preflight only. No unattended order,
