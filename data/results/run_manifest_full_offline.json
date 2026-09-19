@@ -1,6 +1,6 @@
 {
- "commit": "0b76b567c71c2cf8c296b890b273ccc8e8d803be",
- "generated_at": "2026-09-19T10:42:48.218058+00:00",
+ "commit": "48748d36936eb8acf06a913fe1b0c7743ce7e675",
+ "generated_at": "2026-09-19T11:03:50.175030+00:00",
  "inputs": {
   "data/ledger/reality_full_resolved_offline.jsonl": "53db9dae5681c6b3133bc41becb184ccc98d757a85eb13d0fc4084eecc36a191",
   "data/results/event_results_full_offline.json": "8148bf4a710eb6cd30dbc319dd77923ebf6d14e8875df2bc147d6b6b6c1b6c1c",
@@ -8,7 +8,7 @@
  },
  "outputs": {
   "data/results/signals_expost_full_offline.csv": "770e25c7ffeaea63e81587a70350e46f6a7cc06b55bad4cdc7a4d454ce6ea850",
-  "data/results/signals_full_offline.csv": "e6b884ca3bd44ab4d7268d3066e4f6756a8c3e364f9f872b51ed96b1a26e89d0"
+  "data/results/signals_full_offline.csv": "1528ac931f51d6e674f75fe1f50826e10921bfd93d53faa74c0ce36961263ccf"
  },
  "rule_file": null,
  "rule_id": null
