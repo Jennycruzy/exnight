@@ -6,7 +6,7 @@ path, not an unattended trading bot.
 
 ## Current status — 2026-09-19
 
-- **84 tests pass** on the VPS with `python -m pytest`.
+- **85 tests pass** on the VPS with `python -m pytest`.
 - `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
   records corrected projected-buy-price and fresh-depth semantics for later use.
 - The one-minute forward recorder is active for the September 21 events. The scoring script is
@@ -81,6 +81,9 @@ two-sided public books. The system reports those limits instead of inventing fil
   `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'`. One-order real notional is capped at
   $100 by default. `--live-paper` is refused because Bitget's generic demo path does not accept
   Reality symbols.
+- The configured Bitget trading credential currently authenticates only with the documented demo
+  header; the mainnet API returns environment error `40099`. A funded mainnet UTA trade key and
+  Reality whitelist are required before the explicit live-confirmation step.
 - Remaining build work is tracked in [`docs/handoff.md`](docs/handoff.md): complete the hard
   full-ledger artifacts, score the September 21 window, and perform a manually confirmed live
   preflight only if the account is whitelisted for Reality orders.

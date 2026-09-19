@@ -7,7 +7,7 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 ## Current verified state
 
 - VPS: `ubuntu@99.80.93.71`, project `/home/ubuntu/exnight`.
-- Full regression suite: **84 passed** with `python -m pytest`.
+- Full regression suite: **85 passed** with `python -m pytest`.
 - Existing VS Code SSH access was preserved. No SSH config, authorized key, sudo rule,
   firewall, reboot, or login setting was changed.
 - `.env` is mode `600`; the supplied Bitget hackathon Qwen credential is read only as
@@ -49,6 +49,9 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 - The missing `bgc` dependency was removed. Native HMAC-signed calls use Bitget's Reality
   placement, order-info and cancellation endpoints. The official Reality endpoint is
   whitelist-only; `--live-paper` refuses because the generic demo path does not accept rTokens.
+- Read-only authenticated preflight identified the configured Bitget trading key as demo-only:
+  mainnet account assets returns environment error `40099`, while the documented `paptrading: 1`
+  header authenticates. No mainnet trading key is installed and no live order was attempted.
 
 ## Scheduler
 

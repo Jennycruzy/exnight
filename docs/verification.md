@@ -164,6 +164,7 @@ scheme:
 | Reality placement endpoint | `POST /api/v3/trade/place-reality-order` with `category=SPOT`, symbol, side, limit price and quantity. Bitget's current documentation says this endpoint is for Reality pairs and requires a whitelisted UID. |
 | Order lifecycle | `GET /api/v3/trade/order-info` polls the order; `POST /api/v3/trade/cancel-reality-order` cancels an unfilled or partially filled order. |
 | Demo (`--live-paper`) | Refused explicitly. The official Reality endpoint has no generic demo-order path, and the prior generic demo engine rejected `RAVGOUSDT`. |
+| Configured private key | Read-only account-assets call against mainnet returned `40099 exchange environment is incorrect`; the same key authenticated only when the documented `paptrading: 1` demo header was added. It is therefore not a live mainnet trading key. |
 | Dry-run | A public-data dry run for `RAVGOUSDT` at requested $20 recorded a precision-valid payload without credentials or order submission. A $5 attempt was correctly refused below the $10 exchange minimum. |
 | Live safeguards | Live mode requires a two-sided public book, final book recheck, available-balance preflight, the $100 one-order cap and the exact `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'` string. |
 
