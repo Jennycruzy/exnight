@@ -83,6 +83,8 @@ def main() -> int:
                 _save_state(args.state, state)
                 raise
             completed.update(batch)
+            state["failed"] = [failure for failure in state.get("failed", [])
+                                if failure.get("base_coins") != batch]
             state["completed"] = sorted(completed)
             state["last_batch"] = batch
             state["last_event_count"] = len(events)
