@@ -60,6 +60,13 @@ class AgentHubClient:
             "BITGET_SECRET_KEY": secret_key,
             "BITGET_PASSPHRASE": passphrase,
         })
+        if os.path.sep in self.executable:
+            bin_dir = os.path.dirname(self.executable)
+            path_parts = self.environment.get("PATH", "").split(os.pathsep)
+            if bin_dir not in path_parts:
+                self.environment["PATH"] = os.pathsep.join(
+                    [bin_dir, *[part for part in path_parts if part]]
+                )
         self.runner = runner or subprocess.run
         self.timeout = timeout
 

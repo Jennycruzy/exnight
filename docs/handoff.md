@@ -7,7 +7,7 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 ## Current verified state
 
 - VPS: `ubuntu@99.80.93.71`, project `/home/ubuntu/exnight`.
-- Full regression suite: **89 passed** with `python -m pytest`.
+- Full regression suite: **90 passed** with `python -m pytest`.
 - Existing VS Code SSH access was preserved. No SSH config, authorized key, sudo rule,
   firewall, reboot, or login setting was changed.
 - `.env` is mode `600`; the supplied Bitget hackathon Qwen credential is read only as

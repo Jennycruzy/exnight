@@ -6,7 +6,7 @@ path, not an unattended trading bot.
 
 ## Current status — 2026-09-19
 
-- **89 tests pass** on the VPS with `python -m pytest`.
+- **90 tests pass** on the VPS with `python -m pytest`.
 - `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
   records corrected projected-buy-price and fresh-depth semantics for later use.
 - The one-minute forward recorder is active for the September 21 events. The scoring script is

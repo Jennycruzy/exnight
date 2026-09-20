@@ -50,6 +50,16 @@ def test_agent_hub_dry_run_is_forwarded_to_cli():
     assert seen[0][0][-1] == "--dry-run"
 
 
+def test_absolute_agent_hub_path_adds_its_node_directory_to_path():
+    seen = []
+    client = AgentHubClient(
+        "key", "secret", "pass", executable="/opt/node/bin/bgc", environment={"PATH": "/bin"},
+        runner=fake_runner({"data": {}}, seen=seen),
+    )
+    client.order_info("1")
+    assert seen[0][1]["env"]["PATH"] == "/opt/node/bin:/bin"
+
+
 def test_agent_hub_rejects_non_json_cli_output():
     def run(command, **kwargs):
         return subprocess.CompletedProcess(command, 0, "not-json", "")
