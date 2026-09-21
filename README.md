@@ -5,8 +5,9 @@ calendar date, such as a dividend or stock split. It records prices around the e
 the quality of that recording, and produces a simple `BUY`, `EXIT`, `HOLD`, or `NO_SIGNAL`
 result from a saved set of rules.
 
-Exnight is a research tool. It does not trade by itself. Any real order must pass several
-safety checks and still requires a person to confirm the exact symbol, side, and quantity.
+Exnight turns corporate-action and market evidence into clear Reality-token decisions. Enter
+a supported token to see whether the saved strategy says `BUY`, `EXIT`, `HOLD`, or
+`NO_SIGNAL`, together with the reason and the quality of the supporting data.
 
 ## Why this project exists
 
@@ -79,9 +80,10 @@ Start the dashboard from the project root:
 Then open `http://127.0.0.1:8787/`. On a remote server, use an SSH port forward rather than
 exposing the dashboard to the public internet.
 
-The dashboard shows recorder health, upcoming events, saved strategy results, data sources,
-and known limitations. It is deliberately read-only: it has no balance view, credential form,
-or order button.
+The dashboard opens with a token decision lookup. Users can enter forms such as `rAPH`,
+`RAPHUSDT`, or `APH` and receive the nearest evaluated decision for each supported trade size.
+It also shows recorder health, upcoming events, detailed strategy results, data sources, and
+known limitations. If a token has not been evaluated, Exnight says so rather than guessing.
 
 ## Running the research pipeline
 
@@ -165,7 +167,6 @@ approve a trade.
 - `data/` contains source records and generated results. Large and live files are not all
   committed to Git.
 - `tests/` contains the automated test suite.
-- `docs/handoff.md` contains detailed operating notes, evidence counts, and remaining work.
 
 ## Known limits
 
@@ -178,5 +179,5 @@ approve a trade.
 - A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
 - The project has not yet demonstrated a real Reality-token fill.
 
-For detailed evidence, server operations, and the complete list of outstanding items, see
-[`docs/handoff.md`](docs/handoff.md).
+Deployment notes and the operational handoff are maintained in the private server workspace,
+outside this repository.

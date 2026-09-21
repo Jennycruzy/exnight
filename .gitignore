@@ -24,3 +24,6 @@ data/raw/ai_confounder/
 data/raw/recorder/
 data/results/health.json
 data/results/ai_confounders.csv
+
+# Deployment notes stay in the server workspace and are not published.
+docs/handoff.md

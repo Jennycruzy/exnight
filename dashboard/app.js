@@ -48,7 +48,7 @@ function render(data) {
   $("as-of").textContent = `As of ${new Date(data.generated_at).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"})}`;
   $("event-date").textContent = meta.event_date || "window pending";
   $("headline").textContent = failed ? "Observation window needs attention" : "Observation window is collecting";
-  $("hero-copy").textContent = failed ? `${(recorder.errors || []).join(" · ")} The raw evidence is preserved; no synthetic samples are inserted.` : data.observation.message;
+  $("hero-copy").textContent = failed ? `${(recorder.errors || []).join(" · ")} Decisions remain available, with the recording issue shown in their evidence.` : "Enter a Reality token to see Exnight's latest evaluated decision and the evidence behind it.";
   const hero = $("hero-status"); hero.className = `hero-status ${failed ? "bad" : "ok"}`;
   hero.innerHTML = `<span class="status-orb"></span><div><strong>${failed ? "Recorder attention" : "Recorder healthy"}</strong><small>${recorder.sample_count || 0} samples observed</small></div>`;
 
@@ -133,6 +133,46 @@ function showSignal(row) {
   $("signal-dialog").showModal();
 }
 
+function renderDecision(result) {
+  const target = $("decision-result");
+  if (result.status !== "FOUND") {
+    target.className = "decision-result decision-empty";
+    target.innerHTML = `<strong>No decision available</strong><span>${esc(result.message || "This token has not been evaluated yet.")}</span>`;
+    return;
+  }
+  const rows = result.rows || [];
+  const verdicts = [...new Set(rows.map((row) => row.verdict || "NO_SIGNAL"))];
+  const summary = verdicts.length === 1 ? verdicts[0] : "VARIES BY SIZE";
+  target.className = "decision-result decision-found";
+  target.innerHTML = `
+    <div class="decision-summary">
+      <div><span>${esc(result.symbol)} · ${esc(result.spot_symbol)}</span><strong>${esc(summary)}</strong><small>Nearest evaluated event · ${esc(result.event_date)}</small></div>
+      ${verdicts.length === 1 ? verdict(verdicts[0]) : '<span class="verdict HOLD">CHECK SIZE</span>'}
+    </div>
+    <div class="decision-options">${rows.map((row) => `
+      <article>
+        <span>$${Number(row.notional_usd || 0).toLocaleString()} trade size</span>
+        ${verdict(row.verdict)}
+        <p>${esc(row.reason || "Decision produced from the saved Strategy v1 evidence.")}</p>
+        <small>Edge ${number(row.exit_edge_lower, 4)} · cost ${number(row.cost_per_share, 4)} · ${esc(row.sell_book_source || "no sell-book evidence")} → ${esc(row.buy_book_source || "no buy-book evidence")}</small>
+      </article>`).join("")}</div>
+    <a class="decision-more" href="#/signals">Open full decision evidence →</a>`;
+}
+
+async function lookupDecision(symbol) {
+  const target = $("decision-result");
+  target.className = "decision-result decision-loading";
+  target.innerHTML = "<span>Checking saved Exnight decisions…</span>";
+  try {
+    const response = await fetch(`/api/decision?symbol=${encodeURIComponent(symbol)}&t=${Date.now()}`, {cache:"no-store"});
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    renderDecision(await response.json());
+  } catch (error) {
+    target.className = "decision-result decision-empty";
+    target.innerHTML = `<strong>Decision lookup unavailable</strong><span>${esc(error.message)}</span>`;
+  }
+}
+
 async function refresh() {
   try {
     const dateQuery = activeDate ? `&date=${encodeURIComponent(activeDate)}` : "";
@@ -161,6 +201,11 @@ $("dialog-close").addEventListener("click", () => $("signal-dialog").close());
 $("signal-date").addEventListener("change", (event) => { activeDate = event.target.value; refresh(); });
 $("signal-symbol").addEventListener("change", (event) => { activeSymbol = event.target.value; if (latestData) render(latestData); });
 $("chart-symbol").addEventListener("change", (event) => { chartSymbol = event.target.value; if (latestData) renderChart(latestData.recorder); });
+$("decision-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const symbol = $("decision-symbol").value.trim();
+  if (symbol) lookupDecision(symbol);
+});
 
 window.addEventListener("hashchange", () => updateRoute());
 updateRoute({scroll: false});

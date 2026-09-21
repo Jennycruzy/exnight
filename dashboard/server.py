@@ -19,14 +19,14 @@ from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 UTC = dt.timezone.utc
-DEFAULT_SYMBOLS = ("RAVGOUSDT", "RVSTUSDT", "RSATAUSDT")
+DEFAULT_SYMBOLS = ("RAPHUSDT", "RSATAUSDT", "RSTMUSDT")
 STATIC_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = STATIC_ROOT.parent
 DOWNLOAD_NAMES = {
     "signals_v1.csv": "Frozen forward signals",
-    "health.json": "Latest scheduler health",
+    "health_20260922.json": "Latest scheduler health",
     "run_manifest_v1.json": "Strategy run manifest",
-    "forward_score_v1.json": "Forward score",
+    "forward_score_20260922.json": "September 22 forward score",
 }
 
 
@@ -75,7 +75,16 @@ def _display_age(seconds: float | None) -> str:
 
 def _recorder_paths(data_root: Path) -> list[Path]:
     recorder_root = data_root / "raw" / "recorder"
-    return sorted(recorder_root.glob("**/*.jsonl")) if recorder_root.exists() else []
+    if not recorder_root.exists():
+        return []
+    paths = list(recorder_root.glob("**/*.jsonl"))
+    if not paths:
+        return []
+    by_run: dict[Path, list[Path]] = {}
+    for path in paths:
+        by_run.setdefault(path.parent, []).append(path)
+    latest_run = max(by_run, key=lambda parent: max(path.stat().st_mtime for path in by_run[parent]))
+    return sorted(by_run[latest_run])
 
 
 def recorder_summary(data_root: Path, now: dt.datetime | None = None,
@@ -184,14 +193,64 @@ def _signal_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _symbol_aliases(row: dict[str, Any]) -> set[str]:
+    """Return the common ways a user may type a Reality token symbol."""
+    symbol = "".join(character for character in (row.get("symbol") or "").upper()
+                     if character.isalnum())
+    spot = "".join(character for character in (row.get("spot_symbol") or "").upper()
+                   if character.isalnum())
+    aliases = {value for value in (symbol, spot) if value}
+    if spot.endswith("USDT"):
+        base = spot[:-4]
+        aliases.add(base)
+        if base.startswith("R") and len(base) > 1:
+            aliases.add(base[1:])
+    return aliases
+
+
+def decision_lookup(data_root: Path, query: str,
+                    now: dt.datetime | None = None) -> dict[str, Any]:
+    """Find the nearest saved decision for a user-supplied token symbol."""
+    cleaned = "".join(character for character in query.upper() if character.isalnum())
+    if not cleaned:
+        return {"status": "INVALID", "query": query, "message": "Enter a token symbol."}
+    path = data_root / "results" / "signals_v1.csv"
+    try:
+        with path.open(newline="", encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+    except (OSError, UnicodeError, csv.Error):
+        return {"status": "UNAVAILABLE", "query": query,
+                "message": "Saved decisions are not available."}
+    matches = [row for row in rows if cleaned in _symbol_aliases(row)]
+    if not matches:
+        return {"status": "NOT_EVALUATED", "query": query,
+                "message": "This token has no saved Exnight decision."}
+    now = now or dt.datetime.now(UTC)
+    dates = sorted({row.get("ex_date", "") for row in matches if row.get("ex_date")})
+    if not dates:
+        return {"status": "NOT_EVALUATED", "query": query,
+                "message": "This token has no dated Exnight decision."}
+    today = now.date().isoformat()
+    upcoming = [value for value in dates if value >= today]
+    selected_date = upcoming[0] if upcoming else dates[-1]
+    selected = [row for row in matches if row.get("ex_date") == selected_date]
+    selected.sort(key=lambda row: int(float(row.get("notional_usd", 0) or 0)))
+    return {
+        "status": "FOUND", "query": query, "event_date": selected_date,
+        "symbol": selected[0].get("symbol"), "spot_symbol": selected[0].get("spot_symbol"),
+        "available_dates": dates,
+        "rows": [_signal_row(row) for row in selected],
+    }
+
+
 def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = None,
                    signal_date: str | None = None) -> dict[str, Any]:
     now = now or dt.datetime.now(UTC)
     data_root = project_root / "data"
     selected, signal_meta = _signals(data_root, now, requested_date=signal_date)
     manifest = _json(data_root / "results" / "run_manifest_v1.json")
-    forward = _json(data_root / "results" / "forward_score_v1.json")
-    health = _json(data_root / "results" / "health.json")
+    forward = _json(data_root / "results" / "forward_score_20260922.json")
+    health = _json(data_root / "results" / "health_20260922.json")
     recorder = recorder_summary(data_root, now=now)
     event_ids = set(signal_meta.get("event_ids", []))
     manifest_events = set((manifest or {}).get("forward_events_decided", {}))
@@ -204,11 +263,11 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "missing_events": sorted(event_ids - manifest_events),
     }
     if forward is None:
-        score = {"status": "PENDING", "message": "Available after the September 21 observation window closes."}
+        score = {"status": "PENDING", "message": "Available after the September 22 observation window closes."}
         observation_message = "Recorder is collecting evidence; forward score is intentionally deferred."
     else:
         score = {"status": forward.get("status", "UNKNOWN"), "message": "Forward score loaded.",
-                 "path": "data/results/forward_score_v1.json", "report": forward}
+                 "path": "data/results/forward_score_20260922.json", "report": forward}
         observation_message = ("Forward score loaded; recorder remains active for the scheduled "
                               "observation window.")
     downloads = [
@@ -226,7 +285,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "limits": [
             "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
             "Current order books are observed-now evidence, not historical event-time fills.",
-            "RVSTUSDT and RSATAUSDT currently have ticker-only liquidity rather than a two-sided public book.",
+            "The current September 22 symbols have ticker-only liquidity rather than a two-sided public book.",
             "A mainnet order has not been placed; this dashboard exposes no execution controls.",
         ],
     }
@@ -292,6 +351,12 @@ class DashboardHandler(BaseHTTPRequestHandler):
             self.send_header("Cache-Control", "no-store")
             self.end_headers()
             self.wfile.write(body)
+        elif path == "/api/decision":
+            root = Path(getattr(self.server, "project_root", PROJECT_ROOT))
+            symbol = parse_qs(parsed.query).get("symbol", [""])[0]
+            payload = decision_lookup(root / "data", symbol)
+            self._send(HTTPStatus.OK, "application/json; charset=utf-8",
+                       json.dumps(payload, separators=(",", ":")).encode("utf-8"))
         elif path in ("/api/summary", "/healthz"):
             root = Path(getattr(self.server, "project_root", PROJECT_ROOT))
             requested_date = parse_qs(parsed.query).get("date", [None])[0]

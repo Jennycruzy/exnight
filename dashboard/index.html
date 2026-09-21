@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EXNIGHT / research console</title>
+  <title>EXNIGHT / Reality token decisions</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">E</span><span>EXNIGHT</span><small>research console</small></div>
-      <div class="top-meta"><span class="readonly"><span class="dot"></span>READ-ONLY</span><span id="as-of">Loading…</span><button id="refresh-button" class="refresh-button" type="button">Refresh</button></div>
+      <div class="brand"><span class="brand-mark">E</span><span>EXNIGHT</span><small>Reality token decisions</small></div>
+      <div class="top-meta"><span class="readonly"><span class="dot"></span>LIVE EVIDENCE</span><span id="as-of">Loading…</span><button id="refresh-button" class="refresh-button" type="button">Refresh</button></div>
     </header>
 
     <nav class="section-nav" aria-label="Dashboard sections">
@@ -28,9 +28,27 @@
         <div>
           <p class="eyebrow">FORWARD OBSERVATION / <span id="event-date">—</span></p>
           <h1 id="headline">Loading evidence state…</h1>
-          <p id="hero-copy" class="hero-copy">The console reads saved evidence and does not place orders.</p>
+          <p id="hero-copy" class="hero-copy">Enter a Reality token below to see Exnight's latest evaluated decision.</p>
         </div>
         <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Refreshing automatically</small></div></div>
+      </section>
+
+      <section class="decision-finder" aria-labelledby="decision-finder-title">
+        <div class="decision-intro">
+          <p class="eyebrow">TOKEN DECISION</p>
+          <h2 id="decision-finder-title">What should I do with this token?</h2>
+          <p>Enter a Reality symbol such as <code>rAPH</code>, <code>RAPHUSDT</code>, or <code>APH</code>.</p>
+        </div>
+        <form id="decision-form" class="decision-form">
+          <label for="decision-symbol">Reality token</label>
+          <div class="decision-input-row">
+            <input id="decision-symbol" name="symbol" type="text" inputmode="text" autocomplete="off" placeholder="Enter token symbol" required>
+            <button type="submit">Check decision</button>
+          </div>
+        </form>
+        <div id="decision-result" class="decision-result" aria-live="polite">
+          <span>Enter a token to see its nearest evaluated event and decision by trade size.</span>
+        </div>
       </section>
 
       <section class="metrics" aria-label="Key metrics">
@@ -47,7 +65,7 @@
             <h2 id="map-title">Choose your lens</h2>
             <p>Start with the observation state, then open the exact evidence layer you want to inspect.</p>
           </div>
-          <div class="landing-principle"><span class="principle-mark">✦</span><div><strong>Evidence before execution</strong><small>No trading controls. Every route is inspectable and read-only.</small></div></div>
+          <div class="landing-principle"><span class="principle-mark">✦</span><div><strong>Decision with evidence</strong><small>Every verdict shows the reason and market data behind it.</small></div></div>
         </div>
         <div class="destination-grid">
           <a class="destination-card destination-primary" data-route-link="signals" href="#/signals">
@@ -109,7 +127,7 @@
         <article class="panel" id="evidence">
           <div class="panel-heading"><div><p class="eyebrow">VALIDATION</p><h2>What happens next</h2></div><span id="score-badge" class="badge">—</span></div>
           <div id="score-panel" class="score-panel"></div>
-          <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research pipeline</strong><small>Ledger, event study, costs and frozen signals complete</small></div></div><div class="timeline-item active"><span></span><div><strong>Observation window</strong><small>Recorder continues through the September 21 event</small></div></div><div class="timeline-item"><span></span><div><strong>Forward score</strong><small>Runs only after the window closes</small></div></div></div>
+          <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research pipeline</strong><small>Event calendar, price study, costs and saved decisions complete</small></div></div><div class="timeline-item active"><span></span><div><strong>Observation window</strong><small>The September 22 recorder is collecting one-minute samples</small></div></div><div class="timeline-item"><span></span><div><strong>Forward score</strong><small>Runs after the observation window closes</small></div></div></div>
         </article>
         <article class="panel">
           <div class="panel-heading"><div><p class="eyebrow">PROVENANCE</p><h2>Evidence chain</h2></div><span id="provenance-badge" class="badge">—</span></div>
@@ -123,7 +141,7 @@
       </article>
     </section>
 
-    <footer><span>EXNIGHT · evidence before execution</span><span>Auto-refresh <b>30s</b> · no trading controls</span></footer>
+    <footer><span>EXNIGHT · Reality token decision intelligence</span><span>Evidence refresh <b>30s</b></span></footer>
   </main>
   <dialog id="signal-dialog" class="signal-dialog"><div class="dialog-head"><div><p class="eyebrow">SIGNAL DETAIL</p><h2 id="dialog-title">—</h2></div><button id="dialog-close" class="dialog-close" type="button" aria-label="Close">×</button></div><div id="dialog-body" class="dialog-body"></div></dialog>
   <script src="/app.js"></script>
