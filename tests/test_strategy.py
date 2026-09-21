@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 
 from exnight.costs import latest_samples
-from exnight.strategy import estimate, verdict_row
+from exnight.strategy import estimate, summarize_forward_decisions, verdict_row
 
 
 def _samples(**over):
@@ -67,6 +67,19 @@ def test_estimate_requires_slope():
     assert estimate(s, "floor_None")["pdr_hat"] == 0.66
     with pytest.raises(ValueError):
         estimate({"x": {"rungs": {"overnight_2000": {"slope": {"pdr": None, "se": None, "n": 2}}}}}, "x")
+
+
+def test_manifest_summary_includes_every_forward_event():
+    signals = pd.DataFrame([
+        {"event_id": "rVST-2026-09-21-1", "notional_usd": 5000, "verdict": "NO_SIGNAL"},
+        {"event_id": "rSATA-2026-09-21-1", "notional_usd": 1000, "verdict": "HOLD"},
+        {"event_id": "rVST-2026-09-21-1", "notional_usd": 1000, "verdict": "HOLD"},
+        {"event_id": "rSATA-2026-09-21-1", "notional_usd": 5000, "verdict": "NO_SIGNAL"},
+    ])
+    assert summarize_forward_decisions(signals) == {
+        "rSATA-2026-09-21-1": {"1000": "HOLD", "5000": "NO_SIGNAL"},
+        "rVST-2026-09-21-1": {"1000": "HOLD", "5000": "NO_SIGNAL"},
+    }
 
 
 def test_frozen_rule_loads_and_rejects_drift(tmp_path):

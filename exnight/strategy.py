@@ -69,7 +69,24 @@ def _manifest_name(path: Path) -> str:
         return str(resolved)
 
 
-def write_run_manifest(rule: dict | None, *, rule_path: Path | None, inputs: list[Path], outputs: list[Path], tag: str) -> Path:
+def summarize_forward_decisions(signals: pd.DataFrame) -> dict[str, dict[str, str]]:
+    """Return every frozen event decision in a stable, machine-checkable shape."""
+    required = {"event_id", "notional_usd", "verdict"}
+    if signals.empty or not required.issubset(signals.columns):
+        return {}
+    decisions: dict[str, dict[str, str]] = {}
+    ordered = signals.sort_values(["event_id", "notional_usd"], kind="stable")
+    for row in ordered.to_dict("records"):
+        try:
+            notional = str(int(row["notional_usd"]))
+        except (TypeError, ValueError):
+            continue
+        decisions.setdefault(str(row["event_id"]), {})[notional] = str(row["verdict"])
+    return decisions
+
+
+def write_run_manifest(rule: dict | None, *, rule_path: Path | None, inputs: list[Path], outputs: list[Path],
+                       tag: str, forward_signals: pd.DataFrame | None = None) -> Path:
     """Save the exact rule/input/output hashes used for one strategy run."""
     try:
         commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True,
@@ -83,6 +100,8 @@ def write_run_manifest(rule: dict | None, *, rule_path: Path | None, inputs: lis
         inputs={_manifest_name(p): _sha256(p) for p in inputs if p.exists()},
         outputs={_manifest_name(p): _sha256(p) for p in outputs if p.exists()},
     )
+    if forward_signals is not None:
+        payload["forward_events_decided"] = summarize_forward_decisions(forward_signals)
     path = RESULTS / f"run_manifest{tag}.json"
     tmp = path.with_name(path.name + ".tmp")
     tmp.write_text(json.dumps(payload, indent=1, sort_keys=True) + "\n")
@@ -297,7 +316,7 @@ def main() -> None:
         rule, rule_path=args.rule if rule else None,
         inputs=[args.summary, args.ledger, args.results],
         outputs=[RESULTS / f"signals{args.tag}.csv", RESULTS / f"signals_expost{args.tag}.csv"],
-        tag=args.tag,
+        tag=args.tag, forward_signals=ante,
     )
 
     print(f"rule: {rule_id or 'none'}; estimate: {est['sample']} {rung} pdr_hat={est['pdr_hat']:.3f} se={est['se']:.3f} (n={est['n']}), Z={Z}")

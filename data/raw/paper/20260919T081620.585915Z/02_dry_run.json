@@ -1,0 +1,15 @@
+{
+ "code": "00000",
+ "msg": "dry-run; no request sent",
+ "data": {
+  "wouldSend": {
+   "category": "SPOT",
+   "symbol": "RAVGOUSDT",
+   "side": "buy",
+   "orderType": "limit",
+   "qty": "0.0560",
+   "price": "356.87",
+   "clientOid": "exnight-20260919081621-c6a0708e"
+  }
+ }
+}

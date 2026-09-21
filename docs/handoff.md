@@ -1,4 +1,4 @@
-# EXNIGHT handoff — 2026-09-19
+# EXNIGHT handoff — 2026-09-21
 
 EXNIGHT is a research and guarded-execution system for Bitget Reality rTokens. It is not
 an unattended trading bot. The strategy decision remains deterministic; Qwen is an optional
@@ -7,7 +7,10 @@ evidence/confounder analyst and cannot issue BUY, EXIT, or HOLD decisions.
 ## Current verified state
 
 - VPS: `ubuntu@99.80.93.71`, project `/home/ubuntu/exnight`.
-- Full regression suite: **90 passed** with `python -m pytest`.
+- Full regression suite: **94 passed** with `python -m pytest`, including dashboard coverage.
+- The read-only dashboard is implemented under `dashboard/`; it binds to localhost by default
+  and reads recorder health, the nearest upcoming frozen signals, provenance coverage, known
+  limits and forward-score availability.
 - Existing VS Code SSH access was preserved. No SSH config, authorized key, sudo rule,
   firewall, reboot, or login setting was changed.
 - `.env` is mode `600`; the supplied Bitget hackathon Qwen credential is read only as
@@ -90,16 +93,22 @@ an evidence limitation, not something to hide by filling the gap with synthetic 
 1. Full ledger ingestion, online basis resolution, event study, confounder analysis, cost
    scenarios and exploratory strategy outputs are complete. The 298 unresolved cash rows and
    current-book liquidity limits remain explicit in those artifacts.
-2. Keep the recorder running through the September 21 window and score the actual 04:00 ET
-   result against the frozen `strategy_v1.json` rule.
+2. The September 21 forward score has been generated at
+   `data/results/forward_score_v1.json`. All three requested events have on-time cutoff
+   samples, but the report is explicitly `INCOMPLETE` because every symbol shares one
+   3,419-second recorder gap. The realized PDRs are -5.54 (rAVGO), 0.39 (rSATA), and -5.74
+   (rVST); missing executable evidence is not converted into a fill.
 3. Treat a real order as a separate, manually confirmed preflight only. Install a funded live
    UTA read+trade credential for Agent Hub (or complete Agentic OAuth on the chosen host); do
    not enable withdrawals. No unattended order, login change, firewall change, SSH restart, or
    key rotation is part of the application fix.
+4. Start the dashboard with `.venv/bin/python dashboard/server.py --host 127.0.0.1 --port 8787`
+   and use SSH local port forwarding to view it. It is read-only and does not expose trading
+   controls.
 
 ## September 21 forward score
 
-After the recorder window ends, run:
+The score command (rerun after the recorder window ends if final row counts are needed) is:
 
     .venv/bin/python scripts/score_forward.py \
       data/raw/recorder/20260921_rAVGO_rVST/*.jsonl \

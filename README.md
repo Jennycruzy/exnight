@@ -4,13 +4,15 @@ EXNIGHT measures how Bitget Reality rTokens reprice scheduled corporate actions 
 guarded HOLD / EXIT / BUY arithmetic. It is a research system with a manually confirmed order
 path, not an unattended trading bot.
 
-## Current status — 2026-09-19
+## Current status — 2026-09-21
 
-- **90 tests pass** on the VPS with `python -m pytest`.
+- **94 tests pass** on the VPS with `python -m pytest` (including dashboard coverage).
 - `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
   records corrected projected-buy-price and fresh-depth semantics for later use.
-- The one-minute forward recorder is active for the September 21 events. The scoring script is
-  offline and will not substitute a new quote or place an order.
+- The one-minute forward recorder is active for the September 21 events. A score snapshot is
+  saved in `data/results/forward_score_v1.json`; it is explicitly `INCOMPLETE` because all three
+  symbols share one 3,419-second recorder gap. The scoring script is offline and will not
+  substitute a new quote or place an order.
 - Optional Qwen evidence analysis is configured with `BITGET_QWEN_API_KEY`,
   `QWEN_BASE_URL=https://hackathon.bitgetops.com/v1`, and `QWEN_MODEL=qwen3.8-max`. Qwen never
   changes strategy verdicts.
@@ -41,6 +43,23 @@ path, not an unattended trading bot.
 - `scripts/paper_trade.py` — precision-safe dry-run/guarded-live Agent Hub order evidence chain.
 - `exnight/trading.py` — small wrapper around Bitget's official `bgc` Agent Hub CLI.
 - `scripts/verify_evidence.py`, `scripts/healthcheck.py` — offline evidence and scheduler gates.
+- `dashboard/` — dependency-free, localhost-only read-only console for recorder health, frozen
+  signals, provenance, forward-score status and evidence limits.
+
+## Read-only dashboard
+
+Start the console from the project root:
+
+    .venv/bin/python dashboard/server.py --host 127.0.0.1 --port 8787
+
+Then open `http://127.0.0.1:8787/` through an SSH port forward. The dashboard reads saved
+artifacts on every refresh and exposes no credentials, balances, order controls or trading API.
+It selects the nearest upcoming ex-date from `signals_v1.csv`; after the observation window,
+`forward_score_v1.json` is produced by running `scripts/score_forward.py`.
+Signal rows are interactive: select an ex-date or symbol, filter by verdict, click or focus a
+row for its evidence detail, inspect the recent recorder pulse chart, download whitelisted
+evidence artifacts, and use Refresh for an immediate snapshot. These are inspection
+interactions only; execution remains outside the dashboard.
 
 ## Reproduce
 
@@ -57,7 +76,8 @@ path, not an unattended trading bot.
 
 ## Score the September 21 forward window
 
-Run only after the recorder window ends:
+Run after the required 04:00 ET post-event sample is available (and rerun after the recorder
+window ends if you want the final row counts):
 
     .venv/bin/python scripts/score_forward.py \
       data/raw/recorder/20260921_rAVGO_rVST/*.jsonl \
@@ -70,6 +90,11 @@ Run only after the recorder window ends:
 
 The result is incomplete if a cutoff sample is missing or late. Ticker-only quotes are labelled
 as such and are not treated as public-depth fill evidence.
+
+The September 21 snapshot is currently `INCOMPLETE`: the three requested events have on-time
+cutoff samples, but the recorder has one shared 57-minute gap. The realized PDRs are -5.54 for
+rAVGO, 0.39 for rSATA, and -5.74 for rVST; no realized cost is treated as a fill when the
+required executable evidence is unavailable.
 
 The latest health report is intentionally red because the recorder has one shared 57-minute
 gap. The latest depth snapshot is fresh, but RVST and RSATA have ticker-only quotes rather than
@@ -92,8 +117,8 @@ two-sided public books. The system reports those limits instead of inventing fil
   current announcement says Reality order placement/cancellation does not require whitelist
   registration; Reality depth and platform-fills endpoints still do. The two-sided public-book
   guard therefore remains in force.
-- Remaining work is tracked in [`docs/handoff.md`](docs/handoff.md): score the September 21
-  window, install/authorize a funded live Agent Hub account, and perform a manually confirmed
-  live preflight.
+- Remaining work is tracked in [`docs/handoff.md`](docs/handoff.md): review the incomplete
+  September 21 evidence, install/authorize a funded live Agent Hub account, and perform a
+  manually confirmed live preflight.
 - See [`docs/handoff.md`](docs/handoff.md) for the full operational state and the host-security
   boundary. SSH/login configuration is deliberately not modified by the application.

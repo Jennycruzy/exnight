@@ -1,0 +1,22 @@
+{
+ "symbol": "RAVGOUSDT",
+ "base_coin": "rAVGO",
+ "side": "buy",
+ "notional_requested": 20.0,
+ "actual_notional": 19.96512,
+ "band": 0.005,
+ "session": "weekend",
+ "price": "356.52",
+ "qty": "0.0560",
+ "resting_in_band": 51.597,
+ "liquidity_source": "public_book",
+ "time_in_force": "ioc",
+ "execution_adapter": "bitget-agent-hub",
+ "api_endpoint": "/api/v3/trade/place-order",
+ "time_in_force_sent": true,
+ "agent_hub_bin": "bgc",
+ "mode": "dry-run",
+ "taker_fee": "0.001",
+ "maker_fee": "0.001",
+ "note": ""
+}

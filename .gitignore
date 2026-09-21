@@ -12,3 +12,15 @@ p.html
 exnight.egg-info/
 *.lock
 data/raw/recorder/cron.log
+
+# Reproducible source caches and rolling observations stay on the VPS; curated
+# ledgers/results and explicitly force-added forward evidence are versioned.
+data/raw/basis/
+data/raw/corporate_actions/
+data/raw/candles/
+data/raw/underlying/
+data/raw/depth/
+data/raw/ai_confounder/
+data/raw/recorder/
+data/results/health.json
+data/results/ai_confounders.csv

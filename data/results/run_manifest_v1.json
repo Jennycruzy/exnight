@@ -1,22 +1,142 @@
 {
- "rule": "strategy/strategy_v1.json",
- "rule_sha256": "efd1c41cc6cc4622d91e1faaff2f9d5f7578108d1502a207986d36d666425d22",
- "code_commit": "c74603deeaaf8e76e5d94279a5b40315fbd59abf",
- "run_at_utc": "2026-09-17T09:29:22+00:00",
- "command": "python -m exnight.strategy --rule strategy/strategy_v1.json --results data/results/event_results_resolved.json --tag _v1",
+ "commit": "f0ed55ee3a7f0b21df73cb50920d637c3b10f4fe",
+ "forward_events_decided": {
+  "rAPH-2026-09-22-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAVGO-2026-09-21-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rCMCSA-2026-10-07-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCSCO-2026-10-02-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rGFS-2026-09-23-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rINTU-2026-10-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rLRCX-2026-09-23-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rMDT-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMPWR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPWR-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-18-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-21-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-22-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-23-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-24-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-25-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-28-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-29-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTM-2026-09-22-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTM-2026-12-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTM-2027-03-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTRC-2026-09-30-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rSTX-2026-09-24-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rTSM-2026-12-10-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rVST-2026-09-21-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  }
+ },
+ "generated_at": "2026-09-21T10:17:37.787911+00:00",
  "inputs": {
   "data/ledger/reality_notice59_resolved.jsonl": "9de4df544c9e3651465ad8bff9f25977a8a85d413f2750102dabb9c7db69e359",
-  "data/results/summary_resolved.json": "92b06c60585201572480bca392de9cb0c64ccaf9f5daf90ff42ff70c2b5e2f3f",
   "data/results/event_results_resolved.json": "0d8f9371c9ab33b645f29b9fd1637f7b56d1dcd3a2c5c1c8f9245e15ef188d6d",
-  "data/results/depth_samples.csv": "64fe6e22b5148b23ed63599e5185a1014fc97ecc0ae38373c5c3b5d3309d965e"
+  "data/results/summary_resolved.json": "92b06c60585201572480bca392de9cb0c64ccaf9f5daf90ff42ff70c2b5e2f3f"
  },
  "outputs": {
-  "data/results/signals_v1.csv": "15ab75f6bb0369268f0351657835ba434577df09cdbfd807de0aa35586c1be8e",
-  "data/results/signals_expost_v1.csv": "c3d0fb029625b6af241ae29e36fb5d0e908df60cbccb73c637cade543bf9a5f5"
+  "data/results/signals_expost_v1.csv": "c3d0fb029625b6af241ae29e36fb5d0e908df60cbccb73c637cade543bf9a5f5",
+  "data/results/signals_v1.csv": "15ab75f6bb0369268f0351657835ba434577df09cdbfd807de0aa35586c1be8e"
  },
- "forward_events_decided": {
-  "rAVGO-2026-09-21-1": "HOLD at 1000/5000/25000",
-  "rVST-2026-09-21-1": "HOLD at 1000; NO_SIGNAL at 5000/25000 (visible top-of-book)"
- },
- "scoring": "after 2026-09-21: rerun the event study on the two events and apply the same rule with the realised 04:00 PDR; the rule file is not edited"
+ "rule_file": "strategy/strategy_v1.json",
+ "rule_id": "exnight-strategy-v1"
 }

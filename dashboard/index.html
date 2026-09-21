@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EXNIGHT / research console</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">E</span><span>EXNIGHT</span><small>research console</small></div>
+      <div class="top-meta"><span class="readonly"><span class="dot"></span>READ-ONLY</span><span id="as-of">Loading…</span><button id="refresh-button" class="refresh-button" type="button">Refresh</button></div>
+    </header>
+
+    <nav class="section-nav" aria-label="Dashboard sections">
+      <a class="active" data-route-link="home" href="#/" aria-current="page">Home</a>
+      <a data-route-link="signals" href="#/signals">Signals</a>
+      <a data-route-link="recorder" href="#/recorder">Recorder</a>
+      <a data-route-link="evidence" href="#/evidence">Evidence</a>
+      <span>observation / forward window</span>
+    </nav>
+
+    <div id="error" class="notice error hidden" role="alert"></div>
+
+    <section id="overview" class="view view-home active" data-view="home" aria-labelledby="headline">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">FORWARD OBSERVATION / <span id="event-date">—</span></p>
+          <h1 id="headline">Loading evidence state…</h1>
+          <p id="hero-copy" class="hero-copy">The console reads saved evidence and does not place orders.</p>
+        </div>
+        <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Refreshing automatically</small></div></div>
+      </section>
+
+      <section class="metrics" aria-label="Key metrics">
+        <article class="metric"><span>Samples collected</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across monitored symbols</small></article>
+        <article class="metric"><span>Forward events</span><strong id="metric-events">—</strong><small id="metric-events-note">Frozen strategy v1</small></article>
+        <article class="metric"><span>Signal mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Latest event date</small></article>
+        <article class="metric"><span>Depth evidence</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Current snapshot health</small></article>
+      </section>
+
+      <section class="landing-map" aria-labelledby="map-title">
+        <div class="landing-map-heading">
+          <div>
+            <p class="eyebrow">CONSOLE MAP</p>
+            <h2 id="map-title">Choose your lens</h2>
+            <p>Start with the observation state, then open the exact evidence layer you want to inspect.</p>
+          </div>
+          <div class="landing-principle"><span class="principle-mark">✦</span><div><strong>Evidence before execution</strong><small>No trading controls. Every route is inspectable and read-only.</small></div></div>
+        </div>
+        <div class="destination-grid">
+          <a class="destination-card destination-primary" data-route-link="signals" href="#/signals">
+            <span class="destination-index">01 / DECISIONS</span><span class="destination-arrow">↗</span>
+            <h3>Frozen forward signals</h3>
+            <p>Inspect each event, verdict, edge, cost, and book source without losing the arithmetic behind it.</p>
+            <span class="destination-meta"><strong id="landing-signal-count">—</strong><span id="landing-signal-note">rows to inspect</span></span>
+          </a>
+          <a class="destination-card destination-recorder" data-route-link="recorder" href="#/recorder">
+            <span class="destination-index">02 / COLLECTION</span><span class="destination-arrow">↗</span>
+            <h3>Recorder pulse</h3>
+            <p>Follow the observed price series and see where public-book coverage is present or missing.</p>
+            <span class="destination-meta"><strong id="landing-recorder-count">—</strong><span id="landing-recorder-note">samples across symbols</span></span>
+          </a>
+          <a class="destination-card destination-evidence" data-route-link="evidence" href="#/evidence">
+            <span class="destination-index">03 / VALIDATION</span><span class="destination-arrow">↗</span>
+            <h3>Evidence chain</h3>
+            <p>Trace provenance, scoring readiness, downloadable reports, and the limits that remain visible.</p>
+            <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
+          </a>
+        </div>
+      </section>
+    </section>
+
+    <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">
+      <div class="view-heading">
+        <div><p class="eyebrow">SUBPAGE / 01 · DECISIONS</p><h1 id="signals-page-title">Frozen forward signals</h1><p>Open each row for the event arithmetic and the evidence sources used by Strategy v1.</p></div>
+        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+      </div>
+      <section class="panel" id="signals">
+        <div class="panel-heading"><div><p class="eyebrow">DECISIONS</p><h2>Frozen forward signals</h2></div><div class="heading-actions"><select id="signal-date" class="data-select" aria-label="Signal ex-date"></select><select id="signal-symbol" class="data-select" aria-label="Signal symbol"></select><div id="signal-filters" class="filters" aria-label="Filter signals"></div><span class="tag">STRATEGY V1</span></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Event</th><th>Notional</th><th>Verdict</th><th>Edge / cost</th><th>Liquidity evidence</th></tr></thead><tbody id="signals-body"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div>
+      </section>
+    </section>
+
+    <section id="view-recorder" class="view" data-view="recorder" aria-labelledby="recorder-page-title">
+      <div class="view-heading">
+        <div><p class="eyebrow">SUBPAGE / 02 · COLLECTION</p><h1 id="recorder-page-title">Recorder pulse</h1><p>See the saved observation series and the public-book coverage behind the current window.</p></div>
+        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+      </div>
+      <section class="panel chart-panel" id="pulse">
+        <div class="panel-heading"><div><p class="eyebrow">RECORDER PULSE</p><h2>Observed price and public-book coverage</h2></div><label class="select-label">Chart symbol <select id="chart-symbol" aria-label="Chart symbol"></select></label></div>
+        <div id="recorder-chart" class="recorder-chart" role="img" aria-label="Recorder price chart"><span class="empty">Loading recorder series…</span></div>
+        <div class="chart-legend"><span><i class="legend-line"></i>ticker last price</span><span><i class="legend-dot"></i>two-sided public book present</span><span>last 240 samples</span></div>
+      </section>
+      <section class="panel" id="recorder">
+        <div class="panel-heading"><div><p class="eyebrow">RECORDER</p><h2>Collection health</h2></div><span id="recorder-badge" class="badge">—</span></div>
+        <div id="recorder-list" class="health-list"></div>
+        <div id="recorder-errors" class="small-note"></div>
+      </section>
+    </section>
+
+    <section id="view-evidence" class="view" data-view="evidence" aria-labelledby="evidence-page-title">
+      <div class="view-heading">
+        <div><p class="eyebrow">SUBPAGE / 03 · VALIDATION</p><h1 id="evidence-page-title">Evidence chain</h1><p>Understand what is complete, what is pending, and which source files support the observation window.</p></div>
+        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+      </div>
+      <div class="two-col evidence-grid">
+        <article class="panel" id="evidence">
+          <div class="panel-heading"><div><p class="eyebrow">VALIDATION</p><h2>What happens next</h2></div><span id="score-badge" class="badge">—</span></div>
+          <div id="score-panel" class="score-panel"></div>
+          <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research pipeline</strong><small>Ledger, event study, costs and frozen signals complete</small></div></div><div class="timeline-item active"><span></span><div><strong>Observation window</strong><small>Recorder continues through the September 21 event</small></div></div><div class="timeline-item"><span></span><div><strong>Forward score</strong><small>Runs only after the window closes</small></div></div></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">PROVENANCE</p><h2>Evidence chain</h2></div><span id="provenance-badge" class="badge">—</span></div>
+          <dl id="provenance-list" class="details"></dl>
+          <div id="downloads" class="downloads"></div>
+        </article>
+      </div>
+      <article class="panel limits-panel">
+        <div class="panel-heading"><div><p class="eyebrow">GUARDRAILS</p><h2>Known limits</h2></div><span class="tag amber">TRANSPARENT</span></div>
+        <ul id="limits-list"></ul>
+      </article>
+    </section>
+
+    <footer><span>EXNIGHT · evidence before execution</span><span>Auto-refresh <b>30s</b> · no trading controls</span></footer>
+  </main>
+  <dialog id="signal-dialog" class="signal-dialog"><div class="dialog-head"><div><p class="eyebrow">SIGNAL DETAIL</p><h2 id="dialog-title">—</h2></div><button id="dialog-close" class="dialog-close" type="button" aria-label="Close">×</button></div><div id="dialog-body" class="dialog-body"></div></dialog>
+  <script src="/app.js"></script>
+</body>
+</html>
