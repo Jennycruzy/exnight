@@ -1,124 +1,182 @@
-# EXNIGHT
+# Exnight
 
-EXNIGHT measures how Bitget Reality rTokens reprice scheduled corporate actions and exposes
-guarded HOLD / EXIT / BUY arithmetic. It is a research system with a manually confirmed order
-path, not an unattended trading bot.
+Exnight studies how Bitget Reality tokens react when a listed company reaches an important
+calendar date, such as a dividend or stock split. It records prices around the event, checks
+the quality of that recording, and produces a simple `BUY`, `EXIT`, `HOLD`, or `NO_SIGNAL`
+result from a saved set of rules.
 
-## Current status — 2026-09-21
+Exnight is a research tool. It does not trade by itself. Any real order must pass several
+safety checks and still requires a person to confirm the exact symbol, side, and quantity.
 
-- **94 tests pass** on the VPS with `python -m pytest` (including dashboard coverage).
-- `strategy/strategy_v1.json` is the untouched forward-validation rule. `strategy_v2.json`
-  records corrected projected-buy-price and fresh-depth semantics for later use.
-- The one-minute forward recorder is active for the September 21 events. A score snapshot is
-  saved in `data/results/forward_score_v1.json`; it is explicitly `INCOMPLETE` because all three
-  symbols share one 3,419-second recorder gap. The scoring script is offline and will not
-  substitute a new quote or place an order.
-- Optional Qwen evidence analysis is configured with `BITGET_QWEN_API_KEY`,
-  `QWEN_BASE_URL=https://hackathon.bitgetops.com/v1`, and `QWEN_MODEL=qwen3.8-max`. Qwen never
-  changes strategy verdicts.
-- The Reality rebuild completed for 1,653 instruments, producing 1,695 validated events in
-  `data/ledger/reality_full.jsonl`. Progress and recovered failures are recorded in
-  `data/results/reality_full_build.json`. Not every instrument has an event in the date range.
-- The full online basis pass resolved 1,374 cash rows and left 298 cash rows explicitly
-  unresolved. The full event study has 568 usable rows; its outputs are tagged `full_online`.
-- The online cost run produced 8,520 event/rung/notional scenarios, with 754 fully priced from
-  current depth/ticker evidence. The remaining rows carry explicit liquidity reasons.
+## Why this project exists
 
-## Modules
+A Reality token tracks a public company, but its market does not always behave exactly like
+the underlying share. Corporate actions can create temporary price differences. Exnight is
+designed to measure those differences without quietly replacing missing data or presenting a
+theoretical price as a real fill.
 
-- `exnight/market.py` — validated Bitget public adapter with bounded retries and candle paging.
-- `exnight/calendar.py` — saved-source and Reality corporate-action ledgers.
-- `exnight/basis.py` — issuer evidence, gross-basis tiers, and event-level withholding bounds.
-- `exnight/normalizer.py` — inverse split-ratio adjustment with halt validation.
-- `exnight/eventstudy.py`, `exnight/analysis.py` — session-rung PDR, market adjustment and
-  OLS/robust diagnostics.
-- `exnight/confounders.py`, `exnight/ai_confounder.py` — deterministic flags and optional,
-  replayable Qwen prose evidence.
-- `exnight/costs.py`, `exnight/strategy.py` — freshness-gated round-trip costs and
-  deterministic BUY/EXIT/HOLD/NO_SIGNAL decisions.
-- `scripts/record_event.py` — locked, deduplicated forward recorder.
-- `scripts/depth_snapshot.py` — session-labelled depth with raw-response SHA-256 manifests.
-- `scripts/score_forward.py` — offline forward-window scorer.
-- `scripts/build_reality_ledger.py` — resumable complete-universe Reality ledger builder.
-- `scripts/paper_trade.py` — precision-safe dry-run/guarded-live Agent Hub order evidence chain.
-- `exnight/trading.py` — small wrapper around Bitget's official `bgc` Agent Hub CLI.
-- `scripts/verify_evidence.py`, `scripts/healthcheck.py` — offline evidence and scheduler gates.
-- `dashboard/` — dependency-free, localhost-only read-only console for recorder health, frozen
-  signals, provenance, forward-score status and evidence limits.
+The project can:
 
-## Read-only dashboard
+- collect Bitget ticker and order-book data at one-minute intervals;
+- build a calendar of dividends, splits, and other company events;
+- compare the token price before and after an event;
+- estimate fees and trading costs when enough market data exists;
+- apply a fixed, reviewable strategy rule;
+- show the saved evidence in a local, read-only dashboard; and
+- prepare a small order only after explicit human confirmation.
 
-Start the console from the project root:
+## Current state
 
-    .venv/bin/python dashboard/server.py --host 127.0.0.1 --port 8787
+The application and dashboard are complete and the full test suite passes: **95 tests**.
 
-Then open `http://127.0.0.1:8787/` through an SSH port forward. The dashboard reads saved
-artifacts on every refresh and exposes no credentials, balances, order controls or trading API.
-It selects the nearest upcoming ex-date from `signals_v1.csv`; after the observation window,
-`forward_score_v1.json` is produced by running `scripts/score_forward.py`.
-Signal rows are interactive: select an ex-date or symbol, filter by verdict, click or focus a
-row for its evidence detail, inspect the recent recorder pulse chart, download whitelisted
-evidence artifacts, and use Refresh for an immediate snapshot. These are inspection
-interactions only; execution remains outside the dashboard.
+A new forward observation is currently running for the September 22 events:
 
-## Reproduce
+- `RAPHUSDT`
+- `RSATAUSDT`
+- `RSTMUSDT`
 
-    .venv/bin/python -m pytest -q
-    .venv/bin/python scripts/verify_evidence.py
-    .venv/bin/python scripts/build_reality_ledger.py --start-date 2026-06-01
-    .venv/bin/python -m exnight.calendar --source reality --start-date 2026-06-01 --output data/ledger/reality_notice59.jsonl
-    .venv/bin/python -m exnight.basis
-    .venv/bin/python -m exnight.eventstudy --ledger data/ledger/reality_notice59.jsonl --output data/results/event_results_reality.json
-    .venv/bin/python -m exnight.confounders --results data/results/event_results_reality.json --output data/results/confounders_reality.csv --reality-ledger data/ledger/reality_notice59_resolved.jsonl
-    .venv/bin/python -m exnight.analysis --results data/results/event_results_reality.json --confounders data/results/confounders_reality.csv --tag _reality
-    .venv/bin/python -m exnight.costs --results data/results/event_results_reality.json --ledger data/ledger/reality_notice59.jsonl --output data/results/event_costs_reality.csv
-    .venv/bin/python -m exnight.strategy --rule strategy/strategy_v1.json --tag _v1
+The recorder runs once a minute and an independent health check runs every five minutes. At
+the latest check, all three symbols were current, correctly ordered, and free of missing
+intervals. The run ends at **2026-09-22 14:30 UTC**. Its final result must not be declared
+until that time has passed and the saved recording has been scored.
 
-## Score the September 21 forward window
+The earlier September 21 observation remains marked `INCOMPLETE` because it contains a real
+57-minute recording gap. That result is kept as part of the project history; the missing
+period has not been filled with invented rows.
 
-Run after the required 04:00 ET post-event sample is available (and rerun after the recorder
-window ends if you want the final row counts):
+Bitget currently returns ticker quotes but empty public order books for some Reality pairs.
+This does not stop price recording, but it means Exnight cannot claim that a proposed order
+could have filled at those prices.
 
-    .venv/bin/python scripts/score_forward.py \
-      data/raw/recorder/20260921_rAVGO_rVST/*.jsonl \
-      --symbols RAVGOUSDT RVSTUSDT RSATAUSDT \
-      --event-date 2026-09-21 \
-      --rule strategy/strategy_v1.json \
-      --ledger data/ledger/reality_notice59_resolved.jsonl \
-      --signals data/results/signals_v1.csv \
-      --output data/results/forward_score_v1.json
+## Quick start
 
-The result is incomplete if a cutoff sample is missing or late. Ticker-only quotes are labelled
-as such and are not treated as public-depth fill evidence.
+Exnight requires Python 3.11 or newer.
 
-The September 21 snapshot is currently `INCOMPLETE`: the three requested events have on-time
-cutoff samples, but the recorder has one shared 57-minute gap. The realized PDRs are -5.54 for
-rAVGO, 0.39 for rSATA, and -5.74 for rVST; no realized cost is treated as a fill when the
-required executable evidence is unavailable.
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e '.[dev]'
+python -m pytest -q
+```
 
-The latest health report is intentionally red because the recorder has one shared 57-minute
-gap. The latest depth snapshot is fresh, but RVST and RSATA have ticker-only quotes rather than
-two-sided public books. The system reports those limits instead of inventing fills.
+Public-market research does not require API credentials. Copy `.env.example` to `.env` only
+if you need one of the optional authenticated features, and never commit that file.
 
-## Safety and limits
+To verify the saved evidence without making network requests:
 
-- BUY remains suppressed because Bitget's eligibility snapshot time is unpublished.
-- Historical event-time order books do not exist; current depth is an `OBSERVED-NOW` scenario.
-- Unresolved issuer/tax rows remain explicit and cannot produce a non-invariant verdict.
-- A real order requires a funded live UTA trade credential (or authorized Agentic account), a
-  fresh displayed quote, the exact computed quantity, a two-sided public book, an
-  available-balance check, and
-  `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'`. One-order real notional is capped at
-  $100 by default. `--live-paper` is refused because Bitget's generic demo path does not accept
-  Reality symbols.
-- The configured Bitget credential currently authenticates only with the documented demo header;
-  the mainnet API returns environment error `40099`. Agent Hub is installed for the ubuntu user
-  and sends Reality orders through the regular UTA `/api/v3/trade/place-order` surface. Bitget's
-  current announcement says Reality order placement/cancellation does not require whitelist
-  registration; Reality depth and platform-fills endpoints still do. The two-sided public-book
-  guard therefore remains in force.
-- Remaining work is tracked in [`docs/handoff.md`](docs/handoff.md): review the incomplete
-  September 21 evidence, install/authorize a funded live Agent Hub account, and perform a
-  manually confirmed live preflight.
-- See [`docs/handoff.md`](docs/handoff.md) for the full operational state and the host-security
-  boundary. SSH/login configuration is deliberately not modified by the application.
+```bash
+.venv/bin/python scripts/verify_evidence.py
+```
+
+## Dashboard
+
+Start the dashboard from the project root:
+
+```bash
+.venv/bin/python dashboard/server.py --host 127.0.0.1 --port 8787
+```
+
+Then open `http://127.0.0.1:8787/`. On a remote server, use an SSH port forward rather than
+exposing the dashboard to the public internet.
+
+The dashboard shows recorder health, upcoming events, saved strategy results, data sources,
+and known limitations. It is deliberately read-only: it has no balance view, credential form,
+or order button.
+
+## Running the research pipeline
+
+The main commands are shown below in the order they are normally used.
+
+```bash
+# Build or resume the Reality event calendar.
+.venv/bin/python scripts/build_reality_ledger.py --start-date 2026-06-01
+
+# Resolve event values and company evidence.
+.venv/bin/python -m exnight.basis
+
+# Measure price changes around each usable event.
+.venv/bin/python -m exnight.eventstudy \
+  --ledger data/ledger/reality_notice59.jsonl \
+  --output data/results/event_results_reality.json
+
+# Record other news or market conditions that may explain a price move.
+.venv/bin/python -m exnight.confounders \
+  --results data/results/event_results_reality.json \
+  --output data/results/confounders_reality.csv \
+  --reality-ledger data/ledger/reality_notice59_resolved.jsonl
+
+# Estimate trading costs from available market evidence.
+.venv/bin/python -m exnight.costs \
+  --results data/results/event_results_reality.json \
+  --ledger data/ledger/reality_notice59.jsonl \
+  --output data/results/event_costs_reality.csv
+
+# Apply the saved version-one strategy.
+.venv/bin/python -m exnight.strategy \
+  --rule strategy/strategy_v1.json \
+  --tag _v1
+```
+
+These commands keep unresolved events visible. A row is not silently dropped or assigned a
+made-up value simply to produce a cleaner result.
+
+## Scoring the live September 22 observation
+
+Run this only after the recording window closes:
+
+```bash
+.venv/bin/python scripts/score_forward.py \
+  data/raw/recorder/20260922_rAPH_rSATA_rSTM/*.jsonl \
+  --symbols RAPHUSDT RSATAUSDT RSTMUSDT \
+  --event-date 2026-09-22 \
+  --rule strategy/strategy_v1.json \
+  --ledger data/ledger/reality_notice59_resolved.jsonl \
+  --signals data/results/signals_v1.csv \
+  --output data/results/forward_score_20260922.json
+```
+
+The scorer works only from the saved recording. It does not fetch a newer quote to repair a
+late or missing sample, and it cannot place an order. A passing report therefore means the
+required observations were genuinely present and on time.
+
+## Trading safety
+
+The normal workflow is research-only. Even when live trading is configured, Exnight refuses
+an order unless it has:
+
+- a funded Bitget account with the required permission;
+- a fresh quote and a public two-sided order book;
+- enough available balance;
+- a quantity that meets the market's size and value rules;
+- a final price and balance check immediately before submission; and
+- an exact confirmation string supplied by the operator.
+
+Real orders are capped at $100 by default. Withdrawals are not part of this project. The
+optional Qwen analysis can add written context, but it cannot change the strategy result or
+approve a trade.
+
+## Project layout
+
+- `exnight/` contains the market, calendar, analysis, cost, strategy, and trading code.
+- `scripts/` contains the recorder, health check, evidence checker, and command-line jobs.
+- `strategy/` contains the saved strategy rules. Version one is the frozen forward-test rule;
+  version two contains later corrections and is kept separate.
+- `dashboard/` contains the local read-only dashboard.
+- `data/` contains source records and generated results. Large and live files are not all
+  committed to Git.
+- `tests/` contains the automated test suite.
+- `docs/handoff.md` contains detailed operating notes, evidence counts, and remaining work.
+
+## Known limits
+
+- Bitget does not publish the exact dividend eligibility snapshot time, so Exnight suppresses
+  a buy decision when that timing could change the answer.
+- Historical order books are unavailable. A current order book cannot prove what could have
+  filled on an earlier event date.
+- Some company and tax records cannot be resolved from the available sources. They remain
+  clearly marked instead of being guessed.
+- A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
+- The project has not yet demonstrated a real Reality-token fill.
+
+For detailed evidence, server operations, and the complete list of outstanding items, see
+[`docs/handoff.md`](docs/handoff.md).
