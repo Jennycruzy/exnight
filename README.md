@@ -103,8 +103,8 @@ The main commands are shown below in the order they are normally used.
 
 # Measure price changes around each usable event.
 .venv/bin/python -m exnight.eventstudy \
-  --ledger data/ledger/reality_notice59.jsonl \
-  --output data/results/event_results_reality.json
+  --ledger data/ledger/reality_notice59_resolved.jsonl \
+  --output data/results/event_results_resolved.json
 
 # Record other news or market conditions that may explain a price move.
 .venv/bin/python -m exnight.confounders \
@@ -126,6 +126,13 @@ The main commands are shown below in the order they are normally used.
 
 These commands keep unresolved events visible. A row is not silently dropped or assigned a
 made-up value simply to produce a cleaner result.
+
+The legacy-named `reality_notice59*.jsonl` files each contain 185 corporate actions. The
+unresolved ledger yields 58 usable events; issuer and basis resolution expands the usable
+sample to 127. Strategy V1 was frozen on the 127-event resolved study. The command above uses
+that resolved ledger, so it reproduces the study and `premarket_0400` estimate on which V1 was
+frozen (`pdr_hat = 0.9656110633409245`). The unresolved 58-event study remains available for
+audit, but it is not V1's estimation sample.
 
 ## Scoring the live September 22 observation
 
