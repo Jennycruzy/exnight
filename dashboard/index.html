@@ -33,24 +33,6 @@
         <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Refreshing automatically</small></div></div>
       </section>
 
-      <section class="decision-finder" aria-labelledby="decision-finder-title">
-        <div class="decision-intro">
-          <p class="eyebrow">TOKEN DECISION</p>
-          <h2 id="decision-finder-title">What should I do with this token?</h2>
-          <p>Enter a Reality symbol such as <code>rAPH</code>, <code>RAPHUSDT</code>, or <code>APH</code>.</p>
-        </div>
-        <form id="decision-form" class="decision-form">
-          <label for="decision-symbol">Reality token</label>
-          <div class="decision-input-row">
-            <input id="decision-symbol" name="symbol" type="text" inputmode="text" autocomplete="off" placeholder="Enter token symbol" required>
-            <button type="submit">Check decision</button>
-          </div>
-        </form>
-        <div id="decision-result" class="decision-result" aria-live="polite">
-          <span>Enter a token to see its nearest evaluated event and decision by trade size.</span>
-        </div>
-      </section>
-
       <section class="metrics" aria-label="Key metrics">
         <article class="metric"><span>Samples collected</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across monitored symbols</small></article>
         <article class="metric"><span>Forward events</span><strong id="metric-events">—</strong><small id="metric-events-note">Frozen strategy v1</small></article>
@@ -95,6 +77,23 @@
         <div><p class="eyebrow">SUBPAGE / 01 · DECISIONS</p><h1 id="signals-page-title">Frozen forward signals</h1><p>Open each row for the event arithmetic and the evidence sources used by Strategy v1.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
+      <section class="decision-finder" aria-labelledby="decision-finder-title">
+        <div class="decision-intro">
+          <p class="eyebrow">TOKEN DECISION</p>
+          <h2 id="decision-finder-title">What should I do with this token?</h2>
+          <p>Enter a Reality symbol such as <code>rAPH</code>, <code>RAPHUSDT</code>, or <code>APH</code>.</p>
+        </div>
+        <form id="decision-form" class="decision-form">
+          <label for="decision-symbol">Reality token</label>
+          <div class="decision-input-row">
+            <input id="decision-symbol" name="symbol" type="text" inputmode="text" autocomplete="off" placeholder="Enter token symbol" required>
+            <button type="submit">Check decision</button>
+          </div>
+        </form>
+        <div id="decision-result" class="decision-result" aria-live="polite">
+          <span>Enter a token to see its nearest evaluated event and decision by trade size.</span>
+        </div>
+      </section>
       <section class="panel" id="signals">
         <div class="panel-heading"><div><p class="eyebrow">DECISIONS</p><h2>Frozen forward signals</h2></div><div class="heading-actions"><select id="signal-date" class="data-select" aria-label="Signal ex-date"></select><select id="signal-symbol" class="data-select" aria-label="Signal symbol"></select><div id="signal-filters" class="filters" aria-label="Filter signals"></div><span class="tag">STRATEGY V1</span></div></div>
         <div class="table-wrap"><table><thead><tr><th>Event</th><th>Notional</th><th>Verdict</th><th>Edge / cost</th><th>Liquidity evidence</th></tr></thead><tbody id="signals-body"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div>
