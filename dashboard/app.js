@@ -1,5 +1,8 @@
 const $ = (id) => document.getElementById(id);
+const STATIC_SITE = window.location.hostname.endsWith("github.io");
+const siteUrl = (path) => new URL(path, new URL(".", window.location.href)).toString();
 let latestData = null;
+let staticDecisions = null;
 let activeFilter = "ALL";
 let activeSymbol = "ALL";
 let activeDate = null;
@@ -164,9 +167,22 @@ async function lookupDecision(symbol) {
   target.className = "decision-result decision-loading";
   target.innerHTML = "<span>Checking saved Exnight decisions…</span>";
   try {
-    const response = await fetch(`/api/decision?symbol=${encodeURIComponent(symbol)}&t=${Date.now()}`, {cache:"no-store"});
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    renderDecision(await response.json());
+    if (STATIC_SITE) {
+      if (!staticDecisions) {
+        const response = await fetch(siteUrl("api/decisions.json"), {cache:"no-store"});
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        staticDecisions = await response.json();
+      }
+      const key = symbol.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      renderDecision(staticDecisions[key] || {
+        status: "NOT_EVALUATED", query: symbol,
+        message: "This token has no saved Exnight decision.",
+      });
+    } else {
+      const response = await fetch(`/api/decision?symbol=${encodeURIComponent(symbol)}&t=${Date.now()}`, {cache:"no-store"});
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      renderDecision(await response.json());
+    }
   } catch (error) {
     target.className = "decision-result decision-empty";
     target.innerHTML = `<strong>Decision lookup unavailable</strong><span>${esc(error.message)}</span>`;
@@ -176,7 +192,8 @@ async function lookupDecision(symbol) {
 async function refresh() {
   try {
     const dateQuery = activeDate ? `&date=${encodeURIComponent(activeDate)}` : "";
-    const response = await fetch(`/api/summary?t=${Date.now()}${dateQuery}`, {cache:"no-store"});
+    const url = STATIC_SITE ? siteUrl("api/summary.json") : `/api/summary?t=${Date.now()}${dateQuery}`;
+    const response = await fetch(url, {cache:"no-store"});
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     render(await response.json()); $("error").classList.add("hidden");
   } catch (error) {
