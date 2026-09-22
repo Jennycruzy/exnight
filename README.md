@@ -9,6 +9,11 @@ Exnight turns corporate-action and market evidence into clear Reality-token deci
 a supported token to see whether the saved strategy says `BUY`, `EXIT`, `HOLD`, or
 `NO_SIGNAL`, together with the reason and the quality of the supporting data.
 
+**Live dashboard:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/)
+
+The public dashboard is a sanitized evidence snapshot published from the `gh-pages` branch.
+Recording and scoring continue on the private VPS workspace.
+
 ## Why this project exists
 
 A Reality token tracks a public company, but its market does not always behave exactly like
