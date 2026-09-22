@@ -212,8 +212,9 @@ approve a trade.
 - Seventy-one otherwise usable events lack pre-decision gross-basis evidence in the saved
   record. They remain excluded rather than being repaired with later data.
 - A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
-- The current Playbook authoring surface has not yet been shown to accept the corporate-action
-  dates and dividend amounts the strategy requires; Exnight will not be reshaped to fit it.
+- GetAgent skill v0.6.4 exposes dividend `ex_dividend_date`, `amount`, and `declaration_date`,
+  so the Playbook input gate passes. This workspace has no GetAgent Cloud credential, so no
+  cloud run ID or published Playbook is claimed. Exnight has not been reshaped to fit it.
 - The project has not yet demonstrated a real Reality-token fill.
 
 Deployment notes and the operational handoff are maintained in the private server workspace,
