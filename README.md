@@ -1,58 +1,77 @@
 # Exnight
 
-Exnight studies how Bitget Reality tokens react when a listed company reaches an important
-calendar date, such as a dividend or stock split. It records prices around the event, checks
-the quality of that recording, and produces a simple `BUY`, `EXIT`, `HOLD`, or `NO_SIGNAL`
-result from a saved set of rules.
+## Thesis
 
-Exnight turns corporate-action and market evidence into clear Reality-token decisions. Enter
-a supported token to see whether the saved strategy says `BUY`, `EXIT`, `HOLD`, or
-`NO_SIGNAL`, together with the reason and the quality of the supporting data.
+Across 127 usable corporate-action observations, Bitget Reality-token ex-date repricing is
+consistent with roughly the gross dividend by the 04:00 ET rung. But the amount a holder
+actually retains can be lower and varies by event. Exnight measures whether stepping out
+before that repricing beats remaining exposed, after documented or uncertain entitlement,
+fees and execution costs.
+
+## Target user and product value
+
+**Track:** Alpha Factory → rToken Factor Strategies. Secondary fit: Open Theme,
+execution-aware alpha.
+
+**Target user:** a Bitget Reality-token holder with **$1,000–$25,000** positions in
+dividend-paying rTokens, making a decision **around each ex-date** — whether to stay exposed
+or step out temporarily when the expected repricing exceeds what they actually retain plus
+execution costs.
+
+Exnight turns the research into a reviewable `EXIT`, `HOLD`, or `NO_SIGNAL` decision. The
+dashboard's Decisions page accepts forms such as `rAPH`, `RAPHUSDT`, or `APH`, shows the saved
+result for each supported size, and explains when evidence is missing. BUY remains suppressed
+because Bitget has not published its exact dividend-eligibility snapshot time.
 
 **Live dashboard:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/)
 
-The public dashboard is a sanitized evidence snapshot published from the `gh-pages` branch.
+The public dashboard is a sanitized evidence snapshot published from the `gh-pages` branch,
+not a live trading terminal.
 Recording and scoring continue on the private VPS workspace.
 
-## Why this project exists
+## Validation
 
-A Reality token tracks a public company, but its market does not always behave exactly like
-the underlying share. Corporate actions can create temporary price differences. Exnight is
-designed to measure those differences without quietly replacing missing data or presenting a
-theoretical price as a real fill.
+The evidence is deliberately separated:
 
-The project can:
+1. **Discovery study.** Both legacy-named `reality_notice59*.jsonl` ledgers contain 185
+   corporate actions. The unresolved study yields 58 usable events; issuer and basis
+   resolution yields 127. V1's 04:00 estimate is `0.965611 ± 0.183240`. This found the effect;
+   it is not out-of-sample evidence.
+2. **Walk-forward validation.** Only 56 of the 127 resolved/usable events have declaration
+   evidence known before T0. The non-overlapping OOS folds cover 47 calendar days and 39
+   events. The robust rule issued **0 EXIT trades** at every tested combination of 10–100 bps
+   round-trip modeled cost and 0–30% withholding. Policy therefore equals HOLD: OOS total
+   return **−0.096%**, Sharpe **−2.57**, and active return **0.000%**. This does **not** establish
+   active alpha. See [the complete scorecard](docs/competition_scorecard.md).
+3. **Frozen V1 and forward recorder.** V1 was frozen on 17 September and is not renamed as
+   historical OOS. The 21 September run remains `INCOMPLETE` because of its genuine 57-minute
+   gap. The 22 September recorder itself passed—1,348 rows per symbol and a 63-second maximum
+   gap—but its combined score is `INCOMPLETE` because rAPH and rSTM lacked resolved dividend
+   basis. rSATA produced the frozen `HOLD` decision and realised PDR 0.0.
 
-- collect Bitget ticker and order-book data at one-minute intervals;
-- build a calendar of dividends, splits, and other company events;
-- compare the token price before and after an event;
-- estimate fees and trading costs when enough market data exists;
-- apply a fixed, reviewable strategy rule;
-- show the saved evidence in a local, read-only dashboard; and
-- prepare a small order only after explicit human confirmation.
+Historical trading costs in the scorecard are always labelled **MODELED_EXECUTION**. Forward
+capacity is separate: all three 22 September pairs returned empty public books, so executable
+capacity at $1k, $5k, and $25k remains unproven.
 
-## Current state
+## Progress and deliverables
 
-The application and dashboard are complete and the full test suite passes: **95 tests**.
+Delivered:
 
-A new forward observation is currently running for the September 22 events:
+- the 185-action source ledger and the 127-event resolved discovery study;
+- a knowledge-time table with T0, publication time, entitlement handling, fees, and exclusions;
+- runnable expanding-window strategy code with a frozen, hashed manifest;
+- policy, HOLD benchmark, and active-return scorecards with full cost/withholding sensitivity;
+- a minute recorder, independent health checks, and offline forward scorer;
+- a read-only consumer dashboard and guarded, human-confirmed order preparation; and
+- one command that regenerates the competition artifacts from committed inputs.
 
-- `RAPHUSDT`
-- `RSATAUSDT`
-- `RSTMUSDT`
+```bash
+.venv/bin/python scripts/build_competition_submission.py
+```
 
-The recorder runs once a minute and an independent health check runs every five minutes. At
-the latest check, all three symbols were current, correctly ordered, and free of missing
-intervals. The run ends at **2026-09-22 14:30 UTC**. Its final result must not be declared
-until that time has passed and the saved recording has been scored.
-
-The earlier September 21 observation remains marked `INCOMPLETE` because it contains a real
-57-minute recording gap. That result is kept as part of the project history; the missing
-period has not been filled with invented rows.
-
-Bitget currently returns ticker quotes but empty public order books for some Reality pairs.
-This does not stop price recording, but it means Exnight cannot claim that a proposed order
-could have filled at those prices.
+The exact portfolio, T0/T1, fold, rung-selection, and execution conventions are in
+[the competition methodology](docs/competition_methodology.md). The frozen machine-readable
+manifest is `data/results/competition_backtest_manifest.json`.
 
 ## Quick start
 
@@ -85,7 +104,7 @@ Start the dashboard from the project root:
 Then open `http://127.0.0.1:8787/`. On a remote server, use an SSH port forward rather than
 exposing the dashboard to the public internet.
 
-The dashboard opens with a token decision lookup. Users can enter forms such as `rAPH`,
+The dashboard's Decisions page contains the token lookup. Users can enter forms such as `rAPH`,
 `RAPHUSDT`, or `APH` and receive the nearest evaluated decision for each supported trade size.
 It also shows recorder health, upcoming events, detailed strategy results, data sources, and
 known limitations. If a token has not been evaluated, Exnight says so rather than guessing.
@@ -134,7 +153,7 @@ that resolved ledger, so it reproduces the study and `premarket_0400` estimate o
 frozen (`pdr_hat = 0.9656110633409245`). The unresolved 58-event study remains available for
 audit, but it is not V1's estimation sample.
 
-## Scoring the live September 22 observation
+## Scoring the completed September 22 observation
 
 Run this only after the recording window closes:
 
@@ -185,10 +204,16 @@ approve a trade.
 - Bitget does not publish the exact dividend eligibility snapshot time, so Exnight suppresses
   a buy decision when that timing could change the answer.
 - Historical order books are unavailable. A current order book cannot prove what could have
-  filled on an earlier event date.
-- Some company and tax records cannot be resolved from the available sources. They remain
-  clearly marked instead of being guessed.
+  filled on an earlier event date, so historical costs are modeled rather than observed.
+- Only 56 of 127 resolved/usable events pass the ex-ante knowledge filter, and 45 of those are
+  rSATA observations. The scorecard is therefore small and concentrated.
+- The walk-forward produces no EXIT trades at the frozen confidence threshold. Rolling
+  30-day Sharpe is `INSUFFICIENT_EVENTS`; there is no supported active-alpha claim.
+- Seventy-one otherwise usable events lack pre-decision gross-basis evidence in the saved
+  record. They remain excluded rather than being repaired with later data.
 - A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
+- The current Playbook authoring surface has not yet been shown to accept the corporate-action
+  dates and dividend amounts the strategy requires; Exnight will not be reshaped to fit it.
 - The project has not yet demonstrated a real Reality-token fill.
 
 Deployment notes and the operational handoff are maintained in the private server workspace,

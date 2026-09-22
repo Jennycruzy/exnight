@@ -1,0 +1,79 @@
+{
+  "as_of": "2026-09-22T14:29:02+00:00",
+  "label": "OBSERVED_FORWARD_EXECUTION_CAPACITY",
+  "events": [
+    {
+      "symbol": "rAPH",
+      "nonempty_public_book_samples": 0,
+      "sizes": [
+        {
+          "notional_usdt": 1000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        },
+        {
+          "notional_usdt": 5000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        },
+        {
+          "notional_usdt": 25000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        }
+      ]
+    },
+    {
+      "symbol": "rSATA",
+      "nonempty_public_book_samples": 0,
+      "sizes": [
+        {
+          "notional_usdt": 1000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        },
+        {
+          "notional_usdt": 5000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        },
+        {
+          "notional_usdt": 25000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        }
+      ]
+    },
+    {
+      "symbol": "rSTM",
+      "nonempty_public_book_samples": 0,
+      "sizes": [
+        {
+          "notional_usdt": 1000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        },
+        {
+          "notional_usdt": 5000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        },
+        {
+          "notional_usdt": 25000,
+          "public_book_supported": false,
+          "walk_cost": null,
+          "reason": "no contemporaneous two-sided public book"
+        }
+      ]
+    }
+  ],
+  "conclusion": "No recorded pair had a nonempty public book; $1k/$5k/$25k capacity is unproven."
+}
