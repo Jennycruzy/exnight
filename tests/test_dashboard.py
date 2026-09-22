@@ -79,6 +79,28 @@ def test_dashboard_can_select_an_explicit_signal_date(tmp_path):
     assert result["signals"]["meta"]["available_dates"] == ["2026-09-21", "2026-09-22"]
 
 
+def test_dashboard_exposes_walk_forward_validation(tmp_path):
+    results = tmp_path / "data/results"
+    results.mkdir(parents=True)
+    (results / "competition_backtest_manifest.json").write_text(json.dumps({
+        "oos_calendar_days": 47, "slippage_sensitivity_bps": [10, 25, 50, 100],
+    }))
+    (results / "competition_scorecard.json").write_text(json.dumps({
+        "name": "walk-forward OOS performance of the Exnight selection procedure",
+        "sample": {"resolved_usable": 127, "eligible_ex_ante": 56},
+        "oos_concatenated_non_overlapping_folds": {
+            "policy": {"event_count": 39, "trade_count": 0, "total_return": -0.001},
+            "benchmark": {"total_return": -0.001}, "active": {"total_return": 0},
+        },
+        "folds": [{"fold": "OOS_1", "test_events": 39, "test_trades": 0}],
+    }))
+    result = dashboard_data(tmp_path)
+    assert result["competition"]["status"] == "AVAILABLE"
+    assert result["competition"]["sample"]["eligible_ex_ante"] == 56
+    assert result["competition"]["oos"]["policy"]["trade_count"] == 0
+    assert result["competition"]["playbook"]["published"] is False
+
+
 def test_decision_lookup_accepts_consumer_symbol_formats(tmp_path):
     results = tmp_path / "data/results"
     results.mkdir(parents=True)

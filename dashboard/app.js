@@ -7,7 +7,7 @@ let activeFilter = "ALL";
 let activeSymbol = "ALL";
 let activeDate = null;
 let chartSymbol = null;
-const routes = new Set(["home", "signals", "recorder", "evidence"]);
+const routes = new Set(["home", "signals", "recorder", "evidence", "validation"]);
 
 function currentRoute() {
   const route = window.location.hash.replace(/^#\/?/, "").split("/")[0].toLowerCase();
@@ -46,6 +46,7 @@ function render(data) {
   const health = data.depth || {};
   const score = data.forward_score || {};
   const provenance = data.provenance || {};
+  const competition = data.competition || {};
   const failed = recorder.status !== "PASS";
 
   $("as-of").textContent = `As of ${new Date(data.generated_at).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"})}`;
@@ -70,6 +71,24 @@ function render(data) {
   $("landing-recorder-note").textContent = `${Object.keys(recorder.symbols || {}).length} monitored symbols`;
   $("landing-evidence-count").textContent = score.status || "UNKNOWN";
   $("landing-evidence-note").textContent = provenance.status === "PASS" ? "provenance complete" : "provenance review";
+  $("landing-validation-count").textContent = competition.sample?.eligible_ex_ante ?? "—";
+  $("landing-validation-note").textContent = `${competition.oos?.policy?.event_count ?? 0} OOS events`;
+
+  $("validation-resolved").textContent = competition.sample?.resolved_usable ?? "—";
+  $("validation-eligible").textContent = competition.sample?.eligible_ex_ante ?? "—";
+  $("validation-oos-events").textContent = competition.oos?.policy?.event_count ?? "—";
+  $("validation-oos-days").textContent = `${competition.oos_days ?? "—"} calendar days`;
+  $("validation-trades").textContent = competition.oos?.policy?.trade_count ?? "—";
+  const series = [
+    ["Exnight policy", competition.oos?.policy, "sharpe"],
+    ["HOLD benchmark", competition.oos?.benchmark, "sharpe"],
+    ["Active", competition.oos?.active, "information_ratio"],
+  ];
+  $("validation-series").innerHTML = series.map(([name, item, ratio]) => `<tr><td><strong>${name}</strong></td><td>${item?.total_return == null ? "—" : `${number(item.total_return * 100, 3)}%`}</td><td>${number(item?.[ratio], 2)}</td><td>${item?.maximum_drawdown == null ? "—" : `${number(item.maximum_drawdown * 100, 3)}%`}</td></tr>`).join("");
+  $("validation-assumptions").innerHTML = `<dt>Historical costs</dt><dd>MODELED_EXECUTION</dd><dt>Slippage grid</dt><dd>${(competition.cost_grid_bps || []).join(" / ") || "—"} bps round trip</dd><dt>Withholding range</dt><dd>${(competition.withholding_range || []).join(" / ") || "—"}%</dd><dt>Interpretation</dt><dd>Zero EXIT trades made policy equal HOLD in this OOS window.</dd>`;
+  const playbook = competition.playbook || {};
+  $("playbook-status").innerHTML = `<strong>Playbook · ${esc(playbook.status || "UNKNOWN")}</strong>Non-trading selection package. Cloud data check waits for manual Bitget sign-in; published: ${playbook.published ? "yes" : "no"}.`;
+  $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(fold.fold)}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No walk-forward scorecard available.</td></tr>`;
 
   activeDate = data.signals.meta.event_date || activeDate;
   $("signal-date").innerHTML = (meta.available_dates || []).map((date) => `<option value="${esc(date)}" ${date === activeDate ? "selected" : ""}>${esc(date)}</option>`).join("");

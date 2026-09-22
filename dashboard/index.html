@@ -18,6 +18,7 @@
       <a data-route-link="signals" href="#/signals">Signals</a>
       <a data-route-link="recorder" href="#/recorder">Recorder</a>
       <a data-route-link="evidence" href="#/evidence">Evidence</a>
+      <a data-route-link="validation" href="#/validation">Validation</a>
       <span>observation / forward window</span>
     </nav>
 
@@ -68,8 +69,42 @@
             <p>Trace provenance, scoring readiness, downloadable reports, and the limits that remain visible.</p>
             <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
           </a>
+          <a class="destination-card destination-validation" data-route-link="validation" href="#/validation">
+            <span class="destination-index">04 / SCORECARD</span><span class="destination-arrow">↗</span>
+            <h3>Walk-forward validation</h3>
+            <p>See the honest OOS sample, benchmark comparison, fold results, and cost assumptions.</p>
+            <span class="destination-meta"><strong id="landing-validation-count">—</strong><span id="landing-validation-note">eligible events</span></span>
+          </a>
         </div>
       </section>
+    </section>
+
+    <section id="view-validation" class="view" data-view="validation" aria-labelledby="validation-page-title">
+      <div class="view-heading">
+        <div><p class="eyebrow">SUBPAGE / 04 · SCORECARD</p><h1 id="validation-page-title">Walk-forward validation</h1><p>The selection procedure tested on later, non-overlapping windows. This is not labelled V1 OOS.</p></div>
+        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+      </div>
+      <section class="metrics validation-metrics" aria-label="Validation sample">
+        <article class="metric"><span>Discovery study</span><strong id="validation-resolved">—</strong><small>usable resolved events</small></article>
+        <article class="metric"><span>Ex-ante eligible</span><strong id="validation-eligible">—</strong><small>knowable at decision time</small></article>
+        <article class="metric"><span>OOS events</span><strong id="validation-oos-events">—</strong><small id="validation-oos-days">non-overlapping test days</small></article>
+        <article class="metric"><span>OOS EXIT trades</span><strong id="validation-trades">—</strong><small>reported beside every metric</small></article>
+      </section>
+      <div class="two-col validation-grid">
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">OOS PERFORMANCE</p><h2>Policy, benchmark, active</h2></div><span class="tag">HONEST OOS</span></div>
+          <div class="table-wrap"><table class="validation-table"><thead><tr><th>Series</th><th>Total return</th><th>Sharpe / IR</th><th>Max drawdown</th></tr></thead><tbody id="validation-series"></tbody></table></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">ASSUMPTIONS</p><h2>What the result means</h2></div><span class="tag amber">MODELED_EXECUTION</span></div>
+          <dl id="validation-assumptions" class="details"></dl>
+          <div id="playbook-status" class="score-panel"></div>
+        </article>
+      </div>
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">FOLDS</p><h2>Frozen training and later test windows</h2></div><span class="tag">NO FOLD LEAKAGE</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Fold</th><th>Training end</th><th>Test period</th><th>Selected rung</th><th>PDR estimate</th><th>Test events</th><th>EXIT trades</th><th>Test Sharpe</th></tr></thead><tbody id="validation-folds"></tbody></table></div>
+      </article>
     </section>
 
     <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">

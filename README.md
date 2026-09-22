@@ -195,6 +195,8 @@ approve a trade.
 - `strategy/` contains the saved strategy rules. Version one is the frozen forward-test rule;
   version two contains later corrections and is kept separate.
 - `dashboard/` contains the local read-only dashboard.
+- `playbook/exnight-rToken-events/` contains the locally validated, non-trading GetAgent
+  selection package for current ex-date decisions.
 - `data/` contains source records and generated results. Large and live files are not all
   committed to Git.
 - `tests/` contains the automated test suite.
@@ -212,9 +214,10 @@ approve a trade.
 - Seventy-one otherwise usable events lack pre-decision gross-basis evidence in the saved
   record. They remain excluded rather than being repaired with later data.
 - A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
-- GetAgent skill v0.6.4 exposes dividend `ex_dividend_date`, `amount`, and `declaration_date`,
-  so the Playbook input gate passes. This workspace has no GetAgent Cloud credential, so no
-  cloud run ID or published Playbook is claimed. Exnight has not been reshaped to fit it.
+- GetAgent skill v0.6.4 exposes dividend `ex_dividend_date`, `amount`, and `declaration_date`.
+  The Playbook package passes local validation and awaits a temporary cloud data check after
+  manual Bitget sign-in. It is not published. The standard price-bar engine cannot reproduce
+  the event-time walk-forward scorecard, so no equivalent cloud backtest is claimed.
 - The project has not yet demonstrated a real Reality-token fill.
 
 Deployment notes and the operational handoff are maintained in the private server workspace,

@@ -27,6 +27,8 @@ DOWNLOAD_NAMES = {
     "health_20260922.json": "Latest scheduler health",
     "run_manifest_v1.json": "Strategy run manifest",
     "forward_score_20260922.json": "September 22 forward score",
+    "competition_scorecard.json": "Walk-forward scorecard",
+    "competition_backtest_manifest.json": "Backtest manifest",
 }
 
 
@@ -251,6 +253,8 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
     manifest = _json(data_root / "results" / "run_manifest_v1.json")
     forward = _json(data_root / "results" / "forward_score_20260922.json")
     health = _json(data_root / "results" / "health_20260922.json")
+    competition_scorecard = _json(data_root / "results" / "competition_scorecard.json") or {}
+    competition_manifest = _json(data_root / "results" / "competition_backtest_manifest.json") or {}
     recorder = recorder_summary(data_root, now=now)
     event_ids = set(signal_meta.get("event_ids", []))
     manifest_events = set((manifest or {}).get("forward_events_decided", {}))
@@ -274,6 +278,24 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         {"name": name, "label": label, "href": f"/download?file={name}"}
         for name, label in DOWNLOAD_NAMES.items() if (data_root / "results" / name).is_file()
     ]
+    oos = competition_scorecard.get("oos_concatenated_non_overlapping_folds", {})
+    competition = {
+        "status": "AVAILABLE" if competition_scorecard else "UNAVAILABLE",
+        "name": competition_scorecard.get("name"),
+        "sample": competition_scorecard.get("sample", {}),
+        "oos": oos,
+        "folds": competition_scorecard.get("folds", []),
+        "oos_days": competition_manifest.get("oos_calendar_days"),
+        "cost_grid_bps": competition_manifest.get("slippage_sensitivity_bps", []),
+        "withholding_range": [0, 15, 25, 30],
+        "modeled_execution": True,
+        "playbook": {
+            "status": "LOCAL_VALIDATION_PASSED",
+            "kind": "NON_TRADING_SELECTION_BASKET",
+            "cloud_status": "AWAITING_MANUAL_SIGN_IN",
+            "published": False,
+        },
+    }
     return {
         "project": "EXNIGHT", "mode": "READ_ONLY", "generated_at": _iso(now),
         "observation": {"status": "ACTIVE", "event_date": signal_meta.get("event_date"),
@@ -281,7 +303,8 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "recorder": recorder,
         "depth": (health or {}).get("depth", {"status": "UNKNOWN", "message": "No health report yet."}),
         "signals": {"meta": signal_meta, "rows": [_signal_row(row) for row in selected]},
-        "provenance": provenance, "forward_score": score, "downloads": downloads,
+        "provenance": provenance, "forward_score": score, "competition": competition,
+        "downloads": downloads,
         "limits": [
             "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
             "Current order books are observed-now evidence, not historical event-time fills.",
