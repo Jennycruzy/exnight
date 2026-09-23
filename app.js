@@ -287,4 +287,5 @@ $("decision-form").addEventListener("submit", (event) => {
 window.addEventListener("hashchange", () => updateRoute());
 updateRoute({scroll: false});
 refresh();
-setInterval(refresh, 30000);
+// The public Pages site is a fixed snapshot; only the local dashboard polls for new data.
+if (!STATIC_SITE) setInterval(refresh, 30000);
