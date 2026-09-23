@@ -1,0 +1,16 @@
+{
+ "code": "00000",
+ "msg": "dry-run; no request sent",
+ "data": {
+  "wouldSend": {
+   "category": "SPOT",
+   "symbol": "RTOWNUSDT",
+   "side": "buy",
+   "orderType": "limit",
+   "qty": "0.2783",
+   "price": "36.29",
+   "timeInForce": "ioc",
+   "clientOid": "exnight-20260923182548-58464986"
+  }
+ }
+}

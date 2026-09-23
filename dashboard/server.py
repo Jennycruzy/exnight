@@ -377,8 +377,8 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "limits": [
             "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
             "Current order books are observed-now evidence, not historical event-time fills.",
-            "The current September 22 symbols have ticker-only liquidity rather than a two-sided public book.",
-            "A mainnet order has not been placed; this dashboard exposes no execution controls.",
+            "Most Reality tokens show only a live ticker quote, not a two-sided public book; one $10 rTOWN buy filled in full at that quote, but larger sizes are unproven.",
+            "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date); this dashboard exposes no execution controls.",
         ],
     }
 

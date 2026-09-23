@@ -64,5 +64,6 @@ $1k/$5k/$25k are unproven.
 - The out-of-sample test has no EXIT trades, so there is no active-alpha claim.
 - The ex-ante sample is small (56 events) and concentrated in rSATA.
 - Historical order books do not exist, so historical costs are modeled.
-- No real Reality-token fill has been demonstrated.
+- One real fill so far: $10 of rTOWN on 23 September, filled in full on a token with no public order
+  book, at the quote, with a 10 bps fee. Larger sizes and the sell leg are untested.
 - Bitget's dividend-eligibility snapshot time is unpublished.

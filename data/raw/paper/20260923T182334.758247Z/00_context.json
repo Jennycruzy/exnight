@@ -1,0 +1,23 @@
+{
+ "symbol": "RTOWNUSDT",
+ "base_coin": "rTOWN",
+ "side": "buy",
+ "notional_requested": 10.1,
+ "actual_notional": 10.099507,
+ "band": 0.005,
+ "session": "regular",
+ "price": "36.29",
+ "qty": "0.2783",
+ "resting_in_band": 172.0,
+ "liquidity_source": "ticker_only",
+ "time_in_force": "ioc",
+ "execution_adapter": "bitget-agent-hub",
+ "api_endpoint": "/api/v3/trade/place-order",
+ "time_in_force_sent": true,
+ "agent_hub_bin": "/home/ubuntu/.nvm/versions/node/v24.21.0/bin/bgc",
+ "mode": "dry-run",
+ "taker_fee": "0.001",
+ "maker_fee": "0.001",
+ "note": "V3 forward probe: one real fill on a ticker-only rToken before the rTOWN cutoff",
+ "ticker_only_allowed": false
+}

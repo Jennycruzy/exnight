@@ -15,6 +15,13 @@ generic demo environment does not accept Reality symbols, so --live-paper refuse
 Real orders require --live plus an exact confirmation string containing the computed quantity.
 Quantity is derived from the visible book: never more than the resting size inside the
 ±0.5% band at sample time, so the order is one the book could actually fill.
+
+Most Reality tokens show an empty public book while the ticker still carries a live best bid
+and ask with sizes (routed liquidity). Live orders against such a ticker-only quote are
+refused unless --allow-ticker-only is given, which exists to test whether routed liquidity
+actually fills; the order is still capped at the displayed best-quote size. When
+BITGET_READ_API_KEY / _SECRET_KEY / _PASSPHRASE are set (a read-only key with UTA management
+permission), the balance preflight uses that key, because a UTA trade key cannot read balances.
 """
 from __future__ import annotations
 
@@ -176,6 +183,8 @@ def main() -> None:
     ap.add_argument("--confirm-live", default="", help="must equal '<symbol> <side> <computed-quantity>' for --live")
     ap.add_argument("--max-live-notional", type=float, default=MAX_LIVE_NOTIONAL_USD,
                     help="hard cap for one real order (default: $100)")
+    ap.add_argument("--allow-ticker-only", action="store_true",
+                    help="permit a live order when the public book is empty and only the ticker quote is live")
     ap.add_argument("--note", default="")
     args = ap.parse_args()
 
@@ -209,7 +218,7 @@ def main() -> None:
     )
     if args.live and args.confirm_live != f"{args.symbol} {args.side} {qty}":
         raise SystemExit(f"refusing real order; repeat with --confirm-live '{args.symbol} {args.side} {qty}'")
-    if args.live and liquidity_source != "public_book":
+    if args.live and liquidity_source != "public_book" and not args.allow_ticker_only:
         (run / "03_liquidity_refused.json").write_text(json.dumps(
             dict(reason="live orders require a two-sided public order book", source=liquidity_source), indent=1))
         raise SystemExit("refusing live order: current quote is ticker-only, not verified public-book liquidity")
@@ -220,7 +229,8 @@ def main() -> None:
                execution_adapter="bitget-agent-hub", api_endpoint="/api/v3/trade/place-order",
                time_in_force_sent=True, agent_hub_bin=env.get("AGENT_HUB_BIN", "bgc"),
                mode="paper-trading" if args.live_paper else ("live" if args.live else "dry-run"),
-               taker_fee=str(live.taker_fee), maker_fee=str(live.maker_fee), note=args.note)
+               taker_fee=str(live.taker_fee), maker_fee=str(live.maker_fee), note=args.note,
+               ticker_only_allowed=bool(args.allow_ticker_only))
     (run / "00_context.json").write_text(json.dumps(ctx, indent=1))
     (run / "01_book_pre.json").write_text(json.dumps(pre))
 
@@ -245,7 +255,7 @@ def main() -> None:
                 dict(initial_price=price, initial_qty=qty, latest_price=latest_price,
                      latest_qty=latest_qty, latest_source=latest_source), indent=1))
             raise SystemExit("quote changed after dry-run; refusing to submit")
-        if latest_source != "public_book":
+        if latest_source != "public_book" and not args.allow_ticker_only:
             (run / "03_liquidity_refused.json").write_text(json.dumps(
                 dict(reason="live orders require a two-sided public order book", source=latest_source), indent=1))
             raise SystemExit("refusing live order: recheck is ticker-only, not verified public-book liquidity")
@@ -253,12 +263,18 @@ def main() -> None:
             env["BITGET_API_KEY"], env["BITGET_SECRET_KEY"], env["BITGET_PASSPHRASE"],
             executable=env.get("AGENT_HUB_BIN", "bgc"), environment=env,
         )
+        balance_reader = agent_hub
+        if all(env.get(k) for k in ("BITGET_READ_API_KEY", "BITGET_READ_SECRET_KEY", "BITGET_READ_PASSPHRASE")):
+            balance_reader = AgentHubClient(
+                env["BITGET_READ_API_KEY"], env["BITGET_READ_SECRET_KEY"], env["BITGET_READ_PASSPHRASE"],
+                executable=env.get("AGENT_HUB_BIN", "bgc"), environment=env,
+            )
         balance_coin = "USDT" if args.side == "buy" else live.base_coin
         required = Decimal(price) * Decimal(qty)
         if args.side == "buy":
             required *= 1 + max(live.taker_fee, Decimal("0"))
         try:
-            available = Decimal(agent_hub.available(balance_coin))
+            available = Decimal(balance_reader.available(balance_coin))
         except (AgentHubError, ValueError, ArithmeticError) as exc:
             (run / "03_balance_error.json").write_text(_error_text(exc) + "\n")
             raise SystemExit(f"unable to verify {balance_coin} balance; refusing live order: {_error_text(exc)}") from exc

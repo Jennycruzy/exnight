@@ -1,0 +1,8 @@
+{
+ "endpoint": "POST /api/v3/trade/place-order",
+ "requestTime": "2026-09-23T18:25:49.760Z",
+ "data": {
+  "orderId": "1486721505797718016",
+  "clientOid": "exnight-20260923182548-58464986"
+ }
+}

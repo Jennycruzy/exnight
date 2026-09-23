@@ -1,0 +1,37 @@
+{
+ "endpoint": "GET /api/v3/trade/order-info",
+ "requestTime": "2026-09-23T18:25:50.244Z",
+ "data": {
+  "orderId": "1486721505797718016",
+  "clientOid": "exnight-20260923182548-58464986",
+  "category": "SPOT",
+  "symbol": "RTOWNUSDT",
+  "orderType": "limit",
+  "side": "buy",
+  "price": "36.29",
+  "qty": "0.2783",
+  "amount": "10.1",
+  "cumExecQty": "0.2783",
+  "cumExecValue": "10.097837",
+  "avgPrice": "36.28",
+  "timeInForce": "ioc",
+  "orderStatus": "filled",
+  "posSide": "",
+  "tradeSide": "",
+  "holdMode": "",
+  "reduceOnly": "NO",
+  "feeDetail": [
+   {
+    "feeCoin": "USDT",
+    "fee": "0.01009783"
+   }
+  ],
+  "createdTime": "1790187949609",
+  "updatedTime": "1790187950023",
+  "cancelReason": "",
+  "execType": "normal",
+  "stpMode": "none",
+  "marginMode": "crossed",
+  "delegateType": "normal"
+ }
+}

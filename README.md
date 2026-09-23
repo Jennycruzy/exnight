@@ -244,7 +244,9 @@ approve a trade.
 - Seventy-one otherwise usable events lack pre-decision gross-basis evidence in the saved
   record. They remain excluded from the frozen scorecard; a separate
   [source audit](docs/dividend_provenance_audit.md) is checking dated issuer evidence.
-- A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
+- A ticker quote is not the same as executable liquidity. One $10 order on a token with an empty
+  public book filled in full at the quote ([live fill](docs/live_fill_20260923.md)); capacity at
+  $1k, $5k and $25k is still unproven.
 - **No GetAgent Playbook is published, on purpose.** Checked against `@bitget-ai/getagent-skill`
   0.6.4 on 23 September: a normal trading Playbook can now trade spot rTokens such as
   `RAAPLUSDT`, and its dividend data carries ex-date, amount and declaration date. So the
@@ -254,7 +256,9 @@ approve a trade.
   bar-based backtest would count the ex-date price drop but not the dividend a holder
   receives. That makes stepping out look better than it is. Publishing either would
   misrepresent the result.
-- The project has not yet demonstrated a real Reality-token fill.
+- Only one real fill exists: a $10 buy of rTOWN on 23 September, held through the ex-date as V3
+  recommends. It filled at 36.28 against a 36.28/36.29 quote with a 10 bps fee. The sell leg and
+  larger sizes are untested.
 
 Deployment notes and the operational handoff are maintained in the private server workspace,
 outside this repository.
