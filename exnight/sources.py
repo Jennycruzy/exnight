@@ -21,6 +21,9 @@ class Source:
     published: str  # date on the page, as printed
     sha256: str
     note: str
+    # Earliest time we can prove the page existed: our fetch, or the commit that first saved
+    # it. Displayed page dates are not publication times (see dividends_89_2026_09_23).
+    available_by: str | None = None
 
     @property
     def path(self) -> Path:
@@ -47,6 +50,18 @@ SOURCES: dict[str, Source] = {
             sha256="801866c5b0ce01e3a44701798c57eda22e12afa438e6dc83bad80c3d71d756d2",
             note="Dividend Distribution Completed for 63 Stocks Including rMU, rQQQ, and rTSM. "
                  "Table of ticker, ex-dividend date, payment date, dividend per share; 30% withholding.",
+            available_by="2026-09-16T11:09:53+00:00",
+        ),
+        Source(
+            key="dividends_89_2026_09_23",
+            url="https://www.bitget.com/support/articles/12560603893610",
+            filename="bitget_support_12560603893610_dividends_89_fetched_2026-09-23.html",
+            published="2026-07-24 01:42",
+            sha256="f5bb54b3746e9c6c6b42760230b9eef48ad7ee559fb8dd0d9426b95dff5d01e3",
+            note="Dividend Distribution Completed for 89 Stocks Including rAAPL, rMS, and rASML. Same 30% "
+                 "withholding rule and table layout (dates without year). The page displays 2026-07-24 but "
+                 "lists payment dates up to Aug 25, so the displayed date is not its publication time.",
+            available_by="2026-09-23T12:34:33+00:00",
         ),
         Source(
             key="weekend_trading_2026_07_17",

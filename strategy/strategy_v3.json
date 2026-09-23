@@ -1,0 +1,49 @@
+{
+ "rule_id": "exnight-strategy-v3",
+ "parent_rule": "strategy_v1.json",
+ "registered_at_utc": "2026-09-23T12:40:00+00:00",
+ "registration_note": "procedure committed before any V3 estimate, decision or diagnostic was computed; V1, V2 and the competition manifest are unchanged",
+ "designed_after": "V1 walk-forward (0 EXIT) and the 2026-09-23 dividend source audit were seen; every historical V3 figure is therefore POST_HOC_DIAGNOSTIC, never OOS evidence. Only events with ex-date after registered_at_utc count as V3 validation.",
+ "thesis": "Reality tokens reprice by about the gross dividend while the holder may retain only the net. EXIT is worth it only when the documented retained amount plus costs is below the conservative expected drop.",
+ "applies_to": "cash dividend events on Bitget Reality spot rTokens with exchange_ex_date after registered_at_utc",
+ "changes_from_v1": [
+  "entitlement: per-event withholding range from pre-decision first-party evidence (tiers below) instead of one global [0, 0.30] range",
+  "price side: expected drop may not exceed the gross dividend (lower bound capped at 1.0 x gross); V3 takes no credit for overshoot",
+  "estimate: refit at every decision by the registered expanding-window procedure instead of one frozen coefficient",
+  "reporting: every event carries its break-even gross yield"
+ ],
+ "unchanged_from_v1": [
+  "z = 2.0 on the slope standard error",
+  "gross basis: GROSS with basis tiers 1, 2 or 3 (exnight.basis); anything else is NO_SIGNAL",
+  "sell before the 20:00 ET cutoff in the after_hours session; buy back in the overnight session",
+  "costs: live takerFeeRate on both legs plus the per-share depth walk of the latest fresh book; NO_SIGNAL when depth is missing or stale",
+  "notionals 1000 / 5000 / 25000 USD",
+  "BUY suppressed while Bitget's eligibility snapshot time is unpublished"
+ ],
+ "z": 2.0,
+ "rung": "premarket_0400",
+ "rung_rationale": "fixed, not selected: V1's rung; the 2026-09-23 audit showed data-driven selection moving to open_0930, where market-open moves dominate the dividend",
+ "lower_bound_cap": 1.0,
+ "estimate_procedure": {
+  "estimator": "exnight.analysis.slope_pdr (OLS slope of return on gross yield, OLS standard error), rung premarket_0400",
+  "sample": "usable resolved events (GROSS, basis tier 1-3) whose premarket_0400 outcome was observable before the decision and whose gross was verifiable at the time the estimate is used",
+  "forward": "all such events in the resolved ledger and event results with ex-date before the decision date; gross verification for these is in hand before any forward decision",
+  "historical_diagnostic": "only events whose gross evidence was published before their own decision: competition_knowledge_time eligible_ex_ante == YES, plus MATCHED_PRE_DECISION_PRIMARY rows of data/results/dividend_provenance_candidates_20260923.csv",
+  "min_events": 15
+ },
+ "entitlement_tiers": {
+  "E1_DOCUMENTED_PRECEDENT": "the same symbol appears in a registered Bitget distribution notice that states the 30% withholding rule, the notice's listed dividend per share equals that past event's resolved gross (relative tolerance 0.005), and the notice was available before the decision -> withholding exactly 0.30",
+  "E0_RANGE": "otherwise withholding in [0, 0.30], as in V1",
+  "availability_primary": "the time we fetched the notice (registered in exnight.sources)",
+  "availability_content_bound": "sensitivity only: the later of the page's displayed date and the last payment date the notice lists; the 89-stock page displays 2026-07-24 while listing August payments, so displayed dates are not publication times"
+ },
+ "decision": {
+  "lower_drop": "min(pdr_hat - z*se, 1.0) * gross",
+  "EXIT": "lower_drop - gross*(1 - w_low) - cost_per_share > 0 (wins even if the holder keeps the most the evidence allows)",
+  "HOLD": "lower_drop - gross*(1 - w_high) - cost_per_share <= 0 (loses even if the holder keeps the least)",
+  "NO_SIGNAL": "otherwise ENTITLEMENT_UNCERTAIN, or any unresolved input",
+  "breakeven_yield": "cost_fraction / (min(pdr_hat - z*se, 1.0) - (1 - w_low)); infinite when the denominator is not positive"
+ },
+ "historical_diagnostic_conventions": "same folds, T0/T1, 25 bps modeled slippage, fees, notional and concurrency as data/results/competition_backtest_manifest.json; labelled POST_HOC_DIAGNOSTIC and MODELED_EXECUTION",
+ "amendment_policy": "this file is never edited; a changed rule is strategy_v4.json"
+}
