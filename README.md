@@ -37,8 +37,8 @@ execution-aware alpha.
 rTokens, deciding **before each ex-date** whether to stay in or step out for the night.
 
 For each event and trade size, Exnight gives `EXIT`, `HOLD` or `NO_SIGNAL`, with the reason
-and the evidence behind it. The dashboard's home page lists upcoming high-yield ex-dates with
-the decision frozen before each sell cutoff, then the real outcome once the event is scored.
+and the evidence behind it. The dashboard's Upcoming page lists high-yield ex-dates with the
+decision frozen before each sell cutoff, then the real outcome once the event is scored.
 Its Decisions page looks up any evaluated token (`rAPH`, `RAPHUSDT` or `APH`). Exnight never
 says BUY, because Bitget has not published when it takes the dividend-eligibility snapshot.
 

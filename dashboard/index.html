@@ -15,6 +15,7 @@
 
     <nav class="section-nav" aria-label="Dashboard sections">
       <a class="active" data-route-link="home" href="#/" aria-current="page">Home</a>
+      <a data-route-link="upcoming" href="#/upcoming">Upcoming</a>
       <a data-route-link="signals" href="#/signals">Signals</a>
       <a data-route-link="recorder" href="#/recorder">Recorder</a>
       <a data-route-link="evidence" href="#/evidence">Evidence</a>
@@ -39,28 +40,6 @@
         <p id="comparison-note" class="source"></p>
       </section>
 
-      <section class="panel" aria-labelledby="upcoming-title">
-        <div class="panel-heading"><div><p class="eyebrow">FORWARD TEST / STRATEGY V3</p><h2 id="upcoming-title">Upcoming high-yield ex-dates</h2></div><span id="upcoming-tag" class="tag">—</span></div>
-        <p id="upcoming-note" class="source"></p>
-        <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Dividend</th><th>Decision before cutoff</th><th>Why</th><th>Outcome</th></tr></thead><tbody id="upcoming-body"></tbody></table></div>
-      </section>
-
-      <section class="hero">
-        <div>
-          <p class="eyebrow">LAST RECORDED WINDOW (STRATEGY V1) / <span id="event-date">—</span></p>
-          <h2 id="headline">Loading evidence state…</h2>
-          <p id="hero-copy" class="hero-copy">Loading the saved forward result and recorder audit.</p>
-        </div>
-        <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Loading evidence</small></div></div>
-      </section>
-
-      <section class="metrics" aria-label="Key metrics">
-        <article class="metric"><span>Samples collected</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across monitored symbols</small></article>
-        <article class="metric"><span>Forward events</span><strong id="metric-events">—</strong><small id="metric-events-note">Frozen strategy v1</small></article>
-        <article class="metric"><span>Saved signal mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Selected ex-date</small></article>
-        <article class="metric"><span>Public book depth</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Recorded forward window</small></article>
-      </section>
-
       <section class="landing-map" aria-labelledby="map-title">
         <div class="landing-map-heading">
           <div>
@@ -71,26 +50,32 @@
           <div class="landing-principle"><span class="principle-mark">✦</span><div><strong>Decision with evidence</strong><small>Every verdict shows the reason and market data behind it.</small></div></div>
         </div>
         <div class="destination-grid">
-          <a class="destination-card destination-primary" data-route-link="signals" href="#/signals">
-            <span class="destination-index">01 / DECISIONS</span><span class="destination-arrow">↗</span>
+          <a class="destination-card destination-primary" data-route-link="upcoming" href="#/upcoming">
+            <span class="destination-index">01 / UPCOMING</span><span class="destination-arrow">↗</span>
+            <h3>Upcoming ex-dates</h3>
+            <p>High-yield dividends ahead, with the decision frozen before each cutoff and the real outcome once scored.</p>
+            <span class="destination-meta"><strong id="landing-upcoming-count">—</strong><span id="landing-upcoming-note">events scheduled</span></span>
+          </a>
+          <a class="destination-card" data-route-link="signals" href="#/signals">
+            <span class="destination-index">02 / DECISIONS</span><span class="destination-arrow">↗</span>
             <h3>Frozen forward signals</h3>
             <p>Inspect each event, verdict, edge, cost, and book source without losing the arithmetic behind it.</p>
             <span class="destination-meta"><strong id="landing-signal-count">—</strong><span id="landing-signal-note">rows to inspect</span></span>
           </a>
           <a class="destination-card destination-recorder" data-route-link="recorder" href="#/recorder">
-            <span class="destination-index">02 / COLLECTION</span><span class="destination-arrow">↗</span>
+            <span class="destination-index">03 / COLLECTION</span><span class="destination-arrow">↗</span>
             <h3>Recorder pulse</h3>
             <p>Follow the observed price series and see where public-book coverage is present or missing.</p>
             <span class="destination-meta"><strong id="landing-recorder-count">—</strong><span id="landing-recorder-note">samples across symbols</span></span>
           </a>
           <a class="destination-card destination-evidence" data-route-link="evidence" href="#/evidence">
-            <span class="destination-index">03 / VALIDATION</span><span class="destination-arrow">↗</span>
+            <span class="destination-index">04 / EVIDENCE</span><span class="destination-arrow">↗</span>
             <h3>Evidence chain</h3>
             <p>Trace provenance, scoring readiness, downloadable reports, and the limits that remain visible.</p>
             <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
           </a>
           <a class="destination-card destination-validation" data-route-link="validation" href="#/validation">
-            <span class="destination-index">04 / SCORECARD</span><span class="destination-arrow">↗</span>
+            <span class="destination-index">05 / SCORECARD</span><span class="destination-arrow">↗</span>
             <h3>Walk-forward validation</h3>
             <p>See the honest OOS sample, benchmark comparison, fold results, and cost assumptions.</p>
             <span class="destination-meta"><strong id="landing-validation-count">—</strong><span id="landing-validation-note">eligible events</span></span>
@@ -99,9 +84,22 @@
       </section>
     </section>
 
+    <section id="view-upcoming" class="view" data-view="upcoming" aria-labelledby="upcoming-page-title">
+      <div class="view-heading">
+        <div><p class="eyebrow">SUBPAGE / 01 · UPCOMING</p><h1 id="upcoming-page-title">Upcoming high-yield ex-dates</h1><p>Strategy V3's decision for each event, frozen before the 20:00 ET sell cutoff, and the real outcome once the event is scored.</p></div>
+        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+      </div>
+      <section class="panel" aria-labelledby="upcoming-title">
+        <div class="panel-heading"><div><p class="eyebrow">FORWARD TEST / STRATEGY V3</p><h2 id="upcoming-title">Decisions and outcomes</h2></div><span id="upcoming-tag" class="tag">—</span></div>
+        <p id="upcoming-note" class="source"></p>
+        <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Dividend</th><th>Decision before cutoff</th><th>Why</th><th>Outcome</th></tr></thead><tbody id="upcoming-body"></tbody></table></div>
+      </section>
+
+    </section>
+
     <section id="view-validation" class="view" data-view="validation" aria-labelledby="validation-page-title">
       <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 04 · SCORECARD</p><h1 id="validation-page-title">Walk-forward validation</h1><p>The selection procedure tested on later, non-overlapping windows. This is not labelled V1 OOS.</p></div>
+        <div><p class="eyebrow">SUBPAGE / 05 · SCORECARD</p><h1 id="validation-page-title">Walk-forward validation</h1><p>The selection procedure tested on later, non-overlapping windows. This is not labelled V1 OOS.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
       <section class="metrics validation-metrics" aria-label="Validation sample">
@@ -129,7 +127,7 @@
 
     <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">
       <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 01 · DECISIONS</p><h1 id="signals-page-title">Frozen forward signals</h1><p>Open each row for the event arithmetic and the evidence sources used by Strategy v1.</p></div>
+        <div><p class="eyebrow">SUBPAGE / 02 · DECISIONS</p><h1 id="signals-page-title">Frozen forward signals</h1><p>Open each row for the event arithmetic and the evidence sources used by Strategy v1.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
       <section class="decision-finder" aria-labelledby="decision-finder-title">
@@ -157,9 +155,25 @@
 
     <section id="view-recorder" class="view" data-view="recorder" aria-labelledby="recorder-page-title">
       <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 02 · COLLECTION</p><h1 id="recorder-page-title">Recorder pulse</h1><p>See the saved September 22 observation and its public-book coverage.</p></div>
+        <div><p class="eyebrow">SUBPAGE / 03 · COLLECTION</p><h1 id="recorder-page-title">Recorder pulse</h1><p>See the saved September 22 observation and its public-book coverage.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">LAST RECORDED WINDOW (STRATEGY V1) / <span id="event-date">—</span></p>
+          <h2 id="headline">Loading evidence state…</h2>
+          <p id="hero-copy" class="hero-copy">Loading the saved forward result and recorder audit.</p>
+        </div>
+        <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Loading evidence</small></div></div>
+      </section>
+
+      <section class="metrics" aria-label="Key metrics">
+        <article class="metric"><span>Samples collected</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across monitored symbols</small></article>
+        <article class="metric"><span>Forward events</span><strong id="metric-events">—</strong><small id="metric-events-note">Frozen strategy v1</small></article>
+        <article class="metric"><span>Saved signal mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Selected ex-date</small></article>
+        <article class="metric"><span>Public book depth</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Recorded forward window</small></article>
+      </section>
+
       <section class="panel chart-panel" id="pulse">
         <div class="panel-heading"><div><p class="eyebrow">RECORDER PULSE</p><h2>Observed price and public-book coverage</h2></div><label class="select-label">Chart symbol <select id="chart-symbol" aria-label="Chart symbol"></select></label></div>
         <div id="recorder-chart" class="recorder-chart" role="img" aria-label="Recorder price chart"><span class="empty">Loading recorder series…</span></div>
@@ -174,7 +188,7 @@
 
     <section id="view-evidence" class="view" data-view="evidence" aria-labelledby="evidence-page-title">
       <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 03 · EVIDENCE</p><h1 id="evidence-page-title">Evidence chain</h1><p>See what the recorder proved, what the forward score could resolve, and which files support each result.</p></div>
+        <div><p class="eyebrow">SUBPAGE / 04 · EVIDENCE</p><h1 id="evidence-page-title">Evidence chain</h1><p>See what the recorder proved, what the forward score could resolve, and which files support each result.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
       <div class="two-col evidence-grid">

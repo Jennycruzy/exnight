@@ -8,7 +8,7 @@ let activeFilter = "ALL";
 let activeSymbol = "ALL";
 let activeDate = null;
 let chartSymbol = null;
-const routes = new Set(["home", "signals", "recorder", "evidence", "validation"]);
+const routes = new Set(["home", "upcoming", "signals", "recorder", "evidence", "validation"]);
 
 function currentRoute() {
   const route = window.location.hash.replace(/^#\/?/, "").split("/")[0].toLowerCase();
@@ -69,9 +69,12 @@ function renderUpcoming(v3) {
   if (v3.status !== "AVAILABLE") {
     $("upcoming-body").innerHTML = `<tr><td colspan="6" class="empty">No forward schedule available.</td></tr>`;
     $("upcoming-tag").textContent = "UNAVAILABLE";
+    $("landing-upcoming-count").textContent = "—";
     return;
   }
   $("upcoming-tag").textContent = `${v3.scored} OF ${v3.events.length} SCORED`;
+  $("landing-upcoming-count").textContent = v3.events.length;
+  $("landing-upcoming-note").textContent = `events to ${v3.events[v3.events.length - 1]?.ex_date || "—"} · ${v3.scored} scored`;
   $("upcoming-note").textContent = `Every event with a verified dividend worth at least ${number(v3.min_gross_yield_bp, 1)} bps of the price, the smallest size where stepping out could ever pay. `
     + `Each decision is frozen before the 20:00 ET sell cutoff. V3 currently expects a drop of at least ${number(v3.lower_ratio, 2)} of the dividend, `
     + "below the 0.70 a holder keeps after 30% withholding, so it holds unless that estimate tightens.";
@@ -131,8 +134,11 @@ function render(data) {
   $("landing-signal-note").textContent = `${meta.events || rows.length || 0} forward events`;
   $("landing-recorder-count").textContent = (recorder.sample_count || 0).toLocaleString();
   $("landing-recorder-note").textContent = `${Object.keys(recorder.symbols || {}).length} monitored symbols`;
-  $("landing-evidence-count").textContent = score.status || "UNKNOWN";
-  $("landing-evidence-note").textContent = provenance.status === "PASS" ? "provenance complete" : "provenance review";
+  const scoredTokens = score.report?.results || [];
+  $("landing-evidence-count").textContent = scoredTokens.length
+    ? `${scoredTokens.filter((row) => row.complete).length} of ${scoredTokens.length}` : (score.status || "—");
+  $("landing-evidence-note").textContent = scoredTokens.length
+    ? `22 Sep tokens scored · recorder ${recorder.status === "PASS" ? "passed" : "needs attention"}` : "forward score";
   $("landing-validation-count").textContent = competition.sample?.eligible_ex_ante ?? "—";
   $("landing-validation-note").textContent = `${competition.oos?.policy?.event_count ?? 0} OOS events`;
 
