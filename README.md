@@ -79,7 +79,8 @@ Four separate pieces of evidence, never mixed:
 
 Historical trading costs are modeled, not observed, and labelled **MODELED_EXECUTION**
 everywhere. Real execution capacity is reported separately: the recorded Reality tokens had
-empty public order books, so fills at $1k, $5k and $25k are unproven.
+empty public order books. One $10 order filled in full at the quote
+([live fill](docs/live_fill_20260923.md)); fills at $1k, $5k and $25k are unproven.
 
 ## Progress and deliverables
 

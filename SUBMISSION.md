@@ -48,7 +48,7 @@ dividend-eligibility snapshot time.
 
 Historical costs are modeled, and labelled `MODELED_EXECUTION` everywhere. Forward capacity is
 reported separately: the recorded Reality pairs had empty public order books, so fills at
-$1k/$5k/$25k are unproven.
+$1k/$5k/$25k are unproven; one $10 order filled in full at the quote.
 
 ## Progress and deliverables
 

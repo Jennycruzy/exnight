@@ -163,16 +163,17 @@ the standard UTA surface:
 |---|---|
 | Reality placement endpoint | Agent Hub `bgc order --action place` → `POST /api/v3/trade/place-order` with `category=SPOT`, symbol, side, limit price, quantity and time-in-force. Bitget's 11 August announcement says Reality order placement/cancellation is fully open without whitelist registration. |
 | Order lifecycle | Agent Hub `order --action detail` → `GET /api/v3/trade/order-info`; `order --action cancel` → `POST /api/v3/trade/cancel-order`. |
-| Whitelist boundary | Reality order-book/depth and platform-fills endpoints remain whitelist-gated. The live path therefore still requires a fresh two-sided public book; it does not invent liquidity from ticker data. |
+| Whitelist boundary | Reality order-book/depth and platform-fills endpoints remain whitelist-gated. By default the live path requires a fresh two-sided public book. `--allow-ticker-only` is an explicit opt-in that sizes against the ticker's best quote instead; it was added on 23 September to test whether routed liquidity fills. |
 | Demo (`--live-paper`) | Refused explicitly. Bitget's generic demo environment rejects Reality symbols, so EXNIGHT does not pretend that a demo response proves a live rToken path. |
-| Configured private key | Read-only Agent Hub account call against mainnet returned `40099 exchange environment is incorrect`; the same key authenticated only when the documented `paptrading: 1` demo header was added. It is therefore not a live mainnet trading key. |
+| Configured private key | Until 20 September the configured key was demo-only (`40099 exchange environment is incorrect` on mainnet). On 23 September a mainnet key was configured. `GET /api/v3/account/info` reports it as `read_and_write` with `uta_trade` only; it cannot read balances (`40014`, needs UTA management). A second read-only key with `uta_mgt` (`BITGET_READ_*`) is used for the balance preflight. Neither key has withdrawal permission. |
 | Dry-run | A public-data dry run for `RAVGOUSDT` at requested $20 recorded a precision-valid payload without credentials or order submission. A $5 attempt was correctly refused below the $10 exchange minimum. |
-| Live safeguards | Live mode requires a two-sided public book, final book recheck, available-balance preflight, the $100 one-order cap and the exact `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'` string. |
+| Live safeguards | Live mode requires a two-sided public book (unless `--allow-ticker-only`), final quote recheck, available-balance preflight, the $100 one-order cap and the exact `--live --confirm-live '<SYMBOL> <SIDE> <QUANTITY>'` string. |
 
-No live order has been submitted. A real fill still requires a funded live UTA trade credential
-(or authorized Agentic account), displayed liquidity, and the user's explicit confirmation at
-the moment of submission. A Reality whitelist is not required for the order-placement route,
-but is still required for Reality depth/fills data.
+**One live order has been submitted (23 September 2026).** The operator ran the command in their
+own terminal: buy 0.2783 RTOWNUSDT, IOC limit 36.29, with `--allow-ticker-only`. It **filled in
+full at 36.28** (value 10.097837 USDT, fee 0.01009783 USDT) against a 36.28/36.29 ticker quote,
+with an empty public book. See [the live-fill note](live_fill_20260923.md). No Reality whitelist
+was needed for placement. Reality depth and fills data remain whitelist-gated.
 
 ## Errata for frozen documents — 2026-09-23
 
