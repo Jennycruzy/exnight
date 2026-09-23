@@ -25,6 +25,7 @@ ET = ZoneInfo("America/New_York")  # Bitget labels the zone "EST"; OBSERVED to m
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "results" / "depth_samples.csv"
 RAW = ROOT / "data" / "raw" / "depth"
+SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
 BANDS = (0.005, 0.02)
 NOTIONALS = (1_000, 5_000, 25_000)
 
@@ -144,6 +145,14 @@ def sample_book(api: BitgetPublic, sym: str, ticker: dict | None) -> tuple[dict,
     return r, ob
 
 
+def sampled_symbols(schedule: Path = SCHEDULE) -> list[str]:
+    """Study-ledger symbols plus every symbol in the forward schedule, if one exists."""
+    symbols = {e.spot_symbol for e in read_ledger() if e.spot_symbol}
+    if schedule.exists():
+        symbols |= {s for g in json.loads(schedule.read_text())["groups"] for s in g["symbols"]}
+    return sorted(symbols)
+
+
 def main():
     api = BitgetPublic()
     now = dt.datetime.now(dt.UTC); et = now.astimezone(ET)
@@ -155,7 +164,7 @@ def main():
     tickers = {t["symbol"]: t for t in api.tickers()}
     (run_dir / "tickers.json").write_text(json.dumps(tickers))
     rows = []
-    for sym in sorted({e.spot_symbol for e in read_ledger() if e.spot_symbol}):
+    for sym in sampled_symbols():
         r, ob = sample_book(api, sym, tickers.get(sym))
         (run_dir / f"{sym}.json").write_text(json.dumps(ob))
         rows.append(dict(ts=now.isoformat(), et=et.strftime("%Y-%m-%d %H:%M"), session=session, **r))

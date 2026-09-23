@@ -313,7 +313,7 @@ def historical() -> dict:
 
 # --- forward ------------------------------------------------------------------------------
 
-def forward(now: dt.datetime | None = None, pending_ledger: Path = PENDING_LEDGER) -> pd.DataFrame:
+def forward(now: dt.datetime | None = None, pending_ledger: Path = PENDING_LEDGER, tag: str = "") -> pd.DataFrame:
     """Ex-ante V3 decisions for every pending cash dividend in `pending_ledger`.
 
     The estimate and notice precedents come from the resolved study ledger; pending events
@@ -372,9 +372,9 @@ def forward(now: dt.datetime | None = None, pending_ledger: Path = PENDING_LEDGE
                                 breakeven_yield_bp=1e4 * d["breakeven_yield"] if math.isfinite(d["breakeven_yield"]) else None)
             rows.append(row)
     frame = pd.DataFrame(rows)
-    out = RESULTS / "signals_v3.csv"
+    out = RESULTS / f"signals_v3{tag}.csv"
     frame.to_csv(out, index=False)
-    write_run_manifest(rule, rule_path=RULE, inputs=[LEDGER, pending_ledger, EVENT_RESULTS], outputs=[out], tag="_v3",
+    write_run_manifest(rule, rule_path=RULE, inputs=[LEDGER, pending_ledger, EVENT_RESULTS], outputs=[out], tag=f"_v3{tag}",
                        forward_signals=frame)
     return frame
 
@@ -384,6 +384,7 @@ def main() -> None:
     parser.add_argument("action", choices=("historical", "forward"))
     parser.add_argument("--pending-ledger", type=Path, default=PENDING_LEDGER,
                         help="ledger supplying upcoming events (forward only)")
+    parser.add_argument("--tag", default="", help="output suffix, e.g. _20260924 (forward only)")
     args = parser.parse_args()
     if args.action == "historical":
         report = historical()
@@ -392,7 +393,7 @@ def main() -> None:
                          f["no_signal"], f["e1_events"]) for f in run["folds"]],
                   "active", run["score"]["active"]["total_return"])
     else:
-        frame = forward(pending_ledger=args.pending_ledger)
+        frame = forward(pending_ledger=args.pending_ledger, tag=args.tag)
         print(frame.groupby(["verdict", "entitlement_tier"]).size().to_string())
 
 
