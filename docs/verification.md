@@ -173,3 +173,15 @@ No live order has been submitted. A real fill still requires a funded live UTA t
 (or authorized Agentic account), displayed liquidity, and the user's explicit confirmation at
 the moment of submission. A Reality whitelist is not required for the order-placement route,
 but is still required for Reality depth/fills data.
+
+## Errata for frozen documents — 2026-09-23
+
+`docs/m2.md` is a hashed input of the frozen competition manifest, so it is not edited.
+Every figure in its section 2 regenerates with `exnight.doc_figures`, and a test checks them.
+The cluster bootstrap reproduces the printed intervals with seed 0 and 2,000 draws. One label
+is wrong:
+
+- The window table's first row is labelled **"1 Jun – 6 Jul"**, but its figures (n = 51) were
+  computed on ex-dates **through 1 July**. The two 6 July events, rCSCO and rMU, are not in
+  it. Including them gives n = 53 and a 04:00 ET slope of 1.18 ± 0.42, which does not change
+  the section's conclusion.
