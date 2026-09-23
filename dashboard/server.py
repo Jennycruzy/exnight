@@ -374,13 +374,17 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "provenance": provenance, "forward_score": score, "competition": competition,
         "comparison": v3_view.comparison(project_root), "v3": v3_view.v3(project_root),
         "downloads": downloads,
-        "limits": [
-            "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
-            "Current order books are observed-now evidence, not historical event-time fills.",
-            "Most Reality tokens show only a live ticker quote, not a two-sided public book; one $10 rTOWN buy filled in full at that quote, but larger sizes are unproven.",
-            "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date); this dashboard exposes no execution controls.",
-        ],
+        "limits": list(LIMITS),
     }
+
+
+
+LIMITS = (
+    "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
+    "Current order books are observed-now evidence, not historical event-time fills.",
+    "Most Reality tokens show only a live ticker quote, not a two-sided public book; one $10 rTOWN buy filled in full at that quote, but larger sizes are unproven.",
+    "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date); this dashboard exposes no execution controls.",
+)
 
 
 class DashboardHandler(BaseHTTPRequestHandler):

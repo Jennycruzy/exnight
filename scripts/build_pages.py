@@ -92,6 +92,8 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     from dashboard import v3_view
     summary["comparison"] = v3_view.comparison(project_root)
     summary["v3"] = v3_view.v3(project_root)
+    from dashboard.server import LIMITS
+    summary["limits"] = list(LIMITS)
     downloads = []
     for name, label in PUBLIC_EVIDENCE.items():
         source = project_root / "data" / "results" / name
