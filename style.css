@@ -405,3 +405,9 @@ td { color: var(--text); }
 @media (max-width:800px) {
   .decision-finder { display: block; padding: 22px 18px; }.decision-form { margin-top: 20px; }.decision-result { margin-top: 20px; }.decision-input-row { display: block; }.decision-input-row input,.decision-input-row button { width: 100%; }.decision-input-row button { margin-top: 8px; padding: 14px; }.decision-summary { align-items: flex-start; }
 }
+/* Home summary, comparison and upcoming ex-dates */
+.hero h2 { font:600 clamp(22px,3vw,34px)/1.12 ui-sans-serif,system-ui,sans-serif; letter-spacing:-.03em; margin:0; max-width:760px; color:var(--text); }
+.summary-hero h1 { max-width:900px; }
+.panel > p.source { margin:0; padding:0 24px 18px; line-height:1.55; }
+.panel > .table-wrap + p.source { padding-top:14px; }
+@media (max-width:800px) { .panel > p.source { padding:0 18px 16px; } }

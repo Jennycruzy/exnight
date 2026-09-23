@@ -39,6 +39,53 @@ function verdict(value) {
   return `<span class="verdict ${esc(text)}">${esc(text)}</span>`;
 }
 
+function signed(value, digits = 1) {
+  if (value == null || Number.isNaN(Number(value))) return "—";
+  const text = Number(value).toFixed(digits);
+  return text.startsWith("-") ? `−${text.slice(1)}` : text;
+}
+
+function pctText(value, digits = 3) {
+  return value == null ? "—" : `${signed(value * 100, digits)}%`;
+}
+
+function renderComparison(comparison) {
+  if (comparison.status !== "AVAILABLE") {
+    $("summary-headline").textContent = "Exnight decides whether stepping out before an ex-date is worth it";
+    $("comparison-body").innerHTML = `<tr><td colspan="6" class="empty">Comparison unavailable.</td></tr>`;
+    return;
+  }
+  const exit = comparison.rows.find((row) => row.name === "Always step out") || {};
+  $("summary-headline").textContent = `Stepping out before every ex-date lost ${signed(-exit.active_bps_per_event)} bps per event. Exnight stood down.`;
+  $("comparison-body").innerHTML = comparison.rows.map((row) => `<tr><td><strong>${esc(row.name)}</strong></td><td>${row.trades}</td>`
+    + `<td class="${row.active_bps_per_event < 0 ? "negative" : ""}">${row.active_bps_per_event == null ? "—" : `${signed(row.active_bps_per_event)} bps`}</td>`
+    + `<td>${row.beat_hold_share == null ? "—" : `${Math.round(row.beat_hold_share * 100)}% of events`}</td>`
+    + `<td>${pctText(row.total_return)}</td><td>${signed(row.sharpe, 2)}</td></tr>`).join("");
+  $("comparison-note").textContent = `${comparison.events} events over ${comparison.days} days, using only information published before each decision. `
+    + "Holding's negative return comes from market moves on those nights. The always-step-out comparison was added after the results were known and changes no frozen input.";
+}
+
+function renderUpcoming(v3) {
+  if (v3.status !== "AVAILABLE") {
+    $("upcoming-body").innerHTML = `<tr><td colspan="6" class="empty">No forward schedule available.</td></tr>`;
+    $("upcoming-tag").textContent = "UNAVAILABLE";
+    return;
+  }
+  $("upcoming-tag").textContent = `${v3.scored} OF ${v3.events.length} SCORED`;
+  $("upcoming-note").textContent = `Every event with a verified dividend worth at least ${number(v3.min_gross_yield_bp, 1)} bps of the price, the smallest size where stepping out could ever pay. `
+    + `Each decision is frozen before the 20:00 ET sell cutoff. V3 currently expects a drop of at least ${number(v3.lower_ratio, 2)} of the dividend, `
+    + "below the 0.70 a holder keeps after 30% withholding, so it holds unless that estimate tightens.";
+  $("upcoming-body").innerHTML = v3.events.map((event) => {
+    const outcome = event.score_status === "NOT_SCORED" ? `<span class="source">after ${esc(event.ex_date)} 10:30 ET</span>`
+      : `${verdict(event.realised_verdict || event.score_status)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the dividend · ${esc(event.score_status)}</span>`;
+    const why = event.verdict === "PENDING" ? event.reason
+      : event.verdict === "NO_SIGNAL" ? (event.reason || "evidence incomplete")
+      : `break-even yield ${event.breakeven_yield_bp == null ? "not reachable" : `${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% withholding documented" : "withholding 0–30%"}`;
+    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>$${number(event.gross_dividend, 4)}<br><span class="source">${number(event.gross_yield_bp, 0)} bps of price</span></td>`
+      + `<td>${verdict(event.verdict)}</td><td class="source">${esc(why)}</td><td>${outcome}</td></tr>`;
+  }).join("");
+}
+
 function render(data) {
   latestData = data;
   const recorder = data.recorder || {};
@@ -51,6 +98,9 @@ function render(data) {
   const competition = data.competition || {};
   const failed = recorder.status !== "PASS";
   const scored = observation.status === "SCORED";
+
+  renderComparison(data.comparison || {});
+  renderUpcoming(data.v3 || {});
 
   const generated = new Date(data.generated_at);
   $("as-of").textContent = Number.isNaN(generated.getTime()) ? "Snapshot time unknown" : `Snapshot ${generated.toLocaleString([], {year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short"})}`;
