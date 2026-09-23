@@ -40,7 +40,7 @@ RESULTS = ROOT / "data" / "results"
 RULE = ROOT / "strategy" / "strategy_v3.json"
 LEDGER = ROOT / "data" / "ledger" / "reality_notice59_resolved.jsonl"
 EVENT_RESULTS = RESULTS / "event_results_resolved.json"
-PENDING_LEDGER = ROOT / "data" / "ledger" / "reality_full_resolved_online.jsonl"
+PENDING_LEDGER = ROOT / "data" / "ledger" / "reality_forward_20260923_resolved.jsonl"
 KNOWLEDGE = RESULTS / "competition_knowledge_time.csv"
 PROVENANCE = RESULTS / "dividend_provenance_candidates_20260923.csv"
 

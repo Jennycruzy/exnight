@@ -1,5 +1,5 @@
 {
- "commit": "83e7ab09ce62332b84e6a2f33f4e38b08ed53cdd",
+ "commit": "b2c032048a86120314fd15f18ccc331df7ec2a9e",
  "forward_events_decided": {
   "rA-2026-10-06-1": {
    "1000": "NO_SIGNAL",
@@ -12,6 +12,21 @@
    "5000": "NO_SIGNAL"
   },
   "rABCB-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rABM-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rABT-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rACM-2026-10-14-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -31,12 +46,37 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rAHR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAKR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rAMAT-2026-11-19-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rAMT-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAPA-2026-10-22-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rAPD-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAPLE-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -71,12 +111,27 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rAXS-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rBBD-2026-10-05-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
   "rBBDO-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBELFA-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBELFB-2026-10-15-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -96,7 +151,17 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rBHE-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rBMY-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBNL-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -121,6 +186,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rBXP-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rBXSL-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -141,7 +211,27 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rCDP-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCHH-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rCIB-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCIG-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCL-2026-10-20-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -181,7 +271,27 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rCURB-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCUZ-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCVBF-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rCW-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDBRG-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -246,6 +356,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rENSG-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rEOG-2026-10-16-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -291,6 +406,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rFAF-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rFLS-2026-09-25-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -306,6 +426,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rFSV-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rFULT-2026-10-01-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -317,6 +442,11 @@
    "5000": "NO_SIGNAL"
   },
   "rGD-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGGAL-2026-09-28-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -361,6 +491,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rHMY-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rHST-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -386,12 +521,32 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rINDB-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rINDV-2026-10-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rINGR-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rINTU-2026-10-08-1": {
    "1000": "HOLD",
    "25000": "NO_SIGNAL",
    "5000": "HOLD"
   },
   "rINVH-2026-09-24-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rIRT-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -416,7 +571,27 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rJOYY-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rJPM-2026-10-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rKAI-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rKDP-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rKR-2026-11-16-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -432,6 +607,11 @@
    "5000": "NO_SIGNAL"
   },
   "rLECO-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rLII-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -461,6 +641,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rMCD-2026-12-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rMDLZ-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -481,6 +666,11 @@
    "25000": "NO_SIGNAL",
    "5000": "HOLD"
   },
+  "rMRSH-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rMSFT-2026-11-19-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -492,6 +682,21 @@
    "5000": "NO_SIGNAL"
   },
   "rMTCH-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNFG-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNHC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNHI-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -511,7 +716,22 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rNOG-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rNTAP-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNUE-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNVT-2026-10-23-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -522,6 +742,11 @@
    "5000": "NO_SIGNAL"
   },
   "rOBDC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rOC-2026-10-19-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -546,6 +771,16 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rPCAR-2026-11-10-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPCG-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rPECO-2026-10-15-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -562,6 +797,21 @@
    "5000": "NO_SIGNAL"
   },
   "rPGR-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPK-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPM-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPNR-2026-10-23-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -587,6 +837,11 @@
    "5000": "NO_SIGNAL"
   },
   "rRHP-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRITM-2026-10-01-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -736,6 +991,36 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rSATA-2026-10-27-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSFBS-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSIG-2026-10-23-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSLG-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rSNN-2026-10-02-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -791,6 +1076,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rSTWD-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rSTX-2026-09-24-1": {
    "1000": "HOLD",
    "25000": "HOLD",
@@ -816,6 +1106,11 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rTEL-2026-11-20-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rTFII-2026-09-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
@@ -836,7 +1131,37 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rTIMB-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rTJX-2026-11-12-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTKC-2026-12-10-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTNET-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTOL-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTOWN-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTR-2026-10-07-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -862,6 +1187,11 @@
    "5000": "NO_SIGNAL"
   },
   "rTSN-2026-12-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTXN-2026-10-30-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -896,12 +1226,32 @@
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rWFG-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rWMT-2026-12-11-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
   },
+  "rWPC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rWSM-2026-10-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
   "rWTW-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rWWD-2026-11-19-1": {
    "1000": "NO_SIGNAL",
    "25000": "NO_SIGNAL",
    "5000": "NO_SIGNAL"
@@ -917,14 +1267,14 @@
    "5000": "NO_SIGNAL"
   }
  },
- "generated_at": "2026-09-23T12:41:26.203396+00:00",
+ "generated_at": "2026-09-23T14:17:36.090062+00:00",
  "inputs": {
-  "data/ledger/reality_full_resolved_online.jsonl": "0f8bfa25634616e4301ebb0522910c623468ac054d5d11cdf8cff228e946fbac",
+  "data/ledger/reality_forward_20260923_resolved.jsonl": "b1d83f658b025bfe658603fce8b47a0a78d77375d874b5b478f1f98eec222983",
   "data/ledger/reality_notice59_resolved.jsonl": "9de4df544c9e3651465ad8bff9f25977a8a85d413f2750102dabb9c7db69e359",
   "data/results/event_results_resolved.json": "0d8f9371c9ab33b645f29b9fd1637f7b56d1dcd3a2c5c1c8f9245e15ef188d6d"
  },
  "outputs": {
-  "data/results/signals_v3.csv": "045fb3d2a39ab091dc3f6de455c9fbd7ee209bb5c713a6675fd887c98f6e530a"
+  "data/results/signals_v3.csv": "8edc12a12284de7351ae5b714f8bc9740e2f99de2252cd1add942e6c04708f0c"
  },
  "rule_file": "strategy/strategy_v3.json",
  "rule_id": "exnight-strategy-v3"
