@@ -1,0 +1,931 @@
+{
+ "commit": "83e7ab09ce62332b84e6a2f33f4e38b08ed53cdd",
+ "forward_events_decided": {
+  "rA-2026-10-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rABBV-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rABCB-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rADC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAGNC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAGX-2026-10-22-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAMAT-2026-11-19-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAPD-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAQN-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAVAL-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAVAL-2026-11-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAVAL-2026-12-31-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAVAL-2027-01-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rAVAL-2027-02-26-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBBD-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBBDO-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBEN-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBG-2026-11-17-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBG-2027-02-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBMY-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBRC-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBRX-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBTI-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBTI-2026-12-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBXSL-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rBZ-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCAH-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCASY-2026-10-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCIB-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCMCSA-2026-10-07-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCOLD-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCPB-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCPT-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCSCO-2026-10-02-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rCTRE-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCUBE-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rCW-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDDS-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDE-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDELL-2026-10-20-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDEO-2026-10-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDG-2026-10-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDGX-2026-10-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDHR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDOO-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rDOX-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rEGP-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rEHC-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rELS-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rEOG-2026-10-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rEPR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rEPRT-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rERIC-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rERIE-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rESAB-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rESE-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rESLT-2026-10-13-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rESS-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rFLS-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rFR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rFRT-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rFULT-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGAP-2026-10-07-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGD-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGGG-2026-10-19-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGHC-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGL-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGNTX-2026-10-07-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGRMN-2026-12-11-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGRMN-2027-03-12-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rGVA-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rHASI-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rHST-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rHUM-2026-10-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rICE-2026-12-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rIDCC-2026-10-14-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rIEX-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rINTU-2026-10-08-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "HOLD"
+  },
+  "rINVH-2026-09-24-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rITW-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rJAN-2026-10-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rJAN-2026-11-12-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rJAN-2026-12-18-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rJPM-2026-10-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rKRC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rKRG-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rLECO-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rLNC-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rLOW-2026-10-21-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMAIN-2026-10-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMAIN-2026-11-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMAIN-2026-12-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMDLZ-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMDT-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMORN-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMPWR-2026-09-30-1": {
+   "1000": "HOLD",
+   "25000": "NO_SIGNAL",
+   "5000": "HOLD"
+  },
+  "rMSFT-2026-11-19-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMT-2026-11-13-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rMTCH-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNI-2026-10-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNJR-2026-09-24-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNLY-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rNTAP-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rO-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rOBDC-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rOR-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rOR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rORCL-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rOTF-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPECO-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPECO-2026-11-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPEGA-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPGR-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPOR-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPRIM-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rPWR-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rREXR-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRHP-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRJF-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRL-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rROP-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRRX-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRSG-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rRVTY-2026-10-23-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSAIC-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-24-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-05-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-06-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-07-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-13-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-14-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-19-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-20-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-21-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-22-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-23-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSATA-2026-10-26-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSNN-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSOBO-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSRE-2026-09-24-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSSD-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTAG-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTLD-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTM-2026-12-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTM-2027-03-16-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTN-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTRC-2026-09-30-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rSTT-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSTX-2026-09-24-1": {
+   "1000": "HOLD",
+   "25000": "HOLD",
+   "5000": "HOLD"
+  },
+  "rSUI-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSYK-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rSYY-2026-10-02-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTD-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTFII-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTIGO-2026-10-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTIGO-2027-01-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTIGO-2027-04-08-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTJX-2026-11-12-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTRNO-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTRP-2026-09-29-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTS-2026-11-24-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTSM-2026-12-10-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rTSN-2026-12-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rUSB-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rVIV-2026-09-28-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rVMI-2026-09-25-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rVSEC-2026-10-15-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rVSNT-2026-10-01-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rVZ-2026-10-09-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rWMT-2026-12-11-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rWTW-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rYMM-2026-10-14-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  },
+  "rZBH-2026-09-30-1": {
+   "1000": "NO_SIGNAL",
+   "25000": "NO_SIGNAL",
+   "5000": "NO_SIGNAL"
+  }
+ },
+ "generated_at": "2026-09-23T12:41:26.203396+00:00",
+ "inputs": {
+  "data/ledger/reality_full_resolved_online.jsonl": "0f8bfa25634616e4301ebb0522910c623468ac054d5d11cdf8cff228e946fbac",
+  "data/ledger/reality_notice59_resolved.jsonl": "9de4df544c9e3651465ad8bff9f25977a8a85d413f2750102dabb9c7db69e359",
+  "data/results/event_results_resolved.json": "0d8f9371c9ab33b645f29b9fd1637f7b56d1dcd3a2c5c1c8f9245e15ef188d6d"
+ },
+ "outputs": {
+  "data/results/signals_v3.csv": "045fb3d2a39ab091dc3f6de455c9fbd7ee209bb5c713a6675fd887c98f6e530a"
+ },
+ "rule_file": "strategy/strategy_v3.json",
+ "rule_id": "exnight-strategy-v3"
+}
