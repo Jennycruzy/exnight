@@ -380,7 +380,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
 
 
 LIMITS = (
-    "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
+    "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
     "Current order books are observed-now evidence, not historical event-time fills.",
     "Most Reality tokens show only a live ticker quote, not a two-sided public book; one $10 rTOWN buy filled in full at that quote, but larger sizes are unproven.",
     "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date); this dashboard exposes no execution controls.",

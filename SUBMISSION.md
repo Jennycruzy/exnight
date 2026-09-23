@@ -26,8 +26,9 @@ only information available before the decision.
 A Bitget Reality-token holder with $1,000–$25,000 positions in dividend-paying rTokens, deciding
 around each ex-date whether to stay exposed. Exnight gives an `EXIT`, `HOLD` or `NO_SIGNAL`
 decision per event and trade size, with the evidence behind it. The dashboard's Decisions page
-looks up any evaluated token. BUY is suppressed because Bitget does not publish its
-dividend-eligibility snapshot time.
+looks up any evaluated token. BUY is never recommended: across 127 events,
+buying before the ex-date to collect the dividend lost money on average even in the most
+favourable case (−17.7 bps per event).
 
 ## Validation
 
@@ -66,4 +67,5 @@ $1k/$5k/$25k are unproven; one $10 order filled in full at the quote.
 - Historical order books do not exist, so historical costs are modeled.
 - One real fill so far: $10 of rTOWN on 23 September, filled in full on a token with no public order
   book, at the quote, with a 10 bps fee. Larger sizes and the sell leg are untested.
-- Bitget's dividend-eligibility snapshot time is unpublished.
+- Bitget's dividend-eligibility snapshot time is unpublished. It no longer affects the decision,
+  because buying for the dividend loses even when the buyer is counted.

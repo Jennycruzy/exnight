@@ -1,0 +1,68 @@
+{
+  "label": "DESCRIPTIVE_REALISED_PRICES_NOT_A_STRATEGY_TEST",
+  "rung": "premarket_0400",
+  "events": 127,
+  "definition": "buy at the last pre-cutoff price, sell at the 04:00 ET rung, receive the dividend if counted, pay taker fee on both legs plus round-trip slippage",
+  "scenarios": [
+    {
+      "scenario": "counted, no withholding",
+      "counted": true,
+      "withholding": 0.0,
+      "slippage_bps": 10,
+      "mean_bps": -17.727953853098455,
+      "median_bps": -14.840257987100646,
+      "share_positive": 0.31496062992125984,
+      "mean_bps_excluding_rsata": -12.28786663661098
+    },
+    {
+      "scenario": "counted, no withholding",
+      "counted": true,
+      "withholding": 0.0,
+      "slippage_bps": 25,
+      "mean_bps": -32.727953853098455,
+      "median_bps": -29.840257987100646,
+      "share_positive": 0.2125984251968504,
+      "mean_bps_excluding_rsata": -27.287866636610975
+    },
+    {
+      "scenario": "counted, 30% withholding",
+      "counted": true,
+      "withholding": 0.3,
+      "slippage_bps": 10,
+      "mean_bps": -29.66105394831853,
+      "median_bps": -16.397098802794996,
+      "share_positive": 0.2440944881889764,
+      "mean_bps_excluding_rsata": -30.96614958879464
+    },
+    {
+      "scenario": "counted, 30% withholding",
+      "counted": true,
+      "withholding": 0.3,
+      "slippage_bps": 25,
+      "mean_bps": -44.66105394831852,
+      "median_bps": -31.397098802794996,
+      "share_positive": 0.16535433070866143,
+      "mean_bps_excluding_rsata": -45.966149588794636
+    },
+    {
+      "scenario": "not counted",
+      "counted": false,
+      "withholding": null,
+      "slippage_bps": 10,
+      "mean_bps": -57.50495417049869,
+      "median_bps": -29.029902990298094,
+      "share_positive": 0.11023622047244094,
+      "mean_bps_excluding_rsata": -74.54880981055652
+    },
+    {
+      "scenario": "not counted",
+      "counted": false,
+      "withholding": null,
+      "slippage_bps": 25,
+      "mean_bps": -72.5049541704987,
+      "median_bps": -44.0299029902981,
+      "share_positive": 0.08661417322834646,
+      "mean_bps_excluding_rsata": -89.54880981055652
+    }
+  ]
+}

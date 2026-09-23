@@ -40,7 +40,8 @@ For each event and trade size, Exnight gives `EXIT`, `HOLD` or `NO_SIGNAL`, with
 and the evidence behind it. The dashboard's Upcoming page lists high-yield ex-dates with the
 decision frozen before each sell cutoff, then the real outcome once the event is scored.
 Its Decisions page looks up any evaluated token (`rAPH`, `RAPHUSDT` or `APH`). Exnight never
-says BUY, because Bitget has not published when it takes the dividend-eligibility snapshot.
+says BUY: buying before the ex-date to collect the dividend lost money in every scenario tested,
+because the price falls by about the whole dividend (see Known limits).
 
 **Live dashboard:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/)
 (a read-only evidence snapshot, not a trading terminal).
@@ -234,8 +235,13 @@ approve a trade.
 
 ## Known limits
 
-- Bitget does not publish the exact dividend eligibility snapshot time, so Exnight suppresses
-  a buy decision when that timing could change the answer.
+- **BUY is never recommended.** Bitget does not publish when it takes its dividend snapshot, but
+  that no longer matters. Buying before the ex-date to collect the dividend lost money on
+  average in every scenario tested on the 127 events, even the most favourable: counted as a
+  holder, no tax withheld and only 10 bps slippage gave −17.7 bps per event. Not being counted
+  makes it −57.5 bps or worse. The price falls by about the whole dividend, so the fees are the
+  loss. See `data/results/buy_capture_evidence.json`. These are realised prices, so this is a
+  description, not a strategy test.
 - Historical order books are unavailable. A current order book cannot prove what could have
   filled on an earlier event date, so historical costs are modeled rather than observed.
 - Only 56 of 127 resolved/usable events pass the ex-ante knowledge filter, and 45 of those are
