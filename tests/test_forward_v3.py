@@ -105,3 +105,44 @@ def test_depth_sampler_adds_scheduled_symbols(tmp_path, monkeypatch):
     symbols = depth_snapshot.sampled_symbols(schedule)
     assert "RZZZUSDT" in symbols and len(symbols) > 1
     assert "RZZZUSDT" not in depth_snapshot.sampled_symbols(tmp_path / "missing.json")
+
+
+def test_recorder_retries_once_then_records(tmp_path, monkeypatch):
+    calls = []
+
+    def flaky(api, symbols, now):
+        calls.append(now)
+        if len(calls) == 1:
+            raise RuntimeError("temporary API failure")
+        return [{"ts": now.isoformat(), "symbol": symbols[0], "ticker": {"lastPrice": "1"}}]
+
+    written = []
+    plan = {"groups": [dict(label="g", symbols=["RXUSDT"], start="2000-01-01T00:00:00+00:00",
+                            end="2100-01-01T00:00:00+00:00")]}
+    schedule = tmp_path / "s.json"
+    schedule.write_text(json.dumps(plan))
+    monkeypatch.setattr(record_schedule, "sample", flaky)
+    monkeypatch.setattr(record_schedule, "append", lambda label, rows, now: written.append(rows) or tmp_path / "x.jsonl")
+    monkeypatch.setattr(record_schedule, "BitgetPublic", lambda: object())
+    monkeypatch.setattr(record_schedule, "LOCK", tmp_path / "lock")
+    monkeypatch.setattr(record_schedule.time, "sleep", lambda s: None)
+    monkeypatch.setattr(sys, "argv", ["record_schedule.py", "--schedule", str(schedule)])
+    assert record_schedule.main() == 0
+    assert len(calls) == 2 and len(written) == 1
+
+
+def test_recorder_skips_while_previous_run_holds_the_lock(tmp_path, monkeypatch):
+    import fcntl
+    lock = tmp_path / "lock"
+    held = lock.open("w")
+    fcntl.flock(held, fcntl.LOCK_EX)
+    plan = {"groups": [dict(label="g", symbols=["RXUSDT"], start="2000-01-01T00:00:00+00:00",
+                            end="2100-01-01T00:00:00+00:00")]}
+    schedule = tmp_path / "s.json"
+    schedule.write_text(json.dumps(plan))
+    called = []
+    monkeypatch.setattr(record_schedule, "sample", lambda *a: called.append(1) or [])
+    monkeypatch.setattr(record_schedule, "LOCK", lock)
+    monkeypatch.setattr(sys, "argv", ["record_schedule.py", "--schedule", str(schedule)])
+    assert record_schedule.main() == 0
+    assert called == []
