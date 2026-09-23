@@ -49,6 +49,14 @@ The evidence is deliberately separated:
    gap—but its combined score is `INCOMPLETE` because rAPH and rSTM lacked resolved dividend
    basis. rSATA produced the frozen `HOLD` decision and realised PDR 0.0.
 
+4. **Strategy V3, the withholding wedge.** V1 asks whether EXIT would win even if the holder
+   kept the whole dividend. V3 asks the narrower question behind the thesis: does the drop
+   beat what the holder *documentedly* retains, net of 30% withholding, plus costs? V3 was
+   registered before any V3 figure was computed. Its historical run is a post-hoc diagnostic
+   and gives 0 EXIT. Its forward lower ratio of 0.599 sits below the 0.70 retained share, so
+   V3 currently holds on every event. An EXIT would also need roughly 70 bp or more of yield.
+   See [docs/v3.md](docs/v3.md).
+
 Historical trading costs in the scorecard are always labelled **MODELED_EXECUTION**. Forward
 capacity is separate: all three 22 September pairs returned empty public books, so executable
 capacity at $1k, $5k, and $25k remains unproven.
