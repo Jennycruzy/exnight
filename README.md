@@ -22,67 +22,64 @@ instead of trading it.
 
 ## Thesis
 
-Across 127 usable corporate-action observations, Bitget Reality-token ex-date repricing is
-consistent with roughly the gross dividend by the 04:00 ET rung. But the amount a holder
-actually retains can be lower and varies by event. Exnight measures whether stepping out
-before that repricing beats remaining exposed, after documented or uncertain entitlement,
-fees and execution costs.
+Across 127 dividend events, a Bitget Reality token's price has fallen by about the full
+(gross) dividend by 04:00 ET on the ex-date. But a holder may keep less than the full
+dividend after tax withholding, and how much less varies by event. Stepping out before the
+ex-date only pays when the expected fall is bigger than what the holder would have kept, plus
+fees and slippage. Exnight measures that for each event.
 
 ## Target user and product value
 
 **Track:** Alpha Factory → rToken Factor Strategies. Secondary fit: Open Theme,
 execution-aware alpha.
 
-**Target user:** a Bitget Reality-token holder with **$1,000–$25,000** positions in
-dividend-paying rTokens, making a decision **around each ex-date** — whether to stay exposed
-or step out temporarily when the expected repricing exceeds what they actually retain plus
-execution costs.
+**Target user:** a Bitget Reality-token holder with **$1,000–$25,000** in dividend-paying
+rTokens, deciding **before each ex-date** whether to stay in or step out for the night.
 
-Exnight turns the research into a reviewable `EXIT`, `HOLD`, or `NO_SIGNAL` decision. The
-dashboard's Decisions page accepts forms such as `rAPH`, `RAPHUSDT`, or `APH`, shows the saved
-result for each supported size, and explains when evidence is missing. BUY remains suppressed
-because Bitget has not published its exact dividend-eligibility snapshot time.
+For each event and trade size, Exnight gives `EXIT`, `HOLD` or `NO_SIGNAL`, with the reason
+and the evidence behind it. The dashboard's home page lists upcoming high-yield ex-dates with
+the decision frozen before each sell cutoff, then the real outcome once the event is scored.
+Its Decisions page looks up any evaluated token (`rAPH`, `RAPHUSDT` or `APH`). Exnight never
+says BUY, because Bitget has not published when it takes the dividend-eligibility snapshot.
 
 **Live dashboard:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/)
-
-The public dashboard is a sanitized evidence snapshot published from the `gh-pages` branch,
-not a live trading terminal.
-Recording and scoring continue on the private VPS workspace.
+(a read-only evidence snapshot, not a trading terminal).
 
 ## Validation
 
-The evidence is deliberately separated:
+Four separate pieces of evidence, never mixed:
 
-1. **Discovery study.** Both legacy-named `reality_notice59*.jsonl` ledgers contain 185
-   corporate actions. The unresolved study yields 58 usable events; issuer and basis
-   resolution yields 127. V1's 04:00 estimate is `0.965611 ± 0.183240`. This found the effect;
-   it is not out-of-sample evidence.
-2. **Walk-forward validation.** Only 56 of the 127 resolved/usable events have declaration
-   evidence known before T0. The non-overlapping OOS folds cover 47 calendar days and 39
-   events. The robust rule issued **0 EXIT trades** at every tested combination of 10–100 bps
-   round-trip modeled cost and 0–30% withholding. Policy therefore equals HOLD: OOS total
-   return **−0.096%**, Sharpe **−2.57**, and active return **0.000%**. This does **not** establish
-   active alpha. For comparison, stepping out of every OOS event would have returned **−32.5
-   bps per event** against HOLD and beaten it on only 13% of events. That comparison was added
-   after the OOS results were known and changes no frozen input. See
+1. **Discovery study.** 185 corporate actions give 127 usable dividend events once each
+   dividend amount is checked against the issuer. On average the price fell by
+   `0.97 ± 0.18` times the dividend by 04:00 ET. This is where the effect was found, so it
+   is not out-of-sample evidence.
+2. **Walk-forward test.** Only 56 of the 127 events had their dividend published before the
+   moment of decision, so only those are used. The rule is refit on past data only and
+   tested on later, untouched windows covering 47 calendar days and 39
+   events. It made **0 EXIT trades** at every tested cost from 10 to 100 bps and every
+   withholding rate from 0% to 30%. Exnight therefore matched holding: total
+   return **−0.096%**, Sharpe **−2.57**, and **0.000%** better or worse than holding. That is
+   **not** evidence of alpha. For comparison, stepping out of every event would have lost
+   **−32.5 bps per event** against holding and beaten it on only 13% of events. That
+   comparison was added after the results were known and changes nothing frozen. See
    [the complete scorecard](docs/competition_scorecard.md).
-3. **Frozen V1 and forward recorder.** V1 was frozen on 17 September and is not renamed as
-   historical OOS. The 21 September run remains `INCOMPLETE` because of its genuine 57-minute
-   gap. The 22 September recorder itself passed—1,348 rows per symbol and a 63-second maximum
-   gap—but its combined score is `INCOMPLETE` because rAPH and rSTM lacked resolved dividend
-   basis. rSATA produced the frozen `HOLD` decision and realised PDR 0.0.
+3. **Frozen rule, recorded live.** Strategy V1 was frozen on 17 September and then recorded
+   minute by minute. The 21 September recording has a real 57-minute gap and stays
+   `INCOMPLETE`. The 22 September recording passed its checks (1,348 rows per token, longest
+   gap 63 seconds). Its overall score is `INCOMPLETE` because two of the three tokens had no
+   verified dividend amount. On the third, rSATA, V1 said `HOLD`, and the price did not move.
+4. **Strategy V3, the withholding gap.** V1 steps out only if that wins even when the holder
+   keeps the whole dividend. V3 asks the narrower question: does the fall beat what the holder
+   documentedly keeps after 30% withholding, plus costs? V3 was registered before any V3
+   number was computed. On past data it makes 0 EXITs. Going forward, its cautious estimate
+   of the fall (0.599 of the dividend) is below the 0.70 a holder keeps, so it currently holds
+   on every event. Any EXIT would also need a dividend of roughly 70 bps or more. V3 is being
+   recorded live on 16 high-yield ex-dates from 25 September to 8 October. See
+   [docs/v3.md](docs/v3.md).
 
-4. **Strategy V3, the withholding wedge.** V1 asks whether EXIT would win even if the holder
-   kept the whole dividend. V3 asks the narrower question behind the thesis: does the drop
-   beat what the holder *documentedly* retains, net of 30% withholding, plus costs? V3 was
-   registered before any V3 figure was computed. Its historical run is a post-hoc diagnostic
-   and gives 0 EXIT. Its forward lower ratio of 0.599 sits below the 0.70 retained share, so
-   V3 currently holds on every event. An EXIT would also need roughly 70 bp or more of yield.
-   See [docs/v3.md](docs/v3.md).
-
-Historical trading costs in the scorecard are always labelled **MODELED_EXECUTION**. Forward
-capacity is separate: all three 22 September pairs returned empty public books, so executable
-capacity at $1k, $5k, and $25k remains unproven.
+Historical trading costs are modeled, not observed, and labelled **MODELED_EXECUTION**
+everywhere. Real execution capacity is reported separately: the recorded Reality tokens had
+empty public order books, so fills at $1k, $5k and $25k are unproven.
 
 ## Progress and deliverables
 
@@ -248,10 +245,15 @@ approve a trade.
   record. They remain excluded from the frozen scorecard; a separate
   [source audit](docs/dividend_provenance_audit.md) is checking dated issuer evidence.
 - A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
-- GetAgent exposes dividend dates and amounts, but its selection-basket backtest cannot replay
-  Exnight's event-by-event walk-forward test. A local prototype used today's quote and V1's
-  fixed estimate, so it was removed rather than presented as the validated strategy. There is
-  no comparable GetAgent backtest or published Playbook.
+- **No GetAgent Playbook is published, on purpose.** Checked against `@bitget-ai/getagent-skill`
+  0.6.4 on 23 September: a normal trading Playbook can now trade spot rTokens such as
+  `RAAPLUSDT`, and its dividend data carries ex-date, amount and declaration date. So the
+  rule can be expressed. Two things stop a faithful version from being useful or honest.
+  First, Exnight's rule has made no EXIT, so a faithful Playbook is a buy-and-hold rToken
+  basket. Second, the Playbook backtest documentation describes no dividend crediting, so a
+  bar-based backtest would count the ex-date price drop but not the dividend a holder
+  receives. That makes stepping out look better than it is. Publishing either would
+  misrepresent the result.
 - The project has not yet demonstrated a real Reality-token fill.
 
 Deployment notes and the operational handoff are maintained in the private server workspace,

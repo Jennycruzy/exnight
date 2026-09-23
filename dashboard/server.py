@@ -21,6 +21,8 @@ from urllib.parse import parse_qs, urlparse
 UTC = dt.timezone.utc
 DEFAULT_SYMBOLS = ("RAPHUSDT", "RSATAUSDT", "RSTMUSDT")
 STATIC_ROOT = Path(__file__).resolve().parent
+from dashboard import v3_view  # noqa: E402
+
 PROJECT_ROOT = STATIC_ROOT.parent
 DOWNLOAD_NAMES = {
     "signals_v1.csv": "Frozen forward signals",
@@ -370,6 +372,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "depth": depth,
         "signals": {"meta": signal_meta, "rows": [_signal_row(row) for row in selected]},
         "provenance": provenance, "forward_score": score, "competition": competition,
+        "comparison": v3_view.comparison(project_root), "v3": v3_view.v3(project_root),
         "downloads": downloads,
         "limits": [
             "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",

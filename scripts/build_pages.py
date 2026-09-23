@@ -26,6 +26,7 @@ PUBLIC_EVIDENCE = {
     "competition_backtest_manifest.json": "Frozen backtest manifest",
     "forward_score_20260922.json": "September 22 forward score",
     "forward_capacity_20260922.json": "September 22 book capacity",
+    "always_exit_baseline.json": "Always-step-out comparison",
 }
 
 
@@ -86,6 +87,11 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     else:
         summary = public_snapshot(project_root, now=now)
     summary["mode"] = "PUBLIC_SNAPSHOT"
+    # The headline comparison and V3's forward view are always rebuilt from committed results,
+    # so the published page shows the latest frozen decisions and scores.
+    from dashboard import v3_view
+    summary["comparison"] = v3_view.comparison(project_root)
+    summary["v3"] = v3_view.v3(project_root)
     downloads = []
     for name, label in PUBLIC_EVIDENCE.items():
         source = project_root / "data" / "results" / name

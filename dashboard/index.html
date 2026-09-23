@@ -24,11 +24,31 @@
 
     <div id="error" class="notice error hidden" role="alert"></div>
 
-    <section id="overview" class="view view-home active" data-view="home" aria-labelledby="headline">
+    <section id="overview" class="view view-home active" data-view="home" aria-labelledby="summary-headline">
+      <section class="hero summary-hero">
+        <div>
+          <p class="eyebrow">EX-DIVIDEND DECISIONS FOR BITGET RTOKEN HOLDERS</p>
+          <h1 id="summary-headline">Loading the result…</h1>
+          <p id="summary-copy" class="hero-copy">By 04:00 ET on the ex-date, an rToken has usually fallen by about the whole dividend. Exnight checks whether stepping out first is worth it after what you keep of the dividend, fees and slippage.</p>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="comparison-title">
+        <div class="panel-heading"><div><p class="eyebrow">OUT-OF-SAMPLE RESULT</p><h2 id="comparison-title">Exnight against always stepping out</h2></div><span class="tag amber">MODELED_EXECUTION</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Approach</th><th>Trades</th><th>Against holding, per event</th><th>Beat holding</th><th>Total return</th><th>Sharpe</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
+        <p id="comparison-note" class="source"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="upcoming-title">
+        <div class="panel-heading"><div><p class="eyebrow">FORWARD TEST / STRATEGY V3</p><h2 id="upcoming-title">Upcoming high-yield ex-dates</h2></div><span id="upcoming-tag" class="tag">—</span></div>
+        <p id="upcoming-note" class="source"></p>
+        <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Dividend</th><th>Decision before cutoff</th><th>Why</th><th>Outcome</th></tr></thead><tbody id="upcoming-body"></tbody></table></div>
+      </section>
+
       <section class="hero">
         <div>
-          <p class="eyebrow">FORWARD OBSERVATION / <span id="event-date">—</span></p>
-          <h1 id="headline">Loading evidence state…</h1>
+          <p class="eyebrow">LAST RECORDED WINDOW (STRATEGY V1) / <span id="event-date">—</span></p>
+          <h2 id="headline">Loading evidence state…</h2>
           <p id="hero-copy" class="hero-copy">Loading the saved forward result and recorder audit.</p>
         </div>
         <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Loading evidence</small></div></div>
