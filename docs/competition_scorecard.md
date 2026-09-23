@@ -58,6 +58,17 @@ The robust rule issued no EXIT trades. Policy therefore equals HOLD, active retu
 
 No point in the full grid produces an EXIT trade. The result therefore does not establish active alpha at the frozen confidence threshold.
 
+## Comparison: always EXIT
+
+*Added on 23 September, after the OOS results were known. It changes no frozen parameter, decision or input.* It asks what a holder would have earned by stepping out of **every** eligible event, with the scorecard's own costs, T0/T1, notional and metrics.
+
+| Window | Events | Mean active per event | EXIT beat HOLD | Active return | Always-EXIT Sharpe |
+|---|---:|---:|---:|---:|---:|
+| IS initial | 17 | -34.5 bps | 18% | -0.234% | -13.25 |
+| OOS | 39 | -32.5 bps | 13% | -0.505% | -22.93 |
+
+Across the full cost and withholding grid, always-EXIT loses between 14.0 bps per event (10 bps slippage, 30% withholding) and 107.5 bps (100 bps, 0%). It beats HOLD on at most 21% of events. Standing down is what kept Exnight's active return at zero instead of negative. Detail: `data/results/always_exit_baseline.json`.
+
 ## Forward evidence
 
 - 21 September remains `INCOMPLETE` because of the disclosed 57-minute recording gap.

@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from exnight import competition  # noqa: E402
+from exnight import baseline, competition  # noqa: E402
 
 
 def pct(value):
@@ -41,7 +41,7 @@ def capacity(forward: dict) -> dict:
     }
 
 
-def render(report: dict, forward: dict, cap: dict) -> str:
+def render(report: dict, forward: dict, cap: dict, always_exit: dict) -> str:
     sample = report["sample"]
     is_score = report["is_initial_development_window"]
     oos = report["oos_concatenated_non_overlapping_folds"]
@@ -98,6 +98,28 @@ def render(report: dict, forward: dict, cap: dict) -> str:
         "",
         "No point in the full grid produces an EXIT trade. The result therefore does not establish active alpha at the frozen confidence threshold.",
         "",
+        "## Comparison: always EXIT",
+        "",
+        "*Added on 23 September, after the OOS results were known. It changes no frozen parameter, decision or input.* It asks what a holder would have earned by stepping out of **every** eligible event, with the scorecard's own costs, T0/T1, notional and metrics.",
+        "",
+        "| Window | Events | Mean active per event | EXIT beat HOLD | Active return | Always-EXIT Sharpe |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for window, key in (("IS initial", "is_initial"), ("OOS", "oos")):
+        item = always_exit["primary"][key]
+        lines.append(f"| {window} | {item['events']} | {item['mean_active_bps']:.1f} bps | {100 * item['share_exit_beat_hold']:.0f}% | "
+                     f"{pct(item['score']['active']['total_return'])} | {number(item['score']['policy']['sharpe'])} |")
+    grid = always_exit["sensitivity"]
+    worst = min(grid, key=lambda g: g["mean_active_bps"])
+    best = max(grid, key=lambda g: g["mean_active_bps"])
+    lines += [
+        "",
+        f"Across the full cost and withholding grid, always-EXIT loses between {-best['mean_active_bps']:.1f} bps per event "
+        f"({best['slippage_bps']} bps slippage, {100 * best['withholding']:.0f}% withholding) and {-worst['mean_active_bps']:.1f} bps "
+        f"({worst['slippage_bps']} bps, {100 * worst['withholding']:.0f}%). It beats HOLD on at most "
+        f"{100 * max(g['share_exit_beat_hold'] for g in grid):.0f}% of events. Standing down is what kept Exnight's active return at zero "
+        "instead of negative. Detail: `data/results/always_exit_baseline.json`.",
+        "",
         "## Forward evidence",
         "",
         "- 21 September remains `INCOMPLETE` because of the disclosed 57-minute recording gap.",
@@ -123,7 +145,8 @@ def main() -> None:
     forward = json.loads(forward_path.read_text())
     cap = capacity(forward)
     (competition.RESULTS / "forward_capacity_20260922.json").write_text(json.dumps(cap, indent=2) + "\n")
-    (ROOT / "docs" / "competition_scorecard.md").write_text(render(report, forward, cap))
+    always_exit = baseline.build()
+    (ROOT / "docs" / "competition_scorecard.md").write_text(render(report, forward, cap, always_exit))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,360 @@
+{
+  "label": "ADDED_AFTER_OOS_RESULTS_COMPARISON_NOT_A_STRATEGY_CHANGE",
+  "definition": "step out of every eligible event at T0 and back in at T1; same costs, T0/T1, notional and metrics as the scorecard",
+  "primary": {
+    "slippage_bps": 25,
+    "withholding": 0.0,
+    "oos": {
+      "events": 39,
+      "mean_active_bps": -32.4672041666029,
+      "share_exit_beat_hold": 0.1282051282051282,
+      "score": {
+        "policy": {
+          "total_return": -0.0060025597271012865,
+          "annualized_return": -0.045679864804845205,
+          "sharpe": -22.93354679958801,
+          "sortino": -33.820761155463124,
+          "maximum_drawdown": -0.0060025597271012865,
+          "turnover": 3.12,
+          "win_rate": 0.0,
+          "trade_count": 39,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.00212,
+          "slippage_drag_MODELED_EXECUTION": 0.0039
+        },
+        "benchmark": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116
+        },
+        "active": {
+          "total_return": -0.005053029247276242,
+          "annualized_return": -0.038577278339369525,
+          "information_ratio": -11.955744478703467,
+          "sortino": -15.668093731922625,
+          "maximum_drawdown": -0.005053029247276242,
+          "win_rate": 0.1282051282051282
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "OK",
+            "trade_count": 23,
+            "sharpe": -23.39566802855699
+          },
+          {
+            "end": "2026-08-31",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -24.579802006254372
+          },
+          {
+            "end": "2026-09-01",
+            "status": "OK",
+            "trade_count": 27,
+            "sharpe": -25.028165663228474
+          },
+          {
+            "end": "2026-09-02",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": -25.330234354418227
+          },
+          {
+            "end": "2026-09-03",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": -25.46640626255294
+          },
+          {
+            "end": "2026-09-04",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": -25.60701658228881
+          },
+          {
+            "end": "2026-09-05",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -23.97701910273178
+          },
+          {
+            "end": "2026-09-06",
+            "status": "OK",
+            "trade_count": 24,
+            "sharpe": -22.503217274494016
+          },
+          {
+            "end": "2026-09-07",
+            "status": "OK",
+            "trade_count": 24,
+            "sharpe": -22.503217274494016
+          },
+          {
+            "end": "2026-09-08",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -24.11256923602346
+          },
+          {
+            "end": "2026-09-09",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -24.251893676846382
+          },
+          {
+            "end": "2026-09-10",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -24.394951035273195
+          },
+          {
+            "end": "2026-09-11",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -24.54170820664062
+          },
+          {
+            "end": "2026-09-12",
+            "status": "OK",
+            "trade_count": 24,
+            "sharpe": -23.035416473383826
+          },
+          {
+            "end": "2026-09-13",
+            "status": "OK",
+            "trade_count": 22,
+            "sharpe": -21.71519220132951
+          },
+          {
+            "end": "2026-09-14",
+            "status": "OK",
+            "trade_count": 23,
+            "sharpe": -23.24706545635805
+          },
+          {
+            "end": "2026-09-15",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": -23.994512978368054
+          },
+          {
+            "end": "2026-09-16",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": -23.565140479623942
+          }
+        ]
+      }
+    },
+    "is_initial": {
+      "events": 17,
+      "mean_active_bps": -34.486781197284785,
+      "share_exit_beat_hold": 0.17647058823529413,
+      "score": {
+        "policy": {
+          "total_return": -0.002377394941646127,
+          "annualized_return": -0.02260332071435467,
+          "sharpe": -13.250323585622601,
+          "sortino": -20.0719922695138,
+          "maximum_drawdown": -0.0022377082207970522,
+          "turnover": 1.36,
+          "win_rate": 0.0,
+          "trade_count": 17,
+          "event_count": 17,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.00068,
+          "slippage_drag_MODELED_EXECUTION": 0.0017
+        },
+        "benchmark": {
+          "total_return": -3.5348355822306665e-05,
+          "annualized_return": -0.00033947862501892967,
+          "sharpe": -0.11249820158570982,
+          "sortino": -0.07121591183694582,
+          "maximum_drawdown": -0.0010937532349072354
+        },
+        "active": {
+          "total_return": -0.002343030510782218,
+          "annualized_return": -0.02227988545044024,
+          "information_ratio": -6.513826505641301,
+          "sortino": -6.765082518844433,
+          "maximum_drawdown": -0.0023212056725250285,
+          "win_rate": 0.17647058823529413
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-07-23",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": -10.713407881422924
+          },
+          {
+            "end": "2026-07-24",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": -10.713407881422924
+          },
+          {
+            "end": "2026-07-25",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": -10.713407881422924
+          },
+          {
+            "end": "2026-07-26",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": -10.71340788142293
+          },
+          {
+            "end": "2026-07-27",
+            "status": "OK",
+            "trade_count": 10,
+            "sharpe": -11.649254405545793
+          },
+          {
+            "end": "2026-07-28",
+            "status": "OK",
+            "trade_count": 12,
+            "sharpe": -12.296921798331711
+          },
+          {
+            "end": "2026-07-29",
+            "status": "OK",
+            "trade_count": 13,
+            "sharpe": -13.223638450923515
+          },
+          {
+            "end": "2026-07-30",
+            "status": "OK",
+            "trade_count": 14,
+            "sharpe": -14.178608737687702
+          },
+          {
+            "end": "2026-07-31",
+            "status": "OK",
+            "trade_count": 16,
+            "sharpe": -14.952510082115829
+          }
+        ]
+      }
+    }
+  },
+  "sensitivity": [
+    {
+      "slippage_bps": 10,
+      "withholding": 0.0,
+      "mean_active_bps": -17.46720416660289,
+      "share_exit_beat_hold": 0.1794871794871795,
+      "active_total_return": -0.002721835745789769
+    },
+    {
+      "slippage_bps": 10,
+      "withholding": 0.15,
+      "mean_active_bps": -15.741864643255084,
+      "share_exit_beat_hold": 0.20512820512820512,
+      "active_total_return": -0.002453343598544322
+    },
+    {
+      "slippage_bps": 10,
+      "withholding": 0.25,
+      "mean_active_bps": -14.59163829435654,
+      "share_exit_beat_hold": 0.20512820512820512,
+      "active_total_return": -0.0022743120297596953
+    },
+    {
+      "slippage_bps": 10,
+      "withholding": 0.3,
+      "mean_active_bps": -14.016525119907273,
+      "share_exit_beat_hold": 0.20512820512820512,
+      "active_total_return": -0.0021847852025201897
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.0,
+      "mean_active_bps": -32.4672041666029,
+      "share_exit_beat_hold": 0.1282051282051282,
+      "active_total_return": -0.005053029247276242
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.15,
+      "mean_active_bps": -30.741864643255088,
+      "share_exit_beat_hold": 0.1282051282051282,
+      "active_total_return": -0.00478513721002416
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.25,
+      "mean_active_bps": -29.59163829435655,
+      "share_exit_beat_hold": 0.1282051282051282,
+      "active_total_return": -0.004606505793160021
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.3,
+      "mean_active_bps": -29.01652511990728,
+      "share_exit_beat_hold": 0.1282051282051282,
+      "active_total_return": -0.004517179065461008
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.0,
+      "mean_active_bps": -57.467204166602905,
+      "share_exit_beat_hold": 0.07692307692307693,
+      "active_total_return": -0.008926668875500976
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.15,
+      "mean_active_bps": -55.74186464325508,
+      "share_exit_beat_hold": 0.07692307692307693,
+      "active_total_return": -0.008659774148432109
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.25,
+      "mean_active_bps": -54.59163829435654,
+      "share_exit_beat_hold": 0.07692307692307693,
+      "active_total_return": -0.00848180773564744
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.3,
+      "mean_active_bps": -54.016525119907286,
+      "share_exit_beat_hold": 0.07692307692307693,
+      "active_total_return": -0.008392813549181977
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.0,
+      "mean_active_bps": -107.46720416660287,
+      "share_exit_beat_hold": 0.05128205128205128,
+      "active_total_return": -0.01663032772056683
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.15,
+      "mean_active_bps": -105.74186464325508,
+      "share_exit_beat_hold": 0.05128205128205128,
+      "active_total_return": -0.016365416884272066
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.25,
+      "mean_active_bps": -104.59163829435653,
+      "share_exit_beat_hold": 0.05128205128205128,
+      "active_total_return": -0.01618877332524593
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.3,
+      "mean_active_bps": -104.01652511990724,
+      "share_exit_beat_hold": 0.05128205128205128,
+      "active_total_return": -0.016100440643643465
+    }
+  ]
+}

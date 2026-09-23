@@ -1,5 +1,25 @@
 # Exnight
 
+**Exnight tells a Bitget rToken holder whether stepping out before an ex-dividend date is worth
+it.** By 04:00 ET on the ex-date, the token has usually fallen by about the whole dividend, so
+selling first and buying back afterwards looks attractive. Exnight tested that against holding,
+with only information available before each decision:
+
+| Out-of-sample, 39 events over 47 days | Exnight | Always step out | Hold |
+|---|---:|---:|---:|
+| Trades | 0 | 39 | 0 |
+| Result against holding, per event | 0 bps | **−32.5 bps** | — |
+| Events where stepping out beat holding | — | 13% | — |
+| Total return | −0.096% | −0.600% | −0.096% |
+| Sharpe | −2.57 | −22.93 | −2.57 |
+
+Stepping out of every event would have lost 32.5 bps per event after fees and modeled
+slippage. It loses at every tested cost from 10 to 100 bps and every withholding rate from 0% to 30%.
+Exnight's rule stood down every time, so it lost nothing relative to holding. The holding
+return itself is negative because of market moves on those nights, not anything Exnight did.
+The dividend repricing effect is real; after costs it is not yet tradable, and Exnight says so
+instead of trading it.
+
 ## Thesis
 
 Across 127 usable corporate-action observations, Bitget Reality-token ex-date repricing is
@@ -42,7 +62,10 @@ The evidence is deliberately separated:
    events. The robust rule issued **0 EXIT trades** at every tested combination of 10–100 bps
    round-trip modeled cost and 0–30% withholding. Policy therefore equals HOLD: OOS total
    return **−0.096%**, Sharpe **−2.57**, and active return **0.000%**. This does **not** establish
-   active alpha. See [the complete scorecard](docs/competition_scorecard.md).
+   active alpha. For comparison, stepping out of every OOS event would have returned **−32.5
+   bps per event** against HOLD and beaten it on only 13% of events. That comparison was added
+   after the OOS results were known and changes no frozen input. See
+   [the complete scorecard](docs/competition_scorecard.md).
 3. **Frozen V1 and forward recorder.** V1 was frozen on 17 September and is not renamed as
    historical OOS. The 21 September run remains `INCOMPLETE` because of its genuine 57-minute
    gap. The 22 September recorder itself passed—1,348 rows per symbol and a 63-second maximum
