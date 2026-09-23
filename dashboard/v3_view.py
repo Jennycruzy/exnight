@@ -110,6 +110,9 @@ def v3(project_root: Path) -> dict[str, Any]:
             "realised_pdr": _float((realised or {}).get("realised_pdr")),
             "realised_verdict": first.get("realised_verdict"),
             "realised_edge_keep_70pct": _float(first.get("realised_edge_keep_70pct")),
+            "modeled_verdict": ((realised or {}).get("modeled") or {}).get("realised_verdict"),
+            "modeled_edge_keep_gross": _float(((realised or {}).get("modeled") or {}).get("edge_keep_gross")),
+            "modeled_edge_keep_70pct": _float(((realised or {}).get("modeled") or {}).get("edge_keep_70pct")),
         })
     first_row = next(iter(decisions.values()), {})
     return {

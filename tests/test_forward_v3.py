@@ -91,6 +91,11 @@ def test_score_event_uses_frozen_entitlement(tmp_path):
     # A 2% dividend fully priced in: keeping 70% makes EXIT win by 0.6 minus about 0.2 of cost.
     assert first["frozen_verdict"] == "HOLD" and first["realised_verdict"] == "EXIT"
     assert first["realised_edge_keep_gross"] < 0 < first["realised_edge_keep_70pct"]
+    # The modeled-cost view is always present and uses the scorecard's 25 bps assumption.
+    modeled = result["modeled"]
+    assert modeled["label"] == "MODELED_EXECUTION"
+    assert modeled["cost_per_share"] == pytest.approx(100.0 * (2 * 0.001 + 0.0025))
+    assert modeled["realised_verdict"] == "EXIT"   # 2.0 drop - 1.4 kept - 0.45 cost > 0
 
 
 def test_depth_sampler_adds_scheduled_symbols(tmp_path, monkeypatch):

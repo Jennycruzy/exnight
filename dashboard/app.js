@@ -76,8 +76,11 @@ function renderUpcoming(v3) {
     + `Each decision is frozen before the 20:00 ET sell cutoff. V3 currently expects a drop of at least ${number(v3.lower_ratio, 2)} of the dividend, `
     + "below the 0.70 a holder keeps after 30% withholding, so it holds unless that estimate tightens.";
   $("upcoming-body").innerHTML = v3.events.map((event) => {
+    const bookVerdict = event.realised_verdict && event.realised_verdict !== "NO_SIGNAL";
+    const shown = bookVerdict ? event.realised_verdict : (event.modeled_verdict || event.realised_verdict || event.score_status);
+    const basis = bookVerdict ? "recorded quotes" : "modeled costs (visible quotes too thin)";
     const outcome = event.score_status === "NOT_SCORED" ? `<span class="source">after ${esc(event.ex_date)} 10:30 ET</span>`
-      : `${verdict(event.realised_verdict || event.score_status)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the dividend · ${esc(event.score_status)}</span>`;
+      : `${verdict(shown)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the dividend · ${esc(basis)} · recording ${esc(event.score_status)}</span>`;
     const why = event.verdict === "PENDING" ? event.reason
       : event.verdict === "NO_SIGNAL" ? (event.reason || "evidence incomplete")
       : `break-even yield ${event.breakeven_yield_bp == null ? "not reachable" : `${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% withholding documented" : "withholding 0–30%"}`;

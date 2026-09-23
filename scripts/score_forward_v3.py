@@ -13,6 +13,10 @@ with P_pre the last sample before the sell cutoff, P_post the first sample at or
 04:00 ET, and cost = fee on both legs plus the book walk of each sample (ticker-only walks
 are labelled). The realised verdict uses the frozen entitlement range: EXIT if edge(w_low) > 0,
 HOLD if edge(w_high) <= 0, otherwise ENTITLEMENT_AMBIGUOUS.
+
+When the recorded quotes cannot absorb a notional, the book-walk edge is undefined. Each event
+therefore also carries the same edge at the walk-forward scorecard's MODELED_EXECUTION cost
+(taker fee on both legs plus 25 bps round trip), labelled as modeled.
 """
 from __future__ import annotations
 
@@ -35,6 +39,7 @@ SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
 RESULTS = ROOT / "data" / "results"
 RECORDER = ROOT / "data" / "raw" / "recorder"
 NOTIONALS = (1000, 5000, 25000)
+MODELED_SLIPPAGE_BPS = 25   # the walk-forward scorecard's base MODELED_EXECUTION assumption
 
 
 def frozen_decision(event_id: str, cutoff: dt.datetime, signal_files: list[Path]) -> tuple[pd.DataFrame, str | None]:
@@ -94,6 +99,16 @@ def score_event(target: dict, group: dict, event: dict, rows: list, signal_files
             realised_verdict=realised_verdict(edge_low, edge_high) if f else None,
             sell_book_source=sell_source, buy_book_source=buy_source, sell_error=sell_error, buy_error=buy_error,
         ))
+    modeled = None
+    if drop is not None:
+        cost = pre * (2 * fee + MODELED_SLIPPAGE_BPS / 10_000)
+        w_low = float(decision.w_low.iloc[0]) if not decision.empty else None
+        w_high = float(decision.w_high.iloc[0]) if not decision.empty else None
+        low = drop - gross * (1 - w_low) - cost if w_low is not None else None
+        high = drop - gross * (1 - w_high) - cost if w_high is not None else None
+        modeled = dict(label="MODELED_EXECUTION", slippage_bps=MODELED_SLIPPAGE_BPS, cost_per_share=cost,
+                       edge_keep_gross=drop - gross - cost, edge_keep_70pct=drop - 0.70 * gross - cost,
+                       realised_verdict=realised_verdict(low, high) if not decision.empty else None)
     complete = pre_error is None and post_error is None and drop is not None
     return dict(
         event_id=target["event_id"], spot_symbol=target["spot_symbol"], ex_date=target["ex_date"],
@@ -102,7 +117,7 @@ def score_event(target: dict, group: dict, event: dict, rows: list, signal_files
         pre_distance_seconds=pre_distance, post_distance_seconds=post_distance,
         pre_error=pre_error, post_error=post_error, gross_dividend=gross, taker_fee=fee,
         realised_pdr=drop / gross if drop is not None else None,
-        frozen_decision_file=decision_file, notionals=notionals, complete=complete,
+        frozen_decision_file=decision_file, notionals=notionals, modeled=modeled, complete=complete,
         has_frozen_decision=decision_file is not None,
     )
 
@@ -139,7 +154,8 @@ def main() -> int:
     print(json.dumps(dict(status=report["status"], validation=report["errors"],
                           events=[dict(event=r["event_id"], pdr=r["realised_pdr"],
                                        frozen=r["notionals"][0]["frozen_verdict"],
-                                       realised=r["notionals"][0]["realised_verdict"]) for r in scored]), indent=1))
+                                       realised=r["notionals"][0]["realised_verdict"],
+                                       realised_modeled=(r["modeled"] or {}).get("realised_verdict")) for r in scored]), indent=1))
     return 0 if passed else 1
 
 
