@@ -27,6 +27,7 @@ DOWNLOAD_NAMES = {
     "health_20260922.json": "Latest scheduler health",
     "run_manifest_v1.json": "Strategy run manifest",
     "forward_score_20260922.json": "September 22 forward score",
+    "forward_capacity_20260922.json": "September 22 book capacity",
     "competition_scorecard.json": "Walk-forward scorecard",
     "competition_backtest_manifest.json": "Backtest manifest",
 }
@@ -75,11 +76,13 @@ def _display_age(seconds: float | None) -> str:
     return f"{seconds / 3600:.1f}h"
 
 
-def _recorder_paths(data_root: Path) -> list[Path]:
+def _recorder_paths(data_root: Path, run_prefix: str | None = None) -> list[Path]:
     recorder_root = data_root / "raw" / "recorder"
     if not recorder_root.exists():
         return []
     paths = list(recorder_root.glob("**/*.jsonl"))
+    if run_prefix is not None:
+        paths = [path for path in paths if path.parent.name.startswith(run_prefix)]
     if not paths:
         return []
     by_run: dict[Path, list[Path]] = {}
@@ -90,12 +93,14 @@ def _recorder_paths(data_root: Path) -> list[Path]:
 
 
 def recorder_summary(data_root: Path, now: dt.datetime | None = None,
-                     expected_symbols: tuple[str, ...] = DEFAULT_SYMBOLS) -> dict[str, Any]:
+                     expected_symbols: tuple[str, ...] = DEFAULT_SYMBOLS,
+                     run_prefix: str | None = None,
+                     check_freshness: bool = True) -> dict[str, Any]:
     """Read recorder JSONL files and derive current cadence/book coverage."""
     now = now or dt.datetime.now(UTC)
     by_symbol: dict[str, list[tuple[dt.datetime, dict[str, Any]]]] = {symbol: [] for symbol in expected_symbols}
     parse_errors = 0
-    for path in _recorder_paths(data_root):
+    for path in _recorder_paths(data_root, run_prefix=run_prefix):
         try:
             lines = path.read_text(encoding="utf-8").splitlines()
         except (OSError, UnicodeError):
@@ -130,7 +135,7 @@ def recorder_summary(data_root: Path, now: dt.datetime | None = None,
             failures.append(f"{symbol}: no samples")
         if max_gap is not None and max_gap > 180:
             failures.append(f"{symbol}: gap {max_gap:.0f}s")
-        if age is None or age > 7200:
+        if check_freshness and (age is None or age > 7200):
             failures.append(f"{symbol}: stale recorder")
         symbols[symbol] = {
             "rows": len(rows), "first_ts": _iso(timestamps[0]) if timestamps else None,
@@ -151,6 +156,48 @@ def recorder_summary(data_root: Path, now: dt.datetime | None = None,
     return {
         "status": "PASS" if not failures else "FAIL", "checked_at": _iso(now),
         "symbols": symbols, "errors": failures,
+        "sample_count": sum(item["rows"] for item in symbols.values()),
+    }
+
+
+def scored_recorder_summary(data_root: Path, forward: dict[str, Any],
+                            now: dt.datetime) -> dict[str, Any]:
+    """Show the completed recorder's saved audit, with an optional local chart."""
+    scored_symbols = forward.get("symbols", {})
+    event_dates = {str(row.get("ex_date", "")) for row in forward.get("results", [])}
+    event_date = next(iter(event_dates)) if len(event_dates) == 1 else "2026-09-22"
+    raw = recorder_summary(
+        data_root, now=now, expected_symbols=tuple(scored_symbols),
+        run_prefix=event_date.replace("-", ""), check_freshness=False,
+    )
+    symbols: dict[str, Any] = {}
+    errors = list(forward.get("errors", []))
+    for symbol, item in scored_symbols.items():
+        rows = int(item.get("rows", 0))
+        gap = _number(item.get("max_gap_seconds"))
+        if rows <= 0 or int(item.get("gaps_over_limit", 0)) > 0:
+            errors.append(f"{symbol}: incomplete recording")
+        for field in ("samples_too_fast", "duplicate_timestamps", "out_of_order"):
+            if int(item.get(field, 0)) > 0:
+                errors.append(f"{symbol}: {field.replace('_', ' ')}")
+        local = raw["symbols"].get(symbol, {})
+        series = local.get("series", []) if local.get("rows") == rows else []
+        last_ts = item.get("last_ts")
+        last_date = _timestamp(last_ts)
+        symbols[symbol] = {
+            "rows": rows, "first_ts": item.get("first_ts"), "last_ts": last_ts,
+            "last_age_seconds": None,
+            "last_age_display": last_date.strftime("%d %b %H:%M UTC") if last_date else "—",
+            "max_gap_seconds": gap,
+            "nonempty_book_rows": int(item.get("nonempty_book_rows", 0)),
+            "ticker_rows": int(item.get("ticker_rows", 0)),
+            "book_coverage": int(item.get("nonempty_book_rows", 0)) / rows if rows else 0.0,
+            "series": series,
+        }
+    return {
+        "status": "PASS" if scored_symbols and not errors else "FAIL",
+        "mode": "COMPLETED_WINDOW", "checked_at": forward.get("checked_at"),
+        "symbols": symbols, "errors": errors,
         "sample_count": sum(item["rows"] for item in symbols.values()),
     }
 
@@ -252,10 +299,12 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
     selected, signal_meta = _signals(data_root, now, requested_date=signal_date)
     manifest = _json(data_root / "results" / "run_manifest_v1.json")
     forward = _json(data_root / "results" / "forward_score_20260922.json")
+    capacity = _json(data_root / "results" / "forward_capacity_20260922.json")
     health = _json(data_root / "results" / "health_20260922.json")
     competition_scorecard = _json(data_root / "results" / "competition_scorecard.json") or {}
     competition_manifest = _json(data_root / "results" / "competition_backtest_manifest.json") or {}
-    recorder = recorder_summary(data_root, now=now)
+    recorder = (scored_recorder_summary(data_root, forward, now)
+                if forward is not None else recorder_summary(data_root, now=now))
     event_ids = set(signal_meta.get("event_ids", []))
     manifest_events = set((manifest or {}).get("forward_events_decided", {}))
     provenance = {
@@ -269,11 +318,21 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
     if forward is None:
         score = {"status": "PENDING", "message": "Available after the September 22 observation window closes."}
         observation_message = "Recorder is collecting evidence; forward score is intentionally deferred."
+        observation_date = signal_meta.get("event_date")
     else:
-        score = {"status": forward.get("status", "UNKNOWN"), "message": "Forward score loaded.",
+        incomplete = [str(row.get("symbol", "")) for row in forward.get("results", [])
+                      if not row.get("complete")]
+        complete_count = sum(bool(row.get("complete")) for row in forward.get("results", []))
+        message = (f"{complete_count} of {len(forward.get('results', []))} events have complete "
+                   f"cash basis. Unresolved: {', '.join(incomplete)}."
+                   if incomplete else "All forward events have complete cash basis.")
+        score = {"status": forward.get("status", "UNKNOWN"), "message": message,
                  "path": "data/results/forward_score_20260922.json", "report": forward}
-        observation_message = ("Forward score loaded; recorder remains active for the scheduled "
-                              "observation window.")
+        observation_message = ("The September 22 recorder passed cadence checks. " + message
+                               if recorder["status"] == "PASS" else
+                               "The September 22 recorder has unresolved integrity errors. " + message)
+        event_dates = {str(row.get("ex_date", "")) for row in forward.get("results", [])}
+        observation_date = next(iter(event_dates)) if len(event_dates) == 1 else "2026-09-22"
     downloads = [
         {"name": name, "label": label, "href": f"/download?file={name}"}
         for name, label in DOWNLOAD_NAMES.items() if (data_root / "results" / name).is_file()
@@ -289,19 +348,26 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "cost_grid_bps": competition_manifest.get("slippage_sensitivity_bps", []),
         "withholding_range": [0, 15, 25, 30],
         "modeled_execution": True,
-        "playbook": {
-            "status": "LOCAL_VALIDATION_PASSED",
-            "kind": "NON_TRADING_SELECTION_BASKET",
-            "cloud_status": "AWAITING_MANUAL_SIGN_IN",
-            "published": False,
-        },
     }
+    if capacity and capacity.get("events"):
+        empty_books = sum(not item.get("nonempty_public_book_samples")
+                          for item in capacity["events"])
+        depth = {
+            "status": "NO_PUBLIC_BOOK" if empty_books == len(capacity["events"]) else "PARTIAL",
+            "message": f"{empty_books} of {len(capacity['events'])} recorded pairs had no two-sided public book.",
+            "latest": capacity.get("as_of"),
+            "book_supported_count": len(capacity["events"]) - empty_books,
+            "event_count": len(capacity["events"]),
+        }
+    else:
+        depth = (health or {}).get("depth", {"status": "UNKNOWN", "message": "No health report yet."})
     return {
         "project": "EXNIGHT", "mode": "READ_ONLY", "generated_at": _iso(now),
-        "observation": {"status": "ACTIVE", "event_date": signal_meta.get("event_date"),
+        "observation": {"status": "SCORED" if forward is not None else "ACTIVE",
+                         "event_date": observation_date,
                          "message": observation_message},
         "recorder": recorder,
-        "depth": (health or {}).get("depth", {"status": "UNKNOWN", "message": "No health report yet."}),
+        "depth": depth,
         "signals": {"meta": signal_meta, "rows": [_signal_row(row) for row in selected]},
         "provenance": provenance, "forward_score": score, "competition": competition,
         "downloads": downloads,

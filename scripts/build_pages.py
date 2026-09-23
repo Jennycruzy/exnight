@@ -15,10 +15,18 @@ if str(PROJECT_PATH) not in sys.path:
 
 from dashboard.server import (
     PROJECT_ROOT,
+    _signal_row,
+    _signals,
     _symbol_aliases,
     dashboard_data,
-    decision_lookup,
 )
+
+PUBLIC_EVIDENCE = {
+    "competition_scorecard.json": "Walk-forward scorecard",
+    "competition_backtest_manifest.json": "Frozen backtest manifest",
+    "forward_score_20260922.json": "September 22 forward score",
+    "forward_capacity_20260922.json": "September 22 book capacity",
+}
 
 
 def write_json(path: Path, value: object) -> None:
@@ -31,7 +39,7 @@ def public_snapshot(project_root: Path, now: dt.datetime | None = None) -> dict[
     snapshot["mode"] = "PUBLIC_SNAPSHOT"
     snapshot["downloads"] = []
     snapshot["observation"]["message"] = (
-        "Public evidence snapshot. Recorder collection and scoring continue on the private service."
+        "Public evidence snapshot. " + snapshot["observation"]["message"]
     )
     return snapshot
 
@@ -41,7 +49,30 @@ def decision_index(project_root: Path, now: dt.datetime | None = None) -> dict[s
     with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
     aliases = sorted({alias for row in rows for alias in _symbol_aliases(row)})
-    return {alias: decision_lookup(project_root / "data", alias, now=now) for alias in aliases}
+    index = {}
+    for alias in aliases:
+        matches = [row for row in rows if alias in _symbol_aliases(row)]
+        by_date = {}
+        for event_date in sorted({row.get("ex_date", "") for row in matches if row.get("ex_date")}):
+            dated = [row for row in matches if row.get("ex_date") == event_date]
+            dated.sort(key=lambda row: int(float(row.get("notional_usd", 0) or 0)))
+            by_date[event_date] = [_signal_row(row) for row in dated]
+        if by_date:
+            index[alias] = {
+                "status": "FOUND", "symbol": matches[0].get("symbol"),
+                "spot_symbol": matches[0].get("spot_symbol"), "events": by_date,
+            }
+    return index
+
+
+def signal_date_index(project_root: Path, now: dt.datetime | None = None) -> dict[str, object]:
+    now = now or dt.datetime.now(dt.timezone.utc)
+    _, meta = _signals(project_root / "data", now)
+    index = {}
+    for event_date in meta.get("available_dates", []):
+        rows, dated_meta = _signals(project_root / "data", now, requested_date=event_date)
+        index[event_date] = {"meta": dated_meta, "rows": [_signal_row(row) for row in rows]}
+    return index
 
 
 def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
@@ -55,9 +86,18 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     else:
         summary = public_snapshot(project_root, now=now)
     summary["mode"] = "PUBLIC_SNAPSHOT"
-    summary["downloads"] = []
+    downloads = []
+    for name, label in PUBLIC_EVIDENCE.items():
+        source = project_root / "data" / "results" / name
+        if source.is_file():
+            destination = output / "evidence" / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+            downloads.append({"name": name, "label": label, "href": f"evidence/{name}"})
+    summary["downloads"] = downloads
     write_json(output / "api" / "summary.json", summary)
     write_json(output / "api" / "decisions.json", decision_index(project_root, now=now))
+    write_json(output / "api" / "signal_dates.json", signal_date_index(project_root, now=now))
 
 
 def main() -> int:

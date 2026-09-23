@@ -1,12 +1,17 @@
 """Live checks against the public Bitget API. These are the verification for the
 symbol format, fee fields and candle endpoint; they are meant to fail if Bitget changes."""
 import datetime as dt
+import os
 
 import pytest
 
 from exnight.market import BitgetPublic, V3_INTERVALS
 
-pytestmark = pytest.mark.live
+pytestmark = [
+    pytest.mark.live,
+    pytest.mark.skipif(os.environ.get("EXNIGHT_RUN_LIVE_TESTS") != "1",
+                       reason="Set EXNIGHT_RUN_LIVE_TESTS=1 to call the public Bitget API"),
+]
 
 
 @pytest.fixture(scope="module")

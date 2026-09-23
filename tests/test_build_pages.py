@@ -26,6 +26,8 @@ def test_build_pages_creates_static_decision_lookup(tmp_path):
     now = __import__("datetime").datetime.fromisoformat("2026-09-21T12:00:00+00:00")
     build(tmp_path, output, snapshot_path=snapshot, now=now)
     decisions = json.loads((output / "api/decisions.json").read_text(encoding="utf-8"))
-    assert decisions["APH"]["rows"][0]["verdict"] == "HOLD"
+    assert decisions["APH"]["events"]["2026-09-22"][0]["verdict"] == "HOLD"
     assert decisions["RAPHUSDT"]["spot_symbol"] == "RAPHUSDT"
+    signal_dates = json.loads((output / "api/signal_dates.json").read_text(encoding="utf-8"))
+    assert signal_dates["2026-09-22"]["rows"][0]["verdict"] == "HOLD"
     assert (output / ".nojekyll").is_file()

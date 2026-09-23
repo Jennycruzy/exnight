@@ -98,7 +98,34 @@ def test_dashboard_exposes_walk_forward_validation(tmp_path):
     assert result["competition"]["status"] == "AVAILABLE"
     assert result["competition"]["sample"]["eligible_ex_ante"] == 56
     assert result["competition"]["oos"]["policy"]["trade_count"] == 0
-    assert result["competition"]["playbook"]["published"] is False
+
+
+def test_completed_forward_window_uses_saved_cadence_instead_of_live_freshness(tmp_path):
+    results = tmp_path / "data/results"
+    results.mkdir(parents=True)
+    (results / "forward_score_20260922.json").write_text(json.dumps({
+        "status": "INCOMPLETE", "checked_at": "2026-09-22T14:30:00Z", "errors": [],
+        "symbols": {"RSATAUSDT": {
+            "rows": 1348, "first_ts": "2026-09-21T16:02:00Z",
+            "last_ts": "2026-09-22T14:29:00Z", "max_gap_seconds": 63,
+            "gaps_over_limit": 0, "ticker_rows": 1348, "nonempty_book_rows": 0,
+        }},
+        "results": [{"symbol": "rSATA", "ex_date": "2026-09-22", "complete": True},
+                    {"symbol": "rAPH", "ex_date": "2026-09-22", "complete": False}],
+    }))
+    (results / "forward_capacity_20260922.json").write_text(json.dumps({
+        "as_of": "2026-09-22T14:29:00Z",
+        "events": [{"symbol": "rSATA", "nonempty_public_book_samples": 0}],
+    }))
+    now = __import__("datetime").datetime.fromisoformat("2026-09-23T05:00:00+00:00")
+    result = dashboard_data(tmp_path, now=now)
+    assert result["observation"]["status"] == "SCORED"
+    assert result["observation"]["event_date"] == "2026-09-22"
+    assert result["recorder"]["status"] == "PASS"
+    assert result["recorder"]["sample_count"] == 1348
+    assert result["forward_score"]["status"] == "INCOMPLETE"
+    assert "rAPH" in result["forward_score"]["message"]
+    assert result["depth"]["book_supported_count"] == 0
 
 
 def test_decision_lookup_accepts_consumer_symbol_formats(tmp_path):

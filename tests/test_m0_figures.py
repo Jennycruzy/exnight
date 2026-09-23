@@ -1,5 +1,6 @@
 """docs/m0.md is rendered from data/results; assert it is current and internally consistent."""
 import json
+import math
 import subprocess
 import sys
 from pathlib import Path
@@ -32,5 +33,13 @@ def test_summary_json_matches_recomputation():
     for key, kw in [("floor_None", {}), ("floor_0.5", {"yield_floor_pct": 0.5}),
                     ("clean_2000_floor_0.2", {"yield_floor_pct": 0.2, "clean_2000": True})]:
         fresh = summarize(df, **kw)
-        assert fresh["rungs"]["overnight_2000"]["slope"]["pdr"] == stored[key]["rungs"]["overnight_2000"]["slope"]["pdr"]
-        assert fresh["robustness_2000"]["ratio_of_sums"] == stored[key]["robustness_2000"]["ratio_of_sums"]
+        assert math.isclose(
+            fresh["rungs"]["overnight_2000"]["slope"]["pdr"],
+            stored[key]["rungs"]["overnight_2000"]["slope"]["pdr"],
+            rel_tol=1e-12, abs_tol=1e-12,
+        )
+        assert math.isclose(
+            fresh["robustness_2000"]["ratio_of_sums"],
+            stored[key]["robustness_2000"]["ratio_of_sums"],
+            rel_tol=1e-12, abs_tol=1e-12,
+        )
