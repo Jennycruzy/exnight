@@ -1,0 +1,168 @@
+{
+  "label": "TRAINING_ONLY_DIAGNOSTIC_NOT_OOS_VALIDATION",
+  "verified_additions": 16,
+  "windows": {
+    "initial_development": {
+      "frozen_inputs": {
+        "training_events": 17,
+        "selected_rung": "premarket_0400",
+        "pdr": 1.034275825976304,
+        "se": 0.8710489450546619,
+        "two_se_lower_bound": -0.7078220641330197
+      },
+      "primary_verified_additions": {
+        "training_events": 33,
+        "selected_rung": "premarket_0400",
+        "pdr": 1.258156878096134,
+        "se": 0.47362101308647203,
+        "two_se_lower_bound": 0.31091485192319
+      }
+    },
+    "before_august_fold": {
+      "frozen_inputs": {
+        "training_events": 17,
+        "selected_rung": "premarket_0400",
+        "pdr": 1.034275825976304,
+        "se": 0.8710489450546619,
+        "two_se_lower_bound": -0.7078220641330197
+      },
+      "primary_verified_additions": {
+        "training_events": 33,
+        "selected_rung": "premarket_0400",
+        "pdr": 1.258156878096134,
+        "se": 0.47362101308647203,
+        "two_se_lower_bound": 0.31091485192319
+      }
+    },
+    "before_september_fold": {
+      "frozen_inputs": {
+        "training_events": 42,
+        "selected_rung": "open_0930",
+        "pdr": 0.9194329582809133,
+        "se": 0.3528604632179606,
+        "two_se_lower_bound": 0.2137120318449921
+      },
+      "primary_verified_additions": {
+        "training_events": 58,
+        "selected_rung": "open_0930",
+        "pdr": 1.7328336607042445,
+        "se": 0.4311197969365215,
+        "two_se_lower_bound": 0.8705940668312014
+      }
+    }
+  },
+  "leave_one_added_out_before_september": [
+    {
+      "omitted_event_id": "rAVGO-2026-06-22-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7280050278111025,
+      "se": 0.43408706493476035,
+      "two_se_lower_bound": 0.8598308979415819
+    },
+    {
+      "omitted_event_id": "rCMCSA-2026-07-01-1",
+      "selected_rung": "premarket_0400",
+      "pdr": 1.08541238297193,
+      "se": 0.4014690975179576,
+      "two_se_lower_bound": 0.28247418793601475
+    },
+    {
+      "omitted_event_id": "rCRM-2026-06-11-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7225515749833948,
+      "se": 0.4298558822285317,
+      "two_se_lower_bound": 0.8628398105263314
+    },
+    {
+      "omitted_event_id": "rCSCO-2026-07-06-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7550118972071498,
+      "se": 0.4338816864416298,
+      "two_se_lower_bound": 0.8872485243238902
+    },
+    {
+      "omitted_event_id": "rDIS-2026-06-30-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.6815320982314461,
+      "se": 0.446120960848392,
+      "two_se_lower_bound": 0.7892901765346622
+    },
+    {
+      "omitted_event_id": "rGEV-2026-06-16-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.6958253985397993,
+      "se": 0.42951671619257625,
+      "two_se_lower_bound": 0.8367919661546468
+    },
+    {
+      "omitted_event_id": "rHPE-2026-06-16-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7468435945101983,
+      "se": 0.4318374961155552,
+      "two_se_lower_bound": 0.8831686022790879
+    },
+    {
+      "omitted_event_id": "rKO-2026-06-15-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.6315882419113807,
+      "se": 0.43588789863111105,
+      "two_se_lower_bound": 0.7598124446491586
+    },
+    {
+      "omitted_event_id": "rLRCX-2026-06-17-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.6340986206228814,
+      "se": 0.37174734155744593,
+      "two_se_lower_bound": 0.8906039375079895
+    },
+    {
+      "omitted_event_id": "rMDT-2026-06-26-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7866297930057393,
+      "se": 0.45337888925863457,
+      "two_se_lower_bound": 0.8798720144884702
+    },
+    {
+      "omitted_event_id": "rMO-2026-06-15-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.404077947931669,
+      "se": 0.5056968133463009,
+      "two_se_lower_bound": 0.39268432123906716
+    },
+    {
+      "omitted_event_id": "rMPWR-2026-06-30-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7054246676704206,
+      "se": 0.4067191180858261,
+      "two_se_lower_bound": 0.8919864314987683
+    },
+    {
+      "omitted_event_id": "rMU-2026-07-06-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.6557111356857237,
+      "se": 0.4174749886118937,
+      "two_se_lower_bound": 0.8207611584619363
+    },
+    {
+      "omitted_event_id": "rPM-2026-06-25-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.7617081791816087,
+      "se": 0.4501145507821658,
+      "two_se_lower_bound": 0.8614790776172772
+    },
+    {
+      "omitted_event_id": "rPWR-2026-07-01-1",
+      "selected_rung": "open_0930",
+      "pdr": 1.8087610169486859,
+      "se": 0.41808318446623005,
+      "two_se_lower_bound": 0.9725946480162257
+    },
+    {
+      "omitted_event_id": "rSTX-2026-06-24-1",
+      "selected_rung": "open_1000",
+      "pdr": 1.5340684737770252,
+      "se": 0.5362378720805826,
+      "two_se_lower_bound": 0.46159272961585995
+    }
+  ]
+}

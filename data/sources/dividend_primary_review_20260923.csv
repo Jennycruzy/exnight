@@ -1,0 +1,18 @@
+event_id,source_published_date,declared_amount,source_url,review_note
+rBABA-2026-06-11-1,2026-05-13,1.05,https://www.alibabagroup.com/en-US/document-1991364841188622336,Issuer ADS amount differs from Reality gross amount 1.03; not recovered
+rCRM-2026-06-11-1,2026-05-28,0.44,https://investor.salesforce.com/news/news-details/2026/Salesforce-Announces-Quarterly-Dividend/default.aspx,Issuer release states amount and record date
+rKO-2026-06-15-1,2026-04-30,0.53,https://investors.coca-colacompany.com/_assets/_014b8b8f047681531f8b5adc4eb10f2d/cocacolacompany/news/2026-04-30_Board_of_Directors_of_The_Coca_Cola_Company_1159.pdf,Issuer release states amount and record date
+rMO-2026-06-15-1,2026-05-14,1.06,https://investor.altria.com/press-releases/news-details/2026/Altria-Holds-2026-Annual-Meeting-of-Shareholders-Declares-Regular-Quarterly-Dividend-of-1-06-Per-Share/default.aspx,Issuer release states amount and ex-date
+rGEV-2026-06-16-1,2026-05-19,0.50,https://www.gevernova.com/news/print/pdf/node/144094,Issuer release states amount and record date
+rHPE-2026-06-16-1,2026-06-01,0.1425,https://investors.hpe.com/stock/dividend-history,Issuer history states declared date ex-date and amount
+rLRCX-2026-06-17-1,2026-05-21,0.26,https://investor.lamresearch.com/dividend-history,Issuer history states declared date ex-date and amount
+rAVGO-2026-06-22-1,2026-06-03,0.65,https://investors.broadcom.com/news-releases/news-release-details/broadcom-inc-announces-second-quarter-fiscal-year-2026-financial,Issuer release states amount and record date; issuer publication is June 3 despite Bitget API's June 2 announcement date
+rSTX-2026-06-24-1,2026-04-28,0.74,https://investors.seagate.com/news/news-details/2026/Seagate-Technology-Reports-Fiscal-Third-Quarter-2026-Financial-Results/,Issuer release states amount and record date
+rPM-2026-06-25-1,2026-06-11,1.47,https://www.pmi.com/media-center/press-releases/press-details?newsId=30181,Issuer release states amount and ex-date
+rMDT-2026-06-26-1,2026-06-03,0.72,https://news.medtronic.com/2026-06-03-Medtronic-reports-fourth-quarter-and-full-year-fiscal-2026-results-delivers-highest-annual-revenue-growth-in-10-years,Issuer release states amount and record date
+rDIS-2026-06-30-1,2025-11-13,0.75,https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-reports-fourth-quarter-and-full-year-earnings-for-fiscal-2025/,Issuer release states the second installment amount and record date
+rCMCSA-2026-07-01-1,2026-05-13,0.33,https://cmcsa.gcs-web.com/stock-performance/dividends-and-stock-splits,Issuer dividend history states declared date ex-date and amount
+rPWR-2026-07-01-1,2026-05-22,0.11,https://investors.quantaservices.com/news-events/press-releases/detail/399/quanta-services-announces-quarterly-cash-dividend-and-new-1-billion-stock-repurchase-program,Issuer release states amount and record date; publication follows API announcement date by one day
+rMPWR-2026-06-30-1,2026-06-12,2.00,https://www.monolithicpower.com/media/investor-relations/filings/Q2_2026_Dividend_and_Annual_Shareholder_Voting_Results_8-K.pdf,Issuer filing reports June 12 release with amount and record date
+rCSCO-2026-07-06-1,2026-05-13,0.42,https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-THIRD-QUARTER-EARNINGS/default.aspx,Issuer release states amount and record date
+rMU-2026-07-06-1,2026-06-24,0.15,https://investors.micron.com/static-files/f2205e01-6759-4427-8ab1-d70647c3f78f,Issuer June 24 filing states amount and record date

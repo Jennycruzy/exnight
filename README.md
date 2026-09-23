@@ -214,7 +214,8 @@ approve a trade.
 - The walk-forward produces no EXIT trades at the frozen confidence threshold. Rolling
   30-day Sharpe is `INSUFFICIENT_EVENTS`; there is no supported active-alpha claim.
 - Seventy-one otherwise usable events lack pre-decision gross-basis evidence in the saved
-  record. They remain excluded rather than being repaired with later data.
+  record. They remain excluded from the frozen scorecard; a separate
+  [source audit](docs/dividend_provenance_audit.md) is checking dated issuer evidence.
 - A ticker quote is not the same as executable liquidity. Exnight reports the distinction.
 - GetAgent exposes dividend dates and amounts, but its selection-basket backtest cannot replay
   Exnight's event-by-event walk-forward test. A local prototype used today's quote and V1's
