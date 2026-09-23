@@ -1,0 +1,57 @@
+{
+  "candidate_rungs": [
+    "overnight_2000",
+    "premarket_0400",
+    "open_0930",
+    "open_1000",
+    "close_1600"
+  ],
+  "capital_base_usdt": 25000,
+  "code_commit": "4a0082d7af9188ad2492d4290446d24cde4f782c",
+  "concurrency_rule": "highest ex-ante lower-bound edge first; ties by decision_ts then event_id; maximum 25 concurrent events",
+  "eligible_ex_ante_rows": 56,
+  "exclusion_counts": {
+    "DISCOVERY_EVENT_UNUSABLE": 58,
+    "NON_CASH_ACTION": 3,
+    "NO_PRE_DECISION_GROSS_DECLARATION": 128,
+    "NO_VALID_T0_OBSERVATION": 57
+  },
+  "fee_source": "per-event documented 0.05% taker rate through 2026-08-31; saved symbol taker rate thereafter; both legs",
+  "fold_scheme": "initial development through 2026-07-31; test 2026-08-01..08-31; refit; test 2026-09-01..09-16",
+  "input_hashes": {
+    "data/ledger/reality_notice59_resolved.jsonl": "9de4df544c9e3651465ad8bff9f25977a8a85d413f2750102dabb9c7db69e359",
+    "data/results/basis_resolution.csv": "1cce55c97891d0497a0a6a387cac1a332bbb6074aef1677712aa4f60a96e3677",
+    "data/results/competition_knowledge_time.csv": "88ac0ebe8b53600bd6dac7b6c29ea9d82fb9c0a5aa6bada191089e982f270f67",
+    "data/results/event_results_resolved.json": "0d8f9371c9ab33b645f29b9fd1637f7b56d1dcd3a2c5c1c8f9245e15ef188d6d",
+    "docs/m2.md": "0d55e8fe7fb0a4aee5d5bda9a51eb25bd9a8100fe75055d2a6504d4295154459",
+    "exnight/competition.py": "0f095285c239fb78146a275a56549653fa0cd989b4b6cc38b11ae62c1fec787d",
+    "strategy/strategy_v1.json": "efd1c41cc6cc4622d91e1faaff2f9d5f7578108d1502a207986d36d666425d22"
+  },
+  "knowledge_time_rows": 185,
+  "min_subperiod_events": 3,
+  "min_training_events": 15,
+  "notional_usdt": 1000,
+  "oos_calendar_days": 47,
+  "oos_end": "2026-09-16",
+  "oos_start": "2026-08-01",
+  "portfolio_definition": "Holder overlay from T0, the final valid Bitget observation at/before the V1 pre-event cutoff, to T1, the first valid observation at/after the selected rung. decision_ts=T0. HOLD accrues retained dividend at T1; EXIT holds USDT and pays modeled round-trip cost; active=policy-HOLD.",
+  "primary_reporting_withholding": 0.0,
+  "procedure": "expanding-window walk-forward selection; initial development window then non-overlapping monthly test folds",
+  "rung_rule_derived_from": [
+    "c7463451532fd346c27526029a39f6625640c0f9",
+    "docs/m2.md sections 2\u20133"
+  ],
+  "rung_rule_written_after_v1_freeze": true,
+  "rung_selection_rule": "On training data only, estimate each candidate by calendar subperiods with at least 3 events. A rung is stable when its point estimate remains above the documented 0.70 retained-dividend alternative and PDR=1 lies within pdr_hat \u00b1 2*SE in every eligible subperiod; choose the earliest stable rung in market-clock order. If none passes, use premarket_0400 as the documented V1 robust fallback.",
+  "slippage_base_bps": 25,
+  "slippage_base_justification": "fixed a priori before OOS computation; uncertainty reported at 10/25/50/100 bps",
+  "slippage_sensitivity_bps": [
+    10,
+    25,
+    50,
+    100
+  ],
+  "v1_provenance": "Case B \u2014 V1 coefficient fit on all 127 usable events; no historical V1 OOS window exists",
+  "withholding_handling": "event-specific only if published pre-decision, else range [0.00, 0.15, 0.25, 0.30]; EXIT must survive 0.00",
+  "written_at": "2026-09-22T18:16:50.088130+00:00"
+}

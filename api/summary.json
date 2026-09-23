@@ -1,18 +1,669 @@
 {
+ "competition": {
+  "cost_grid_bps": [
+   10,
+   25,
+   50,
+   100
+  ],
+  "folds": [
+   {
+    "fold": "OOS_2026_08",
+    "pdr_estimate": 1.034275825976304,
+    "pdr_se": 0.8710489450546619,
+    "selected_rung": "premarket_0400",
+    "selection_diagnostics": {
+     "fallback_used": false,
+     "stable_rungs": [
+      "premarket_0400",
+      "open_0930",
+      "close_1600"
+     ],
+     "subperiods": {
+      "close_1600": [
+       {
+        "cluster_se": 0.20944314072533196,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 0.9966150822349372,
+        "intercept": -0.0018274891319259592,
+        "n": 16,
+        "p_value": 0.49610347418776285,
+        "pdr": 0.8219902787179852,
+        "period": "2026-07",
+        "r2": 0.03370743419309352,
+        "se": 1.1762350999975852
+       }
+      ],
+      "open_0930": [
+       {
+        "cluster_se": 0.0681838639651296,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 0.2871673367697661,
+        "intercept": 0.0010683251312422369,
+        "n": 16,
+        "p_value": 0.04935955574869637,
+        "pdr": 0.8900007470044429,
+        "period": "2026-07",
+        "r2": 0.24851802244986956,
+        "se": 0.41362491750140823
+       }
+      ],
+      "open_1000": [
+       {
+        "cluster_se": 0.11924426401178986,
+        "gross_pdr_not_rejected": false,
+        "hc3_se": 0.5778122427040346,
+        "intercept": -0.0006211843293182937,
+        "n": 16,
+        "p_value": 0.6168837286487974,
+        "pdr": -0.26398515174421205,
+        "period": "2026-07",
+        "r2": 0.01835439970660763,
+        "se": 0.5159679809643221
+       }
+      ],
+      "overnight_2000": [
+       {
+        "cluster_se": 0.02015456475863233,
+        "gross_pdr_not_rejected": false,
+        "hc3_se": 1.6928557394198231,
+        "intercept": -0.0009055301916984047,
+        "n": 16,
+        "p_value": 0.7368358226403445,
+        "pdr": -0.44619340832973897,
+        "period": "2026-07",
+        "r2": 0.008324209506373796,
+        "se": 1.3015848554136005
+       }
+      ],
+      "premarket_0400": [
+       {
+        "cluster_se": 0.009042184559463918,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 1.8986572221814066,
+        "intercept": -2.6045815933583216e-05,
+        "n": 16,
+        "p_value": 0.21736361382064445,
+        "pdr": 1.2080406237180055,
+        "period": "2026-07",
+        "r2": 0.10649372169403873,
+        "se": 0.9351996225417217
+       }
+      ]
+     }
+    },
+    "test_events": 25,
+    "test_period": "2026-08-01..2026-08-31",
+    "test_sharpe": -4.351357043515459,
+    "test_trades": 0,
+    "training_end": "2026-07-31",
+    "training_events": 17
+   },
+   {
+    "fold": "OOS_2026_09",
+    "pdr_estimate": 0.9194329582809133,
+    "pdr_se": 0.3528604632179606,
+    "selected_rung": "open_0930",
+    "selection_diagnostics": {
+     "fallback_used": false,
+     "stable_rungs": [
+      "open_0930",
+      "close_1600"
+     ],
+     "subperiods": {
+      "close_1600": [
+       {
+        "cluster_se": 0.20944314072533196,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 0.9966150822349372,
+        "intercept": -0.0018274891319259592,
+        "n": 16,
+        "p_value": 0.49610347418776285,
+        "pdr": 0.8219902787179852,
+        "period": "2026-07",
+        "r2": 0.03370743419309352,
+        "se": 1.1762350999975852
+       },
+       {
+        "cluster_se": 0.7156060485209035,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 0.9604180133753233,
+        "intercept": 0.002097392776330119,
+        "n": 25,
+        "p_value": 0.03951388446625353,
+        "pdr": 1.5577726111943924,
+        "period": "2026-08",
+        "r2": 0.17161054925975022,
+        "se": 0.7136502708453893
+       }
+      ],
+      "open_0930": [
+       {
+        "cluster_se": 0.0681838639651296,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 0.2871673367697661,
+        "intercept": 0.0010683251312422369,
+        "n": 16,
+        "p_value": 0.04935955574869637,
+        "pdr": 0.8900007470044429,
+        "period": "2026-07",
+        "r2": 0.24851802244986956,
+        "se": 0.41362491750140823
+       },
+       {
+        "cluster_se": 0.513908256524346,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 0.623142483617029,
+        "intercept": 0.0008950391078817508,
+        "n": 25,
+        "p_value": 0.2167259798104075,
+        "pdr": 0.7204036229497645,
+        "period": "2026-08",
+        "r2": 0.06554648392354914,
+        "se": 0.5671737485626798
+       }
+      ],
+      "open_1000": [
+       {
+        "cluster_se": 0.11924426401178986,
+        "gross_pdr_not_rejected": false,
+        "hc3_se": 0.5778122427040346,
+        "intercept": -0.0006211843293182937,
+        "n": 16,
+        "p_value": 0.6168837286487974,
+        "pdr": -0.26398515174421205,
+        "period": "2026-07",
+        "r2": 0.01835439970660763,
+        "se": 0.5159679809643221
+       },
+       {
+        "cluster_se": 0.768257892337639,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 1.1432521316069668,
+        "intercept": 0.0016354591639306006,
+        "n": 25,
+        "p_value": 0.0038475063384658978,
+        "pdr": 1.9569758463340732,
+        "period": "2026-08",
+        "r2": 0.309929765064712,
+        "se": 0.6088867893793861
+       }
+      ],
+      "overnight_2000": [
+       {
+        "cluster_se": 0.02015456475863233,
+        "gross_pdr_not_rejected": false,
+        "hc3_se": 1.6928557394198231,
+        "intercept": -0.0009055301916984047,
+        "n": 16,
+        "p_value": 0.7368358226403445,
+        "pdr": -0.44619340832973897,
+        "period": "2026-07",
+        "r2": 0.008324209506373796,
+        "se": 1.3015848554136005
+       },
+       {
+        "cluster_se": 0.324627288991847,
+        "gross_pdr_not_rejected": false,
+        "hc3_se": 0.3738421618840076,
+        "intercept": 0.002603116623894277,
+        "n": 25,
+        "p_value": 0.6172431895388324,
+        "pdr": 0.45654328671508987,
+        "period": "2026-08",
+        "r2": 0.011036187626291959,
+        "se": 0.9011533584440116
+       }
+      ],
+      "premarket_0400": [
+       {
+        "cluster_se": 0.009042184559463918,
+        "gross_pdr_not_rejected": true,
+        "hc3_se": 1.8986572221814066,
+        "intercept": -2.6045815933583216e-05,
+        "n": 16,
+        "p_value": 0.21736361382064445,
+        "pdr": 1.2080406237180055,
+        "period": "2026-07",
+        "r2": 0.10649372169403873,
+        "se": 0.9351996225417217
+       },
+       {
+        "cluster_se": 0.419116030709504,
+        "gross_pdr_not_rejected": false,
+        "hc3_se": 0.4266530856268247,
+        "intercept": -0.002377761673108481,
+        "n": 25,
+        "p_value": 0.7844018643944553,
+        "pdr": -0.16004103457146387,
+        "period": "2026-08",
+        "r2": 0.003320299768491046,
+        "se": 0.5781713815352582
+       }
+      ]
+     }
+    },
+    "test_events": 14,
+    "test_period": "2026-09-01..2026-09-16",
+    "test_sharpe": 2.379261436725159,
+    "test_trades": 0,
+    "training_end": "2026-08-31",
+    "training_events": 42
+   }
+  ],
+  "modeled_execution": true,
+  "name": "walk-forward OOS performance of the Exnight selection procedure",
+  "oos": {
+   "active": {
+    "annualized_return": 0.0,
+    "information_ratio": null,
+    "maximum_drawdown": 0.0,
+    "sortino": null,
+    "total_return": 0.0,
+    "win_rate": 0.0
+   },
+   "benchmark": {
+    "annualized_return": -0.007394087024370943,
+    "maximum_drawdown": -0.0016870715117968116,
+    "sharpe": -2.5655030118735462,
+    "sortino": -1.5875654248206583,
+    "total_return": -0.0009551962848424189
+   },
+   "policy": {
+    "annualized_return": -0.007394087024370943,
+    "entitlement_uncertain_count": 0,
+    "event_count": 39,
+    "fee_drag": 0.0,
+    "maximum_drawdown": -0.0016870715117968116,
+    "sharpe": -2.5655030118735462,
+    "slippage_drag_MODELED_EXECUTION": 0.0,
+    "sortino": -1.5875654248206583,
+    "total_return": -0.0009551962848424189,
+    "trade_count": 0,
+    "turnover": 0.0,
+    "win_rate": 0.6666666666666666
+   },
+   "rolling_30_day_sharpe": [
+    {
+     "end": "2026-08-30",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-08-31",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-01",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-02",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-03",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-04",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-05",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-06",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-07",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-08",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-09",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-10",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-11",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-12",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-13",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-14",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-15",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    },
+    {
+     "end": "2026-09-16",
+     "status": "INSUFFICIENT_EVENTS",
+     "trade_count": 0
+    }
+   ]
+  },
+  "oos_days": 47,
+  "sample": {
+   "eligible_ex_ante": 56,
+   "excluded": 71,
+   "exclusion_reason_combinations": {
+    "DISCOVERY_EVENT_UNUSABLE": 1,
+    "DISCOVERY_EVENT_UNUSABLE;NO_VALID_T0_OBSERVATION;NO_PRE_DECISION_GROSS_DECLARATION": 54,
+    "NON_CASH_ACTION;DISCOVERY_EVENT_UNUSABLE;NO_VALID_T0_OBSERVATION;NO_PRE_DECISION_GROSS_DECLARATION": 3,
+    "NO_PRE_DECISION_GROSS_DECLARATION": 71
+   },
+   "resolved_usable": 127
+  },
+  "status": "AVAILABLE",
+  "withholding_range": [
+   0,
+   15,
+   25,
+   30
+  ]
+ },
  "depth": {
-  "age_seconds": 3299.761958,
-  "latest": "2026-09-21T23:05:03.552360+00:00",
-  "path": "data/results/depth_samples.csv",
-  "rows": 5133,
-  "status": "PASS",
-  "symbols": 59
+  "book_supported_count": 0,
+  "event_count": 3,
+  "latest": "2026-09-22T14:29:02+00:00",
+  "message": "3 of 3 recorded pairs had no two-sided public book.",
+  "status": "NO_PUBLIC_BOOK"
  },
- "downloads": [],
+ "downloads": [
+  {
+   "href": "evidence/competition_scorecard.json",
+   "label": "Walk-forward scorecard",
+   "name": "competition_scorecard.json"
+  },
+  {
+   "href": "evidence/competition_backtest_manifest.json",
+   "label": "Frozen backtest manifest",
+   "name": "competition_backtest_manifest.json"
+  },
+  {
+   "href": "evidence/forward_score_20260922.json",
+   "label": "September 22 forward score",
+   "name": "forward_score_20260922.json"
+  },
+  {
+   "href": "evidence/forward_capacity_20260922.json",
+   "label": "September 22 book capacity",
+   "name": "forward_capacity_20260922.json"
+  }
+ ],
  "forward_score": {
-  "message": "Available after the September 22 observation window closes.",
-  "status": "PENDING"
+  "message": "1 of 3 events have complete cash basis. Unresolved: rAPH, rSTM.",
+  "path": "data/results/forward_score_20260922.json",
+  "report": {
+   "checked_at": "2026-09-22T14:29:02+00:00",
+   "errors": [],
+   "expected_interval_seconds": 60,
+   "max_age_seconds": null,
+   "max_gap_seconds": 180,
+   "missing_events": [],
+   "results": [
+    {
+     "complete": false,
+     "event_id": "rAPH-2026-09-22-1",
+     "ex_date": "2026-09-22",
+     "frozen_pdr_hat": 0.9656110633409245,
+     "frozen_se": 0.18323952822276032,
+     "gross_dividend": null,
+     "net_dividend": null,
+     "notionals": [
+      {
+       "buy_book_source": "none",
+       "buy_error": "no executable quote",
+       "cost_per_share": null,
+       "frozen_reason": "cash basis UNRESOLVED; gross basis required",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 1000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": null
+      },
+      {
+       "buy_book_source": "none",
+       "buy_error": "no executable quote",
+       "cost_per_share": null,
+       "frozen_reason": "cash basis UNRESOLVED; gross basis required",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 5000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": null
+      },
+      {
+       "buy_book_source": "none",
+       "buy_error": "no executable quote",
+       "cost_per_share": null,
+       "frozen_reason": "cash basis UNRESOLVED; gross basis required",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 25000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": "$25,000 exceeds visible sell liquidity"
+      }
+     ],
+     "post_cutoff": "2026-09-22T04:00:00-04:00",
+     "post_distance_seconds": 4.0,
+     "post_error": null,
+     "post_price": 80.0,
+     "post_price_source": "ticker_last",
+     "pre_cutoff": "2026-09-21T20:00:00-04:00",
+     "pre_distance_seconds": 58.0,
+     "pre_error": null,
+     "pre_price": 81.23,
+     "pre_price_source": "ticker_last",
+     "realized_pdr": null,
+     "rung": "premarket_0400",
+     "symbol": "rAPH"
+    },
+    {
+     "complete": true,
+     "event_id": "rSATA-2026-09-22-1",
+     "ex_date": "2026-09-22",
+     "frozen_pdr_hat": 0.9656110633409245,
+     "frozen_se": 0.18323952822276032,
+     "gross_dividend": 0.0516,
+     "net_dividend": 0.03612,
+     "notionals": [
+      {
+       "buy_book_source": "none",
+       "buy_error": "no executable quote",
+       "cost_per_share": null,
+       "frozen_reason": "",
+       "frozen_verdict": "HOLD",
+       "notional_usd": 1000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": null
+      },
+      {
+       "buy_book_source": "none",
+       "buy_error": "no executable quote",
+       "cost_per_share": null,
+       "frozen_reason": "buy: $5,000 exceeds visible top-of-book ($1,000) on ticker-only symbol",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 5000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": null
+      },
+      {
+       "buy_book_source": "none",
+       "buy_error": "no executable quote",
+       "cost_per_share": null,
+       "frozen_reason": "sell: $25,000 exceeds visible top-of-book ($19,996) on ticker-only symbol; buy: $25,000 exceeds visible top-of-book ($1,000) on ticker-only symbol",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 25000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": null
+      }
+     ],
+     "post_cutoff": "2026-09-22T04:00:00-04:00",
+     "post_distance_seconds": 4.0,
+     "post_error": null,
+     "post_price": 100.01,
+     "post_price_source": "ticker_last",
+     "pre_cutoff": "2026-09-21T20:00:00-04:00",
+     "pre_distance_seconds": 58.0,
+     "pre_error": null,
+     "pre_price": 100.01,
+     "pre_price_source": "ticker_last",
+     "realized_pdr": 0.0,
+     "rung": "premarket_0400",
+     "symbol": "rSATA"
+    },
+    {
+     "complete": false,
+     "event_id": "rSTM-2026-09-22-1",
+     "ex_date": "2026-09-22",
+     "frozen_pdr_hat": 0.9656110633409245,
+     "frozen_se": 0.18323952822276032,
+     "gross_dividend": null,
+     "net_dividend": null,
+     "notionals": [
+      {
+       "buy_book_source": "ticker_only",
+       "buy_error": null,
+       "cost_per_share": null,
+       "frozen_reason": "cash basis UNRESOLVED; gross basis required",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 1000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": null
+      },
+      {
+       "buy_book_source": "ticker_only",
+       "buy_error": null,
+       "cost_per_share": null,
+       "frozen_reason": "cash basis UNRESOLVED; gross basis required",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 5000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": "$5,000 exceeds visible sell liquidity"
+      },
+      {
+       "buy_book_source": "ticker_only",
+       "buy_error": null,
+       "cost_per_share": null,
+       "frozen_reason": "cash basis UNRESOLVED; gross basis required",
+       "frozen_verdict": "NO_SIGNAL",
+       "notional_usd": 25000,
+       "realized_edge_per_share": null,
+       "realized_verdict": "NO_SIGNAL",
+       "sell_book_source": "ticker_only",
+       "sell_error": "$25,000 exceeds visible sell liquidity"
+      }
+     ],
+     "post_cutoff": "2026-09-22T04:00:00-04:00",
+     "post_distance_seconds": 4.0,
+     "post_error": null,
+     "post_price": 51.55,
+     "post_price_source": "ticker_last",
+     "pre_cutoff": "2026-09-21T20:00:00-04:00",
+     "pre_distance_seconds": 58.0,
+     "pre_error": null,
+     "pre_price": 52.11,
+     "pre_price_source": "ticker_last",
+     "realized_pdr": null,
+     "rung": "premarket_0400",
+     "symbol": "rSTM"
+    }
+   ],
+   "rule_id": "exnight-strategy-v1",
+   "status": "INCOMPLETE",
+   "symbols": {
+    "RAPHUSDT": {
+     "duplicate_timestamps": 0,
+     "first_ts": "2026-09-21T16:02:02+00:00",
+     "gaps_over_limit": 0,
+     "last_age_seconds": 0.0,
+     "last_ts": "2026-09-22T14:29:02+00:00",
+     "max_gap_seconds": 63,
+     "nonempty_book_rows": 0,
+     "out_of_order": 0,
+     "rows": 1348,
+     "samples_too_fast": 0,
+     "ticker_rows": 1348
+    },
+    "RSATAUSDT": {
+     "duplicate_timestamps": 0,
+     "first_ts": "2026-09-21T16:02:02+00:00",
+     "gaps_over_limit": 0,
+     "last_age_seconds": 0.0,
+     "last_ts": "2026-09-22T14:29:02+00:00",
+     "max_gap_seconds": 63,
+     "nonempty_book_rows": 0,
+     "out_of_order": 0,
+     "rows": 1348,
+     "samples_too_fast": 0,
+     "ticker_rows": 1348
+    },
+    "RSTMUSDT": {
+     "duplicate_timestamps": 0,
+     "first_ts": "2026-09-21T16:02:02+00:00",
+     "gaps_over_limit": 0,
+     "last_age_seconds": 0.0,
+     "last_ts": "2026-09-22T14:29:02+00:00",
+     "max_gap_seconds": 63,
+     "nonempty_book_rows": 0,
+     "out_of_order": 0,
+     "rows": 1348,
+     "samples_too_fast": 0,
+     "ticker_rows": 1348
+    }
+   }
+  },
+  "status": "INCOMPLETE"
  },
- "generated_at": "2026-09-22T00:04:43.488216Z",
+ "generated_at": "2026-09-23T05:03:35.524901Z",
  "limits": [
   "BUY is suppressed because the Bitget eligibility snapshot time is unpublished.",
   "Current order books are observed-now evidence, not historical event-time fills.",
@@ -22,8 +673,8 @@
  "mode": "PUBLIC_SNAPSHOT",
  "observation": {
   "event_date": "2026-09-22",
-  "message": "Public evidence snapshot. Recorder collection and scoring continue on the private service.",
-  "status": "ACTIVE"
+  "message": "Public evidence snapshot. The September 22 recorder passed cadence checks. 1 of 3 events have complete cash basis. Unresolved: rAPH, rSTM.",
+  "status": "SCORED"
  },
  "project": "EXNIGHT",
  "provenance": {
@@ -36,3649 +687,3650 @@
   "status": "PASS"
  },
  "recorder": {
-  "checked_at": "2026-09-22T00:04:43.488216Z",
+  "checked_at": "2026-09-22T14:29:02+00:00",
   "errors": [],
-  "sample_count": 1449,
+  "mode": "COMPLETED_WINDOW",
+  "sample_count": 4044,
   "status": "PASS",
   "symbols": {
    "RAPHUSDT": {
     "book_coverage": 0.0,
-    "first_ts": "2026-09-21T16:02:02Z",
-    "last_age_display": "41s",
-    "last_age_seconds": 41.488216,
-    "last_ts": "2026-09-22T00:04:02Z",
-    "max_gap_seconds": 62.0,
+    "first_ts": "2026-09-21T16:02:02+00:00",
+    "last_age_display": "22 Sep 14:29 UTC",
+    "last_age_seconds": null,
+    "last_ts": "2026-09-22T14:29:02+00:00",
+    "max_gap_seconds": 63.0,
     "nonempty_book_rows": 0,
-    "rows": 483,
+    "rows": 1348,
     "series": [
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:05:03Z"
+      "price": 80.49,
+      "ts": "2026-09-22T10:30:04Z"
      },
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:06:03Z"
+      "price": 80.49,
+      "ts": "2026-09-22T10:31:03Z"
      },
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:07:02Z"
+      "price": 80.49,
+      "ts": "2026-09-22T10:32:02Z"
      },
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:08:02Z"
+      "price": 80.49,
+      "ts": "2026-09-22T10:33:02Z"
      },
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:09:02Z"
+      "price": 80.55,
+      "ts": "2026-09-22T10:34:02Z"
      },
      {
       "book": false,
-      "price": 80.76,
-      "ts": "2026-09-21T20:10:03Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:35:03Z"
      },
      {
       "book": false,
-      "price": 80.62,
-      "ts": "2026-09-21T20:11:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:36:03Z"
      },
      {
       "book": false,
-      "price": 81.17,
-      "ts": "2026-09-21T20:12:03Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:37:02Z"
      },
      {
       "book": false,
-      "price": 81.17,
-      "ts": "2026-09-21T20:13:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:38:02Z"
      },
      {
       "book": false,
-      "price": 81.17,
-      "ts": "2026-09-21T20:14:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:39:03Z"
      },
      {
       "book": false,
-      "price": 81.17,
-      "ts": "2026-09-21T20:15:03Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:40:03Z"
      },
      {
       "book": false,
-      "price": 81.04,
-      "ts": "2026-09-21T20:16:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:41:02Z"
      },
      {
       "book": false,
-      "price": 81.04,
-      "ts": "2026-09-21T20:17:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:42:03Z"
      },
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:18:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:43:02Z"
      },
      {
       "book": false,
-      "price": 80.73,
-      "ts": "2026-09-21T20:19:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:44:02Z"
      },
      {
       "book": false,
-      "price": 81.2,
-      "ts": "2026-09-21T20:20:03Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:45:02Z"
      },
      {
       "book": false,
-      "price": 80.72,
-      "ts": "2026-09-21T20:21:02Z"
+      "price": 80.53,
+      "ts": "2026-09-22T10:46:01Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:49:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:51:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:52:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:53:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:55:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.53,
+      "ts": "2026-09-22T10:56:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.48,
+      "ts": "2026-09-22T10:57:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.48,
+      "ts": "2026-09-22T10:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.48,
+      "ts": "2026-09-22T10:59:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.48,
+      "ts": "2026-09-22T11:00:04Z"
+     },
+     {
+      "book": false,
+      "price": 80.74,
+      "ts": "2026-09-22T11:01:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.74,
+      "ts": "2026-09-22T11:02:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.74,
+      "ts": "2026-09-22T11:03:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.74,
+      "ts": "2026-09-22T11:04:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.74,
+      "ts": "2026-09-22T11:05:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.6,
+      "ts": "2026-09-22T11:06:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.6,
+      "ts": "2026-09-22T11:07:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.6,
+      "ts": "2026-09-22T11:08:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.6,
+      "ts": "2026-09-22T11:09:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.95,
+      "ts": "2026-09-22T11:10:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:11:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:12:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:13:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:15:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:16:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:17:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:18:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.37,
+      "ts": "2026-09-22T11:19:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.88,
+      "ts": "2026-09-22T11:20:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.88,
+      "ts": "2026-09-22T11:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.88,
+      "ts": "2026-09-22T11:22:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.88,
+      "ts": "2026-09-22T11:23:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:25:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:26:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:29:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:31:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.77,
+      "ts": "2026-09-22T11:32:03Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:22:02Z"
+      "ts": "2026-09-22T11:33:02Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:23:02Z"
+      "ts": "2026-09-22T11:34:02Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:24:03Z"
+      "ts": "2026-09-22T11:35:03Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:25:02Z"
+      "ts": "2026-09-22T11:36:03Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:26:02Z"
+      "ts": "2026-09-22T11:37:02Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:27:02Z"
+      "ts": "2026-09-22T11:38:02Z"
      },
      {
       "book": false,
-      "price": 81.05,
-      "ts": "2026-09-21T20:28:02Z"
+      "price": 80.7,
+      "ts": "2026-09-22T11:39:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:40:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:41:01Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:42:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:45:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:46:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:49:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.7,
+      "ts": "2026-09-22T11:51:02Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:29:02Z"
+      "ts": "2026-09-22T11:52:03Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:30:04Z"
+      "ts": "2026-09-22T11:53:03Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:31:02Z"
+      "ts": "2026-09-22T11:54:03Z"
      },
      {
       "book": false,
       "price": 80.5,
-      "ts": "2026-09-21T20:32:02Z"
+      "ts": "2026-09-22T11:55:02Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:33:02Z"
+      "price": 80.5,
+      "ts": "2026-09-22T11:56:02Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:34:01Z"
+      "price": 80.5,
+      "ts": "2026-09-22T11:57:02Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:35:02Z"
+      "price": 80.45,
+      "ts": "2026-09-22T11:58:02Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:36:03Z"
+      "price": 80.99,
+      "ts": "2026-09-22T11:59:03Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:37:02Z"
+      "price": 80.99,
+      "ts": "2026-09-22T12:00:04Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:38:02Z"
+      "price": 80.99,
+      "ts": "2026-09-22T12:01:03Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:39:02Z"
+      "price": 80.99,
+      "ts": "2026-09-22T12:02:02Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:40:03Z"
+      "price": 80.99,
+      "ts": "2026-09-22T12:03:02Z"
      },
      {
       "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.7,
-      "ts": "2026-09-21T20:42:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.86,
-      "ts": "2026-09-21T20:43:01Z"
-     },
-     {
-      "book": false,
-      "price": 80.86,
-      "ts": "2026-09-21T20:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.86,
-      "ts": "2026-09-21T20:45:03Z"
+      "price": 80.99,
+      "ts": "2026-09-22T12:04:01Z"
      },
      {
       "book": false,
       "price": 81.0,
-      "ts": "2026-09-21T20:46:02Z"
+      "ts": "2026-09-22T12:05:03Z"
      },
      {
       "book": false,
-      "price": 81.23,
-      "ts": "2026-09-21T20:47:02Z"
+      "price": 81.0,
+      "ts": "2026-09-22T12:06:03Z"
      },
      {
       "book": false,
-      "price": 81.23,
-      "ts": "2026-09-21T20:48:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:07:02Z"
      },
      {
       "book": false,
-      "price": 80.84,
-      "ts": "2026-09-21T20:49:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:08:02Z"
      },
      {
       "book": false,
-      "price": 80.84,
-      "ts": "2026-09-21T20:50:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:09:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:51:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:10:03Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:52:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:11:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:53:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:12:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:54:03Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:13:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:55:03Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:14:03Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:56:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:15:03Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:57:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:16:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:58:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:17:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T20:59:01Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:18:03Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T21:00:03Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:19:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T21:01:03Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:20:03Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T21:02:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:21:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T21:03:01Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:22:02Z"
      },
      {
       "book": false,
-      "price": 80.83,
-      "ts": "2026-09-21T21:04:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:23:02Z"
      },
      {
       "book": false,
-      "price": 81.14,
-      "ts": "2026-09-21T21:05:03Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:24:03Z"
      },
      {
       "book": false,
-      "price": 81.14,
-      "ts": "2026-09-21T21:06:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:25:03Z"
      },
      {
       "book": false,
-      "price": 81.14,
-      "ts": "2026-09-21T21:07:02Z"
+      "price": 80.67,
+      "ts": "2026-09-22T12:26:02Z"
      },
      {
       "book": false,
-      "price": 81.14,
-      "ts": "2026-09-21T21:08:02Z"
+      "price": 81.0,
+      "ts": "2026-09-22T12:27:02Z"
      },
      {
       "book": false,
-      "price": 81.17,
-      "ts": "2026-09-21T21:09:02Z"
+      "price": 81.0,
+      "ts": "2026-09-22T12:28:02Z"
      },
      {
       "book": false,
-      "price": 81.12,
-      "ts": "2026-09-21T21:10:03Z"
+      "price": 81.0,
+      "ts": "2026-09-22T12:29:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:31:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:32:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:34:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.66,
+      "ts": "2026-09-22T12:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.66,
+      "ts": "2026-09-22T12:37:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.66,
+      "ts": "2026-09-22T12:38:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.66,
+      "ts": "2026-09-22T12:39:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.66,
+      "ts": "2026-09-22T12:40:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:41:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:42:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:45:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:46:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T12:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:49:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:51:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:52:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T12:53:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T12:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T12:55:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T12:56:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T12:57:01Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T12:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T12:59:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:00:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:01:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:02:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:03:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:04:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:05:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:06:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:07:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:08:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:09:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:10:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:11:01Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:12:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:13:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.0,
+      "ts": "2026-09-22T13:15:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:16:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:17:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:18:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.72,
+      "ts": "2026-09-22T13:19:01Z"
+     },
+     {
+      "book": false,
+      "price": 80.51,
+      "ts": "2026-09-22T13:20:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.4,
+      "ts": "2026-09-22T13:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.4,
+      "ts": "2026-09-22T13:22:01Z"
+     },
+     {
+      "book": false,
+      "price": 80.4,
+      "ts": "2026-09-22T13:23:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T13:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.26,
+      "ts": "2026-09-22T13:25:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.27,
+      "ts": "2026-09-22T13:26:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.27,
+      "ts": "2026-09-22T13:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.21,
+      "ts": "2026-09-22T13:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.21,
+      "ts": "2026-09-22T13:29:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.0,
+      "ts": "2026-09-22T13:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 79.68,
+      "ts": "2026-09-22T13:31:03Z"
+     },
+     {
+      "book": false,
+      "price": 79.6,
+      "ts": "2026-09-22T13:32:02Z"
+     },
+     {
+      "book": false,
+      "price": 79.95,
+      "ts": "2026-09-22T13:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.14,
+      "ts": "2026-09-22T13:34:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.31,
+      "ts": "2026-09-22T13:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.51,
+      "ts": "2026-09-22T13:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.49,
+      "ts": "2026-09-22T13:37:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.42,
+      "ts": "2026-09-22T13:38:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.11,
+      "ts": "2026-09-22T13:39:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.58,
+      "ts": "2026-09-22T13:40:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.43,
+      "ts": "2026-09-22T13:41:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.34,
+      "ts": "2026-09-22T13:42:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.3,
+      "ts": "2026-09-22T13:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.35,
+      "ts": "2026-09-22T13:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 80.66,
+      "ts": "2026-09-22T13:45:03Z"
+     },
+     {
+      "book": false,
+      "price": 80.75,
+      "ts": "2026-09-22T13:46:02Z"
      },
      {
       "book": false,
       "price": 80.82,
-      "ts": "2026-09-21T21:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T21:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T21:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T21:14:02Z"
+      "ts": "2026-09-22T13:47:02Z"
      },
      {
       "book": false,
       "price": 80.82,
-      "ts": "2026-09-21T21:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.2,
-      "ts": "2026-09-21T21:16:02Z"
+      "ts": "2026-09-22T13:48:03Z"
      },
      {
       "book": false,
       "price": 81.05,
-      "ts": "2026-09-21T21:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T21:18:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T21:19:02Z"
+      "ts": "2026-09-22T13:49:02Z"
      },
      {
       "book": false,
       "price": 80.98,
-      "ts": "2026-09-21T21:20:03Z"
+      "ts": "2026-09-22T13:50:03Z"
      },
      {
       "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:21:02Z"
+      "price": 81.28,
+      "ts": "2026-09-22T13:51:02Z"
      },
      {
       "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:24:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.04,
-      "ts": "2026-09-21T21:25:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.04,
-      "ts": "2026-09-21T21:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.04,
-      "ts": "2026-09-21T21:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.04,
-      "ts": "2026-09-21T21:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T21:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.91,
-      "ts": "2026-09-21T21:30:04Z"
-     },
-     {
-      "book": false,
-      "price": 80.91,
-      "ts": "2026-09-21T21:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:34:02Z"
+      "price": 81.18,
+      "ts": "2026-09-22T13:52:03Z"
      },
      {
       "book": false,
       "price": 81.03,
-      "ts": "2026-09-21T21:35:02Z"
+      "ts": "2026-09-22T13:53:03Z"
      },
      {
       "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T21:36:03Z"
+      "price": 81.06,
+      "ts": "2026-09-22T13:54:03Z"
      },
      {
       "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T21:37:01Z"
+      "price": 81.11,
+      "ts": "2026-09-22T13:55:03Z"
      },
      {
       "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T21:38:02Z"
+      "price": 81.19,
+      "ts": "2026-09-22T13:56:02Z"
      },
      {
       "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T21:39:02Z"
+      "price": 81.26,
+      "ts": "2026-09-22T13:57:02Z"
      },
      {
       "book": false,
-      "price": 80.9,
-      "ts": "2026-09-21T21:40:02Z"
+      "price": 81.22,
+      "ts": "2026-09-22T13:58:02Z"
      },
      {
       "book": false,
-      "price": 80.9,
-      "ts": "2026-09-21T21:41:02Z"
+      "price": 81.28,
+      "ts": "2026-09-22T13:59:02Z"
      },
      {
       "book": false,
-      "price": 80.9,
-      "ts": "2026-09-21T21:42:03Z"
+      "price": 81.32,
+      "ts": "2026-09-22T14:00:04Z"
      },
      {
       "book": false,
-      "price": 81.05,
-      "ts": "2026-09-21T21:43:02Z"
+      "price": 81.33,
+      "ts": "2026-09-22T14:01:03Z"
      },
      {
       "book": false,
-      "price": 81.05,
-      "ts": "2026-09-21T21:44:02Z"
+      "price": 81.25,
+      "ts": "2026-09-22T14:02:02Z"
      },
      {
       "book": false,
-      "price": 81.05,
-      "ts": "2026-09-21T21:45:02Z"
+      "price": 81.43,
+      "ts": "2026-09-22T14:03:02Z"
      },
      {
       "book": false,
-      "price": 81.05,
-      "ts": "2026-09-21T21:46:02Z"
+      "price": 81.4,
+      "ts": "2026-09-22T14:04:02Z"
      },
      {
       "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T21:47:02Z"
+      "price": 81.45,
+      "ts": "2026-09-22T14:05:03Z"
      },
      {
       "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T21:48:03Z"
+      "price": 81.45,
+      "ts": "2026-09-22T14:06:03Z"
      },
      {
       "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T21:49:01Z"
+      "price": 81.47,
+      "ts": "2026-09-22T14:07:02Z"
      },
      {
       "book": false,
-      "price": 80.9,
-      "ts": "2026-09-21T21:50:03Z"
+      "price": 81.42,
+      "ts": "2026-09-22T14:08:02Z"
      },
      {
       "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:51:01Z"
+      "price": 81.35,
+      "ts": "2026-09-22T14:09:02Z"
      },
      {
       "book": false,
-      "price": 80.98,
-      "ts": "2026-09-21T21:52:03Z"
+      "price": 81.44,
+      "ts": "2026-09-22T14:10:04Z"
      },
      {
       "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T21:53:02Z"
+      "price": 81.34,
+      "ts": "2026-09-22T14:11:02Z"
      },
      {
       "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T21:54:03Z"
+      "price": 81.27,
+      "ts": "2026-09-22T14:12:03Z"
      },
      {
       "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T21:55:03Z"
+      "price": 81.29,
+      "ts": "2026-09-22T14:13:01Z"
      },
      {
       "book": false,
-      "price": 80.94,
-      "ts": "2026-09-21T21:56:02Z"
+      "price": 81.43,
+      "ts": "2026-09-22T14:14:03Z"
      },
      {
       "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T21:57:02Z"
+      "price": 81.43,
+      "ts": "2026-09-22T14:15:02Z"
      },
      {
       "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T21:58:02Z"
+      "price": 81.41,
+      "ts": "2026-09-22T14:16:02Z"
      },
      {
       "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T21:59:02Z"
+      "price": 81.36,
+      "ts": "2026-09-22T14:17:02Z"
      },
      {
       "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:00:03Z"
+      "price": 81.38,
+      "ts": "2026-09-22T14:18:03Z"
      },
      {
       "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:01:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:02:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:03:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:04:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:05:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.02,
-      "ts": "2026-09-21T22:06:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.02,
-      "ts": "2026-09-21T22:07:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T22:16:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T22:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T22:18:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T22:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:24:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:25:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.92,
-      "ts": "2026-09-21T22:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T22:30:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.0,
-      "ts": "2026-09-21T22:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:34:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:35:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:36:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:37:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:38:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:39:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:40:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T22:42:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:43:01Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:45:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:46:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:47:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:48:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:49:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T22:50:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:51:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:52:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:53:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:54:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:55:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:56:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:57:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:58:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T22:59:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T23:00:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.01,
-      "ts": "2026-09-21T23:01:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:02:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:03:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:04:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:05:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:06:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:07:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.97,
-      "ts": "2026-09-21T23:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T23:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T23:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T23:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T23:16:03Z"
-     },
-     {
-      "book": false,
-      "price": 81.03,
-      "ts": "2026-09-21T23:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.96,
-      "ts": "2026-09-21T23:18:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.96,
-      "ts": "2026-09-21T23:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.96,
-      "ts": "2026-09-21T23:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.96,
-      "ts": "2026-09-21T23:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.96,
-      "ts": "2026-09-21T23:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.96,
-      "ts": "2026-09-21T23:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:24:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:25:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.9,
-      "ts": "2026-09-21T23:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.9,
-      "ts": "2026-09-21T23:30:04Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:34:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:35:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:36:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:37:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:38:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.91,
-      "ts": "2026-09-21T23:39:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T23:40:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T23:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T23:42:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T23:43:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:45:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:46:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:47:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:48:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.95,
-      "ts": "2026-09-21T23:49:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.89,
-      "ts": "2026-09-21T23:50:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:51:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:52:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:53:03Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:54:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:55:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:56:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:57:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.88,
-      "ts": "2026-09-21T23:58:02Z"
+      "price": 81.26,
+      "ts": "2026-09-22T14:19:02Z"
      },
      {
       "book": false,
       "price": 81.23,
-      "ts": "2026-09-21T23:59:02Z"
+      "ts": "2026-09-22T14:20:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.22,
+      "ts": "2026-09-22T14:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.1,
+      "ts": "2026-09-22T14:22:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.19,
+      "ts": "2026-09-22T14:23:02Z"
+     },
+     {
+      "book": false,
+      "price": 81.1,
+      "ts": "2026-09-22T14:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 81.24,
+      "ts": "2026-09-22T14:25:03Z"
      },
      {
       "book": false,
       "price": 81.23,
-      "ts": "2026-09-22T00:00:03Z"
+      "ts": "2026-09-22T14:26:02Z"
      },
      {
       "book": false,
-      "price": 81.23,
-      "ts": "2026-09-22T00:01:03Z"
+      "price": 81.28,
+      "ts": "2026-09-22T14:27:02Z"
      },
      {
       "book": false,
-      "price": 81.23,
-      "ts": "2026-09-22T00:02:02Z"
+      "price": 81.38,
+      "ts": "2026-09-22T14:28:02Z"
      },
      {
       "book": false,
-      "price": 81.23,
-      "ts": "2026-09-22T00:03:02Z"
-     },
-     {
-      "book": false,
-      "price": 80.73,
-      "ts": "2026-09-22T00:04:02Z"
+      "price": 81.29,
+      "ts": "2026-09-22T14:29:02Z"
      }
     ],
-    "ticker_rows": 483
+    "ticker_rows": 1348
    },
    "RSATAUSDT": {
     "book_coverage": 0.0,
-    "first_ts": "2026-09-21T16:02:02Z",
-    "last_age_display": "41s",
-    "last_age_seconds": 41.488216,
-    "last_ts": "2026-09-22T00:04:02Z",
-    "max_gap_seconds": 62.0,
+    "first_ts": "2026-09-21T16:02:02+00:00",
+    "last_age_display": "22 Sep 14:29 UTC",
+    "last_age_seconds": null,
+    "last_ts": "2026-09-22T14:29:02+00:00",
+    "max_gap_seconds": 63.0,
     "nonempty_book_rows": 0,
-    "rows": 483,
+    "rows": 1348,
     "series": [
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:05:03Z"
+      "price": 99.98,
+      "ts": "2026-09-22T10:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 99.98,
+      "ts": "2026-09-22T10:31:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.98,
+      "ts": "2026-09-22T10:32:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.98,
+      "ts": "2026-09-22T10:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:34:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:37:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:38:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:39:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:40:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:41:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:42:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:45:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:46:01Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:49:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:51:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:52:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:53:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:55:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:56:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:57:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T10:59:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T20:06:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:07:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:12:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:16:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:18:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.0,
-      "ts": "2026-09-21T20:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.0,
-      "ts": "2026-09-21T20:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.0,
-      "ts": "2026-09-21T20:24:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.0,
-      "ts": "2026-09-21T20:25:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:30:04Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:34:01Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:35:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:36:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:37:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:38:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:39:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:40:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:42:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:43:01Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:45:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:46:02Z"
+      "ts": "2026-09-22T11:00:04Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T20:47:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:48:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:49:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:50:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:51:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:52:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:53:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:54:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:55:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:56:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:57:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:58:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T20:59:01Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:00:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:01:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:02:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:03:01Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:04:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:05:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:06:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:07:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:14:02Z"
+      "ts": "2026-09-22T11:01:03Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:15:03Z"
+      "ts": "2026-09-22T11:02:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:16:02Z"
+      "ts": "2026-09-22T11:03:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:17:02Z"
+      "ts": "2026-09-22T11:04:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:18:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:24:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:25:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:29:02Z"
+      "ts": "2026-09-22T11:05:03Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:30:04Z"
+      "ts": "2026-09-22T11:06:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:34:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:35:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:36:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:37:01Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:38:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:39:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:40:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:42:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:43:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:45:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:46:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:47:02Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:48:03Z"
-     },
-     {
-      "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:49:01Z"
+      "ts": "2026-09-22T11:07:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:50:03Z"
+      "ts": "2026-09-22T11:08:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:51:01Z"
+      "ts": "2026-09-22T11:09:02Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:52:03Z"
+      "ts": "2026-09-22T11:10:03Z"
      },
      {
       "book": false,
       "price": 100.0,
-      "ts": "2026-09-21T21:53:02Z"
+      "ts": "2026-09-22T11:11:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:54:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:12:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:55:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:13:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:56:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:14:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:57:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T11:15:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:58:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T11:16:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T21:59:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T11:17:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:00:03Z"
+      "price": 99.99,
+      "ts": "2026-09-22T11:18:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:01:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T11:19:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:02:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:20:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:03:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:21:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:04:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:22:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:05:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:23:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:06:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:24:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:07:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:25:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:08:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:26:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:09:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:27:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:10:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:28:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:11:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:29:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:12:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:30:04Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:13:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:31:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:14:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:32:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:15:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:33:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:16:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:34:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:17:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:35:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:18:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:36:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:19:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:37:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:20:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:38:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:21:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:39:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:22:02Z"
+      "ts": "2026-09-22T11:40:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:23:02Z"
+      "ts": "2026-09-22T11:41:01Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:24:02Z"
+      "ts": "2026-09-22T11:42:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:25:03Z"
+      "ts": "2026-09-22T11:43:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:26:02Z"
+      "ts": "2026-09-22T11:44:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:27:02Z"
+      "ts": "2026-09-22T11:45:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:28:02Z"
+      "ts": "2026-09-22T11:46:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:29:02Z"
+      "ts": "2026-09-22T11:47:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T22:30:03Z"
+      "ts": "2026-09-22T11:48:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:31:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:49:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:32:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:50:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:33:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:51:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:34:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:52:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:35:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:53:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:36:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:54:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:37:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:55:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:38:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:56:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:39:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:57:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:40:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:58:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:41:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T11:59:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:42:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:00:04Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:43:01Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:01:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:44:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:02:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:45:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:03:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:46:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:04:01Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:47:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:05:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:48:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:06:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:49:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:07:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:50:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:08:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:51:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:09:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:52:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:10:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:53:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:11:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:54:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:12:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:55:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:13:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:56:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:14:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:57:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:15:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:58:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:16:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T22:59:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:17:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:00:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:18:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:01:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:19:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:02:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:20:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:03:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:21:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:04:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:22:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:05:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:23:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:06:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:24:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:07:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:25:03Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:08:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:26:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:09:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:27:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:10:03Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:28:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:11:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T12:29:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:12:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T12:30:04Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:13:02Z"
+      "price": 99.99,
+      "ts": "2026-09-22T12:31:02Z"
      },
      {
       "book": false,
-      "price": 100.01,
-      "ts": "2026-09-21T23:14:02Z"
+      "price": 100.0,
+      "ts": "2026-09-22T12:32:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:34:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:37:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:38:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:39:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:40:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:41:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:42:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:45:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:46:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:49:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:51:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:52:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:53:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:55:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:56:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:57:01Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T12:59:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:00:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:01:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:02:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:03:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:04:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:05:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:06:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:07:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:08:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:09:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:10:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:11:01Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:12:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:13:02Z"
+     },
+     {
+      "book": false,
+      "price": 99.99,
+      "ts": "2026-09-22T13:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:15:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:16:02Z"
      },
      {
       "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:17:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:18:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:19:01Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:20:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:22:01Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:23:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:25:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:26:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:29:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:30:04Z"
+     },
+     {
+      "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:15:03Z"
+      "ts": "2026-09-22T13:31:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:16:03Z"
+      "ts": "2026-09-22T13:32:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:17:02Z"
+      "ts": "2026-09-22T13:33:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:18:02Z"
+      "ts": "2026-09-22T13:34:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:19:02Z"
+      "ts": "2026-09-22T13:35:03Z"
      },
      {
       "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:36:03Z"
+     },
+     {
+      "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:20:03Z"
+      "ts": "2026-09-22T13:37:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:21:02Z"
+      "ts": "2026-09-22T13:38:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:22:02Z"
+      "ts": "2026-09-22T13:39:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:23:02Z"
+      "ts": "2026-09-22T13:40:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:24:03Z"
+      "ts": "2026-09-22T13:41:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:25:02Z"
+      "ts": "2026-09-22T13:42:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:43:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:26:02Z"
+      "ts": "2026-09-22T13:44:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:27:02Z"
+      "ts": "2026-09-22T13:45:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:46:02Z"
      },
      {
       "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:47:02Z"
+     },
+     {
+      "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:28:02Z"
+      "ts": "2026-09-22T13:48:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:29:02Z"
+      "ts": "2026-09-22T13:49:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:30:04Z"
+      "ts": "2026-09-22T13:50:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:31:02Z"
+      "ts": "2026-09-22T13:51:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:32:02Z"
+      "ts": "2026-09-22T13:52:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:33:02Z"
+      "ts": "2026-09-22T13:53:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T13:54:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:34:02Z"
+      "ts": "2026-09-22T13:55:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:35:02Z"
+      "ts": "2026-09-22T13:56:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:36:02Z"
+      "ts": "2026-09-22T13:57:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:37:02Z"
+      "ts": "2026-09-22T13:58:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:38:02Z"
+      "ts": "2026-09-22T13:59:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T14:00:04Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:39:03Z"
+      "ts": "2026-09-22T14:01:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:40:03Z"
+      "ts": "2026-09-22T14:02:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:41:02Z"
+      "ts": "2026-09-22T14:03:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:42:02Z"
+      "ts": "2026-09-22T14:04:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:43:02Z"
+      "ts": "2026-09-22T14:05:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:44:02Z"
+      "ts": "2026-09-22T14:06:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:45:03Z"
+      "ts": "2026-09-22T14:07:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:46:02Z"
+      "ts": "2026-09-22T14:08:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:47:02Z"
+      "ts": "2026-09-22T14:09:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:48:03Z"
+      "ts": "2026-09-22T14:10:04Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:49:02Z"
+      "ts": "2026-09-22T14:11:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:50:03Z"
+      "ts": "2026-09-22T14:12:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:51:02Z"
+      "ts": "2026-09-22T14:13:01Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T14:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T14:15:02Z"
+     },
+     {
+      "book": false,
+      "price": 100.0,
+      "ts": "2026-09-22T14:16:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:52:03Z"
+      "ts": "2026-09-22T14:17:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:53:03Z"
+      "ts": "2026-09-22T14:18:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:54:02Z"
+      "ts": "2026-09-22T14:19:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:55:02Z"
+      "ts": "2026-09-22T14:20:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:56:02Z"
+      "ts": "2026-09-22T14:21:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:57:02Z"
+      "ts": "2026-09-22T14:22:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:58:02Z"
+      "ts": "2026-09-22T14:23:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-21T23:59:02Z"
+      "ts": "2026-09-22T14:24:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-22T00:00:03Z"
+      "ts": "2026-09-22T14:25:03Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-22T00:01:03Z"
+      "ts": "2026-09-22T14:26:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-22T00:02:02Z"
+      "ts": "2026-09-22T14:27:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-22T00:03:02Z"
+      "ts": "2026-09-22T14:28:02Z"
      },
      {
       "book": false,
       "price": 100.01,
-      "ts": "2026-09-22T00:04:02Z"
+      "ts": "2026-09-22T14:29:02Z"
      }
     ],
-    "ticker_rows": 483
+    "ticker_rows": 1348
    },
    "RSTMUSDT": {
     "book_coverage": 0.0,
-    "first_ts": "2026-09-21T16:02:02Z",
-    "last_age_display": "41s",
-    "last_age_seconds": 41.488216,
-    "last_ts": "2026-09-22T00:04:02Z",
-    "max_gap_seconds": 62.0,
+    "first_ts": "2026-09-21T16:02:02+00:00",
+    "last_age_display": "22 Sep 14:29 UTC",
+    "last_age_seconds": null,
+    "last_ts": "2026-09-22T14:29:02+00:00",
+    "max_gap_seconds": 63.0,
     "nonempty_book_rows": 0,
-    "rows": 483,
+    "rows": 1348,
     "series": [
      {
       "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:05:03Z"
+      "price": 51.98,
+      "ts": "2026-09-22T10:30:04Z"
      },
      {
       "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:06:03Z"
+      "price": 51.98,
+      "ts": "2026-09-22T10:31:03Z"
      },
      {
       "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:07:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:12:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T20:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T20:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:16:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:18:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.63,
-      "ts": "2026-09-21T20:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T20:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T20:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.58,
-      "ts": "2026-09-21T20:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.58,
-      "ts": "2026-09-21T20:24:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:25:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:30:04Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.6,
-      "ts": "2026-09-21T20:34:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:35:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:36:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:37:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:38:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.65,
-      "ts": "2026-09-21T20:39:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T20:40:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T20:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T20:42:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.69,
-      "ts": "2026-09-21T20:43:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T20:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T20:45:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.72,
-      "ts": "2026-09-21T20:46:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.72,
-      "ts": "2026-09-21T20:47:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.72,
-      "ts": "2026-09-21T20:48:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.72,
-      "ts": "2026-09-21T20:49:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.72,
-      "ts": "2026-09-21T20:50:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:51:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:52:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:53:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:54:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:55:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:56:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.7,
-      "ts": "2026-09-21T20:57:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T20:58:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T20:59:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:00:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:01:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:02:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:03:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:04:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:05:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:06:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.68,
-      "ts": "2026-09-21T21:07:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:16:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:18:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:24:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:25:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.66,
-      "ts": "2026-09-21T21:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:30:04Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:31:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:32:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:33:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.74,
-      "ts": "2026-09-21T21:34:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:35:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:36:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:37:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:38:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:39:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:40:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:41:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:42:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:43:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:44:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:45:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:46:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:47:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:48:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:49:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:50:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:51:01Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:52:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:53:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:54:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.77,
-      "ts": "2026-09-21T21:55:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:56:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:57:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.78,
-      "ts": "2026-09-21T21:58:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T21:59:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:00:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:01:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:02:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:03:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:04:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:05:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:06:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.79,
-      "ts": "2026-09-21T22:07:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.86,
-      "ts": "2026-09-21T22:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.86,
-      "ts": "2026-09-21T22:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.86,
-      "ts": "2026-09-21T22:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.86,
-      "ts": "2026-09-21T22:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.86,
-      "ts": "2026-09-21T22:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.86,
-      "ts": "2026-09-21T22:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T22:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T22:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T22:16:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T22:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T22:18:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T22:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T22:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T22:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T22:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T22:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T22:24:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.92,
-      "ts": "2026-09-21T22:25:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.92,
-      "ts": "2026-09-21T22:26:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.92,
-      "ts": "2026-09-21T22:27:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.92,
-      "ts": "2026-09-21T22:28:02Z"
+      "price": 51.97,
+      "ts": "2026-09-22T10:32:02Z"
      },
      {
       "book": false,
       "price": 51.99,
-      "ts": "2026-09-21T22:29:02Z"
+      "ts": "2026-09-22T10:33:02Z"
      },
      {
       "book": false,
       "price": 51.99,
-      "ts": "2026-09-21T22:30:03Z"
+      "ts": "2026-09-22T10:34:02Z"
      },
      {
       "book": false,
       "price": 51.99,
-      "ts": "2026-09-21T22:31:02Z"
+      "ts": "2026-09-22T10:35:03Z"
      },
      {
       "book": false,
       "price": 52.0,
-      "ts": "2026-09-21T22:32:02Z"
+      "ts": "2026-09-22T10:36:03Z"
      },
      {
       "book": false,
       "price": 52.0,
-      "ts": "2026-09-21T22:33:02Z"
+      "ts": "2026-09-22T10:37:02Z"
      },
      {
       "book": false,
       "price": 52.0,
-      "ts": "2026-09-21T22:34:02Z"
+      "ts": "2026-09-22T10:38:02Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:35:03Z"
+      "price": 52.0,
+      "ts": "2026-09-22T10:39:03Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:36:02Z"
+      "price": 52.01,
+      "ts": "2026-09-22T10:40:03Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:37:02Z"
+      "price": 52.03,
+      "ts": "2026-09-22T10:41:02Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:38:02Z"
+      "price": 52.03,
+      "ts": "2026-09-22T10:42:03Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:39:02Z"
+      "price": 52.05,
+      "ts": "2026-09-22T10:43:02Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:40:03Z"
+      "price": 52.05,
+      "ts": "2026-09-22T10:44:02Z"
      },
      {
       "book": false,
-      "price": 51.91,
-      "ts": "2026-09-21T22:41:02Z"
+      "price": 52.07,
+      "ts": "2026-09-22T10:45:02Z"
      },
      {
       "book": false,
-      "price": 51.91,
-      "ts": "2026-09-21T22:42:03Z"
+      "price": 52.07,
+      "ts": "2026-09-22T10:46:01Z"
      },
      {
       "book": false,
-      "price": 51.91,
-      "ts": "2026-09-21T22:43:01Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:47:02Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:44:02Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:48:03Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:45:03Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:49:02Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:46:03Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:50:03Z"
      },
      {
       "book": false,
-      "price": 51.97,
-      "ts": "2026-09-21T22:47:02Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:51:03Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:48:03Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:52:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:49:02Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:53:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:50:02Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:54:03Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:51:02Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:55:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:52:03Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:56:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:53:02Z"
+      "price": 52.06,
+      "ts": "2026-09-22T10:57:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:54:03Z"
+      "price": 52.11,
+      "ts": "2026-09-22T10:58:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:55:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:56:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:57:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T22:58:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T22:59:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:00:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:01:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:02:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:03:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:04:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:05:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:06:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:07:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:08:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:09:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:10:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:11:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:12:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:13:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:14:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:15:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:16:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:17:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.98,
-      "ts": "2026-09-21T23:18:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:19:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:20:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:21:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:22:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:23:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:24:03Z"
-     },
-     {
-      "book": false,
-      "price": 51.96,
-      "ts": "2026-09-21T23:25:02Z"
-     },
-     {
-      "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T23:26:02Z"
+      "price": 52.12,
+      "ts": "2026-09-22T10:59:02Z"
      },
      {
       "book": false,
       "price": 52.08,
-      "ts": "2026-09-21T23:27:02Z"
+      "ts": "2026-09-22T11:00:04Z"
      },
      {
       "book": false,
-      "price": 52.0,
-      "ts": "2026-09-21T23:28:02Z"
-     },
-     {
-      "book": false,
-      "price": 52.0,
-      "ts": "2026-09-21T23:29:02Z"
-     },
-     {
-      "book": false,
-      "price": 52.0,
-      "ts": "2026-09-21T23:30:04Z"
+      "price": 52.02,
+      "ts": "2026-09-22T11:01:03Z"
      },
      {
       "book": false,
       "price": 51.99,
-      "ts": "2026-09-21T23:31:02Z"
+      "ts": "2026-09-22T11:02:02Z"
      },
      {
       "book": false,
-      "price": 51.99,
-      "ts": "2026-09-21T23:32:02Z"
+      "price": 51.94,
+      "ts": "2026-09-22T11:03:02Z"
      },
      {
       "book": false,
-      "price": 52.09,
-      "ts": "2026-09-21T23:33:02Z"
+      "price": 51.94,
+      "ts": "2026-09-22T11:04:02Z"
      },
      {
       "book": false,
-      "price": 52.09,
-      "ts": "2026-09-21T23:34:02Z"
+      "price": 51.94,
+      "ts": "2026-09-22T11:05:03Z"
      },
      {
       "book": false,
-      "price": 52.09,
-      "ts": "2026-09-21T23:35:02Z"
+      "price": 51.94,
+      "ts": "2026-09-22T11:06:02Z"
      },
      {
       "book": false,
-      "price": 52.09,
-      "ts": "2026-09-21T23:36:02Z"
+      "price": 51.86,
+      "ts": "2026-09-22T11:07:02Z"
      },
      {
       "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T23:37:02Z"
+      "price": 51.86,
+      "ts": "2026-09-22T11:08:02Z"
      },
      {
       "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T23:38:02Z"
+      "price": 51.86,
+      "ts": "2026-09-22T11:09:02Z"
      },
      {
       "book": false,
-      "price": 52.07,
-      "ts": "2026-09-21T23:39:03Z"
+      "price": 51.75,
+      "ts": "2026-09-22T11:10:03Z"
      },
      {
       "book": false,
-      "price": 52.07,
-      "ts": "2026-09-21T23:40:03Z"
+      "price": 51.75,
+      "ts": "2026-09-22T11:11:02Z"
      },
      {
       "book": false,
-      "price": 52.07,
-      "ts": "2026-09-21T23:41:02Z"
+      "price": 51.75,
+      "ts": "2026-09-22T11:12:03Z"
      },
      {
       "book": false,
-      "price": 52.07,
-      "ts": "2026-09-21T23:42:02Z"
+      "price": 51.88,
+      "ts": "2026-09-22T11:13:02Z"
      },
      {
       "book": false,
-      "price": 51.95,
-      "ts": "2026-09-21T23:43:02Z"
+      "price": 51.88,
+      "ts": "2026-09-22T11:14:03Z"
      },
      {
       "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T23:44:02Z"
+      "price": 51.88,
+      "ts": "2026-09-22T11:15:02Z"
      },
      {
       "book": false,
-      "price": 51.9,
-      "ts": "2026-09-21T23:45:03Z"
+      "price": 51.84,
+      "ts": "2026-09-22T11:16:02Z"
      },
      {
       "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T23:46:02Z"
+      "price": 51.84,
+      "ts": "2026-09-22T11:17:02Z"
      },
      {
       "book": false,
-      "price": 51.85,
-      "ts": "2026-09-21T23:47:02Z"
+      "price": 51.75,
+      "ts": "2026-09-22T11:18:02Z"
      },
      {
       "book": false,
-      "price": 51.82,
-      "ts": "2026-09-21T23:48:03Z"
+      "price": 51.75,
+      "ts": "2026-09-22T11:19:03Z"
      },
      {
       "book": false,
-      "price": 51.82,
-      "ts": "2026-09-21T23:49:02Z"
+      "price": 51.75,
+      "ts": "2026-09-22T11:20:03Z"
      },
      {
       "book": false,
-      "price": 51.82,
-      "ts": "2026-09-21T23:50:03Z"
+      "price": 51.77,
+      "ts": "2026-09-22T11:21:02Z"
      },
      {
       "book": false,
-      "price": 51.82,
-      "ts": "2026-09-21T23:51:02Z"
+      "price": 51.77,
+      "ts": "2026-09-22T11:22:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.77,
+      "ts": "2026-09-22T11:23:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.77,
+      "ts": "2026-09-22T11:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.77,
+      "ts": "2026-09-22T11:25:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.77,
+      "ts": "2026-09-22T11:26:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:29:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:31:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:32:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:34:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:37:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T11:38:02Z"
      },
      {
       "book": false,
       "price": 51.89,
-      "ts": "2026-09-21T23:52:03Z"
+      "ts": "2026-09-22T11:39:03Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-21T23:53:03Z"
+      "price": 51.89,
+      "ts": "2026-09-22T11:40:03Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-21T23:54:02Z"
+      "price": 51.91,
+      "ts": "2026-09-22T11:41:01Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T11:42:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T11:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T11:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T11:45:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T11:46:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.87,
+      "ts": "2026-09-22T11:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.85,
+      "ts": "2026-09-22T11:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T11:49:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T11:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T11:51:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T11:52:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T11:53:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T11:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.78,
+      "ts": "2026-09-22T11:55:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.79,
+      "ts": "2026-09-22T11:56:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.79,
+      "ts": "2026-09-22T11:57:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.79,
+      "ts": "2026-09-22T11:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T11:59:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T12:00:04Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T12:01:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T12:02:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.76,
+      "ts": "2026-09-22T12:03:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.76,
+      "ts": "2026-09-22T12:04:01Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T12:05:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.81,
+      "ts": "2026-09-22T12:06:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.79,
+      "ts": "2026-09-22T12:07:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.81,
+      "ts": "2026-09-22T12:08:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:09:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T12:10:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.71,
+      "ts": "2026-09-22T12:11:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.71,
+      "ts": "2026-09-22T12:12:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.73,
+      "ts": "2026-09-22T12:13:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.73,
+      "ts": "2026-09-22T12:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.73,
+      "ts": "2026-09-22T12:15:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.66,
+      "ts": "2026-09-22T12:16:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.71,
+      "ts": "2026-09-22T12:17:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.71,
+      "ts": "2026-09-22T12:18:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.71,
+      "ts": "2026-09-22T12:19:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T12:20:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.7,
+      "ts": "2026-09-22T12:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.72,
+      "ts": "2026-09-22T12:22:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.73,
+      "ts": "2026-09-22T12:23:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.73,
+      "ts": "2026-09-22T12:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:25:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:26:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:29:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 51.74,
+      "ts": "2026-09-22T12:31:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.75,
+      "ts": "2026-09-22T12:32:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T12:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T12:34:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.8,
+      "ts": "2026-09-22T12:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.88,
+      "ts": "2026-09-22T12:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T12:37:02Z"
      },
      {
       "book": false,
       "price": 51.82,
-      "ts": "2026-09-21T23:55:02Z"
+      "ts": "2026-09-22T12:38:03Z"
      },
      {
       "book": false,
       "price": 51.82,
-      "ts": "2026-09-21T23:56:02Z"
+      "ts": "2026-09-22T12:39:03Z"
      },
      {
       "book": false,
-      "price": 51.82,
-      "ts": "2026-09-21T23:57:02Z"
+      "price": 51.94,
+      "ts": "2026-09-22T12:40:03Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-21T23:58:02Z"
+      "price": 51.98,
+      "ts": "2026-09-22T12:41:02Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-21T23:59:02Z"
+      "price": 51.97,
+      "ts": "2026-09-22T12:42:02Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-22T00:00:03Z"
+      "price": 51.99,
+      "ts": "2026-09-22T12:43:02Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-22T00:01:03Z"
+      "price": 52.01,
+      "ts": "2026-09-22T12:44:02Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-22T00:02:02Z"
+      "price": 51.96,
+      "ts": "2026-09-22T12:45:03Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-22T00:03:02Z"
+      "price": 51.96,
+      "ts": "2026-09-22T12:46:02Z"
      },
      {
       "book": false,
-      "price": 52.11,
-      "ts": "2026-09-22T00:04:02Z"
+      "price": 51.94,
+      "ts": "2026-09-22T12:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.94,
+      "ts": "2026-09-22T12:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T12:49:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T12:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.88,
+      "ts": "2026-09-22T12:51:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.9,
+      "ts": "2026-09-22T12:52:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T12:53:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.86,
+      "ts": "2026-09-22T12:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.88,
+      "ts": "2026-09-22T12:55:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.88,
+      "ts": "2026-09-22T12:56:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.88,
+      "ts": "2026-09-22T12:57:01Z"
+     },
+     {
+      "book": false,
+      "price": 51.89,
+      "ts": "2026-09-22T12:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.85,
+      "ts": "2026-09-22T12:59:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.89,
+      "ts": "2026-09-22T13:00:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.85,
+      "ts": "2026-09-22T13:01:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.85,
+      "ts": "2026-09-22T13:02:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.95,
+      "ts": "2026-09-22T13:03:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.93,
+      "ts": "2026-09-22T13:04:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.93,
+      "ts": "2026-09-22T13:05:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.94,
+      "ts": "2026-09-22T13:06:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.0,
+      "ts": "2026-09-22T13:07:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.01,
+      "ts": "2026-09-22T13:08:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.0,
+      "ts": "2026-09-22T13:09:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.03,
+      "ts": "2026-09-22T13:10:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.95,
+      "ts": "2026-09-22T13:11:01Z"
+     },
+     {
+      "book": false,
+      "price": 51.98,
+      "ts": "2026-09-22T13:12:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.94,
+      "ts": "2026-09-22T13:13:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.94,
+      "ts": "2026-09-22T13:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.96,
+      "ts": "2026-09-22T13:15:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T13:16:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.91,
+      "ts": "2026-09-22T13:17:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.87,
+      "ts": "2026-09-22T13:18:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.87,
+      "ts": "2026-09-22T13:19:01Z"
+     },
+     {
+      "book": false,
+      "price": 51.87,
+      "ts": "2026-09-22T13:20:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.81,
+      "ts": "2026-09-22T13:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.84,
+      "ts": "2026-09-22T13:22:01Z"
+     },
+     {
+      "book": false,
+      "price": 51.9,
+      "ts": "2026-09-22T13:23:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.94,
+      "ts": "2026-09-22T13:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.97,
+      "ts": "2026-09-22T13:25:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.98,
+      "ts": "2026-09-22T13:26:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.02,
+      "ts": "2026-09-22T13:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.06,
+      "ts": "2026-09-22T13:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.93,
+      "ts": "2026-09-22T13:29:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.89,
+      "ts": "2026-09-22T13:30:04Z"
+     },
+     {
+      "book": false,
+      "price": 51.9,
+      "ts": "2026-09-22T13:31:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.95,
+      "ts": "2026-09-22T13:32:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.03,
+      "ts": "2026-09-22T13:33:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.01,
+      "ts": "2026-09-22T13:34:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.1,
+      "ts": "2026-09-22T13:35:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.15,
+      "ts": "2026-09-22T13:36:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.07,
+      "ts": "2026-09-22T13:37:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.98,
+      "ts": "2026-09-22T13:38:02Z"
+     },
+     {
+      "book": false,
+      "price": 51.98,
+      "ts": "2026-09-22T13:39:03Z"
+     },
+     {
+      "book": false,
+      "price": 51.99,
+      "ts": "2026-09-22T13:40:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.01,
+      "ts": "2026-09-22T13:41:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.06,
+      "ts": "2026-09-22T13:42:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.05,
+      "ts": "2026-09-22T13:43:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.15,
+      "ts": "2026-09-22T13:44:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.19,
+      "ts": "2026-09-22T13:45:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.21,
+      "ts": "2026-09-22T13:46:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.23,
+      "ts": "2026-09-22T13:47:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.23,
+      "ts": "2026-09-22T13:48:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.25,
+      "ts": "2026-09-22T13:49:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.27,
+      "ts": "2026-09-22T13:50:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.38,
+      "ts": "2026-09-22T13:51:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.43,
+      "ts": "2026-09-22T13:52:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.41,
+      "ts": "2026-09-22T13:53:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.47,
+      "ts": "2026-09-22T13:54:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.5,
+      "ts": "2026-09-22T13:55:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.48,
+      "ts": "2026-09-22T13:56:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.48,
+      "ts": "2026-09-22T13:57:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.58,
+      "ts": "2026-09-22T13:58:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.6,
+      "ts": "2026-09-22T13:59:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.67,
+      "ts": "2026-09-22T14:00:04Z"
+     },
+     {
+      "book": false,
+      "price": 52.66,
+      "ts": "2026-09-22T14:01:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.67,
+      "ts": "2026-09-22T14:02:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.76,
+      "ts": "2026-09-22T14:03:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.74,
+      "ts": "2026-09-22T14:04:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.72,
+      "ts": "2026-09-22T14:05:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.72,
+      "ts": "2026-09-22T14:06:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.77,
+      "ts": "2026-09-22T14:07:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.83,
+      "ts": "2026-09-22T14:08:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.84,
+      "ts": "2026-09-22T14:09:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.83,
+      "ts": "2026-09-22T14:10:04Z"
+     },
+     {
+      "book": false,
+      "price": 52.88,
+      "ts": "2026-09-22T14:11:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.98,
+      "ts": "2026-09-22T14:12:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.98,
+      "ts": "2026-09-22T14:13:01Z"
+     },
+     {
+      "book": false,
+      "price": 52.97,
+      "ts": "2026-09-22T14:14:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.94,
+      "ts": "2026-09-22T14:15:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.95,
+      "ts": "2026-09-22T14:16:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.95,
+      "ts": "2026-09-22T14:17:02Z"
+     },
+     {
+      "book": false,
+      "price": 52.98,
+      "ts": "2026-09-22T14:18:03Z"
+     },
+     {
+      "book": false,
+      "price": 52.98,
+      "ts": "2026-09-22T14:19:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.02,
+      "ts": "2026-09-22T14:20:03Z"
+     },
+     {
+      "book": false,
+      "price": 53.05,
+      "ts": "2026-09-22T14:21:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.08,
+      "ts": "2026-09-22T14:22:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.15,
+      "ts": "2026-09-22T14:23:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.27,
+      "ts": "2026-09-22T14:24:03Z"
+     },
+     {
+      "book": false,
+      "price": 53.3,
+      "ts": "2026-09-22T14:25:03Z"
+     },
+     {
+      "book": false,
+      "price": 53.23,
+      "ts": "2026-09-22T14:26:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.29,
+      "ts": "2026-09-22T14:27:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.28,
+      "ts": "2026-09-22T14:28:02Z"
+     },
+     {
+      "book": false,
+      "price": 53.27,
+      "ts": "2026-09-22T14:29:02Z"
      }
     ],
-    "ticker_rows": 483
+    "ticker_rows": 1348
    }
   }
  },
@@ -3703,78 +4355,135 @@
     "2026-12-15",
     "2027-03-16"
    ],
-   "event_date": "2026-09-22",
+   "event_date": "2026-09-23",
    "event_ids": [
-    "rAPH-2026-09-22-1",
-    "rSATA-2026-09-22-1",
-    "rSTM-2026-09-22-1"
+    "rGFS-2026-09-23-1",
+    "rLRCX-2026-09-23-1",
+    "rSATA-2026-09-23-1"
    ],
    "events": 3,
    "path": "data/results/signals_v1.csv",
    "rows": 9,
    "status": "PASS",
    "verdict_counts": {
-    "HOLD": 1,
-    "NO_SIGNAL": 8
+    "HOLD": 4,
+    "NO_SIGNAL": 5
    }
   },
   "rows": [
    {
-    "basis_tier": null,
+    "basis_tier": 2.0,
     "buy": "SUPPRESSED: eligibility snapshot time unpublished",
-    "buy_book_source": "",
+    "buy_book_source": "ticker_only",
     "cost_per_share": null,
     "drop_ratio": 0.9656110633409245,
-    "event_id": "rAPH-2026-09-22-1",
-    "ex_date": "2026-09-22",
+    "event_id": "rGFS-2026-09-23-1",
+    "ex_date": "2026-09-23",
     "exit_edge_lower": null,
-    "gross_dividend": null,
-    "net_dividend": null,
+    "gross_dividend": 0.12,
+    "net_dividend": 0.084,
     "notional_usd": 1000,
-    "price": 79.05,
-    "reason": "cash basis UNRESOLVED; gross basis required",
-    "sell_book_source": "",
-    "spot_symbol": "RAPHUSDT",
-    "symbol": "rAPH",
+    "price": 44.08,
+    "reason": "buy: $1,000 exceeds visible top-of-book ($44) on ticker-only symbol",
+    "sell_book_source": "ticker_only",
+    "spot_symbol": "RGFSUSDT",
+    "symbol": "rGFS",
     "verdict": "NO_SIGNAL"
    },
    {
-    "basis_tier": null,
+    "basis_tier": 2.0,
     "buy": "SUPPRESSED: eligibility snapshot time unpublished",
-    "buy_book_source": "",
+    "buy_book_source": "ticker_only",
     "cost_per_share": null,
     "drop_ratio": 0.9656110633409245,
-    "event_id": "rAPH-2026-09-22-1",
-    "ex_date": "2026-09-22",
+    "event_id": "rGFS-2026-09-23-1",
+    "ex_date": "2026-09-23",
     "exit_edge_lower": null,
-    "gross_dividend": null,
-    "net_dividend": null,
+    "gross_dividend": 0.12,
+    "net_dividend": 0.084,
     "notional_usd": 5000,
-    "price": 79.05,
-    "reason": "cash basis UNRESOLVED; gross basis required",
-    "sell_book_source": "",
-    "spot_symbol": "RAPHUSDT",
-    "symbol": "rAPH",
+    "price": 44.08,
+    "reason": "buy: $5,000 exceeds visible top-of-book ($44) on ticker-only symbol",
+    "sell_book_source": "ticker_only",
+    "spot_symbol": "RGFSUSDT",
+    "symbol": "rGFS",
     "verdict": "NO_SIGNAL"
    },
    {
-    "basis_tier": null,
+    "basis_tier": 2.0,
     "buy": "SUPPRESSED: eligibility snapshot time unpublished",
-    "buy_book_source": "",
+    "buy_book_source": "ticker_only",
     "cost_per_share": null,
     "drop_ratio": 0.9656110633409245,
-    "event_id": "rAPH-2026-09-22-1",
-    "ex_date": "2026-09-22",
+    "event_id": "rGFS-2026-09-23-1",
+    "ex_date": "2026-09-23",
     "exit_edge_lower": null,
-    "gross_dividend": null,
-    "net_dividend": null,
+    "gross_dividend": 0.12,
+    "net_dividend": 0.084,
     "notional_usd": 25000,
-    "price": 79.05,
-    "reason": "cash basis UNRESOLVED; gross basis required",
-    "sell_book_source": "",
-    "spot_symbol": "RAPHUSDT",
-    "symbol": "rAPH",
+    "price": 44.08,
+    "reason": "buy: $25,000 exceeds visible top-of-book ($44) on ticker-only symbol",
+    "sell_book_source": "ticker_only",
+    "spot_symbol": "RGFSUSDT",
+    "symbol": "rGFS",
     "verdict": "NO_SIGNAL"
+   },
+   {
+    "basis_tier": 2.0,
+    "buy": "SUPPRESSED: eligibility snapshot time unpublished",
+    "buy_book_source": "public_book",
+    "cost_per_share": 2.7196211695484216,
+    "drop_ratio": 0.9656110633409245,
+    "event_id": "rLRCX-2026-09-23-1",
+    "ex_date": "2026-09-23",
+    "exit_edge_lower": -2.752907607272938,
+    "gross_dividend": 0.33,
+    "net_dividend": 0.231,
+    "notional_usd": 1000,
+    "price": 276.14,
+    "reason": null,
+    "sell_book_source": "public_book",
+    "spot_symbol": "RLRCXUSDT",
+    "symbol": "rLRCX",
+    "verdict": "HOLD"
+   },
+   {
+    "basis_tier": 2.0,
+    "buy": "SUPPRESSED: eligibility snapshot time unpublished",
+    "buy_book_source": "public_book",
+    "cost_per_share": 3.317889989901702,
+    "drop_ratio": 0.9656110633409245,
+    "event_id": "rLRCX-2026-09-23-1",
+    "ex_date": "2026-09-23",
+    "exit_edge_lower": -3.3511764276262186,
+    "gross_dividend": 0.33,
+    "net_dividend": 0.231,
+    "notional_usd": 5000,
+    "price": 276.14,
+    "reason": null,
+    "sell_book_source": "public_book",
+    "spot_symbol": "RLRCXUSDT",
+    "symbol": "rLRCX",
+    "verdict": "HOLD"
+   },
+   {
+    "basis_tier": 2.0,
+    "buy": "SUPPRESSED: eligibility snapshot time unpublished",
+    "buy_book_source": "public_book",
+    "cost_per_share": 4.5617042517706485,
+    "drop_ratio": 0.9656110633409245,
+    "event_id": "rLRCX-2026-09-23-1",
+    "ex_date": "2026-09-23",
+    "exit_edge_lower": -4.594990689495165,
+    "gross_dividend": 0.33,
+    "net_dividend": 0.231,
+    "notional_usd": 25000,
+    "price": 276.14,
+    "reason": null,
+    "sell_book_source": "public_book",
+    "spot_symbol": "RLRCXUSDT",
+    "symbol": "rLRCX",
+    "verdict": "HOLD"
    },
    {
     "basis_tier": 2.0,
@@ -3782,8 +4491,8 @@
     "buy_book_source": "ticker_only",
     "cost_per_share": 0.21000100012501552,
     "drop_ratio": 0.9656110633409245,
-    "event_id": "rSATA-2026-09-22-1",
-    "ex_date": "2026-09-22",
+    "event_id": "rSATA-2026-09-23-1",
+    "ex_date": "2026-09-23",
     "exit_edge_lower": -0.21520578856921269,
     "gross_dividend": 0.0516,
     "net_dividend": 0.03612,
@@ -3801,8 +4510,8 @@
     "buy_book_source": "ticker_only",
     "cost_per_share": null,
     "drop_ratio": 0.9656110633409245,
-    "event_id": "rSATA-2026-09-22-1",
-    "ex_date": "2026-09-22",
+    "event_id": "rSATA-2026-09-23-1",
+    "ex_date": "2026-09-23",
     "exit_edge_lower": null,
     "gross_dividend": 0.0516,
     "net_dividend": 0.03612,
@@ -3820,8 +4529,8 @@
     "buy_book_source": "ticker_only",
     "cost_per_share": null,
     "drop_ratio": 0.9656110633409245,
-    "event_id": "rSATA-2026-09-22-1",
-    "ex_date": "2026-09-22",
+    "event_id": "rSATA-2026-09-23-1",
+    "ex_date": "2026-09-23",
     "exit_edge_lower": null,
     "gross_dividend": 0.0516,
     "net_dividend": 0.03612,
@@ -3831,63 +4540,6 @@
     "sell_book_source": "ticker_only",
     "spot_symbol": "RSATAUSDT",
     "symbol": "rSATA",
-    "verdict": "NO_SIGNAL"
-   },
-   {
-    "basis_tier": null,
-    "buy": "SUPPRESSED: eligibility snapshot time unpublished",
-    "buy_book_source": "",
-    "cost_per_share": null,
-    "drop_ratio": 0.9656110633409245,
-    "event_id": "rSTM-2026-09-22-1",
-    "ex_date": "2026-09-22",
-    "exit_edge_lower": null,
-    "gross_dividend": null,
-    "net_dividend": null,
-    "notional_usd": 1000,
-    "price": 48.45,
-    "reason": "cash basis UNRESOLVED; gross basis required",
-    "sell_book_source": "",
-    "spot_symbol": "RSTMUSDT",
-    "symbol": "rSTM",
-    "verdict": "NO_SIGNAL"
-   },
-   {
-    "basis_tier": null,
-    "buy": "SUPPRESSED: eligibility snapshot time unpublished",
-    "buy_book_source": "",
-    "cost_per_share": null,
-    "drop_ratio": 0.9656110633409245,
-    "event_id": "rSTM-2026-09-22-1",
-    "ex_date": "2026-09-22",
-    "exit_edge_lower": null,
-    "gross_dividend": null,
-    "net_dividend": null,
-    "notional_usd": 5000,
-    "price": 48.45,
-    "reason": "cash basis UNRESOLVED; gross basis required",
-    "sell_book_source": "",
-    "spot_symbol": "RSTMUSDT",
-    "symbol": "rSTM",
-    "verdict": "NO_SIGNAL"
-   },
-   {
-    "basis_tier": null,
-    "buy": "SUPPRESSED: eligibility snapshot time unpublished",
-    "buy_book_source": "",
-    "cost_per_share": null,
-    "drop_ratio": 0.9656110633409245,
-    "event_id": "rSTM-2026-09-22-1",
-    "ex_date": "2026-09-22",
-    "exit_edge_lower": null,
-    "gross_dividend": null,
-    "net_dividend": null,
-    "notional_usd": 25000,
-    "price": 48.45,
-    "reason": "cash basis UNRESOLVED; gross basis required",
-    "sell_book_source": "",
-    "spot_symbol": "RSTMUSDT",
-    "symbol": "rSTM",
     "verdict": "NO_SIGNAL"
    }
   ]

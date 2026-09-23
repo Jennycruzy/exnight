@@ -3,11 +3,12 @@ const STATIC_SITE = window.location.hostname.endsWith("github.io");
 const siteUrl = (path) => new URL(path, new URL(".", window.location.href)).toString();
 let latestData = null;
 let staticDecisions = null;
+let staticSignalDates = null;
 let activeFilter = "ALL";
 let activeSymbol = "ALL";
 let activeDate = null;
 let chartSymbol = null;
-const routes = new Set(["home", "signals", "recorder", "evidence"]);
+const routes = new Set(["home", "signals", "recorder", "evidence", "validation"]);
 
 function currentRoute() {
   const route = window.location.hash.replace(/^#\/?/, "").split("/")[0].toLowerCase();
@@ -45,31 +46,57 @@ function render(data) {
   const rows = (data.signals || {}).rows || [];
   const health = data.depth || {};
   const score = data.forward_score || {};
+  const observation = data.observation || {};
   const provenance = data.provenance || {};
+  const competition = data.competition || {};
   const failed = recorder.status !== "PASS";
+  const scored = observation.status === "SCORED";
 
-  $("as-of").textContent = `As of ${new Date(data.generated_at).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit", second:"2-digit"})}`;
-  $("event-date").textContent = meta.event_date || "window pending";
-  $("headline").textContent = failed ? "Observation window needs attention" : "Observation window is collecting";
-  $("hero-copy").textContent = failed ? `${(recorder.errors || []).join(" · ")} Decisions remain available, with the recording issue shown in their evidence.` : "Enter a Reality token to see Exnight's latest evaluated decision and the evidence behind it.";
+  const generated = new Date(data.generated_at);
+  $("as-of").textContent = Number.isNaN(generated.getTime()) ? "Snapshot time unknown" : `Snapshot ${generated.toLocaleString([], {year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short"})}`;
+  $("event-date").textContent = observation.event_date || meta.event_date || "window pending";
+  $("headline").textContent = scored
+    ? (failed ? "Recorder audit needs attention" : score.status === "PASS" ? "Forward window scored" : "Recording passed; score incomplete")
+    : (failed ? "Observation window needs attention" : "Observation window is collecting");
+  $("hero-copy").textContent = scored ? (observation.message || score.message || "Saved forward evidence is available.")
+    : failed ? `${(recorder.errors || []).join(" · ")} Decisions remain available, with the recording issue shown in their evidence.`
+    : "The recorder is collecting evidence for the scheduled forward window.";
   const hero = $("hero-status"); hero.className = `hero-status ${failed ? "bad" : "ok"}`;
-  hero.innerHTML = `<span class="status-orb"></span><div><strong>${failed ? "Recorder attention" : "Recorder healthy"}</strong><small>${recorder.sample_count || 0} samples observed</small></div>`;
+  hero.innerHTML = `<span class="status-orb"></span><div><strong>${failed ? "Recorder attention" : scored ? "Recorder passed" : "Recorder healthy"}</strong><small>${(recorder.sample_count || 0).toLocaleString()} saved samples</small></div>`;
 
   $("metric-samples").textContent = (recorder.sample_count || 0).toLocaleString();
   $("metric-samples-note").textContent = `${Object.keys(recorder.symbols || {}).length} monitored symbols`;
-  $("metric-events").textContent = meta.events == null ? "—" : meta.events;
-  $("metric-events-note").textContent = `${meta.rows || 0} frozen notional rows`;
+  const scoredEvents = score.report?.results || [];
+  $("metric-events").textContent = scored ? scoredEvents.length : (meta.events ?? "—");
+  $("metric-events-note").textContent = scored ? `${scoredEvents.filter((row) => row.complete).length} with resolved cash basis` : `${meta.rows || 0} frozen notional rows`;
   const counts = meta.verdict_counts || {};
   $("metric-signals").textContent = Object.entries(counts).map(([key, value]) => `${value} ${key}`).join(" · ") || "—";
   $("metric-signals-note").textContent = `For ex-date ${meta.event_date || "—"}`;
-  $("metric-depth").textContent = health.status || "UNKNOWN";
-  $("metric-depth-note").textContent = health.latest ? `${number(health.age_seconds, 0)}s since latest snapshot` : "No snapshot report";
+  $("metric-depth").textContent = health.event_count ? `${health.book_supported_count}/${health.event_count}` : (health.status || "UNKNOWN");
+  $("metric-depth-note").textContent = health.message || "No capacity report";
   $("landing-signal-count").textContent = (meta.rows || rows.length || 0).toLocaleString();
   $("landing-signal-note").textContent = `${meta.events || rows.length || 0} forward events`;
   $("landing-recorder-count").textContent = (recorder.sample_count || 0).toLocaleString();
   $("landing-recorder-note").textContent = `${Object.keys(recorder.symbols || {}).length} monitored symbols`;
   $("landing-evidence-count").textContent = score.status || "UNKNOWN";
   $("landing-evidence-note").textContent = provenance.status === "PASS" ? "provenance complete" : "provenance review";
+  $("landing-validation-count").textContent = competition.sample?.eligible_ex_ante ?? "—";
+  $("landing-validation-note").textContent = `${competition.oos?.policy?.event_count ?? 0} OOS events`;
+
+  $("validation-resolved").textContent = competition.sample?.resolved_usable ?? "—";
+  $("validation-eligible").textContent = competition.sample?.eligible_ex_ante ?? "—";
+  $("validation-oos-events").textContent = competition.oos?.policy?.event_count ?? "—";
+  $("validation-oos-days").textContent = `${competition.oos_days ?? "—"} calendar days`;
+  $("validation-trades").textContent = competition.oos?.policy?.trade_count ?? "—";
+  const series = [
+    ["Exnight policy", competition.oos?.policy, "sharpe"],
+    ["HOLD benchmark", competition.oos?.benchmark, "sharpe"],
+    ["Active", competition.oos?.active, "information_ratio"],
+  ];
+  $("validation-series").innerHTML = series.map(([name, item, ratio]) => `<tr><td><strong>${name}</strong></td><td>${item?.total_return == null ? "—" : `${number(item.total_return * 100, 3)}%`}</td><td>${number(item?.[ratio], 2)}</td><td>${item?.maximum_drawdown == null ? "—" : `${number(item.maximum_drawdown * 100, 3)}%`}</td></tr>`).join("");
+  $("validation-assumptions").innerHTML = `<dt>Historical costs</dt><dd>MODELED_EXECUTION</dd><dt>Slippage grid</dt><dd>${(competition.cost_grid_bps || []).join(" / ") || "—"} bps round trip</dd><dt>Withholding range</dt><dd>${(competition.withholding_range || []).join(" / ") || "—"}%</dd><dt>Interpretation</dt><dd>Exnight matched HOLD because no EXIT cleared the frozen rule.</dd>`;
+  $("validation-note").innerHTML = `<strong>Rolling 30-day Sharpe · INSUFFICIENT_EVENTS</strong>${competition.oos?.policy?.trade_count ?? 0} OOS EXIT trades across ${competition.oos?.policy?.event_count ?? 0} events. Active return is zero; an active information ratio is undefined.`;
+  $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(fold.fold)}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No walk-forward scorecard available.</td></tr>`;
 
   activeDate = data.signals.meta.event_date || activeDate;
   $("signal-date").innerHTML = (meta.available_dates || []).map((date) => `<option value="${esc(date)}" ${date === activeDate ? "selected" : ""}>${esc(date)}</option>`).join("");
@@ -91,13 +118,26 @@ function render(data) {
   $("recorder-list").innerHTML = Object.entries(symbols).map(([symbol, item]) => {
     const coverage = Math.round((item.book_coverage || 0) * 100);
     const warn = coverage === 0 || (item.max_gap_seconds || 0) > 180;
-    return `<div class="health-row"><div class="health-name"><strong>${esc(symbol)}</strong><small>${(item.rows || 0).toLocaleString()} rows · last ${esc(item.last_age_display)}</small></div><div class="health-stat"><strong>${coverage}% public book</strong><div class="health-bar"><i class="${warn ? "warn" : ""}" style="width:${Math.max(coverage, 3)}%"></i></div></div></div>`;
+    return `<div class="health-row"><div class="health-name"><strong>${esc(symbol)}</strong><small>${(item.rows || 0).toLocaleString()} rows · ${recorder.mode === "COMPLETED_WINDOW" ? "ended" : "last"} ${esc(item.last_age_display)}</small></div><div class="health-stat"><strong>${coverage}% public book</strong><div class="health-bar"><i class="${warn ? "warn" : ""}" style="width:${Math.max(coverage, 3)}%"></i></div></div></div>`;
   }).join("");
   $("recorder-badge").className = `badge ${failed ? "bad" : "ok"}`; $("recorder-badge").textContent = recorder.status || "UNKNOWN";
   $("recorder-errors").textContent = (recorder.errors || []).join(" · ");
 
-  $("score-badge").className = `badge ${score.status === "PENDING" ? "warn" : "ok"}`; $("score-badge").textContent = score.status || "UNKNOWN";
+  $("score-badge").className = `badge ${score.status === "PASS" ? "ok" : "warn"}`; $("score-badge").textContent = score.status || "UNKNOWN";
   $("score-panel").innerHTML = `<strong>${esc(score.status || "UNKNOWN")}</strong>${esc(score.message || "No forward-score report available.")}`;
+  $("forward-events").innerHTML = (score.report?.results || []).map((event) => {
+    const decision = event.notionals?.find((item) => item.notional_usd === 1000)?.frozen_verdict || "NO_SIGNAL";
+    const prices = event.pre_price == null || event.post_price == null
+      ? "Unavailable" : `${number(event.pre_price, 2)} → ${number(event.post_price, 2)}`;
+    const outcome = event.complete
+      ? (event.pre_price === event.post_price ? "No price change" : "Cash basis resolved")
+      : "Cash-adjusted result unavailable";
+    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td><span class="verdict ${esc(decision)}">${esc(decision)}</span></td><td>${event.gross_dividend == null ? "Unresolved" : "Resolved"}</td><td>${esc(prices)}</td><td>${esc(outcome)}</td></tr>`;
+  }).join("") || `<tr><td colspan="5" class="empty">No scored forward events available.</td></tr>`;
+  $("timeline-observation").className = `timeline-item ${scored ? (failed ? "active" : "done") : "active"}`;
+  $("timeline-observation-note").textContent = scored ? `${(recorder.sample_count || 0).toLocaleString()} samples; ${failed ? "integrity review needed" : "cadence passed"}` : "Recorder is collecting one-minute samples";
+  $("timeline-forward").className = `timeline-item ${score.status === "PASS" ? "done" : scored ? "active" : ""}`;
+  $("timeline-forward-note").textContent = scored ? (score.message || "Forward score available") : "Runs after the observation window closes";
   $("provenance-badge").className = `badge ${provenance.status === "PASS" ? "ok" : "warn"}`; $("provenance-badge").textContent = provenance.status || "UNKNOWN";
   $("provenance-list").innerHTML = `<dt>Manifest</dt><dd>${provenance.manifest_present ? "run_manifest_v1.json" : "missing"}</dd><dt>Signal events</dt><dd>${provenance.signal_events || 0}</dd><dt>Manifest events</dt><dd>${provenance.manifest_events || 0}</dd><dt>Commit</dt><dd>${esc(provenance.code_commit || "—")}</dd><dt>Coverage note</dt><dd>${provenance.missing_events?.length ? `Missing ${provenance.missing_events.length} event(s) from historical summary` : "Complete"}</dd>`;
   $("limits-list").innerHTML = (data.limits || []).map((item) => `<li>${esc(item)}</li>`).join("");
@@ -110,7 +150,7 @@ function renderChart(recorder) {
   if (!symbols.includes(chartSymbol)) chartSymbol = symbols[0];
   $("chart-symbol").innerHTML = symbols.map((symbol) => `<option value="${esc(symbol)}" ${symbol === chartSymbol ? "selected" : ""}>${esc(symbol)}</option>`).join("");
   const series = (recorder.symbols?.[chartSymbol]?.series || []).filter((point) => point.price != null);
-  if (series.length < 2) { $("recorder-chart").innerHTML = '<span class="empty">Not enough ticker samples for this chart.</span>'; return; }
+  if (series.length < 2) { $("recorder-chart").innerHTML = '<span class="empty">Chart samples are unavailable in this snapshot. The saved recorder audit is shown below.</span>'; return; }
   const width = 900, height = 230, pad = 28;
   const prices = series.map((point) => Number(point.price));
   const low = Math.min(...prices), high = Math.max(...prices), spread = high - low || Math.max(high * 0.001, 1);
@@ -162,6 +202,17 @@ function renderDecision(result) {
     <a class="decision-more" href="#/signals">Open full decision evidence →</a>`;
 }
 
+function currentStaticDecision(record) {
+  if (!record?.events) return record;
+  const dates = Object.keys(record.events).sort();
+  const today = new Date().toISOString().slice(0, 10);
+  const selected = dates.find((date) => date >= today) || dates.at(-1);
+  return {
+    status: "FOUND", symbol: record.symbol, spot_symbol: record.spot_symbol,
+    event_date: selected, rows: record.events[selected] || [], available_dates: dates,
+  };
+}
+
 async function lookupDecision(symbol) {
   const target = $("decision-result");
   target.className = "decision-result decision-loading";
@@ -174,7 +225,7 @@ async function lookupDecision(symbol) {
         staticDecisions = await response.json();
       }
       const key = symbol.toUpperCase().replace(/[^A-Z0-9]/g, "");
-      renderDecision(staticDecisions[key] || {
+      renderDecision(currentStaticDecision(staticDecisions[key]) || {
         status: "NOT_EVALUATED", query: symbol,
         message: "This token has no saved Exnight decision.",
       });
@@ -195,7 +246,16 @@ async function refresh() {
     const url = STATIC_SITE ? siteUrl("api/summary.json") : `/api/summary?t=${Date.now()}${dateQuery}`;
     const response = await fetch(url, {cache:"no-store"});
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    render(await response.json()); $("error").classList.add("hidden");
+    const data = await response.json();
+    if (STATIC_SITE && activeDate && activeDate !== data.signals?.meta?.event_date) {
+      if (!staticSignalDates) {
+        const datesResponse = await fetch(siteUrl("api/signal_dates.json"), {cache:"no-store"});
+        if (!datesResponse.ok) throw new Error(`HTTP ${datesResponse.status}`);
+        staticSignalDates = await datesResponse.json();
+      }
+      if (staticSignalDates[activeDate]) data.signals = staticSignalDates[activeDate];
+    }
+    render(data); $("error").classList.add("hidden");
   } catch (error) {
     $("error").textContent = `Dashboard data unavailable: ${error.message}`; $("error").classList.remove("hidden");
   }

@@ -1,0 +1,2600 @@
+{
+  "name": "walk-forward OOS performance of the Exnight selection procedure",
+  "manifest_sha256": "7ebb01057edc55b63f8023ae32c21f960950bfec46db9c06e1d603ead0cb9437",
+  "labels": {
+    "historical_execution": "MODELED_EXECUTION",
+    "v1_oos": false
+  },
+  "sample": {
+    "resolved_usable": 127,
+    "eligible_ex_ante": 56,
+    "excluded": 71,
+    "exclusion_reason_combinations": {
+      "DISCOVERY_EVENT_UNUSABLE;NO_VALID_T0_OBSERVATION;NO_PRE_DECISION_GROSS_DECLARATION": 54,
+      "NO_PRE_DECISION_GROSS_DECLARATION": 71,
+      "NON_CASH_ACTION;DISCOVERY_EVENT_UNUSABLE;NO_VALID_T0_OBSERVATION;NO_PRE_DECISION_GROSS_DECLARATION": 3,
+      "DISCOVERY_EVENT_UNUSABLE": 1
+    }
+  },
+  "initial_model": {
+    "selected_rung": "premarket_0400",
+    "estimate": {
+      "n": 17,
+      "pdr": 1.034275825976304,
+      "se": 0.8710489450546619,
+      "intercept": -7.173398918105655e-06,
+      "hc3_se": 1.5242429275785752,
+      "cluster_se": 0.2761006422482127,
+      "r2": 0.08591752420016435,
+      "p_value": 0.2535370778829
+    },
+    "selection_diagnostics": {
+      "stable_rungs": [
+        "premarket_0400",
+        "open_0930",
+        "close_1600"
+      ],
+      "subperiods": {
+        "overnight_2000": [
+          {
+            "period": "2026-07",
+            "n": 16,
+            "pdr": -0.44619340832973897,
+            "se": 1.3015848554136005,
+            "intercept": -0.0009055301916984047,
+            "hc3_se": 1.6928557394198231,
+            "cluster_se": 0.02015456475863233,
+            "r2": 0.008324209506373796,
+            "p_value": 0.7368358226403445,
+            "gross_pdr_not_rejected": false
+          }
+        ],
+        "premarket_0400": [
+          {
+            "period": "2026-07",
+            "n": 16,
+            "pdr": 1.2080406237180055,
+            "se": 0.9351996225417217,
+            "intercept": -2.6045815933583216e-05,
+            "hc3_se": 1.8986572221814066,
+            "cluster_se": 0.009042184559463918,
+            "r2": 0.10649372169403873,
+            "p_value": 0.21736361382064445,
+            "gross_pdr_not_rejected": true
+          }
+        ],
+        "open_0930": [
+          {
+            "period": "2026-07",
+            "n": 16,
+            "pdr": 0.8900007470044429,
+            "se": 0.41362491750140823,
+            "intercept": 0.0010683251312422369,
+            "hc3_se": 0.2871673367697661,
+            "cluster_se": 0.0681838639651296,
+            "r2": 0.24851802244986956,
+            "p_value": 0.04935955574869637,
+            "gross_pdr_not_rejected": true
+          }
+        ],
+        "open_1000": [
+          {
+            "period": "2026-07",
+            "n": 16,
+            "pdr": -0.26398515174421205,
+            "se": 0.5159679809643221,
+            "intercept": -0.0006211843293182937,
+            "hc3_se": 0.5778122427040346,
+            "cluster_se": 0.11924426401178986,
+            "r2": 0.01835439970660763,
+            "p_value": 0.6168837286487974,
+            "gross_pdr_not_rejected": false
+          }
+        ],
+        "close_1600": [
+          {
+            "period": "2026-07",
+            "n": 16,
+            "pdr": 0.8219902787179852,
+            "se": 1.1762350999975852,
+            "intercept": -0.0018274891319259592,
+            "hc3_se": 0.9966150822349372,
+            "cluster_se": 0.20944314072533196,
+            "r2": 0.03370743419309352,
+            "p_value": 0.49610347418776285,
+            "gross_pdr_not_rejected": true
+          }
+        ]
+      },
+      "fallback_used": false
+    }
+  },
+  "is_initial_development_window": {
+    "policy": {
+      "total_return": -3.5348355822306665e-05,
+      "annualized_return": -0.00033947862501892967,
+      "sharpe": -0.11249820158570982,
+      "sortino": -0.07121591183694582,
+      "maximum_drawdown": -0.0010937532349072354,
+      "turnover": 0.0,
+      "win_rate": 0.6470588235294118,
+      "trade_count": 0,
+      "event_count": 17,
+      "entitlement_uncertain_count": 0,
+      "fee_drag": 0.0,
+      "slippage_drag_MODELED_EXECUTION": 0.0
+    },
+    "benchmark": {
+      "total_return": -3.5348355822306665e-05,
+      "annualized_return": -0.00033947862501892967,
+      "sharpe": -0.11249820158570982,
+      "sortino": -0.07121591183694582,
+      "maximum_drawdown": -0.0010937532349072354
+    },
+    "active": {
+      "total_return": 0.0,
+      "annualized_return": 0.0,
+      "information_ratio": null,
+      "sortino": null,
+      "maximum_drawdown": 0.0,
+      "win_rate": 0.0
+    },
+    "rolling_30_day_sharpe": [
+      {
+        "end": "2026-07-23",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-24",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-25",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-26",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-27",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-28",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-29",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-30",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-07-31",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      }
+    ]
+  },
+  "oos_concatenated_non_overlapping_folds": {
+    "policy": {
+      "total_return": -0.0009551962848424189,
+      "annualized_return": -0.007394087024370943,
+      "sharpe": -2.5655030118735462,
+      "sortino": -1.5875654248206583,
+      "maximum_drawdown": -0.0016870715117968116,
+      "turnover": 0.0,
+      "win_rate": 0.6666666666666666,
+      "trade_count": 0,
+      "event_count": 39,
+      "entitlement_uncertain_count": 0,
+      "fee_drag": 0.0,
+      "slippage_drag_MODELED_EXECUTION": 0.0
+    },
+    "benchmark": {
+      "total_return": -0.0009551962848424189,
+      "annualized_return": -0.007394087024370943,
+      "sharpe": -2.5655030118735462,
+      "sortino": -1.5875654248206583,
+      "maximum_drawdown": -0.0016870715117968116
+    },
+    "active": {
+      "total_return": 0.0,
+      "annualized_return": 0.0,
+      "information_ratio": null,
+      "sortino": null,
+      "maximum_drawdown": 0.0,
+      "win_rate": 0.0
+    },
+    "rolling_30_day_sharpe": [
+      {
+        "end": "2026-08-30",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-08-31",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-01",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-02",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-03",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-04",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-05",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-06",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-07",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-08",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-09",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-10",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-11",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-12",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-13",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-14",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-15",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      },
+      {
+        "end": "2026-09-16",
+        "status": "INSUFFICIENT_EVENTS",
+        "trade_count": 0
+      }
+    ]
+  },
+  "oos_sharpe_over_is_sharpe": 22.80483577258742,
+  "oos_sharpe_decay_flag_below_0_5": false,
+  "is_trade_count_for_ratio": 0,
+  "folds": [
+    {
+      "fold": "OOS_2026_08",
+      "training_end": "2026-07-31",
+      "test_period": "2026-08-01..2026-08-31",
+      "selected_rung": "premarket_0400",
+      "pdr_estimate": 1.034275825976304,
+      "pdr_se": 0.8710489450546619,
+      "training_events": 17,
+      "test_events": 25,
+      "test_trades": 0,
+      "test_sharpe": -4.351357043515459,
+      "selection_diagnostics": {
+        "stable_rungs": [
+          "premarket_0400",
+          "open_0930",
+          "close_1600"
+        ],
+        "subperiods": {
+          "overnight_2000": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": -0.44619340832973897,
+              "se": 1.3015848554136005,
+              "intercept": -0.0009055301916984047,
+              "hc3_se": 1.6928557394198231,
+              "cluster_se": 0.02015456475863233,
+              "r2": 0.008324209506373796,
+              "p_value": 0.7368358226403445,
+              "gross_pdr_not_rejected": false
+            }
+          ],
+          "premarket_0400": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": 1.2080406237180055,
+              "se": 0.9351996225417217,
+              "intercept": -2.6045815933583216e-05,
+              "hc3_se": 1.8986572221814066,
+              "cluster_se": 0.009042184559463918,
+              "r2": 0.10649372169403873,
+              "p_value": 0.21736361382064445,
+              "gross_pdr_not_rejected": true
+            }
+          ],
+          "open_0930": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": 0.8900007470044429,
+              "se": 0.41362491750140823,
+              "intercept": 0.0010683251312422369,
+              "hc3_se": 0.2871673367697661,
+              "cluster_se": 0.0681838639651296,
+              "r2": 0.24851802244986956,
+              "p_value": 0.04935955574869637,
+              "gross_pdr_not_rejected": true
+            }
+          ],
+          "open_1000": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": -0.26398515174421205,
+              "se": 0.5159679809643221,
+              "intercept": -0.0006211843293182937,
+              "hc3_se": 0.5778122427040346,
+              "cluster_se": 0.11924426401178986,
+              "r2": 0.01835439970660763,
+              "p_value": 0.6168837286487974,
+              "gross_pdr_not_rejected": false
+            }
+          ],
+          "close_1600": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": 0.8219902787179852,
+              "se": 1.1762350999975852,
+              "intercept": -0.0018274891319259592,
+              "hc3_se": 0.9966150822349372,
+              "cluster_se": 0.20944314072533196,
+              "r2": 0.03370743419309352,
+              "p_value": 0.49610347418776285,
+              "gross_pdr_not_rejected": true
+            }
+          ]
+        },
+        "fallback_used": false
+      }
+    },
+    {
+      "fold": "OOS_2026_09",
+      "training_end": "2026-08-31",
+      "test_period": "2026-09-01..2026-09-16",
+      "selected_rung": "open_0930",
+      "pdr_estimate": 0.9194329582809133,
+      "pdr_se": 0.3528604632179606,
+      "training_events": 42,
+      "test_events": 14,
+      "test_trades": 0,
+      "test_sharpe": 2.379261436725159,
+      "selection_diagnostics": {
+        "stable_rungs": [
+          "open_0930",
+          "close_1600"
+        ],
+        "subperiods": {
+          "overnight_2000": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": -0.44619340832973897,
+              "se": 1.3015848554136005,
+              "intercept": -0.0009055301916984047,
+              "hc3_se": 1.6928557394198231,
+              "cluster_se": 0.02015456475863233,
+              "r2": 0.008324209506373796,
+              "p_value": 0.7368358226403445,
+              "gross_pdr_not_rejected": false
+            },
+            {
+              "period": "2026-08",
+              "n": 25,
+              "pdr": 0.45654328671508987,
+              "se": 0.9011533584440116,
+              "intercept": 0.002603116623894277,
+              "hc3_se": 0.3738421618840076,
+              "cluster_se": 0.324627288991847,
+              "r2": 0.011036187626291959,
+              "p_value": 0.6172431895388324,
+              "gross_pdr_not_rejected": false
+            }
+          ],
+          "premarket_0400": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": 1.2080406237180055,
+              "se": 0.9351996225417217,
+              "intercept": -2.6045815933583216e-05,
+              "hc3_se": 1.8986572221814066,
+              "cluster_se": 0.009042184559463918,
+              "r2": 0.10649372169403873,
+              "p_value": 0.21736361382064445,
+              "gross_pdr_not_rejected": true
+            },
+            {
+              "period": "2026-08",
+              "n": 25,
+              "pdr": -0.16004103457146387,
+              "se": 0.5781713815352582,
+              "intercept": -0.002377761673108481,
+              "hc3_se": 0.4266530856268247,
+              "cluster_se": 0.419116030709504,
+              "r2": 0.003320299768491046,
+              "p_value": 0.7844018643944553,
+              "gross_pdr_not_rejected": false
+            }
+          ],
+          "open_0930": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": 0.8900007470044429,
+              "se": 0.41362491750140823,
+              "intercept": 0.0010683251312422369,
+              "hc3_se": 0.2871673367697661,
+              "cluster_se": 0.0681838639651296,
+              "r2": 0.24851802244986956,
+              "p_value": 0.04935955574869637,
+              "gross_pdr_not_rejected": true
+            },
+            {
+              "period": "2026-08",
+              "n": 25,
+              "pdr": 0.7204036229497645,
+              "se": 0.5671737485626798,
+              "intercept": 0.0008950391078817508,
+              "hc3_se": 0.623142483617029,
+              "cluster_se": 0.513908256524346,
+              "r2": 0.06554648392354914,
+              "p_value": 0.2167259798104075,
+              "gross_pdr_not_rejected": true
+            }
+          ],
+          "open_1000": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": -0.26398515174421205,
+              "se": 0.5159679809643221,
+              "intercept": -0.0006211843293182937,
+              "hc3_se": 0.5778122427040346,
+              "cluster_se": 0.11924426401178986,
+              "r2": 0.01835439970660763,
+              "p_value": 0.6168837286487974,
+              "gross_pdr_not_rejected": false
+            },
+            {
+              "period": "2026-08",
+              "n": 25,
+              "pdr": 1.9569758463340732,
+              "se": 0.6088867893793861,
+              "intercept": 0.0016354591639306006,
+              "hc3_se": 1.1432521316069668,
+              "cluster_se": 0.768257892337639,
+              "r2": 0.309929765064712,
+              "p_value": 0.0038475063384658978,
+              "gross_pdr_not_rejected": true
+            }
+          ],
+          "close_1600": [
+            {
+              "period": "2026-07",
+              "n": 16,
+              "pdr": 0.8219902787179852,
+              "se": 1.1762350999975852,
+              "intercept": -0.0018274891319259592,
+              "hc3_se": 0.9966150822349372,
+              "cluster_se": 0.20944314072533196,
+              "r2": 0.03370743419309352,
+              "p_value": 0.49610347418776285,
+              "gross_pdr_not_rejected": true
+            },
+            {
+              "period": "2026-08",
+              "n": 25,
+              "pdr": 1.5577726111943924,
+              "se": 0.7136502708453893,
+              "intercept": 0.002097392776330119,
+              "hc3_se": 0.9604180133753233,
+              "cluster_se": 0.7156060485209035,
+              "r2": 0.17161054925975022,
+              "p_value": 0.03951388446625353,
+              "gross_pdr_not_rejected": true
+            }
+          ]
+        },
+        "fallback_used": false
+      }
+    }
+  ],
+  "sensitivity": [
+    {
+      "slippage_bps_MODELED_EXECUTION": 10,
+      "withholding": 0.0,
+      "score": {
+        "policy": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 10,
+      "withholding": 0.15,
+      "score": {
+        "policy": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 10,
+      "withholding": 0.25,
+      "score": {
+        "policy": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 10,
+      "withholding": 0.3,
+      "score": {
+        "policy": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 25,
+      "withholding": 0.0,
+      "score": {
+        "policy": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 25,
+      "withholding": 0.15,
+      "score": {
+        "policy": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 25,
+      "withholding": 0.25,
+      "score": {
+        "policy": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 25,
+      "withholding": 0.3,
+      "score": {
+        "policy": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 50,
+      "withholding": 0.0,
+      "score": {
+        "policy": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 50,
+      "withholding": 0.15,
+      "score": {
+        "policy": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 50,
+      "withholding": 0.25,
+      "score": {
+        "policy": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 50,
+      "withholding": 0.3,
+      "score": {
+        "policy": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 100,
+      "withholding": 0.0,
+      "score": {
+        "policy": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0009551962848424189,
+          "annualized_return": -0.007394087024370943,
+          "sharpe": -2.5655030118735462,
+          "sortino": -1.5875654248206583,
+          "maximum_drawdown": -0.0016870715117968116
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 100,
+      "withholding": 0.15,
+      "score": {
+        "policy": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023,
+          "turnover": 0.0,
+          "win_rate": 0.6666666666666666,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0012240652380508532,
+          "annualized_return": -0.009466766647138414,
+          "sharpe": -3.2790739578048065,
+          "sortino": -2.0227982382278418,
+          "maximum_drawdown": -0.0018391528276932023
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 100,
+      "withholding": 0.25,
+      "score": {
+        "policy": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014032743611124276,
+          "annualized_return": -0.010846173868620967,
+          "sharpe": -3.7437432060836002,
+          "sortino": -2.3527918906409813,
+          "maximum_drawdown": -0.0019405292433349874
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "slippage_bps_MODELED_EXECUTION": 100,
+      "withholding": 0.3,
+      "score": {
+        "policy": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357,
+          "turnover": 0.0,
+          "win_rate": 0.6410256410256411,
+          "trade_count": 0,
+          "event_count": 39,
+          "entitlement_uncertain_count": 0,
+          "fee_drag": 0.0,
+          "slippage_drag_MODELED_EXECUTION": 0.0
+        },
+        "benchmark": {
+          "total_return": -0.0014928678705822263,
+          "annualized_return": -0.011535164694055355,
+          "sharpe": -3.971852218075804,
+          "sortino": -2.4994861246901494,
+          "maximum_drawdown": -0.001991214112922357
+        },
+        "active": {
+          "total_return": 0.0,
+          "annualized_return": 0.0,
+          "information_ratio": null,
+          "sortino": null,
+          "maximum_drawdown": 0.0,
+          "win_rate": 0.0
+        },
+        "rolling_30_day_sharpe": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    }
+  ],
+  "notes": [
+    "HOLD dividend is accrued as an entitlement receivable at T1, not represented as cash paid by T1.",
+    "Unknown Bitget eligibility timing is modeled conservatively for EXIT as forfeiting retained dividend.",
+    "NO_SIGNAL leaves the holder in the benchmark exposure."
+  ]
+}

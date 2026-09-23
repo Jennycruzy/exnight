@@ -18,7 +18,8 @@
       <a data-route-link="signals" href="#/signals">Signals</a>
       <a data-route-link="recorder" href="#/recorder">Recorder</a>
       <a data-route-link="evidence" href="#/evidence">Evidence</a>
-      <span>observation / forward window</span>
+      <a data-route-link="validation" href="#/validation">Validation</a>
+      <span>saved evidence / forward window</span>
     </nav>
 
     <div id="error" class="notice error hidden" role="alert"></div>
@@ -28,7 +29,7 @@
         <div>
           <p class="eyebrow">FORWARD OBSERVATION / <span id="event-date">—</span></p>
           <h1 id="headline">Loading evidence state…</h1>
-          <p id="hero-copy" class="hero-copy">Enter a Reality token below to see Exnight's latest evaluated decision.</p>
+          <p id="hero-copy" class="hero-copy">Loading the saved forward result and recorder audit.</p>
         </div>
         <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Refreshing automatically</small></div></div>
       </section>
@@ -36,8 +37,8 @@
       <section class="metrics" aria-label="Key metrics">
         <article class="metric"><span>Samples collected</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across monitored symbols</small></article>
         <article class="metric"><span>Forward events</span><strong id="metric-events">—</strong><small id="metric-events-note">Frozen strategy v1</small></article>
-        <article class="metric"><span>Signal mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Latest event date</small></article>
-        <article class="metric"><span>Depth evidence</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Current snapshot health</small></article>
+        <article class="metric"><span>Saved signal mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Selected ex-date</small></article>
+        <article class="metric"><span>Public book depth</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Recorded forward window</small></article>
       </section>
 
       <section class="landing-map" aria-labelledby="map-title">
@@ -68,8 +69,42 @@
             <p>Trace provenance, scoring readiness, downloadable reports, and the limits that remain visible.</p>
             <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
           </a>
+          <a class="destination-card destination-validation" data-route-link="validation" href="#/validation">
+            <span class="destination-index">04 / SCORECARD</span><span class="destination-arrow">↗</span>
+            <h3>Walk-forward validation</h3>
+            <p>See the honest OOS sample, benchmark comparison, fold results, and cost assumptions.</p>
+            <span class="destination-meta"><strong id="landing-validation-count">—</strong><span id="landing-validation-note">eligible events</span></span>
+          </a>
         </div>
       </section>
+    </section>
+
+    <section id="view-validation" class="view" data-view="validation" aria-labelledby="validation-page-title">
+      <div class="view-heading">
+        <div><p class="eyebrow">SUBPAGE / 04 · SCORECARD</p><h1 id="validation-page-title">Walk-forward validation</h1><p>The selection procedure tested on later, non-overlapping windows. This is not labelled V1 OOS.</p></div>
+        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+      </div>
+      <section class="metrics validation-metrics" aria-label="Validation sample">
+        <article class="metric"><span>Discovery study</span><strong id="validation-resolved">—</strong><small>usable resolved events</small></article>
+        <article class="metric"><span>Ex-ante eligible</span><strong id="validation-eligible">—</strong><small>knowable at decision time</small></article>
+        <article class="metric"><span>OOS events</span><strong id="validation-oos-events">—</strong><small id="validation-oos-days">non-overlapping test days</small></article>
+        <article class="metric"><span>OOS EXIT trades</span><strong id="validation-trades">—</strong><small>reported beside every metric</small></article>
+      </section>
+      <div class="two-col validation-grid">
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">OOS PERFORMANCE</p><h2>Policy, benchmark, active</h2></div><span class="tag">HONEST OOS</span></div>
+          <div class="table-wrap"><table class="validation-table"><thead><tr><th>Series</th><th>Total return</th><th>Sharpe / IR</th><th>Max drawdown</th></tr></thead><tbody id="validation-series"></tbody></table></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">ASSUMPTIONS</p><h2>What the result means</h2></div><span class="tag amber">MODELED_EXECUTION</span></div>
+          <dl id="validation-assumptions" class="details"></dl>
+          <div id="validation-note" class="score-panel"></div>
+        </article>
+      </div>
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">FOLDS</p><h2>Frozen training and later test windows</h2></div><span class="tag">NO FOLD LEAKAGE</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Fold</th><th>Training end</th><th>Test period</th><th>Selected rung</th><th>PDR estimate</th><th>Test events</th><th>EXIT trades</th><th>Test Sharpe</th></tr></thead><tbody id="validation-folds"></tbody></table></div>
+      </article>
     </section>
 
     <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">
@@ -102,13 +137,13 @@
 
     <section id="view-recorder" class="view" data-view="recorder" aria-labelledby="recorder-page-title">
       <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 02 · COLLECTION</p><h1 id="recorder-page-title">Recorder pulse</h1><p>See the saved observation series and the public-book coverage behind the current window.</p></div>
+        <div><p class="eyebrow">SUBPAGE / 02 · COLLECTION</p><h1 id="recorder-page-title">Recorder pulse</h1><p>See the saved September 22 observation and its public-book coverage.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
       <section class="panel chart-panel" id="pulse">
         <div class="panel-heading"><div><p class="eyebrow">RECORDER PULSE</p><h2>Observed price and public-book coverage</h2></div><label class="select-label">Chart symbol <select id="chart-symbol" aria-label="Chart symbol"></select></label></div>
         <div id="recorder-chart" class="recorder-chart" role="img" aria-label="Recorder price chart"><span class="empty">Loading recorder series…</span></div>
-        <div class="chart-legend"><span><i class="legend-line"></i>ticker last price</span><span><i class="legend-dot"></i>two-sided public book present</span><span>last 240 samples</span></div>
+        <div class="chart-legend"><span><i class="legend-line"></i>ticker last price</span><span><i class="legend-dot"></i>two-sided public book present</span><span>last 240 saved samples</span></div>
       </section>
       <section class="panel" id="recorder">
         <div class="panel-heading"><div><p class="eyebrow">RECORDER</p><h2>Collection health</h2></div><span id="recorder-badge" class="badge">—</span></div>
@@ -119,14 +154,14 @@
 
     <section id="view-evidence" class="view" data-view="evidence" aria-labelledby="evidence-page-title">
       <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 03 · VALIDATION</p><h1 id="evidence-page-title">Evidence chain</h1><p>Understand what is complete, what is pending, and which source files support the observation window.</p></div>
+        <div><p class="eyebrow">SUBPAGE / 03 · EVIDENCE</p><h1 id="evidence-page-title">Evidence chain</h1><p>See what the recorder proved, what the forward score could resolve, and which files support each result.</p></div>
         <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
       <div class="two-col evidence-grid">
         <article class="panel" id="evidence">
-          <div class="panel-heading"><div><p class="eyebrow">VALIDATION</p><h2>What happens next</h2></div><span id="score-badge" class="badge">—</span></div>
+          <div class="panel-heading"><div><p class="eyebrow">FORWARD SCORE</p><h2>September 22 result</h2></div><span id="score-badge" class="badge">—</span></div>
           <div id="score-panel" class="score-panel"></div>
-          <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research pipeline</strong><small>Event calendar, price study, costs and saved decisions complete</small></div></div><div class="timeline-item active"><span></span><div><strong>Observation window</strong><small>The September 22 recorder is collecting one-minute samples</small></div></div><div class="timeline-item"><span></span><div><strong>Forward score</strong><small>Runs after the observation window closes</small></div></div></div>
+          <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research pipeline</strong><small>Event calendar, price study, costs and saved decisions</small></div></div><div id="timeline-observation" class="timeline-item"><span></span><div><strong>Observation window</strong><small id="timeline-observation-note">Checking recorder evidence</small></div></div><div id="timeline-forward" class="timeline-item"><span></span><div><strong>Forward score</strong><small id="timeline-forward-note">Checking scored events</small></div></div></div>
         </article>
         <article class="panel">
           <div class="panel-heading"><div><p class="eyebrow">PROVENANCE</p><h2>Evidence chain</h2></div><span id="provenance-badge" class="badge">—</span></div>
@@ -134,13 +169,17 @@
           <div id="downloads" class="downloads"></div>
         </article>
       </div>
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">SCORED EVENTS</p><h2>What happened for each token</h2></div><span class="tag">FROZEN V1</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Token</th><th>$1k decision</th><th>Cash basis</th><th>Observed price</th><th>Result</th></tr></thead><tbody id="forward-events"></tbody></table></div>
+      </article>
       <article class="panel limits-panel">
         <div class="panel-heading"><div><p class="eyebrow">GUARDRAILS</p><h2>Known limits</h2></div><span class="tag amber">TRANSPARENT</span></div>
         <ul id="limits-list"></ul>
       </article>
     </section>
 
-    <footer><span>EXNIGHT · Reality token decision intelligence</span><span>Evidence refresh <b>30s</b></span></footer>
+    <footer><span>EXNIGHT · Reality token decision intelligence</span><span>Snapshot check <b>30s</b></span></footer>
   </main>
   <dialog id="signal-dialog" class="signal-dialog"><div class="dialog-head"><div><p class="eyebrow">SIGNAL DETAIL</p><h2 id="dialog-title">—</h2></div><button id="dialog-close" class="dialog-close" type="button" aria-label="Close">×</button></div><div id="dialog-body" class="dialog-body"></div></dialog>
   <script src="app.js"></script>
