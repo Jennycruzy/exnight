@@ -3,225 +3,154 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>EXNIGHT / Reality token decisions</title>
+  <title>EXNIGHT · Should you sell before the dividend?</title>
+  <meta name="description" content="Exnight tells a Bitget rToken holder whether selling before an ex-dividend date is worth it, and proves the answer with frozen, live-scored decisions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="shell">
-    <header class="topbar">
-      <div class="brand"><span class="brand-mark">E</span><span>EXNIGHT</span><small>Reality token decisions</small></div>
-      <div class="top-meta"><span class="readonly"><span class="dot"></span>EVIDENCE SNAPSHOT</span><span id="as-of">Loading…</span><button id="refresh-button" class="refresh-button" type="button">Refresh</button></div>
-    </header>
+  <nav class="l-nav" aria-label="Main">
+    <a class="logo" href="./"><span class="logo-mark">E</span>EXNIGHT</a>
+    <div class="l-links">
+      <a href="#how">How it works</a>
+      <a href="#try">Try it</a>
+      <a href="#proof">Proof</a>
+      <a href="https://github.com/Jennycruzy/exnight">GitHub</a>
+      <a class="btn btn-primary" href="app.html">Open the app →</a>
+    </div>
+  </nav>
 
-    <nav class="section-nav" aria-label="Dashboard sections">
-      <a class="active" data-route-link="home" href="#/" aria-current="page">Home</a>
-      <a data-route-link="upcoming" href="#/upcoming">Upcoming</a>
-      <a data-route-link="signals" href="#/signals">Signals</a>
-      <a data-route-link="recorder" href="#/recorder">Recorder</a>
-      <a data-route-link="evidence" href="#/evidence">Evidence</a>
-      <a data-route-link="validation" href="#/validation">Validation</a>
-      <span>saved evidence / forward window</span>
-    </nav>
-
-    <div id="error" class="notice error hidden" role="alert"></div>
-
-    <section id="overview" class="view view-home active" data-view="home" aria-labelledby="summary-headline">
-      <section class="hero summary-hero">
-        <div>
-          <p class="eyebrow">EX-DIVIDEND DECISIONS FOR BITGET RTOKEN HOLDERS</p>
-          <h1 id="summary-headline">Loading the result…</h1>
-          <p id="summary-copy" class="hero-copy">By 04:00 ET on the ex-date, an rToken has usually fallen by about the whole dividend. Exnight checks whether stepping out first is worth it after what you keep of the dividend, fees and slippage.</p>
+  <header class="l-hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">For Bitget rToken holders · Alpha Factory</p>
+        <h1>Sell before the dividend? <em>Usually, don't.</em></h1>
+        <p class="lede">When a stock pays a dividend, its Bitget rToken drops overnight by about the dividend amount. Selling first and buying back looks like free money. Exnight checks whether it really is, for each event and trade size, after tax and trading costs. Every decision is locked in before the market moves and graded afterwards.</p>
+        <div class="l-cta">
+          <a class="btn btn-primary" href="app.html">Open the app →</a>
+          <a class="btn" href="#try">Try the calculator</a>
         </div>
-      </section>
-
-      <section class="panel" aria-labelledby="forward-title">
-        <div class="panel-heading"><div><p class="eyebrow">LIVE FORWARD EVIDENCE</p><h2 id="forward-title">Decisions frozen before the cutoff, scored after the ex-date</h2></div><span id="forward-tag" class="tag">—</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Frozen decision</th><th>What happened</th><th>Stepping out, per share</th><th>Recording</th></tr></thead><tbody id="forward-body"></tbody></table></div>
-        <p id="forward-note" class="source"></p>
-      </section>
-
-      <section class="panel" aria-labelledby="comparison-title">
-        <div class="panel-heading"><div><p class="eyebrow">OUT-OF-SAMPLE RESULT</p><h2 id="comparison-title">Exnight against always stepping out</h2></div><span class="tag amber">MODELED_EXECUTION</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Approach</th><th>Trades</th><th>Against holding, per event</th><th>Beat holding</th><th>Total return</th><th>Sharpe</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
-        <p id="comparison-note" class="source"></p>
-      </section>
-
-      <section class="landing-map" aria-labelledby="map-title">
-        <div class="landing-map-heading">
-          <div>
-            <p class="eyebrow">CONSOLE MAP</p>
-            <h2 id="map-title">Choose your lens</h2>
-            <p>Start with the observation state, then open the exact evidence layer you want to inspect.</p>
+      </div>
+      <aside class="live-card" aria-label="Latest live result">
+        <header><span>LATEST LIVE RESULT</span><span class="pulse">RECORDING</span></header>
+        <div class="lc-body">
+          <div class="lc-token"><strong id="lc-symbol">—</strong><span id="lc-verdict"></span></div>
+          <div class="lc-rows">
+            <div><span>Ex-dividend date</span><b id="lc-date">—</b></div>
+            <div><span>Dividend</span><b id="lc-div">—</b></div>
+            <div><span>Decision locked before the cutoff</span><b id="lc-frozen">—</b></div>
+            <div><span>Selling first vs holding</span><b id="lc-edge">—</b></div>
+            <div><span>Minute-by-minute recording</span><b id="lc-rec">—</b></div>
           </div>
-          <div class="landing-principle"><span class="principle-mark">✦</span><div><strong>Decision with evidence</strong><small>Every verdict shows the reason and market data behind it.</small></div></div>
         </div>
-        <div class="destination-grid">
-          <a class="destination-card destination-primary" data-route-link="upcoming" href="#/upcoming">
-            <span class="destination-index">01 / UPCOMING</span><span class="destination-arrow">↗</span>
-            <h3>Upcoming ex-dates</h3>
-            <p>High-yield dividends ahead, with the decision frozen before each cutoff and the real outcome once scored.</p>
-            <span class="destination-meta"><strong id="landing-upcoming-count">—</strong><span id="landing-upcoming-note">events scheduled</span></span>
-          </a>
-          <a class="destination-card" data-route-link="signals" href="#/signals">
-            <span class="destination-index">02 / DECISIONS</span><span class="destination-arrow">↗</span>
-            <h3>Frozen forward signals</h3>
-            <p>Inspect each event, verdict, edge, cost, and book source without losing the arithmetic behind it.</p>
-            <span class="destination-meta"><strong id="landing-signal-count">—</strong><span id="landing-signal-note">rows to inspect</span></span>
-          </a>
-          <a class="destination-card destination-recorder" data-route-link="recorder" href="#/recorder">
-            <span class="destination-index">03 / COLLECTION</span><span class="destination-arrow">↗</span>
-            <h3>Recorder pulse</h3>
-            <p>Follow the observed price series and see where public-book coverage is present or missing.</p>
-            <span class="destination-meta"><strong id="landing-recorder-count">—</strong><span id="landing-recorder-note">samples across symbols</span></span>
-          </a>
-          <a class="destination-card destination-evidence" data-route-link="evidence" href="#/evidence">
-            <span class="destination-index">04 / EVIDENCE</span><span class="destination-arrow">↗</span>
-            <h3>Evidence chain</h3>
-            <p>Trace provenance, scoring readiness, downloadable reports, and the limits that remain visible.</p>
-            <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
-          </a>
-          <a class="destination-card destination-validation" data-route-link="validation" href="#/validation">
-            <span class="destination-index">05 / SCORECARD</span><span class="destination-arrow">↗</span>
-            <h3>Walk-forward validation</h3>
-            <p>See the honest OOS sample, benchmark comparison, fold results, and cost assumptions.</p>
-            <span class="destination-meta"><strong id="landing-validation-count">—</strong><span id="landing-validation-note">eligible events</span></span>
-          </a>
-        </div>
-      </section>
-    </section>
+        <footer id="lc-foot">Loading live evidence…</footer>
+      </aside>
+    </div>
+  </header>
 
-    <section id="view-upcoming" class="view" data-view="upcoming" aria-labelledby="upcoming-page-title">
-      <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 01 · UPCOMING</p><h1 id="upcoming-page-title">Upcoming high-yield ex-dates</h1><p>Strategy V3's decision for each event, frozen before the 20:00 ET sell cutoff, and the real outcome once the event is scored.</p></div>
-        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
+  <section class="l-section" id="how">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Three facts decide the answer.</h2>
+      <p class="lede">Exnight measures each one from Bitget data, then compares them. If selling first doesn't clearly win, it tells you to hold.</p>
+      <div class="steps">
+        <div class="step"><span class="step-n">01 · THE DROP</span><h3>The price falls by the dividend</h3><p>Across 127 past events, by 04:00 ET on the ex-date an rToken had fallen by about the full dividend.</p><span class="big">0.97× <small class="source">the dividend</small></span></div>
+        <div class="step"><span class="step-n">02 · THE TAX</span><h3>But you only keep part of it</h3><p>US dividends to rToken holders can have up to 30% withheld. Selling first avoids the drop, and gives up only what you'd have kept.</p><span class="big">70% <small class="source">kept after 30% tax</small></span></div>
+        <div class="step"><span class="step-n">03 · THE COST</span><h3>Selling and buying back costs money</h3><p>Two trades mean two fees plus slippage. The gap between the drop and what you keep has to beat this.</p><span class="big">~45 bps <small class="source">round trip</small></span></div>
       </div>
-      <section class="panel" aria-labelledby="upcoming-title">
-        <div class="panel-heading"><div><p class="eyebrow">FORWARD TEST / STRATEGY V3</p><h2 id="upcoming-title">Decisions and outcomes</h2></div><span id="upcoming-tag" class="tag">—</span></div>
-        <p id="upcoming-note" class="source"></p>
-        <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Dividend</th><th>Decision before cutoff</th><th>Why</th><th>Outcome</th></tr></thead><tbody id="upcoming-body"></tbody></table></div>
-      </section>
+    </div>
+  </section>
 
-    </section>
-
-    <section id="view-validation" class="view" data-view="validation" aria-labelledby="validation-page-title">
-      <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 05 · SCORECARD</p><h1 id="validation-page-title">Walk-forward validation</h1><p>The selection procedure tested on later, non-overlapping windows. This is not labelled V1 OOS.</p></div>
-        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
-      </div>
-      <section class="metrics validation-metrics" aria-label="Validation sample">
-        <article class="metric"><span>Discovery study</span><strong id="validation-resolved">—</strong><small>usable resolved events</small></article>
-        <article class="metric"><span>Ex-ante eligible</span><strong id="validation-eligible">—</strong><small>knowable at decision time</small></article>
-        <article class="metric"><span>OOS events</span><strong id="validation-oos-events">—</strong><small id="validation-oos-days">non-overlapping test days</small></article>
-        <article class="metric"><span>OOS EXIT trades</span><strong id="validation-trades">—</strong><small>reported beside every metric</small></article>
-      </section>
-      <div class="two-col validation-grid">
-        <article class="panel">
-          <div class="panel-heading"><div><p class="eyebrow">OOS PERFORMANCE</p><h2>Policy, benchmark, active</h2></div><span class="tag">HONEST OOS</span></div>
-          <div class="table-wrap"><table class="validation-table"><thead><tr><th>Series</th><th>Total return</th><th>Sharpe / IR</th><th>Max drawdown</th></tr></thead><tbody id="validation-series"></tbody></table></div>
-        </article>
-        <article class="panel">
-          <div class="panel-heading"><div><p class="eyebrow">ASSUMPTIONS</p><h2>What the result means</h2></div><span class="tag amber">MODELED_EXECUTION</span></div>
-          <dl id="validation-assumptions" class="details"></dl>
-          <div id="validation-note" class="score-panel"></div>
-        </article>
-      </div>
-      <article class="panel">
-        <div class="panel-heading"><div><p class="eyebrow">FOLDS</p><h2>Frozen training and later test windows</h2></div><span class="tag">NO FOLD LEAKAGE</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Fold</th><th>Training end</th><th>Test period</th><th>Selected rung</th><th>PDR estimate</th><th>Test events</th><th>EXIT trades</th><th>Test Sharpe</th></tr></thead><tbody id="validation-folds"></tbody></table></div>
-      </article>
-    </section>
-
-    <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">
-      <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 02 · DECISIONS</p><h1 id="signals-page-title">Frozen forward signals</h1><p>Open each row for the event arithmetic and the evidence sources used by Strategy v1.</p></div>
-        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
-      </div>
-      <section class="decision-finder" aria-labelledby="decision-finder-title">
-        <div class="decision-intro">
-          <p class="eyebrow">TOKEN DECISION</p>
-          <h2 id="decision-finder-title">What should I do with this token?</h2>
-          <p>Enter a Reality symbol such as <code>rAPH</code>, <code>RAPHUSDT</code>, or <code>APH</code>.</p>
-        </div>
-        <form id="decision-form" class="decision-form">
-          <label for="decision-symbol">Reality token</label>
-          <div class="decision-input-row">
-            <input id="decision-symbol" name="symbol" type="text" inputmode="text" autocomplete="off" placeholder="Enter token symbol" required>
-            <button type="submit">Check decision</button>
+  <section class="l-section" id="try">
+    <div class="wrap">
+      <p class="eyebrow">Interactive</p>
+      <h2>Try it: does selling first pay?</h2>
+      <p class="lede">Move the sliders. This is the same arithmetic Exnight runs on every event, simplified to one trade.</p>
+      <div class="calc">
+        <div class="calc-inputs">
+          <div class="field">
+            <div class="presets" role="group" aria-label="Example events">
+              <button type="button" data-preset="30">Typical (30 bps)</button>
+              <button type="button" data-preset="77" class="on">rTOWN (77 bps)</button>
+              <button type="button" data-preset="354">rBZ (354 bps)</button>
+            </div>
           </div>
-        </form>
-        <div id="decision-result" class="decision-result" aria-live="polite">
-          <span>Enter a token to see its nearest evaluated event and decision by trade size.</span>
+          <div class="field"><label for="c-yield">Dividend, as % of the price <b id="c-yield-v"></b></label><input id="c-yield" type="range" min="5" max="400" step="1" value="77"><small>Most rToken dividends are 0.1%–0.8% of the price.</small></div>
+          <div class="field"><label for="c-pdr">Expected price drop, × the dividend <b id="c-pdr-v"></b></label><input id="c-pdr" type="range" min="0.3" max="1.3" step="0.01" value="0.60"><small>The average is 0.97, but it's uncertain. Exnight uses the cautious end, 0.60, so it never steps out on a guess.</small>
+            <div class="presets" style="margin-top:10px"><button type="button" data-pdr="0.60" class="on">Cautious 0.60 (Exnight)</button><button type="button" data-pdr="0.97">Average 0.97</button></div></div>
+          <div class="field"><label for="c-wh">Tax withheld from the dividend <b id="c-wh-v"></b></label><input id="c-wh" type="range" min="0" max="30" step="1" value="30"><small>More tax withheld means less to give up by selling.</small></div>
+          <div class="field"><label for="c-cost">Round-trip trading cost <b id="c-cost-v"></b></label><input id="c-cost" type="range" min="10" max="100" step="1" value="45"><small>Two 10 bps fees plus 25 bps of slippage is 45 bps.</small></div>
         </div>
-      </section>
-      <section class="panel" id="signals">
-        <div class="panel-heading"><div><p class="eyebrow">DECISIONS</p><h2>Frozen forward signals</h2></div><div class="heading-actions"><select id="signal-date" class="data-select" aria-label="Signal ex-date"></select><select id="signal-symbol" class="data-select" aria-label="Signal symbol"></select><div id="signal-filters" class="filters" aria-label="Filter signals"></div><span class="tag">STRATEGY V1</span></div></div>
-        <div class="table-wrap"><table><thead><tr><th>Event</th><th>Notional</th><th>Verdict</th><th>Edge / cost</th><th>Liquidity evidence</th></tr></thead><tbody id="signals-body"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div>
-      </section>
-    </section>
-
-    <section id="view-recorder" class="view" data-view="recorder" aria-labelledby="recorder-page-title">
-      <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 03 · COLLECTION</p><h1 id="recorder-page-title">Recorder pulse</h1><p>See the saved September 22 observation and its public-book coverage.</p></div>
-        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
-      </div>
-      <section class="hero">
-        <div>
-          <p class="eyebrow">LAST RECORDED WINDOW (STRATEGY V1) / <span id="event-date">—</span></p>
-          <h2 id="headline">Loading evidence state…</h2>
-          <p id="hero-copy" class="hero-copy">Loading the saved forward result and recorder audit.</p>
+        <div class="calc-out" aria-live="polite">
+          <div><p class="eyebrow">Exnight says</p><div id="c-verdict" class="calc-verdict">HOLD</div><p id="c-sub" class="calc-sub"></p></div>
+          <div class="bar-compare">
+            <div class="row"><span>Drop avoided</span><div class="track"><i id="b-gain" class="fill gain"></i></div><b id="b-gain-v"></b></div>
+            <div class="row"><span>Dividend given up</span><div class="track"><i id="b-keep" class="fill keep"></i></div><b id="b-keep-v"></b></div>
+            <div class="row"><span>Trading cost</span><div class="track"><i id="b-cost" class="fill"></i></div><b id="b-cost-v"></b></div>
+          </div>
+          <div class="ledger">
+            <div><span>Price drop you avoid by selling</span><b id="l-gain"></b></div>
+            <div><span>− dividend you would have kept</span><b id="l-keep"></b></div>
+            <div><span>− trading cost</span><b id="l-cost"></b></div>
+            <div class="total"><span>Selling first vs holding</span><b id="l-total"></b></div>
+          </div>
+          <p class="source">On $1,000, that's <b id="c-usd"></b>. Numbers are in basis points (1 bp = 0.01%) of the token price.</p>
         </div>
-        <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Loading evidence</small></div></div>
-      </section>
-
-      <section class="metrics" aria-label="Key metrics">
-        <article class="metric"><span>Samples collected</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across monitored symbols</small></article>
-        <article class="metric"><span>Forward events</span><strong id="metric-events">—</strong><small id="metric-events-note">Frozen strategy v1</small></article>
-        <article class="metric"><span>Saved signal mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Selected ex-date</small></article>
-        <article class="metric"><span>Public book depth</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Recorded forward window</small></article>
-      </section>
-
-      <section class="panel chart-panel" id="pulse">
-        <div class="panel-heading"><div><p class="eyebrow">RECORDER PULSE</p><h2>Observed price and public-book coverage</h2></div><label class="select-label">Chart symbol <select id="chart-symbol" aria-label="Chart symbol"></select></label></div>
-        <div id="recorder-chart" class="recorder-chart" role="img" aria-label="Recorder price chart"><span class="empty">Loading recorder series…</span></div>
-        <div class="chart-legend"><span><i class="legend-line"></i>ticker last price</span><span><i class="legend-dot"></i>two-sided public book present</span><span>last 240 saved samples</span></div>
-      </section>
-      <section class="panel" id="recorder">
-        <div class="panel-heading"><div><p class="eyebrow">RECORDER</p><h2>Collection health</h2></div><span id="recorder-badge" class="badge">—</span></div>
-        <div id="recorder-list" class="health-list"></div>
-        <div id="recorder-errors" class="small-note"></div>
-      </section>
-    </section>
-
-    <section id="view-evidence" class="view" data-view="evidence" aria-labelledby="evidence-page-title">
-      <div class="view-heading">
-        <div><p class="eyebrow">SUBPAGE / 04 · EVIDENCE</p><h1 id="evidence-page-title">Evidence chain</h1><p>See what the recorder proved, what the forward score could resolve, and which files support each result.</p></div>
-        <a class="back-link" data-route-link="home" href="#/">← Back to overview</a>
       </div>
-      <div class="two-col evidence-grid">
-        <article class="panel" id="evidence">
-          <div class="panel-heading"><div><p class="eyebrow">FORWARD SCORE</p><h2>September 22 result</h2></div><span id="score-badge" class="badge">—</span></div>
-          <div id="score-panel" class="score-panel"></div>
-          <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research pipeline</strong><small>Event calendar, price study, costs and saved decisions</small></div></div><div id="timeline-observation" class="timeline-item"><span></span><div><strong>Observation window</strong><small id="timeline-observation-note">Checking recorder evidence</small></div></div><div id="timeline-forward" class="timeline-item"><span></span><div><strong>Forward score</strong><small id="timeline-forward-note">Checking scored events</small></div></div></div>
-        </article>
-        <article class="panel">
-          <div class="panel-heading"><div><p class="eyebrow">PROVENANCE</p><h2>Evidence chain</h2></div><span id="provenance-badge" class="badge">—</span></div>
-          <dl id="provenance-list" class="details"></dl>
-          <div id="downloads" class="downloads"></div>
-        </article>
-      </div>
-      <article class="panel">
-        <div class="panel-heading"><div><p class="eyebrow">SCORED EVENTS</p><h2>What happened for each token</h2></div><span class="tag">FROZEN V1</span></div>
-        <div class="table-wrap"><table><thead><tr><th>Token</th><th>$1k decision</th><th>Cash basis</th><th>Observed price</th><th>Result</th></tr></thead><tbody id="forward-events"></tbody></table></div>
-      </article>
-      <article class="panel limits-panel">
-        <div class="panel-heading"><div><p class="eyebrow">GUARDRAILS</p><h2>Known limits</h2></div><span class="tag amber">TRANSPARENT</span></div>
-        <ul id="limits-list"></ul>
-      </article>
-    </section>
+    </div>
+  </section>
 
-    <footer><span>EXNIGHT · Reality token decision intelligence</span><span>Snapshot check <b>30s</b></span></footer>
-  </main>
-  <dialog id="signal-dialog" class="signal-dialog"><div class="dialog-head"><div><p class="eyebrow">SIGNAL DETAIL</p><h2 id="dialog-title">—</h2></div><button id="dialog-close" class="dialog-close" type="button" aria-label="Close">×</button></div><div id="dialog-body" class="dialog-body"></div></dialog>
-  <script src="app.js"></script>
+  <section class="l-section" id="proof">
+    <div class="wrap">
+      <p class="eyebrow">Proof</p>
+      <h2>Tested on data it had never seen, then run live.</h2>
+      <p class="lede">The rule was fitted on past events only and tested on later ones. Now it locks each decision before the 20:00 ET sell cutoff and a recorder grades it after the ex-date. Nothing is adjusted after the fact.</p>
+      <div class="stat-strip">
+        <div class="stat hl"><strong id="s-exit">−32.5</strong><span>bps lost per event by always selling first, versus holding</span></div>
+        <div class="stat"><strong id="s-beat">13%</strong><span>of events where always selling first beat holding</span></div>
+        <div class="stat"><strong id="s-oos">39</strong><span>unseen test events. Exnight sold on none of them, so it lost nothing</span></div>
+        <div class="stat"><strong id="s-live">—</strong><span>live events graded so far, out of those scheduled to 8 Oct</span></div>
+      </div>
+      <div class="honest">
+        <div class="yes"><h3>What the evidence shows</h3><ul>
+          <li>The overnight dividend drop is real and repeatable: about 0.97× the dividend.</li>
+          <li>After tax and costs, selling first loses. Always doing it lost at every cost from 10 to 100 bps and every tax rate from 0% to 30%.</li>
+          <li>A real $10 order filled in full at the quote on an rToken with an empty public order book, at a 10 bps fee.</li>
+          <li>Every decision is committed to Git before the cutoff, so it can't be changed after the result is known.</li>
+        </ul></div>
+        <div class="no"><h3>What we don't claim</h3><ul>
+          <li>No trading profit. Exnight's value is avoiding a losing trade, not finding a winning one.</li>
+          <li>Past trading costs are modeled. Historical order books don't exist.</li>
+          <li>Trades of $1,000 and up are untested with real money.</li>
+          <li>The live test is still running, and a handful of events can't prove much alone.</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="l-section">
+    <div class="wrap">
+      <p class="eyebrow">Plain-English glossary</p>
+      <h2>Four words you'll see in the app.</h2>
+      <dl class="glossary">
+        <div><dt>EX-DATE</dt><dd>The day the price drops by the dividend. You must hold the token before it to get paid.</dd></div>
+        <div><dt>HOLD</dt><dd>Keep the token through the ex-date. Selling first would cost more than it saves.</dd></div>
+        <div><dt>EXIT</dt><dd>Sell before the cutoff and buy back after. Only when that clearly wins after tax and costs.</dd></div>
+        <div><dt>NO_SIGNAL</dt><dd>Not enough evidence to decide, for example a trade too big for the visible quotes. Exnight won't guess.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="l-section l-final">
+    <div class="wrap">
+      <div><p class="eyebrow">Check it yourself</p><h2>Look up a token, see every live decision, download the evidence.</h2></div>
+      <a class="btn btn-primary" href="app.html">Open the app →</a>
+    </div>
+  </section>
+
+  <footer class="l-foot"><div class="wrap"><span>EXNIGHT · Bitget AI Genesis Season 2 · research tool, not financial advice</span><span><a href="https://github.com/Jennycruzy/exnight">Source code</a> · <a href="app.html#/evidence">Evidence files</a></span></div></footer>
+  <script src="landing.js"></script>
 </body>
 </html>

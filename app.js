@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-const STATIC_SITE = window.location.hostname.endsWith("github.io");
+const STATIC_SITE = window.location.hostname.endsWith("github.io") || new URLSearchParams(window.location.search).has("static");
 const siteUrl = (path) => new URL(path, new URL(".", window.location.href)).toString();
 let latestData = null;
 let staticDecisions = null;
@@ -8,6 +8,12 @@ let activeFilter = "ALL";
 let activeSymbol = "ALL";
 let activeDate = null;
 let chartSymbol = null;
+const DISPLAY_NAMES = {"Always step out": "Always sell first", "Hold": "Just hold"};
+
+function when(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? (value || "") : `${date.toISOString().slice(0, 16).replace("T", " ")} UTC`;
+}
 const routes = new Set(["home", "upcoming", "signals", "recorder", "evidence", "validation"]);
 
 function currentRoute() {
@@ -56,13 +62,13 @@ function renderComparison(comparison) {
     return;
   }
   const exit = comparison.rows.find((row) => row.name === "Always step out") || {};
-  $("summary-headline").textContent = `Stepping out before every ex-date lost ${signed(-exit.active_bps_per_event)} bps per event. Exnight stood down.`;
-  $("comparison-body").innerHTML = comparison.rows.map((row) => `<tr><td><strong>${esc(row.name)}</strong></td><td>${row.trades}</td>`
+  $("summary-headline").textContent = `Selling before every ex-date lost ${signed(-exit.active_bps_per_event)} bps per event. Exnight held, and lost nothing to it.`;
+  $("comparison-body").innerHTML = comparison.rows.map((row) => `<tr><td><strong>${esc(DISPLAY_NAMES[row.name] || row.name)}</strong></td><td>${row.trades}</td>`
     + `<td class="${row.active_bps_per_event < 0 ? "negative" : ""}">${row.active_bps_per_event == null ? "—" : `${signed(row.active_bps_per_event)} bps`}</td>`
     + `<td>${row.beat_hold_share == null ? "—" : `${Math.round(row.beat_hold_share * 100)}% of events`}</td>`
     + `<td>${pctText(row.total_return)}</td><td>${signed(row.sharpe, 2)}</td></tr>`).join("");
-  $("comparison-note").textContent = `${comparison.events} events over ${comparison.days} days, using only information published before each decision. `
-    + "Holding's negative return comes from market moves on those nights. The always-step-out comparison was added after the results were known and changes no frozen input.";
+  $("comparison-note").textContent = `${comparison.events} unseen events over ${comparison.days} days, using only information published before each decision. `
+    + "Holding's small negative return comes from ordinary market moves on those nights, not from the dividend. The always-sell-first line was added after the results were known and changes nothing that was frozen.";
 }
 
 function renderUpcoming(v3) {
@@ -98,15 +104,15 @@ function renderForward(v3) {
   $("forward-tag").textContent = `${scored.length} OF ${total} SCORED`;
   $("forward-body").innerHTML = scored.length ? scored.map((event) => {
     const edge = event.modeled_edge_keep_70pct;
-    const edgeText = edge == null ? "—" : `${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)} (keep 70%)<br><span class="source">${edge < 0 ? "a loss: holding was right" : "a gain"} · modeled costs</span>`;
-    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>${verdict(event.verdict)}<br><span class="source">frozen ${esc(event.decided_at || "")}</span></td>`
+    const edgeText = edge == null ? "—" : `<span class="${edge < 0 ? "negative" : "positive"}">${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)}</span><br><span class="source">${edge < 0 ? "a loss, so holding was right" : "a gain"} · 30% tax, modeled costs</span>`;
+    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>${verdict(event.verdict)}<br><span class="source">locked ${esc(when(event.decided_at))}</span></td>`
       + `<td>${verdict(event.modeled_verdict || event.realised_verdict)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the $${number(event.gross_dividend, 2)} dividend</span></td>`
       + `<td>${edgeText}</td><td>${esc(event.score_status)}</td></tr>`;
   }).join("") : `<tr><td colspan="6" class="empty">First window not yet scored.</td></tr>`;
-  $("forward-note").innerHTML = `Every decision is frozen and committed before the 20:00 ET sell cutoff, then scored automatically from minute-by-minute recordings. `
+  $("forward-note").innerHTML = `Every decision is saved to Git before the 20:00 ET sell cutoff, then graded automatically from the minute-by-minute recording. `
     + `${total - scored.length} more high-yield events are scheduled up to ${esc(v3.events?.[total - 1]?.ex_date || "—")}. `
     + `A real order backs this up: 0.2783 rTOWN bought on 23 September filled in full at the quote on an empty public book, 10 bps fee, no slippage (<a href="https://github.com/Jennycruzy/exnight/blob/main/docs/live_fill_20260923.md">live fill</a>). `
-    + `Thin books mean these costs are modeled; one $10 fill does not prove $1k capacity.`;
+    + `The public order books are empty, so trading costs are modeled. One $10 fill doesn't prove a $1,000 trade would fill the same way.`;
 }
 
 function render(data) {
@@ -156,9 +162,9 @@ function render(data) {
   $("landing-evidence-count").textContent = scoredTokens.length
     ? `${scoredTokens.filter((row) => row.complete).length} of ${scoredTokens.length}` : (score.status || "—");
   $("landing-evidence-note").textContent = scoredTokens.length
-    ? `22 Sep tokens scored · recorder ${recorder.status === "PASS" ? "passed" : "needs attention"}` : "forward score";
+    ? `first-recording tokens scored` : "forward score";
   $("landing-validation-count").textContent = competition.sample?.eligible_ex_ante ?? "—";
-  $("landing-validation-note").textContent = `${competition.oos?.policy?.event_count ?? 0} OOS events`;
+  $("landing-validation-note").textContent = `knowable in advance · ${competition.oos?.policy?.event_count ?? 0} unseen test events`;
 
   $("validation-resolved").textContent = competition.sample?.resolved_usable ?? "—";
   $("validation-eligible").textContent = competition.sample?.eligible_ex_ante ?? "—";
@@ -185,7 +191,7 @@ function render(data) {
     const edge = row.exit_edge_lower == null ? "—" : `${number(row.exit_edge_lower, 3)} / ${number(row.cost_per_share, 3)}`;
     const source = `${row.sell_book_source || "—"} → ${row.buy_book_source || "—"}`;
     const rowIndex = rows.indexOf(row);
-    return `<tr class="signal-row" data-row-index="${rowIndex}" tabindex="0" aria-label="Open ${esc(row.symbol)} signal detail"><td><strong>${esc(row.symbol)}</strong><br><span class="source">${esc(row.spot_symbol)} · ${esc(row.ex_date)}</span></td><td>$${Number(row.notional_usd || 0).toLocaleString()}</td><td>${verdict(row.verdict)}<br><span class="source">${esc(row.reason || "no additional reason")}</span></td><td class="${row.exit_edge_lower > 0 ? "positive" : "negative"}">${esc(edge)}</td><td class="source">${esc(source)}</td></tr>`;
+    return `<tr class="signal-row" data-row-index="${rowIndex}" tabindex="0" aria-label="Open ${esc(row.symbol)} signal detail"><td><strong>${esc(row.symbol)}</strong><br><span class="source">${esc(row.spot_symbol)} · ${esc(row.ex_date)}</span></td><td>$${Number(row.notional_usd || 0).toLocaleString()}</td><td>${verdict(row.verdict)}<br><span class="source">${esc(row.reason || (row.verdict === "HOLD" ? "the expected gain from selling is smaller than the cost" : "no additional reason"))}</span></td><td class="${row.exit_edge_lower > 0 ? "positive" : "negative"}">${esc(edge)}</td><td class="source">${esc(source)}</td></tr>`;
   }).join("") : `<tr><td colspan="5" class="empty">No rows match the current filters.</td></tr>`;
 
   const filterValues = ["ALL", ...Object.keys(meta.verdict_counts || {})];
@@ -351,6 +357,16 @@ document.addEventListener("keydown", (event) => {
   }
 });
 $("refresh-button").addEventListener("click", refresh);
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  $("theme-button").textContent = theme === "light" ? "Dark" : "Light";
+  try { localStorage.setItem("exnight-theme", theme); } catch (error) { /* storage unavailable */ }
+}
+try { setTheme(localStorage.getItem("exnight-theme") || "dark"); } catch (error) { setTheme("dark"); }
+$("theme-button").addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
+document.querySelectorAll("[data-pick]").forEach((button) => button.addEventListener("click", () => {
+  $("decision-symbol").value = button.dataset.pick; lookupDecision(button.dataset.pick);
+}));
 $("dialog-close").addEventListener("click", () => $("signal-dialog").close());
 $("signal-date").addEventListener("change", (event) => { activeDate = event.target.value; refresh(); });
 $("signal-symbol").addEventListener("change", (event) => { activeSymbol = event.target.value; if (latestData) render(latestData); });
