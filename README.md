@@ -1,9 +1,37 @@
 # Exnight
 
-**Exnight tells a Bitget rToken holder whether stepping out before an ex-dividend date is worth
-it.** By 04:00 ET on the ex-date, the token has usually fallen by about the whole dividend, so
-selling first and buying back afterwards looks attractive. Exnight tested that against holding,
-with only information available before each decision:
+**Should you sell your Bitget rToken before the dividend and buy it back after? Usually not,
+and Exnight proves it.**
+
+**[Open the live site →](https://jennycruzy.github.io/exnight/)** · the landing page has a
+calculator you can try; the app has live results, a token lookup and every evidence file.
+
+## For judges: the 60-second version
+
+1. **The effect is real.** When a stock pays a dividend, its rToken drops overnight by about the
+   full dividend (0.97× on average, 127 past events).
+2. **Trading it doesn't pay.** Selling first avoids the drop but gives up the dividend you'd keep
+   (70% after US tax) and costs two trades. On unseen data, always selling first lost
+   **32.5 bps per event**. Exnight's rule never sold, so it lost nothing.
+3. **It's being tested live, honestly.** Each decision is committed to Git *before* the 20:00 ET
+   sell cutoff and graded automatically afterwards from a minute-by-minute recording.
+   First graded event: rTOWN, 25 Sep, holding was right (selling first: −$0.36/share).
+4. **A real order backs it.** A $10 rTOWN buy filled in full at the quote on a token with an
+   empty public order book.
+5. **What we don't claim:** no trading profit, and fills of $1,000 or more are untested.
+
+| Word | Meaning |
+|---|---|
+| Ex-date | The day the price drops by the dividend. |
+| HOLD | Keep the token through the ex-date. |
+| EXIT ("stepping out") | Sell before the 20:00 ET cutoff, buy back after. Only when that clearly wins. |
+| NO_SIGNAL | Not enough evidence to decide (for example, trade too big for the visible quotes). |
+| bps | Basis points: 1 bp = 0.01% of the price. |
+| PDR | Price-drop ratio: how much the price fell, as a multiple of the dividend. |
+
+## The backtest result
+
+Exnight was tested against holding, using only information available before each decision:
 
 | Out-of-sample, 39 events over 47 days | Exnight | Always step out | Hold |
 |---|---:|---:|---:|
@@ -52,14 +80,15 @@ execution-aware alpha.
 rTokens, deciding **before each ex-date** whether to stay in or step out for the night.
 
 For each event and trade size, Exnight gives `EXIT`, `HOLD` or `NO_SIGNAL`, with the reason
-and the evidence behind it. The dashboard's Upcoming page lists high-yield ex-dates with the
+and the evidence behind it. The app's Live test page lists high-yield ex-dates with the
 decision frozen before each sell cutoff, then the real outcome once the event is scored.
-Its Decisions page looks up any evaluated token (`rAPH`, `RAPHUSDT` or `APH`). Exnight never
+Its Check a token page looks up any evaluated token (`rAPH`, `RAPHUSDT` or `APH`). Exnight never
 says BUY: buying before the ex-date to collect the dividend lost money in every scenario tested,
 because the price falls by about the whole dividend (see Known limits).
 
-**Live dashboard:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/)
-(a read-only evidence snapshot, not a trading terminal).
+**Live site:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/): a landing
+page with an interactive calculator, and a read-only [app](https://jennycruzy.github.io/exnight/app.html)
+with six pages: Overview, Live test, Check a token, Backtest, Recorder and Evidence.
 
 ## Validation
 
@@ -150,10 +179,10 @@ Start the dashboard from the project root:
 .venv/bin/python dashboard/server.py --host 127.0.0.1 --port 8787
 ```
 
-Then open `http://127.0.0.1:8787/`. On a remote server, use an SSH port forward rather than
+Then open `http://127.0.0.1:8787/` (landing page) or `http://127.0.0.1:8787/app.html` (the app). On a remote server, use an SSH port forward rather than
 exposing the dashboard to the public internet.
 
-The dashboard's Decisions page contains the token lookup. Users can enter forms such as `rAPH`,
+The app's Check a token page contains the token lookup. Users can enter forms such as `rAPH`,
 `RAPHUSDT`, or `APH` and receive the nearest evaluated decision for each supported trade size.
 It also shows recorder health, upcoming events, detailed strategy results, data sources, and
 known limitations. If a token has not been evaluated, Exnight says so rather than guessing.

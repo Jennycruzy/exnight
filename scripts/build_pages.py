@@ -79,7 +79,7 @@ def signal_date_index(project_root: Path, now: dt.datetime | None = None) -> dic
 def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
           now: dt.datetime | None = None) -> None:
     output.mkdir(parents=True, exist_ok=True)
-    for name in ("index.html", "app.js", "style.css"):
+    for name in ("index.html", "app.html", "app.js", "landing.js", "style.css"):
         shutil.copy2(project_root / "dashboard" / name, output / name)
     (output / ".nojekyll").write_text("", encoding="utf-8")
     if snapshot_path and snapshot_path.is_file():
@@ -87,6 +87,7 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     else:
         summary = public_snapshot(project_root, now=now)
     summary["mode"] = "PUBLIC_SNAPSHOT"
+    summary["generated_at"] = (now or dt.datetime.now(dt.timezone.utc)).isoformat()
     # The headline comparison and V3's forward view are always rebuilt from committed results,
     # so the published page shows the latest frozen decisions and scores.
     from dashboard import v3_view

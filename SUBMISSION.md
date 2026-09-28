@@ -6,7 +6,7 @@ checked by `tests/test_baseline.py` and `tests/test_competition_report.py`.
 **Project:** Exnight
 **Track:** Alpha Factory → rToken Factor Strategies. Secondary fit: Open Theme, execution-aware alpha.
 **Repository:** https://github.com/Jennycruzy/exnight
-**Dashboard (evidence snapshot):** https://jennycruzy.github.io/exnight/
+**Live site:** https://jennycruzy.github.io/exnight/ (landing page + calculator) · app: https://jennycruzy.github.io/exnight/app.html
 
 ## One line
 
@@ -25,7 +25,7 @@ only information available before the decision.
 
 A Bitget Reality-token holder with $1,000–$25,000 positions in dividend-paying rTokens, deciding
 around each ex-date whether to stay exposed. Exnight gives an `EXIT`, `HOLD` or `NO_SIGNAL`
-decision per event and trade size, with the evidence behind it. The dashboard's Decisions page
+decision per event and trade size, with the evidence behind it. The app's Check a token page
 looks up any evaluated token. BUY is never recommended: across 127 events,
 buying before the ex-date to collect the dividend lost money on average even in the most
 favourable case (−17.7 bps per event).
@@ -45,7 +45,8 @@ favourable case (−17.7 bps per event).
     withholding rate from 0% to 30%.
 - **Forward evidence.** The rule was frozen on 17 September and recorded live on 21 and 22 September.
   A withholding-aware V3 was registered before any V3 result was computed. It is recording 16
-  high-yield events from 25 September to 8 October.
+  high-yield events from 25 September to 8 October. First graded event: rTOWN (25 Sep), recording
+  PASS; selling first would have lost $0.36/share against holding, so holding was right.
 
 Historical costs are modeled, and labelled `MODELED_EXECUTION` everywhere. Forward capacity is
 reported separately: the recorded Reality pairs had empty public order books, so fills at

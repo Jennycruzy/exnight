@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EXNIGHT · App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <a class="logo" href="./"><span class="logo-mark">E</span>EXNIGHT</a>
+    <nav class="section-nav" aria-label="App pages">
+      <a class="active" data-route-link="home" href="#/" aria-current="page"><span class="n">01</span>Overview</a>
+      <a data-route-link="upcoming" href="#/upcoming"><span class="n">02</span>Live test</a>
+      <a data-route-link="signals" href="#/signals"><span class="n">03</span>Check a token</a>
+      <a data-route-link="validation" href="#/validation"><span class="n">04</span>Backtest</a>
+      <a data-route-link="recorder" href="#/recorder"><span class="n">05</span>Recorder</a>
+      <a data-route-link="evidence" href="#/evidence"><span class="n">06</span>Evidence</a>
+    </nav>
+    <div class="side-foot">
+      <a href="./">← Back to home</a>
+      <a href="https://github.com/Jennycruzy/exnight">Source on GitHub</a>
+      <span>Read-only. No trading controls.</span>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <span class="readonly"><span class="dot"></span>EVIDENCE SNAPSHOT</span>
+      <div class="top-meta"><span id="as-of">Loading…</span><button id="theme-button" class="theme-btn" type="button">Light</button><button id="refresh-button" class="refresh-button" type="button">Refresh</button></div>
+    </header>
+
+    <main class="shell">
+      <div id="error" class="notice error hidden" role="alert"></div>
+
+      <!-- 01 OVERVIEW -->
+      <section id="overview" class="view active" data-view="home" aria-labelledby="summary-headline">
+        <section class="answer">
+          <div>
+            <p class="eyebrow">The answer</p>
+            <h1 id="summary-headline">Loading the result…</h1>
+            <p id="summary-copy" class="hero-copy">By 04:00 ET on the ex-date, an rToken has usually fallen by about the whole dividend. Exnight checks whether selling first is worth it after the tax you'd pay on the dividend, fees and slippage.</p>
+          </div>
+          <div>
+            <p class="eyebrow">Read this page in 30 seconds</p>
+            <ul class="answer-list">
+              <li><span class="k">01</span><span><b>Live test:</b> decisions locked before each cutoff, graded after. Latest results below.</span></li>
+              <li><span class="k">02</span><span><b>Backtest:</b> always selling first loses money. Exnight didn't.</span></li>
+              <li><span class="k">03</span><span><b>Check a token</b> to see its decision at $1k, $5k and $25k.</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="forward-title">
+          <div class="panel-heading"><div><p class="eyebrow">01 · Live test results</p><h2 id="forward-title">Locked before the cutoff, graded after the ex-date</h2></div><span id="forward-tag" class="tag">—</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Locked decision</th><th>What happened</th><th>Selling first, per share</th><th>Recording</th></tr></thead><tbody id="forward-body"></tbody></table></div>
+          <p id="forward-note" class="source"></p>
+        </section>
+
+        <section class="panel" aria-labelledby="comparison-title">
+          <div class="panel-heading"><div><p class="eyebrow">02 · Backtest on unseen data</p><h2 id="comparison-title">Exnight vs always selling first vs holding</h2></div><span class="tag amber">COSTS MODELED</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Approach</th><th>Trades</th><th>Vs holding, per event</th><th>Beat holding</th><th>Total return</th><th>Sharpe</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
+          <p id="comparison-note" class="source"></p>
+        </section>
+
+        <div class="destination-grid">
+          <a class="destination-card" data-route-link="upcoming" href="#/upcoming">
+            <span class="destination-index">02 / LIVE TEST</span><span class="destination-arrow">↗</span>
+            <h3>Every scheduled event</h3>
+            <p>High-dividend ex-dates, the decision locked for each, and the graded outcome.</p>
+            <span class="destination-meta"><strong id="landing-upcoming-count">—</strong><span id="landing-upcoming-note">events scheduled</span></span>
+          </a>
+          <a class="destination-card" data-route-link="signals" href="#/signals">
+            <span class="destination-index">03 / CHECK A TOKEN</span><span class="destination-arrow">↗</span>
+            <h3>What should I do with my token?</h3>
+            <p>Type a symbol, get HOLD, EXIT or NO_SIGNAL for each trade size, with the reason.</p>
+            <span class="destination-meta"><strong id="landing-signal-count">—</strong><span id="landing-signal-note">decisions</span></span>
+          </a>
+          <a class="destination-card" data-route-link="validation" href="#/validation">
+            <span class="destination-index">04 / BACKTEST</span><span class="destination-arrow">↗</span>
+            <h3>How it was tested</h3>
+            <p>Fitted on the past only, tested on later events, across every cost and tax level.</p>
+            <span class="destination-meta"><strong id="landing-validation-count">—</strong><span id="landing-validation-note">eligible events</span></span>
+          </a>
+          <a class="destination-card" data-route-link="recorder" href="#/recorder">
+            <span class="destination-index">05 / RECORDER</span><span class="destination-arrow">↗</span>
+            <h3>Minute-by-minute prices</h3>
+            <p>The raw price recording the grades are computed from, with its health checks.</p>
+            <span class="destination-meta"><strong id="landing-recorder-count">—</strong><span id="landing-recorder-note">samples</span></span>
+          </a>
+          <a class="destination-card" data-route-link="evidence" href="#/evidence">
+            <span class="destination-index">06 / EVIDENCE</span><span class="destination-arrow">↗</span>
+            <h3>Files and limits</h3>
+            <p>Download every score and manifest. Read exactly what isn't proven yet.</p>
+            <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
+          </a>
+          <a class="destination-card" href="./#try">
+            <span class="destination-index">↺ / CALCULATOR</span><span class="destination-arrow">↗</span>
+            <h3>Try the arithmetic</h3>
+            <p>Move the dividend, tax and cost sliders to see when selling first could pay.</p>
+            <span class="destination-meta"><strong>4</strong><span>sliders</span></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 02 LIVE TEST -->
+      <section id="view-upcoming" class="view" data-view="upcoming" aria-labelledby="upcoming-page-title">
+        <div class="view-heading">
+          <div><p class="eyebrow">02 · Live test</p><h1 id="upcoming-page-title">Every high-dividend event, 25 Sep to 8 Oct</h1><p>Each decision is saved and committed to Git before the 20:00 ET sell cutoff, so it can't be changed later. After the ex-date, a scorer grades it from the minute-by-minute recording.</p></div>
+          <a class="back-link" data-route-link="home" href="#/">← Overview</a>
+        </div>
+        <section class="panel" aria-labelledby="upcoming-title">
+          <div class="panel-heading"><div><p class="eyebrow">Strategy V3</p><h2 id="upcoming-title">Decisions and outcomes</h2></div><span id="upcoming-tag" class="tag">—</span></div>
+          <p id="upcoming-note" class="source"></p>
+          <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Dividend</th><th>Locked decision</th><th>Why</th><th>Outcome</th></tr></thead><tbody id="upcoming-body"></tbody></table></div>
+        </section>
+      </section>
+
+      <!-- 03 CHECK A TOKEN -->
+      <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">
+        <div class="view-heading">
+          <div><p class="eyebrow">03 · Check a token</p><h1 id="signals-page-title">What should I do with my token?</h1><p>Look up a Reality token to see its decision at each trade size, or browse every saved decision below. Click a row for the full arithmetic.</p></div>
+          <a class="back-link" data-route-link="home" href="#/">← Overview</a>
+        </div>
+        <section class="decision-finder" aria-labelledby="decision-finder-title">
+          <div class="decision-intro">
+            <p class="eyebrow">Token lookup</p>
+            <h2 id="decision-finder-title">Enter a symbol</h2>
+            <p>Any form works: <code>rAPH</code>, <code>RAPHUSDT</code> or <code>APH</code>.</p>
+          </div>
+          <form id="decision-form" class="decision-form">
+            <label for="decision-symbol">Reality token</label>
+            <div class="decision-input-row">
+              <input id="decision-symbol" name="symbol" type="text" autocomplete="off" placeholder="e.g. rAPH" required>
+              <button type="submit">Check</button>
+            </div>
+            <div class="quick-picks">Try: <button type="button" data-pick="rAPH">rAPH</button><button type="button" data-pick="rSATA">rSATA</button><button type="button" data-pick="rAVGO">rAVGO</button><button type="button" data-pick="rSTM">rSTM</button></div>
+          </form>
+          <div id="decision-result" class="decision-result" aria-live="polite">
+            <span>The decision for each trade size appears here.</span>
+          </div>
+        </section>
+        <section class="panel" id="signals">
+          <div class="panel-heading"><div><p class="eyebrow">All saved decisions</p><h2>Decisions by ex-date</h2></div><div class="heading-actions"><select id="signal-date" class="data-select" aria-label="Ex-date"></select><select id="signal-symbol" class="data-select" aria-label="Token"></select><div id="signal-filters" class="filters" aria-label="Filter by decision"></div><span class="tag">STRATEGY V1</span></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Event</th><th>Trade size</th><th>Decision</th><th>Edge / cost per share</th><th>Order-book evidence</th></tr></thead><tbody id="signals-body"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div>
+        </section>
+      </section>
+
+      <!-- 04 BACKTEST -->
+      <section id="view-validation" class="view" data-view="validation" aria-labelledby="validation-page-title">
+        <div class="view-heading">
+          <div><p class="eyebrow">04 · Backtest</p><h1 id="validation-page-title">How it was tested</h1><p>The rule was fitted using only past events, frozen, then tested on later events it had never seen. Only dividends published before each decision were used.</p></div>
+          <a class="back-link" data-route-link="home" href="#/">← Overview</a>
+        </div>
+        <section class="metrics validation-metrics" aria-label="Sample sizes">
+          <article class="metric"><span>Events studied</span><strong id="validation-resolved">—</strong><small>past dividend events</small></article>
+          <article class="metric"><span>Knowable in advance</span><strong id="validation-eligible">—</strong><small>dividend published before the decision</small></article>
+          <article class="metric"><span>Unseen test events</span><strong id="validation-oos-events">—</strong><small id="validation-oos-days">test days</small></article>
+          <article class="metric"><span>Sell trades made</span><strong id="validation-trades">—</strong><small>none cleared the rule</small></article>
+        </section>
+        <div class="two-col validation-grid">
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">Unseen-data performance</p><h2>Exnight, holding, and the difference</h2></div></div>
+            <div class="table-wrap"><table class="validation-table"><thead><tr><th>Series</th><th>Total return</th><th>Sharpe / IR</th><th>Max drawdown</th></tr></thead><tbody id="validation-series"></tbody></table></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">Assumptions</p><h2>What the result means</h2></div><span class="tag amber">COSTS MODELED</span></div>
+            <dl id="validation-assumptions" class="details"></dl>
+            <div id="validation-note" class="score-panel"></div>
+          </article>
+        </div>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Folds</p><h2>Training windows and the later test windows</h2></div><span class="tag">NO LEAKAGE</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Fold</th><th>Training end</th><th>Test period</th><th>Selected time</th><th>Drop estimate</th><th>Test events</th><th>Sell trades</th><th>Test Sharpe</th></tr></thead><tbody id="validation-folds"></tbody></table></div>
+        </article>
+      </section>
+
+      <!-- 05 RECORDER -->
+      <section id="view-recorder" class="view" data-view="recorder" aria-labelledby="recorder-page-title">
+        <div class="view-heading">
+          <div><p class="eyebrow">05 · Recorder</p><h1 id="recorder-page-title">Minute-by-minute price recording</h1><p>The recorder saves each token's price every minute through the event. Scores are computed only from this saved record, never from newer data.</p></div>
+          <a class="back-link" data-route-link="home" href="#/">← Overview</a>
+        </div>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Recorded window (Strategy V1) · <span id="event-date">—</span></p>
+            <h2 id="headline">Loading…</h2>
+            <p id="hero-copy" class="hero-copy">Loading the saved recording and its audit.</p>
+          </div>
+          <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Loading</small></div></div>
+        </section>
+        <section class="metrics" aria-label="Recorder metrics">
+          <article class="metric"><span>Samples saved</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across tokens</small></article>
+          <article class="metric"><span>Events</span><strong id="metric-events">—</strong><small id="metric-events-note">Strategy V1</small></article>
+          <article class="metric"><span>Decision mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Selected ex-date</small></article>
+          <article class="metric"><span>Public order book</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Recorded window</small></article>
+        </section>
+        <section class="panel chart-panel" id="pulse">
+          <div class="panel-heading"><div><p class="eyebrow">Price</p><h2>Recorded price and order-book coverage</h2></div><label class="select-label">Token <select id="chart-symbol" aria-label="Chart token"></select></label></div>
+          <div id="recorder-chart" class="recorder-chart" role="img" aria-label="Recorded price chart"><span class="empty">Loading…</span></div>
+          <div class="chart-legend"><span><i class="legend-line"></i>last traded price</span><span><i class="legend-dot"></i>public order book present</span><span>last 240 samples</span></div>
+        </section>
+        <section class="panel" id="recorder">
+          <div class="panel-heading"><div><p class="eyebrow">Health</p><h2>Recording checks per token</h2></div><span id="recorder-badge" class="badge">—</span></div>
+          <div id="recorder-list" class="health-list"></div>
+          <div id="recorder-errors" class="small-note"></div>
+        </section>
+      </section>
+
+      <!-- 06 EVIDENCE -->
+      <section id="view-evidence" class="view" data-view="evidence" aria-labelledby="evidence-page-title">
+        <div class="view-heading">
+          <div><p class="eyebrow">06 · Evidence</p><h1 id="evidence-page-title">Files, provenance and limits</h1><p>Download the scored results and manifests behind every number, and see exactly what is not yet proven.</p></div>
+          <a class="back-link" data-route-link="home" href="#/">← Overview</a>
+        </div>
+        <div class="two-col evidence-grid">
+          <article class="panel" id="evidence">
+            <div class="panel-heading"><div><p class="eyebrow">First live recording</p><h2>22 September result (Strategy V1)</h2></div><span id="score-badge" class="badge">—</span></div>
+            <div id="score-panel" class="score-panel"></div>
+            <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research</strong><small>Event calendar, price study, costs and saved decisions</small></div></div><div id="timeline-observation" class="timeline-item"><span></span><div><strong>Recording</strong><small id="timeline-observation-note">Checking</small></div></div><div id="timeline-forward" class="timeline-item"><span></span><div><strong>Grading</strong><small id="timeline-forward-note">Checking</small></div></div></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">Provenance</p><h2>Where the numbers come from</h2></div><span id="provenance-badge" class="badge">—</span></div>
+            <dl id="provenance-list" class="details"></dl>
+            <div id="downloads" class="downloads"></div>
+          </article>
+        </div>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">22 September tokens</p><h2>What happened for each token</h2></div><span class="tag">STRATEGY V1</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Token</th><th>$1k decision</th><th>Dividend amount</th><th>Price before → after</th><th>Result</th></tr></thead><tbody id="forward-events"></tbody></table></div>
+        </article>
+        <article class="panel limits-panel">
+          <div class="panel-heading"><div><p class="eyebrow">Honest limits</p><h2>What isn't proven yet</h2></div></div>
+          <ul id="limits-list"></ul>
+        </article>
+      </section>
+
+      <footer class="app-foot"><span>EXNIGHT · research tool, not financial advice</span><span><a href="./">Home</a> · <a href="https://github.com/Jennycruzy/exnight">GitHub</a></span></footer>
+    </main>
+  </div>
+</div>
+<dialog id="signal-dialog" class="signal-dialog"><div class="dialog-head"><div><p class="eyebrow">Decision detail</p><h2 id="dialog-title">—</h2></div><button id="dialog-close" class="dialog-close" type="button" aria-label="Close">×</button></div><dl id="dialog-body" class="dialog-body"></dl></dialog>
+<script src="app.js"></script>
+</body>
+</html>

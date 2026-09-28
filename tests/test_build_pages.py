@@ -7,7 +7,7 @@ from scripts.build_pages import build
 
 def test_build_pages_creates_static_decision_lookup(tmp_path):
     (tmp_path / "dashboard").mkdir()
-    for name in ("index.html", "app.js", "style.css"):
+    for name in ("index.html", "app.html", "app.js", "landing.js", "style.css"):
         (tmp_path / "dashboard" / name).write_text(name, encoding="utf-8")
     results = tmp_path / "data/results"
     results.mkdir(parents=True)

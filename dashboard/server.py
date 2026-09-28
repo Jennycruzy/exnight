@@ -423,6 +423,10 @@ class DashboardHandler(BaseHTTPRequestHandler):
         path = parsed.path
         if path in ("/", "/index.html"):
             self._send(HTTPStatus.OK, "text/html; charset=utf-8", (STATIC_ROOT / "index.html").read_bytes())
+        elif path == "/app.html":
+            self._send(HTTPStatus.OK, "text/html; charset=utf-8", (STATIC_ROOT / "app.html").read_bytes())
+        elif path == "/landing.js":
+            self._send(HTTPStatus.OK, "text/javascript; charset=utf-8", (STATIC_ROOT / "landing.js").read_bytes())
         elif path == "/app.js":
             self._send(HTTPStatus.OK, "text/javascript; charset=utf-8", (STATIC_ROOT / "app.js").read_bytes())
         elif path == "/style.css":
