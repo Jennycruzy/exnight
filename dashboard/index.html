@@ -27,7 +27,7 @@
       <div>
         <p class="eyebrow">For Bitget rToken holders · Alpha Factory</p>
         <h1>Sell before the dividend? <em>Usually, don't.</em></h1>
-        <p class="lede">When a stock pays a dividend, its Bitget rToken drops overnight by about the dividend amount. Selling first and buying back looks like free money. Exnight checks whether it really is, for each event and trade size, after tax and trading costs. Every decision is locked in before the market moves and graded afterwards.</p>
+        <p class="lede">When a stock pays a dividend, its rToken drops overnight by about that much. So selling the night before and buying back in the morning sounds like free money. I tested it on 127 dividends. It isn't. Exnight tells you, event by event, whether it's worth it, and every call is locked in before the market moves.</p>
         <div class="l-cta">
           <a class="btn btn-primary" href="app/">Open the app →</a>
           <a class="btn" href="#try">Try the calculator</a>
@@ -53,12 +53,12 @@
   <section class="l-section" id="how">
     <div class="wrap">
       <p class="eyebrow">How it works</p>
-      <h2>Three facts decide the answer.</h2>
-      <p class="lede">Exnight measures each one from Bitget data, then compares them. If selling first doesn't clearly win, it tells you to hold.</p>
+      <h2>It comes down to three numbers.</h2>
+      <p class="lede">All three come from Bitget data. If selling first doesn't clearly come out ahead, the answer is hold.</p>
       <div class="steps">
-        <div class="step"><span class="step-n">01 · THE DROP</span><h3>The price falls by the dividend</h3><p>Across 127 past events, by 04:00 ET on the ex-date an rToken had fallen by about the full dividend.</p><span class="big">0.97× <small class="source">the dividend</small></span></div>
-        <div class="step"><span class="step-n">02 · THE TAX</span><h3>But you only keep part of it</h3><p>US dividends to rToken holders can have up to 30% withheld. Selling first avoids the drop, and gives up only what you'd have kept.</p><span class="big">70% <small class="source">kept after 30% tax</small></span></div>
-        <div class="step"><span class="step-n">03 · THE COST</span><h3>Selling and buying back costs money</h3><p>Two trades mean two fees plus slippage. The gap between the drop and what you keep has to beat this.</p><span class="big">~45 bps <small class="source">round trip</small></span></div>
+        <div class="step"><span class="step-n">01 · THE DROP</span><h3>The price really does drop</h3><p>Across 127 past dividends, by 04:00 ET the rToken had dropped by almost the whole dividend.</p><span class="big">0.97× <small class="source">the dividend</small></span></div>
+        <div class="step"><span class="step-n">02 · THE TAX</span><h3>But you give up the dividend</h3><p>If you sell, you don't get paid. After up to 30% US tax, that's 70% of the dividend you're walking away from.</p><span class="big">70% <small class="source">kept after 30% tax</small></span></div>
+        <div class="step"><span class="step-n">03 · THE COST</span><h3>And getting out and back in isn't free</h3><p>Two fees plus slippage. Whatever's left after the dividend you gave up has to cover this.</p><span class="big">~45 bps <small class="source">round trip</small></span></div>
       </div>
     </div>
   </section>
@@ -66,8 +66,8 @@
   <section class="l-section" id="try">
     <div class="wrap">
       <p class="eyebrow">Interactive</p>
-      <h2>Try it: does selling first pay?</h2>
-      <p class="lede">Move the sliders. This is the same arithmetic Exnight runs on every event, simplified to one trade.</p>
+      <h2>Try it yourself.</h2>
+      <p class="lede">Drag the sliders. It's the same math Exnight runs on every event, just for one trade. Try the rBZ preset to see what it takes for EXIT to show up.</p>
       <div class="calc">
         <div class="calc-inputs">
           <div class="field">
@@ -78,9 +78,9 @@
             </div>
           </div>
           <div class="field"><label for="c-yield">Dividend, as % of the price <b id="c-yield-v"></b></label><input id="c-yield" type="range" min="5" max="400" step="1" value="77"><small>Most rToken dividends are 0.1%–0.8% of the price.</small></div>
-          <div class="field"><label for="c-pdr">Expected price drop, × the dividend <b id="c-pdr-v"></b></label><input id="c-pdr" type="range" min="0.3" max="1.3" step="0.01" value="0.60"><small>The average is 0.97, but it's uncertain. Exnight uses the cautious end, 0.60, so it never steps out on a guess.</small>
+          <div class="field"><label for="c-pdr">Expected price drop, × the dividend <b id="c-pdr-v"></b></label><input id="c-pdr" type="range" min="0.3" max="1.3" step="0.01" value="0.60"><small>The average is 0.97, but it bounces around. Exnight plays it safe with 0.60 so it doesn't trade on a hunch.</small>
             <div class="presets" style="margin-top:10px"><button type="button" data-pdr="0.60" class="on">Cautious 0.60 (Exnight)</button><button type="button" data-pdr="0.97">Average 0.97</button></div></div>
-          <div class="field"><label for="c-wh">Tax withheld from the dividend <b id="c-wh-v"></b></label><input id="c-wh" type="range" min="0" max="30" step="1" value="30"><small>More tax withheld means less to give up by selling.</small></div>
+          <div class="field"><label for="c-wh">Tax withheld from the dividend <b id="c-wh-v"></b></label><input id="c-wh" type="range" min="0" max="30" step="1" value="30"><small>The more tax gets taken, the less you lose by skipping the dividend.</small></div>
           <div class="field"><label for="c-cost">Round-trip trading cost <b id="c-cost-v"></b></label><input id="c-cost" type="range" min="10" max="100" step="1" value="45"><small>Two 10 bps fees plus 25 bps of slippage is 45 bps.</small></div>
         </div>
         <div class="calc-out" aria-live="polite">
@@ -105,27 +105,29 @@
   <section class="l-section" id="proof">
     <div class="wrap">
       <p class="eyebrow">Proof</p>
-      <h2>Tested on data it had never seen, then run live.</h2>
-      <p class="lede">The rule was fitted on past events only and tested on later ones. Now it locks each decision before the 20:00 ET sell cutoff and a recorder grades it after the ex-date. Nothing is adjusted after the fact.</p>
+      <h2>Tested on data it hadn't seen. Now running live.</h2>
+      <p class="lede">I fitted the rule on older events and tested it on newer ones it had never seen. Now each decision goes into Git before the 20:00 ET cutoff, and gets graded after the ex-date from a minute-by-minute recording. No edits after the fact.</p>
       <div class="stat-strip">
-        <div class="stat hl"><strong id="s-exit">−32.5</strong><span>bps lost per event by always selling first, versus holding</span></div>
-        <div class="stat"><strong id="s-beat">13%</strong><span>of events where always selling first beat holding</span></div>
-        <div class="stat"><strong id="s-oos">39</strong><span>unseen test events. Exnight sold on none of them, so it lost nothing</span></div>
-        <div class="stat"><strong id="s-live">—</strong><span>live events graded so far, out of those scheduled to 8 Oct</span></div>
+        <div class="stat hl"><strong id="s-exit">−32.5</strong><span>bps lost per event if you always sell first</span></div>
+        <div class="stat"><strong id="s-beat">13%</strong><span>of the time selling first actually won</span></div>
+        <div class="stat"><strong id="s-oos">39</strong><span>unseen events. Exnight said hold on all of them</span></div>
+        <div class="stat"><strong id="s-live">—</strong><span>live events graded so far (16 scheduled to 8 Oct)</span></div>
       </div>
       <div class="honest">
-        <div class="yes"><h3>What the evidence shows</h3><ul>
-          <li>The overnight dividend drop is real and repeatable: about 0.97× the dividend.</li>
-          <li>Exnight is +32.5 bps per event ahead of selling first, on data the rule had never seen.</li>
-          <li>After tax and costs, selling first loses. Always doing it lost at every cost from 10 to 100 bps and every tax rate from 0% to 30%.</li>
-          <li>A real $10 order filled in full at the quote on an rToken with an empty public order book, at a 10 bps fee.</li>
-          <li>Every decision is committed to Git before the cutoff, so it can't be changed after the result is known.</li>
+        <div class="yes"><h3>What I found</h3><ul>
+          <li>The overnight drop is real. On average it's 0.97× the dividend.</li>
+          <li>On unseen data, Exnight came out 32.5 bps per event ahead of selling first.</li>
+          <li>Selling first lost at every cost I tried (10 to 100 bps) and every tax rate (0% to 30%).</li>
+          <li>Buying just to catch the dividend lost money too, in every setup.</li>
+          <li>Bitget's Playbook backtest doesn't credit dividends, so it makes selling first look better than it is.</li>
+          <li>A real $10 order filled at the quoted price, even with an empty public order book.</li>
+          <li>Every call is in Git before the cutoff, so nobody can change it once the result is in.</li>
         </ul></div>
-        <div class="no"><h3>Scope and limits</h3><ul>
-          <li>EXIT is rare by design: it needs roughly 70 bp of yield and a tight drop estimate. No past event qualified; the live high-yield events are the first real test.</li>
-          <li>Past trading costs are modeled. Historical order books don't exist.</li>
-          <li>Trades of $1,000 and up use modelled costs; one $10 order has filled for real.</li>
-          <li>The live test is still running, and a handful of events can't prove much alone.</li>
+        <div class="no"><h3>What's still open</h3><ul>
+          <li>EXIT hasn't fired yet. It needs a big dividend (about 0.7%+) and a confident estimate. The live high-dividend events are its first real shot.</li>
+          <li>Past trading costs are modelled, because old order books aren't available.</li>
+          <li>Trades of $1,000 and up are modelled too. Only the $10 order is real so far.</li>
+          <li>The live test is still going. A few events alone don't prove much.</li>
         </ul></div>
       </div>
     </div>
@@ -133,20 +135,20 @@
 
   <section class="l-section">
     <div class="wrap">
-      <p class="eyebrow">Plain-English glossary</p>
-      <h2>Four words you'll see in the app.</h2>
+      <p class="eyebrow">Quick glossary</p>
+      <h2>Four words you'll see in the app</h2>
       <dl class="glossary">
         <div><dt>EX-DATE</dt><dd>The day the price drops by the dividend. You must hold the token before it to get paid.</dd></div>
         <div><dt>HOLD</dt><dd>Keep the token through the ex-date. Selling first would cost more than it saves.</dd></div>
         <div><dt>EXIT</dt><dd>Sell before the cutoff and buy back after. Only when that clearly wins after tax and costs.</dd></div>
-        <div><dt>NO_SIGNAL</dt><dd>Not enough evidence to decide, for example a trade too big for the visible quotes. Exnight won't guess.</dd></div>
+        <div><dt>NO_SIGNAL</dt><dd>Not enough to go on, like a trade too big for the visible quotes. It won't guess.</dd></div>
       </dl>
     </div>
   </section>
 
   <section class="l-section l-final">
     <div class="wrap">
-      <div><p class="eyebrow">Check it yourself</p><h2>Look up a token, see every live decision, download the evidence.</h2></div>
+      <div><p class="eyebrow">Check it yourself</p><h2>Look up a token, see every live call, grab the raw data.</h2></div>
       <a class="btn btn-primary" href="app/">Open the app →</a>
     </div>
   </section>
