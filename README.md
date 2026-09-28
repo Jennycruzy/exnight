@@ -34,8 +34,10 @@ It's being tested live right now, on 16 high-dividend events between 25 Septembe
 a recorder saves the price every minute, and a scorer grades it after the ex-date. Git history
 shows none of it was edited afterwards.
 
-First one graded: rTOWN on 25 September. Holding was right. Selling first would have cost
-$0.36 a share.
+Four graded so far. Holding was right on rTOWN, rINDB and rKDP. The fourth, rBZ, is the
+interesting one: a big dividend and a full-size drop, so selling first would have won by
+$0.13 a share if 30% tax is withheld, and lost by $0.02 if it isn't. That's exactly the kind of
+event where EXIT starts to become possible.
 
 I also placed a real order. On 23 September I bought about $10 of rTOWN at 36.28. It filled in
 full in under half a second at the quoted price, even though the public order book was empty.
@@ -94,6 +96,9 @@ was frozen.
 | Token | Ex-date | Dividend | Locked decision | Drop ÷ dividend | Selling first vs holding | Recording |
 |---|---|---:|---|---:|---:|---|
 | rTOWN | 25 Sep 2026 | $0.28 (77 bps) | NO_SIGNAL (quotes too thin for $1k) | 0.00x | **-$0.36/share**, holding was right | PASS: 1,110 samples, longest gap 62 s |
+| rBZ | 28 Sep 2026 | $0.51 (362 bps) | NO_SIGNAL (quotes too thin for $1k) | 1.08x | +$0.13/share if 30% tax is withheld, -$0.02 if you keep it all: too close to call | PASS: 3,990 samples, longest gap 62 s |
+| rINDB | 28 Sep 2026 | $0.64 (79 bps) | NO_SIGNAL (quotes too thin for $1k) | 0.00x | **-$0.81/share**, holding was right | PASS: 3,990 samples, longest gap 62 s |
+| rKDP | 28 Sep 2026 | $0.23 (72 bps) | HOLD at $1k and $5k | 0.65x | **-$0.16/share**, holding was right | PASS: 3,990 samples, longest gap 62 s |
 
 Scores land in [`data/results/forward_score_v3_*.json`](data/results/) and show up in the app
 as each event is graded. Costs here are modelled because these tokens have no public order
