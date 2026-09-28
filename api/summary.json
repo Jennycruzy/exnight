@@ -464,6 +464,11 @@
    "href": "evidence/forward_score_v3_20260925_RTOWN.json",
    "label": "V3 forward score, 20260925_RTOWN",
    "name": "forward_score_v3_20260925_RTOWN.json"
+  },
+  {
+   "href": "evidence/forward_score_v3_20260928_RBZ_RINDB_RKDP.json",
+   "label": "V3 forward score, 20260928_RBZ_RINDB_RKDP",
+   "name": "forward_score_v3_20260928_RBZ_RINDB_RKDP.json"
   }
  ],
  "forward_score": {
@@ -704,7 +709,7 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-09-28T11:39:12.018930+00:00",
+ "generated_at": "2026-09-28T14:35:32.739856+00:00",
  "limits": [
   "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
   "Current order books are observed-now evidence, not historical event-time fills.",
@@ -4617,14 +4622,14 @@
     "ex_date": "2026-09-28",
     "gross_dividend": 0.51,
     "gross_yield_bp": 353.675,
-    "modeled_edge_keep_70pct": null,
-    "modeled_edge_keep_gross": null,
-    "modeled_verdict": null,
+    "modeled_edge_keep_70pct": 0.12959500000000074,
+    "modeled_edge_keep_gross": -0.0234049999999993,
+    "modeled_verdict": "ENTITLEMENT_AMBIGUOUS",
     "realised_edge_keep_70pct": null,
-    "realised_pdr": null,
-    "realised_verdict": null,
+    "realised_pdr": 1.0784313725490209,
+    "realised_verdict": "NO_SIGNAL",
     "reason": "sell: $1,000 exceeds visible top-of-book ($700) on ticker-only symbol",
-    "score_status": "NOT_SCORED",
+    "score_status": "PASS",
     "sell_cutoff": "2026-09-25T20:00:00-04:00",
     "symbol": "rBZ",
     "verdict": "NO_SIGNAL"
@@ -4638,14 +4643,14 @@
     "ex_date": "2026-09-28",
     "gross_dividend": 0.64,
     "gross_yield_bp": 79.179,
-    "modeled_edge_keep_70pct": null,
-    "modeled_edge_keep_gross": null,
-    "modeled_verdict": null,
+    "modeled_edge_keep_70pct": -0.8134,
+    "modeled_edge_keep_gross": -1.0054,
+    "modeled_verdict": "HOLD",
     "realised_edge_keep_70pct": null,
-    "realised_pdr": null,
-    "realised_verdict": null,
+    "realised_pdr": 0.0,
+    "realised_verdict": "NO_SIGNAL",
     "reason": "buy: $1,000 exceeds visible top-of-book ($277) on ticker-only symbol",
-    "score_status": "NOT_SCORED",
+    "score_status": "PASS",
     "sell_cutoff": "2026-09-25T20:00:00-04:00",
     "symbol": "rINDB",
     "verdict": "NO_SIGNAL"
@@ -4659,14 +4664,14 @@
     "ex_date": "2026-09-28",
     "gross_dividend": 0.23,
     "gross_yield_bp": 72.35,
-    "modeled_edge_keep_70pct": null,
-    "modeled_edge_keep_gross": null,
-    "modeled_verdict": null,
+    "modeled_edge_keep_70pct": -0.15486500000000145,
+    "modeled_edge_keep_gross": -0.22386500000000145,
+    "modeled_verdict": "HOLD",
     "realised_edge_keep_70pct": null,
-    "realised_pdr": null,
-    "realised_verdict": null,
+    "realised_pdr": 0.652173913043472,
+    "realised_verdict": "NO_SIGNAL",
     "reason": "",
-    "score_status": "NOT_SCORED",
+    "score_status": "PASS",
     "sell_cutoff": "2026-09-25T20:00:00-04:00",
     "symbol": "rKDP",
     "verdict": "HOLD"
@@ -4929,7 +4934,7 @@
   "pdr_hat": 0.9656110633409246,
   "pdr_se": 0.18323952822276032,
   "rule_id": "exnight-strategy-v3",
-  "scored": 1,
+  "scored": 4,
   "status": "AVAILABLE"
  }
 }
