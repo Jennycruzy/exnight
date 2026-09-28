@@ -95,7 +95,10 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     from dashboard.server import LIMITS
     summary["limits"] = list(LIMITS)
     downloads = []
-    for name, label in PUBLIC_EVIDENCE.items():
+    evidence = dict(PUBLIC_EVIDENCE)
+    for path in sorted((project_root / "data" / "results").glob("forward_score_v3_*.json")):
+        evidence[path.name] = f"V3 forward score, {path.stem.removeprefix('forward_score_v3_')}"
+    for name, label in evidence.items():
         source = project_root / "data" / "results" / name
         if source.is_file():
             destination = output / "evidence" / name

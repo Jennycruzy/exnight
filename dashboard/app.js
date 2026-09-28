@@ -92,6 +92,23 @@ function renderUpcoming(v3) {
   }).join("");
 }
 
+function renderForward(v3) {
+  const scored = (v3.events || []).filter((event) => event.score_status !== "NOT_SCORED");
+  const total = (v3.events || []).length;
+  $("forward-tag").textContent = `${scored.length} OF ${total} SCORED`;
+  $("forward-body").innerHTML = scored.length ? scored.map((event) => {
+    const edge = event.modeled_edge_keep_70pct;
+    const edgeText = edge == null ? "—" : `${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)} (keep 70%)<br><span class="source">${edge < 0 ? "a loss: holding was right" : "a gain"} · modeled costs</span>`;
+    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>${verdict(event.verdict)}<br><span class="source">frozen ${esc(event.decided_at || "")}</span></td>`
+      + `<td>${verdict(event.modeled_verdict || event.realised_verdict)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the $${number(event.gross_dividend, 2)} dividend</span></td>`
+      + `<td>${edgeText}</td><td>${esc(event.score_status)}</td></tr>`;
+  }).join("") : `<tr><td colspan="6" class="empty">First window not yet scored.</td></tr>`;
+  $("forward-note").innerHTML = `Every decision is frozen and committed before the 20:00 ET sell cutoff, then scored automatically from minute-by-minute recordings. `
+    + `${total - scored.length} more high-yield events are scheduled up to ${esc(v3.events?.[total - 1]?.ex_date || "—")}. `
+    + `A real order backs this up: 0.2783 rTOWN bought on 23 September filled in full at the quote on an empty public book, 10 bps fee, no slippage (<a href="https://github.com/Jennycruzy/exnight/blob/main/docs/live_fill_20260923.md">live fill</a>). `
+    + `Thin books mean these costs are modeled; one $10 fill does not prove $1k capacity.`;
+}
+
 function render(data) {
   latestData = data;
   const recorder = data.recorder || {};
@@ -106,6 +123,7 @@ function render(data) {
   const scored = observation.status === "SCORED";
 
   renderComparison(data.comparison || {});
+  renderForward(data.v3 || {});
   renderUpcoming(data.v3 || {});
 
   const generated = new Date(data.generated_at);

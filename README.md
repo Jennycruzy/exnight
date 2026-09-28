@@ -20,6 +20,21 @@ return itself is negative because of market moves on those nights, not anything 
 The dividend repricing effect is real; after costs it is not yet tradable, and Exnight says so
 instead of trading it.
 
+## Live forward evidence
+
+Strategy V3's decisions are frozen and committed before each 20:00 ET sell cutoff, then scored
+automatically from minute-by-minute recordings after the ex-date.
+
+| Token | Ex-date | Dividend | Frozen decision | Price fall / dividend | Stepping out vs holding | Recording |
+|---|---|---:|---|---:|---:|---|
+| rTOWN | 25 Sep 2026 | $0.28 (77 bps) | NO_SIGNAL (book too thin for $1k) | 0.00× | **−$0.36/share** (modeled): HOLD was right | PASS, 1,110 rows, max gap 62 s |
+
+A real order backs this up: 0.2783 rTOWN, bought on 23 September on an empty public book, filled
+in full at the quote with a 10 bps fee and no slippage ([live fill](docs/live_fill_20260923.md)).
+The position is held through the ex-date to measure the actual withholding. 15 more events
+are scheduled up to 8 October. Scores:
+[`data/results/forward_score_v3_*.json`](data/results/).
+
 ## Thesis
 
 Across 127 dividend events, a Bitget Reality token's price has fallen by about the full
