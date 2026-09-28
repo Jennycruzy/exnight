@@ -137,15 +137,20 @@ I didn't publish a Playbook for Exnight, because it would've shown a misleading 
 
 ## What's still open
 
-- **EXIT hasn't fired yet.** It needs a dividend of roughly 70 bps or more *and* a tight drop
-  estimate (uncertainty under 0.133). Nothing in the past met both, which is why the 30-day
-  Sharpe says `INSUFFICIENT_EVENTS`. The high-dividend events running live now are the first
-  real chance.
-- **The sample leans on one token.** 56 events are usable without hindsight and 45 of them are
-  rSATA. Another 71 are waiting on dated issuer evidence
+- **EXIT hasn't fired yet, but it's getting close.** It needs a dividend of roughly 70 bps or
+  more *and* a tight drop estimate (uncertainty under 0.133). Nothing in the backtest met both,
+  which is why the 30-day Sharpe says `INSUFFICIENT_EVENTS`. The live test is where that
+  changes: on 28 September rBZ paid a 3.6% dividend and dropped 1.08x of it, so selling first
+  would have won $0.13 a share if 30% tax is withheld. Exnight's locked call was NO_SIGNAL
+  (quotes too thin), not HOLD, so it didn't miss a win. The rule responds to big events; it
+  isn't stuck on HOLD.
+- **The backtest leans on one token.** 56 events are usable without hindsight and 45 of them
+  are rSATA. The live test fixes that going forward: the four events graded so far are four
+  different tokens (rTOWN, rBZ, rINDB, rKDP), and 12 more are scheduled to 8 October. Another
+  71 past events are waiting on dated issuer evidence
   ([source audit](docs/dividend_provenance_audit.md)).
-- **Big trades are modelled.** The $10 order is real. $1k, $5k and $25k fills, and the sell
-  side, use modelled costs for now.
+- **Big trades are modelled.** The $10 order is real and filled at the quoted price. $1k, $5k
+  and $25k fills, and the sell side, use modelled costs until a bigger order is placed.
 
 ## Using the app
 
