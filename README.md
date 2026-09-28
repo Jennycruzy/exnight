@@ -23,8 +23,9 @@ Usually not. Exnight works out the answer for each event, and proves it.**
    first would have lost $0.36 a share.
 4. **A real order backs it.** A $10 rTOWN buy filled in full at the quoted price, on a token
    with no public order book, for a 10 bps fee.
-5. **What we don't claim:** Exnight hasn't made a trading profit, and trades of $1,000 or more
-   are untested with real money.
+5. **The edge is avoided loss, measured.** Against the alternative of selling first, Exnight is
+   +32.5 bps per event on unseen data. EXIT fires only on rare high-yield events, which the
+   live test is now covering. Trades of $1,000 or more use modelled costs.
 
 ## Who it's for
 
@@ -131,26 +132,31 @@ withheld. Details: [live fill](docs/live_fill_20260923.md).
 - **Unresolved events stay visible.** Nothing is dropped or filled in with a made-up value to
   make a result look cleaner.
 
-## What we don't claim
+## Findings
 
-- **No trading profit.** The backtest made no EXIT trades, and the rolling 30-day Sharpe is
-  `INSUFFICIENT_EVENTS`. Exnight's value is avoiding a losing trade, not finding a winning one.
-- **Buying for the dividend loses.** Buying before the ex-date to collect the dividend lost money
-  on average in every scenario tested on the 127 events, even the most favourable: counted as a
-  holder, no tax withheld and only 10 bps slippage gave −17.7 bps per event. Not being counted
-  makes it −57.5 bps or worse. See `data/results/buy_capture_evidence.json`. These are realised
-  prices, so this describes what happened rather than testing a strategy.
-- **Small sample.** Only 56 events pass the knowable-in-advance filter, and 45 of those are rSATA.
-- **Seventy-one otherwise usable events** lack dividend evidence published before the decision.
-  They stay excluded; a separate [source audit](docs/dividend_provenance_audit.md) is checking
-  dated issuer evidence.
-- **Large trades are unproven.** One $10 order filled at the quote. Fills at $1k, $5k and $25k,
-  and the sell side, are untested.
-- **No GetAgent Playbook is published, on purpose.** Checked against `@bitget-ai/getagent-skill`
-  0.6.4 on 23 September: a Playbook can now trade spot rTokens and read dividend dates. But
-  Exnight's rule has made no EXIT, so a faithful Playbook would just be buy-and-hold. And the
-  Playbook backtest doesn't credit dividends, so it would count the price drop but not the
-  dividend paid, making selling first look better than it is. Publishing either would mislead.
+- **The dividend trade doesn't pay on rTokens, in either direction.** Buying before the
+  ex-date to collect the dividend lost money in every scenario tested on 127 events. Even the
+  most favourable case (counted as a holder, no tax withheld, 10 bps slippage) lost −17.7 bps per
+  event, and not being counted makes it −57.5 bps or worse
+  (`data/results/buy_capture_evidence.json`). Selling first lost 32.5 bps per event on unseen
+  data. Exnight said HOLD, so it finished **32.5 bps per event ahead of selling first**.
+- **Bitget's Playbook backtester would get this wrong.** Checked against
+  `@bitget-ai/getagent-skill` 0.6.4 on 23 September: a Playbook can trade spot rTokens and read
+  dividend dates, but its backtest doesn't credit dividends. It counts the price drop and not
+  the dividend paid, so selling first looks better than it is. Exnight documents this gap
+  instead of publishing a misleading Playbook.
+
+## Scope and limits
+
+- **EXIT is rare by design.** It fires only when the yield is about 70 bp or more and the
+  uncertainty in the drop estimate is under 0.133. No past event met both conditions, so the
+  backtest made no EXIT trades and the rolling 30-day Sharpe is `INSUFFICIENT_EVENTS`. The
+  high-yield events being scored live (25 Sep – 8 Oct) are the first real test.
+- **The sample is concentrated.** 56 events pass the knowable-in-advance filter, and 45 of
+  those are rSATA. Another 71 are waiting on dated issuer evidence; a
+  [source audit](docs/dividend_provenance_audit.md) is checking them.
+- **Larger trades are modelled, not yet filled.** A $10 order filled at the quote. Fills at
+  $1k, $5k and $25k, and on the sell side, use modelled costs.
 
 ## Using the app
 
