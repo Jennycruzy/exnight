@@ -1,6 +1,6 @@
 const $ = (id) => document.getElementById(id);
 const STATIC_SITE = window.location.hostname.endsWith("github.io") || new URLSearchParams(window.location.search).has("static");
-const siteUrl = (path) => new URL(path, new URL(".", window.location.href)).toString();
+const siteUrl = (path) => new URL(path, new URL(window.EXNIGHT_ROOT || ".", window.location.href)).toString();
 let latestData = null;
 let staticDecisions = null;
 let staticSignalDates = null;
@@ -224,7 +224,7 @@ function render(data) {
   $("provenance-badge").className = `badge ${provenance.status === "PASS" ? "ok" : "warn"}`; $("provenance-badge").textContent = provenance.status || "UNKNOWN";
   $("provenance-list").innerHTML = `<dt>Manifest</dt><dd>${provenance.manifest_present ? "run_manifest_v1.json" : "missing"}</dd><dt>Signal events</dt><dd>${provenance.signal_events || 0}</dd><dt>Manifest events</dt><dd>${provenance.manifest_events || 0}</dd><dt>Commit</dt><dd>${esc(provenance.code_commit || "—")}</dd><dt>Coverage note</dt><dd>${provenance.missing_events?.length ? `Missing ${provenance.missing_events.length} event(s) from historical summary` : "Complete"}</dd>`;
   $("limits-list").innerHTML = (data.limits || []).map((item) => `<li>${esc(item)}</li>`).join("");
-  $("downloads").innerHTML = (data.downloads || []).length ? `<span>DOWNLOAD EVIDENCE</span>${data.downloads.map((item) => `<a href="${esc(item.href)}">${esc(item.label)}</a>`).join("")}` : "<span>No evidence downloads available.</span>";
+  $("downloads").innerHTML = (data.downloads || []).length ? `<span>DOWNLOAD EVIDENCE</span>${data.downloads.map((item) => `<a href="${esc(STATIC_SITE ? siteUrl(item.href) : item.href)}">${esc(item.label)}</a>`).join("")}` : "<span>No evidence downloads available.</span>";
   renderChart(recorder);
 }
 
