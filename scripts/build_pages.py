@@ -79,7 +79,8 @@ def signal_date_index(project_root: Path, now: dt.datetime | None = None) -> dic
 def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
           now: dt.datetime | None = None) -> None:
     output.mkdir(parents=True, exist_ok=True)
-    for name in ("index.html", "app.html", "app.js", "landing.js", "style.css"):
+    for name in ("index.html", "app/index.html", "app.js", "landing.js", "style.css"):
+        (output / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(project_root / "dashboard" / name, output / name)
     (output / ".nojekyll").write_text("", encoding="utf-8")
     if snapshot_path and snapshot_path.is_file():

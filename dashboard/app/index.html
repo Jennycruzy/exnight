@@ -7,12 +7,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <div class="app">
   <aside class="side">
-    <a class="logo" href="./"><span class="logo-mark">E</span>EXNIGHT</a>
+    <a class="logo" href="../"><span class="logo-mark">E</span>EXNIGHT</a>
     <nav class="section-nav" aria-label="App pages">
       <a class="active" data-route-link="home" href="#/" aria-current="page"><span class="n">01</span>Overview</a>
       <a data-route-link="upcoming" href="#/upcoming"><span class="n">02</span>Live test</a>
@@ -22,7 +22,7 @@
       <a data-route-link="evidence" href="#/evidence"><span class="n">06</span>Evidence</a>
     </nav>
     <div class="side-foot">
-      <a href="./">← Back to home</a>
+      <a href="../">← Back to home</a>
       <a href="https://github.com/Jennycruzy/exnight">Source on GitHub</a>
       <span>Read-only. No trading controls.</span>
     </div>
@@ -98,7 +98,7 @@
             <p>Download every score and manifest. Read exactly what isn't proven yet.</p>
             <span class="destination-meta"><strong id="landing-evidence-count">—</strong><span id="landing-evidence-note">validation state</span></span>
           </a>
-          <a class="destination-card" href="./#try">
+          <a class="destination-card" href="../#try">
             <span class="destination-index">↺ / CALCULATOR</span><span class="destination-arrow">↗</span>
             <h3>Try the arithmetic</h3>
             <p>Move the dividend, tax and cost sliders to see when selling first could pay.</p>
@@ -239,11 +239,12 @@
         </article>
       </section>
 
-      <footer class="app-foot"><span>EXNIGHT · research tool, not financial advice</span><span><a href="./">Home</a> · <a href="https://github.com/Jennycruzy/exnight">GitHub</a></span></footer>
+      <footer class="app-foot"><span>EXNIGHT · research tool, not financial advice</span><span><a href="../">Home</a> · <a href="https://github.com/Jennycruzy/exnight">GitHub</a></span></footer>
     </main>
   </div>
 </div>
 <dialog id="signal-dialog" class="signal-dialog"><div class="dialog-head"><div><p class="eyebrow">Decision detail</p><h2 id="dialog-title">—</h2></div><button id="dialog-close" class="dialog-close" type="button" aria-label="Close">×</button></div><dl id="dialog-body" class="dialog-body"></dl></dialog>
-<script src="app.js"></script>
+<script>window.EXNIGHT_ROOT = "../";</script>
+<script src="../app.js"></script>
 </body>
 </html>

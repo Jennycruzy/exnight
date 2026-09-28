@@ -1,37 +1,66 @@
 # Exnight
 
-**Should you sell your Bitget rToken before the dividend and buy it back after? Usually not,
-and Exnight proves it.**
+**Should you sell your Bitget rToken before the dividend and buy it back afterwards?
+Usually not. Exnight works out the answer for each event, and proves it.**
 
-**[Open the live site →](https://jennycruzy.github.io/exnight/)** · the landing page has a
-calculator you can try; the app has live results, a token lookup and every evidence file.
+- **Live site:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/). Start
+  here: a one-page explanation with a calculator you can play with.
+- **App:** [jennycruzy.github.io/exnight/app](https://jennycruzy.github.io/exnight/app/). Live
+  results, a token lookup, the backtest and every evidence file.
+- **Track:** Alpha Factory → rToken Factor Strategies. Secondary fit: Open Theme,
+  execution-aware alpha.
 
-## For judges: the 60-second version
+## The 60-second version
 
-1. **The effect is real.** When a stock pays a dividend, its rToken drops overnight by about the
-   full dividend (0.97× on average, 127 past events).
-2. **Trading it doesn't pay.** Selling first avoids the drop but gives up the dividend you'd keep
-   (70% after US tax) and costs two trades. On unseen data, always selling first lost
-   **32.5 bps per event**. Exnight's rule never sold, so it lost nothing.
-3. **It's being tested live, honestly.** Each decision is committed to Git *before* the 20:00 ET
-   sell cutoff and graded automatically afterwards from a minute-by-minute recording.
-   First graded event: rTOWN, 25 Sep, holding was right (selling first: −$0.36/share).
-4. **A real order backs it.** A $10 rTOWN buy filled in full at the quote on a token with an
-   empty public order book.
-5. **What we don't claim:** no trading profit, and fills of $1,000 or more are untested.
+1. **The effect is real.** When a US stock pays a dividend, its Bitget rToken drops overnight by
+   about the full dividend: 0.97× on average across 127 past events.
+2. **Trading it doesn't pay.** Selling first avoids that drop, but you give up the dividend you
+   would have kept (70% after US tax) and you pay for two trades. On data the rule had never
+   seen, always selling first lost **32.5 bps per event**. Exnight never sold, so it lost nothing.
+3. **It's tested live, and it can't cheat.** Each decision is committed to Git *before* the
+   20:00 ET sell cutoff. A recorder saves prices every minute, and a scorer grades the decision
+   after the ex-date. First graded event: rTOWN on 25 September. Holding was right; selling
+   first would have lost $0.36 a share.
+4. **A real order backs it.** A $10 rTOWN buy filled in full at the quoted price, on a token
+   with no public order book, for a 10 bps fee.
+5. **What we don't claim:** Exnight hasn't made a trading profit, and trades of $1,000 or more
+   are untested with real money.
 
-| Word | Meaning |
+## Who it's for
+
+A Bitget rToken holder with **$1,000–$25,000** in dividend-paying tokens who wonders, before each
+ex-date, whether to hold overnight or sell and buy back. For every event and trade size, Exnight
+answers with one of three words, plus the reason and the evidence:
+
+| Answer | Meaning |
 |---|---|
-| Ex-date | The day the price drops by the dividend. |
-| HOLD | Keep the token through the ex-date. |
-| EXIT ("stepping out") | Sell before the 20:00 ET cutoff, buy back after. Only when that clearly wins. |
-| NO_SIGNAL | Not enough evidence to decide (for example, trade too big for the visible quotes). |
-| bps | Basis points: 1 bp = 0.01% of the price. |
-| PDR | Price-drop ratio: how much the price fell, as a multiple of the dividend. |
+| **HOLD** | Keep the token. Selling first would cost more than it saves. |
+| **EXIT** | Sell before the 20:00 ET cutoff and buy back after. Only when that clearly wins after tax and costs. |
+| **NO_SIGNAL** | Not enough evidence to decide, for example a trade bigger than the visible quotes. Exnight won't guess. |
 
-## The backtest result
+Exnight never says BUY. Buying before the ex-date just to collect the dividend lost money in
+every scenario tested, because the price falls by about the whole dividend.
 
-Exnight was tested against holding, using only information available before each decision:
+## How it decides
+
+Three numbers, all measured from Bitget data:
+
+1. **The drop.** How far the price falls, as a multiple of the dividend (the *price-drop ratio*).
+   Exnight uses a cautious estimate, not the average, so it never acts on a lucky guess.
+2. **What you keep.** The part of the dividend you'd receive after tax is withheld (up to 30%).
+3. **The cost.** Two trading fees plus slippage.
+
+Selling first pays only if *the drop* is bigger than *what you keep* plus *the cost*. Today,
+Exnight's cautious drop estimate is 0.60× the dividend, below the 0.70× a holder keeps, so the
+answer is HOLD on every event until the evidence gets stronger. You can try the arithmetic
+on the landing page's calculator.
+
+## Results
+
+### 1. Backtest on unseen data
+
+The rule was fitted on past events only, frozen, and then tested on later events it had never
+seen, using only dividend information published before each decision:
 
 | Out-of-sample, 39 events over 47 days | Exnight | Always step out | Hold |
 |---|---:|---:|---:|
@@ -41,115 +70,107 @@ Exnight was tested against holding, using only information available before each
 | Total return | −0.096% | −0.600% | −0.096% |
 | Sharpe | −2.57 | −22.93 | −2.57 |
 
-Stepping out of every event would have lost 32.5 bps per event after fees and modeled
-slippage. It loses at every tested cost from 10 to 100 bps and every withholding rate from 0% to 30%.
-Exnight's rule stood down every time, so it lost nothing relative to holding. The holding
-return itself is negative because of market moves on those nights, not anything Exnight did.
-The dividend repricing effect is real; after costs it is not yet tradable, and Exnight says so
-instead of trading it.
+"Step out" means sell before the ex-date and buy back after. Doing that every time lost 32.5 bps
+per event after fees and slippage, and it lost at every cost tested (10 to 100 bps) and every
+tax rate (0% to 30%). Exnight made no trades, so it matched holding exactly. Holding's small
+negative return comes from ordinary market moves on those nights, not from anything Exnight did.
+The always-step-out comparison was added after the results were known and changes nothing that
+was frozen.
 
-## Live forward evidence
+### 2. Live test (running now)
 
-Strategy V3's decisions are frozen and committed before each 20:00 ET sell cutoff, then scored
-automatically from minute-by-minute recordings after the ex-date.
+Strategy V3 is recording 16 high-dividend events from 25 September to 8 October. Each decision
+is locked before the sell cutoff and graded after the ex-date:
 
-| Token | Ex-date | Dividend | Frozen decision | Price fall / dividend | Stepping out vs holding | Recording |
+| Token | Ex-date | Dividend | Locked decision | Price drop ÷ dividend | Selling first vs holding | Recording |
 |---|---|---:|---|---:|---:|---|
-| rTOWN | 25 Sep 2026 | $0.28 (77 bps) | NO_SIGNAL (book too thin for $1k) | 0.00× | **−$0.36/share** (modeled): HOLD was right | PASS, 1,110 rows, max gap 62 s |
+| rTOWN | 25 Sep 2026 | $0.28 (77 bps) | NO_SIGNAL (quotes too thin for $1k) | 0.00× | **−$0.36/share**: holding was right | PASS: 1,110 samples, longest gap 62 s |
 
-A real order backs this up: 0.2783 rTOWN, bought on 23 September on an empty public book, filled
-in full at the quote with a 10 bps fee and no slippage ([live fill](docs/live_fill_20260923.md)).
-The position is held through the ex-date to measure the actual withholding. 15 more events
-are scheduled up to 8 October. Scores:
-[`data/results/forward_score_v3_*.json`](data/results/).
+Scores are saved as [`data/results/forward_score_v3_*.json`](data/results/) and appear in the
+app as soon as each event is graded. Trading costs here are modeled because these tokens have
+no public order book.
 
-## Thesis
+### 3. A real order
 
-Across 127 dividend events, a Bitget Reality token's price has fallen by about the full
-(gross) dividend by 04:00 ET on the ex-date. But a holder may keep less than the full
-dividend after tax withholding, and how much less varies by event. Stepping out before the
-ex-date only pays when the expected fall is bigger than what the holder would have kept, plus
-fees and slippage. Exnight measures that for each event.
+On 23 September, 0.2783 rTOWN (about $10) was bought at 36.28 against a 36.28/36.29 quote. It
+filled in full in 0.4 seconds with a 10 bps fee and no slippage, even though the public order
+book was empty. The position is being held through the ex-date to measure the tax actually
+withheld. Details: [live fill](docs/live_fill_20260923.md).
 
-## Target user and product value
+### 4. How the rule was found and checked
 
-**Track:** Alpha Factory → rToken Factor Strategies. Secondary fit: Open Theme,
-execution-aware alpha.
-
-**Target user:** a Bitget Reality-token holder with **$1,000–$25,000** in dividend-paying
-rTokens, deciding **before each ex-date** whether to stay in or step out for the night.
-
-For each event and trade size, Exnight gives `EXIT`, `HOLD` or `NO_SIGNAL`, with the reason
-and the evidence behind it. The app's Live test page lists high-yield ex-dates with the
-decision frozen before each sell cutoff, then the real outcome once the event is scored.
-Its Check a token page looks up any evaluated token (`rAPH`, `RAPHUSDT` or `APH`). Exnight never
-says BUY: buying before the ex-date to collect the dividend lost money in every scenario tested,
-because the price falls by about the whole dividend (see Known limits).
-
-**Live site:** [jennycruzy.github.io/exnight](https://jennycruzy.github.io/exnight/): a landing
-page with an interactive calculator, and a read-only [app](https://jennycruzy.github.io/exnight/app.html)
-with six pages: Overview, Live test, Check a token, Backtest, Recorder and Evidence.
-
-## Validation
-
-Four separate pieces of evidence, never mixed:
-
-1. **Discovery study.** 185 corporate actions give 127 usable dividend events once each
-   dividend amount is checked against the issuer. On average the price fell by
-   `0.97 ± 0.18` times the dividend by 04:00 ET. This is where the effect was found, so it
-   is not out-of-sample evidence.
+1. **Discovery study.** 185 corporate actions give 127 usable dividend events once each dividend
+   amount is checked against the issuer. On average the price fell by `0.97 ± 0.18` times the
+   dividend by 04:00 ET. This is where the effect was found, so it doesn't count as a test.
 2. **Walk-forward test.** Only 56 of the 127 events had their dividend published before the
-   moment of decision, so only those are used. The rule is refit on past data only and
-   tested on later, untouched windows covering 47 calendar days and 39
-   events. It made **0 EXIT trades** at every tested cost from 10 to 100 bps and every
-   withholding rate from 0% to 30%. Exnight therefore matched holding: total
-   return **−0.096%**, Sharpe **−2.57**, and **0.000%** better or worse than holding. That is
-   **not** evidence of alpha. For comparison, stepping out of every event would have lost
-   **−32.5 bps per event** against holding and beaten it on only 13% of events. That
-   comparison was added after the results were known and changes nothing frozen. See
-   [the complete scorecard](docs/competition_scorecard.md).
-3. **Frozen rule, recorded live.** Strategy V1 was frozen on 17 September and then recorded
-   minute by minute. The 21 September recording has a real 57-minute gap and stays
-   `INCOMPLETE`. The 22 September recording passed its checks (1,348 rows per token, longest
-   gap 63 seconds). Its overall score is `INCOMPLETE` because two of the three tokens had no
-   verified dividend amount. On the third, rSATA, V1 said `HOLD`, and the price did not move.
-4. **Strategy V3, the withholding gap.** V1 steps out only if that wins even when the holder
-   keeps the whole dividend. V3 asks the narrower question: does the fall beat what the holder
-   documentedly keeps after 30% withholding, plus costs? V3 was registered before any V3
-   number was computed. On past data it makes 0 EXITs. Going forward, its cautious estimate
-   of the fall (0.599 of the dividend) is below the 0.70 a holder keeps, so it currently holds
-   on every event. Any EXIT would also need a dividend of roughly 70 bps or more. V3 is being
-   recorded live on 16 high-yield ex-dates from 25 September to 8 October. See
-   [docs/v3.md](docs/v3.md).
+   moment of decision, so only those are used. The rule is refit on past data only and tested
+   on later, untouched windows covering 47 calendar days and 39
+   events. It made **0 EXIT trades** at every cost and tax rate tested. Exnight therefore
+   matched holding: total return **−0.096%**, Sharpe **−2.57**, and **0.000%** better or worse
+   than holding. That is **not** evidence of a trading edge. Full detail:
+   [the scorecard](docs/competition_scorecard.md).
+3. **First live recordings (Strategy V1).** V1 was frozen on 17 September and recorded minute by
+   minute. The 21 September recording has a real 57-minute gap and stays `INCOMPLETE`. The
+   22 September recording passed its checks (1,348 samples per token, longest gap 63 seconds),
+   but two of its three tokens had no verified dividend amount. On the third, rSATA, V1 said
+   `HOLD` and the price didn't move.
+4. **Strategy V3.** V1 sells only if that wins even when the holder keeps the whole dividend. V3
+   asks the sharper question: does the drop beat what the holder keeps after 30% tax, plus
+   costs? V3 was registered before any V3 number was computed. On past data it makes 0 EXITs.
+   Any EXIT would need a dividend of roughly 70 bps or more. See [docs/v3.md](docs/v3.md).
 
-Historical trading costs are modeled, not observed, and labelled **MODELED_EXECUTION**
-everywhere. Real execution capacity is reported separately: the recorded Reality tokens had
-empty public order books. One $10 order filled in full at the quote
-([live fill](docs/live_fill_20260923.md)); fills at $1k, $5k and $25k are unproven.
+## How it stays honest
 
-## Progress and deliverables
+- **Decisions are locked in advance.** Every forward decision is committed to Git before the
+  sell cutoff, with a run manifest. Git history shows it couldn't be changed afterwards.
+- **No hindsight.** The backtest only uses dividends that were published before each decision.
+- **Grades come only from the saved recording.** The scorer can't fetch newer prices to repair a
+  gap. A PASS means every minute was genuinely there.
+- **Modeled is labelled as modeled.** Historical trading costs can't be observed (old order
+  books don't exist), so they're marked `MODELED_EXECUTION` everywhere.
+- **Unresolved events stay visible.** Nothing is dropped or filled in with a made-up value to
+  make a result look cleaner.
 
-Delivered:
+## What we don't claim
 
-- the 185-action source ledger and the 127-event resolved discovery study;
-- a knowledge-time table with T0, publication time, entitlement handling, fees, and exclusions;
-- runnable expanding-window strategy code with a frozen, hashed manifest;
-- policy, HOLD benchmark, and active-return scorecards with full cost/withholding sensitivity;
-- a minute recorder, independent health checks, and offline forward scorer;
-- a read-only consumer dashboard and guarded, human-confirmed order preparation; and
-- one command that regenerates the competition artifacts from committed inputs.
+- **No trading profit.** The backtest made no EXIT trades, and the rolling 30-day Sharpe is
+  `INSUFFICIENT_EVENTS`. Exnight's value is avoiding a losing trade, not finding a winning one.
+- **Buying for the dividend loses.** Buying before the ex-date to collect the dividend lost money
+  on average in every scenario tested on the 127 events, even the most favourable: counted as a
+  holder, no tax withheld and only 10 bps slippage gave −17.7 bps per event. Not being counted
+  makes it −57.5 bps or worse. See `data/results/buy_capture_evidence.json`. These are realised
+  prices, so this describes what happened rather than testing a strategy.
+- **Small sample.** Only 56 events pass the knowable-in-advance filter, and 45 of those are rSATA.
+- **Seventy-one otherwise usable events** lack dividend evidence published before the decision.
+  They stay excluded; a separate [source audit](docs/dividend_provenance_audit.md) is checking
+  dated issuer evidence.
+- **Large trades are unproven.** One $10 order filled at the quote. Fills at $1k, $5k and $25k,
+  and the sell side, are untested.
+- **No GetAgent Playbook is published, on purpose.** Checked against `@bitget-ai/getagent-skill`
+  0.6.4 on 23 September: a Playbook can now trade spot rTokens and read dividend dates. But
+  Exnight's rule has made no EXIT, so a faithful Playbook would just be buy-and-hold. And the
+  Playbook backtest doesn't credit dividends, so it would count the price drop but not the
+  dividend paid, making selling first look better than it is. Publishing either would mislead.
 
-```bash
-.venv/bin/python scripts/build_competition_submission.py
-```
+## Using the app
 
-The exact portfolio, T0/T1, fold, rung-selection, and execution conventions are in
-[the competition methodology](docs/competition_methodology.md). The frozen machine-readable
-manifest is `data/results/competition_backtest_manifest.json`.
+The [app](https://jennycruzy.github.io/exnight/app/) has six pages:
 
-## Quick start
+| Page | What it shows |
+|---|---|
+| Overview | The answer in one line, the latest live results and the backtest table. |
+| Live test | All 16 scheduled events, each locked decision, and the graded outcome. |
+| Check a token | Type `rAPH`, `RAPHUSDT` or `APH` to see the decision at $1k, $5k and $25k. |
+| Backtest | How the rule was fitted and tested, fold by fold. |
+| Recorder | The minute-by-minute price recording and its health checks. |
+| Evidence | Downloadable scores and manifests, and the known limits. |
 
-Exnight requires Python 3.11 or newer.
+It is read-only: there are no trading controls. If a token hasn't been evaluated, it says so
+rather than guessing.
+
+## Run it yourself
+
+Exnight needs Python 3.11 or newer.
 
 ```bash
 python3 -m venv .venv
@@ -158,44 +179,44 @@ python -m pip install -e '.[dev]'
 python -m pytest -q
 ```
 
-The public Bitget API checks are opt-in: run
-`EXNIGHT_RUN_LIVE_TESTS=1 .venv/bin/python -m pytest -q tests/test_market_live.py`
-when network access is available.
-
-Public-market research does not require API credentials. Copy `.env.example` to `.env` only
-if you need one of the optional authenticated features, and never commit that file.
-
-To verify the saved evidence without making network requests:
+Check the saved evidence without any network requests:
 
 ```bash
 .venv/bin/python scripts/verify_evidence.py
 ```
 
-## Dashboard
+Regenerate every competition result from committed inputs:
 
-Start the dashboard from the project root:
+```bash
+.venv/bin/python scripts/build_competition_submission.py
+```
+
+The exact conventions (decision times, folds, cost model) are in
+[the competition methodology](docs/competition_methodology.md), and the frozen manifest is
+`data/results/competition_backtest_manifest.json`.
+
+Public-market research needs no API keys. Copy `.env.example` to `.env` only for the optional
+authenticated features, and never commit that file. Live Bitget API tests are opt-in:
+`EXNIGHT_RUN_LIVE_TESTS=1 .venv/bin/python -m pytest -q tests/test_market_live.py`.
+
+### Local dashboard
 
 ```bash
 .venv/bin/python dashboard/server.py --host 127.0.0.1 --port 8787
 ```
 
-Then open `http://127.0.0.1:8787/` (landing page) or `http://127.0.0.1:8787/app.html` (the app). On a remote server, use an SSH port forward rather than
-exposing the dashboard to the public internet.
+Open `http://127.0.0.1:8787/` for the landing page or `http://127.0.0.1:8787/app/` for the app.
+On a remote server, use an SSH port forward rather than exposing it to the internet.
 
-The app's Check a token page contains the token lookup. Users can enter forms such as `rAPH`,
-`RAPHUSDT`, or `APH` and receive the nearest evaluated decision for each supported trade size.
-It also shows recorder health, upcoming events, detailed strategy results, data sources, and
-known limitations. If a token has not been evaluated, Exnight says so rather than guessing.
+### The research pipeline
 
-## Running the research pipeline
-
-The main commands are shown below in the order they are normally used.
+In the order they're normally run:
 
 ```bash
 # Build or resume the Reality event calendar.
 .venv/bin/python scripts/build_reality_ledger.py --start-date 2026-06-01
 
-# Resolve event values and company evidence.
+# Resolve dividend amounts and company evidence.
 .venv/bin/python -m exnight.basis
 
 # Measure price changes around each usable event.
@@ -221,19 +242,15 @@ The main commands are shown below in the order they are normally used.
   --tag _v1
 ```
 
-These commands keep unresolved events visible. A row is not silently dropped or assigned a
-made-up value simply to produce a cleaner result.
+The `reality_notice59*.jsonl` files (named after the first notice) each hold 185 corporate
+actions. The unresolved ledger gives 58 usable events; checking dividend amounts against issuers
+expands that to 127. V1 was frozen on the 127-event study, and the command above reproduces its
+`premarket_0400` estimate (`pdr_hat = 0.9656110633409245`).
 
-The legacy-named `reality_notice59*.jsonl` files each contain 185 corporate actions. The
-unresolved ledger yields 58 usable events; issuer and basis resolution expands the usable
-sample to 127. Strategy V1 was frozen on the 127-event resolved study. The command above uses
-that resolved ledger, so it reproduces the study and `premarket_0400` estimate on which V1 was
-frozen (`pdr_hat = 0.9656110633409245`). The unresolved 58-event study remains available for
-audit, but it is not V1's estimation sample.
+### Grading a recording
 
-## Scoring the completed September 22 observation
-
-Run this only after the recording window closes:
+Live V3 windows are graded automatically each hour by `scripts/score_due_v3.py`. To grade the
+22 September V1 recording by hand, after its window has closed:
 
 ```bash
 .venv/bin/python scripts/score_forward.py \
@@ -246,70 +263,21 @@ Run this only after the recording window closes:
   --output data/results/forward_score_20260922.json
 ```
 
-The scorer works only from the saved recording. It does not fetch a newer quote to repair a
-late or missing sample, and it cannot place an order. A passing report therefore means the
-required observations were genuinely present and on time.
-
 ## Trading safety
 
-The normal workflow is research-only. Even when live trading is configured, Exnight refuses
-an order unless it has:
-
-- a funded Bitget account with the required permission;
-- a fresh quote and a public two-sided order book;
-- enough available balance;
-- a quantity that meets the market's size and value rules;
-- a final price and balance check immediately before submission; and
-- an exact confirmation string supplied by the operator.
-
-Real orders are capped at $100 by default. Withdrawals are not part of this project. The
-optional Qwen analysis can add written context, but it cannot change the strategy result or
-approve a trade.
+Normal use is research only. Even with live trading configured, Exnight refuses an order unless
+it has a funded account with the right permission, a fresh quote, enough balance, a size that
+meets the market's rules, a final price and balance check just before sending, and an exact
+confirmation string typed by the operator. Real orders are capped at $100 by default, and
+withdrawals aren't supported. The optional Qwen analysis can add written context, but it can't
+change a decision or approve a trade.
 
 ## Project layout
 
-- `exnight/` contains the market, calendar, analysis, cost, strategy, and trading code.
-- `scripts/` contains the recorder, health check, evidence checker, and command-line jobs.
-- `strategy/` contains the saved strategy rules. Version one is the frozen forward-test rule;
-  version two contains later corrections and is kept separate.
-- `dashboard/` contains the local read-only dashboard.
-- `data/` contains source records and generated results. Large and live files are not all
-  committed to Git.
-- `tests/` contains the automated test suite.
-
-## Known limits
-
-- **BUY is never recommended.** Bitget does not publish when it takes its dividend snapshot, but
-  that no longer matters. Buying before the ex-date to collect the dividend lost money on
-  average in every scenario tested on the 127 events, even the most favourable: counted as a
-  holder, no tax withheld and only 10 bps slippage gave −17.7 bps per event. Not being counted
-  makes it −57.5 bps or worse. The price falls by about the whole dividend, so the fees are the
-  loss. See `data/results/buy_capture_evidence.json`. These are realised prices, so this is a
-  description, not a strategy test.
-- Historical order books are unavailable. A current order book cannot prove what could have
-  filled on an earlier event date, so historical costs are modeled rather than observed.
-- Only 56 of 127 resolved/usable events pass the ex-ante knowledge filter, and 45 of those are
-  rSATA observations. The scorecard is therefore small and concentrated.
-- The walk-forward produces no EXIT trades at the frozen confidence threshold. Rolling
-  30-day Sharpe is `INSUFFICIENT_EVENTS`; there is no supported active-alpha claim.
-- Seventy-one otherwise usable events lack pre-decision gross-basis evidence in the saved
-  record. They remain excluded from the frozen scorecard; a separate
-  [source audit](docs/dividend_provenance_audit.md) is checking dated issuer evidence.
-- A ticker quote is not the same as executable liquidity. One $10 order on a token with an empty
-  public book filled in full at the quote ([live fill](docs/live_fill_20260923.md)); capacity at
-  $1k, $5k and $25k is still unproven.
-- **No GetAgent Playbook is published, on purpose.** Checked against `@bitget-ai/getagent-skill`
-  0.6.4 on 23 September: a normal trading Playbook can now trade spot rTokens such as
-  `RAAPLUSDT`, and its dividend data carries ex-date, amount and declaration date. So the
-  rule can be expressed. Two things stop a faithful version from being useful or honest.
-  First, Exnight's rule has made no EXIT, so a faithful Playbook is a buy-and-hold rToken
-  basket. Second, the Playbook backtest documentation describes no dividend crediting, so a
-  bar-based backtest would count the ex-date price drop but not the dividend a holder
-  receives. That makes stepping out look better than it is. Publishing either would
-  misrepresent the result.
-- Only one real fill exists: a $10 buy of rTOWN on 23 September, held through the ex-date as V3
-  recommends. It filled at 36.28 against a 36.28/36.29 quote with a 10 bps fee. The sell leg and
-  larger sizes are untested.
-
-Deployment notes and the operational handoff are maintained in the private server workspace,
-outside this repository.
+- `exnight/`: market data, event calendar, analysis, costs, strategy and trading code.
+- `scripts/`: the recorder, health checks, scorers, evidence checker and site builder.
+- `strategy/`: the saved strategy rules. V1 is the frozen forward-test rule; V2 holds later
+  corrections; V3 is the withholding-aware rule being tested live.
+- `dashboard/`: the landing page (`index.html`) and the app (`app/`).
+- `data/`: source records and generated results. Large live recordings aren't all committed.
+- `tests/`: the automated test suite.

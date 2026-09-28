@@ -6,7 +6,7 @@ checked by `tests/test_baseline.py` and `tests/test_competition_report.py`.
 **Project:** Exnight
 **Track:** Alpha Factory → rToken Factor Strategies. Secondary fit: Open Theme, execution-aware alpha.
 **Repository:** https://github.com/Jennycruzy/exnight
-**Live site:** https://jennycruzy.github.io/exnight/ (landing page + calculator) · app: https://jennycruzy.github.io/exnight/app.html
+**Live site:** https://jennycruzy.github.io/exnight/ (landing page + calculator) · app: https://jennycruzy.github.io/exnight/app/
 
 ## One line
 
