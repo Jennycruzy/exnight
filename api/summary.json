@@ -709,7 +709,7 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-09-28T14:35:32.739856+00:00",
+ "generated_at": "2026-09-28T14:40:12.772207+00:00",
  "limits": [
   "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
   "Current order books are observed-now evidence, not historical event-time fills.",
