@@ -149,8 +149,6 @@ I didn't publish a Playbook for Exnight, because it would've shown a misleading 
   different tokens (rTOWN, rBZ, rINDB, rKDP), and 12 more are scheduled to 8 October. Another
   71 past events are waiting on dated issuer evidence
   ([source audit](docs/dividend_provenance_audit.md)).
-- **Big trades are modelled.** The $10 order is real and filled at the quoted price. $1k, $5k
-  and $25k fills, and the sell side, use modelled costs until a bigger order is placed.
 
 ## Using the app
 
