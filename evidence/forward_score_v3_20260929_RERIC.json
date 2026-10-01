@@ -1,0 +1,106 @@
+{
+ "status": "PASS",
+ "checked_at": "2026-09-29T14:29:02+00:00",
+ "expected_interval_seconds": 60,
+ "max_gap_seconds": 180,
+ "max_age_seconds": null,
+ "symbols": {
+  "RERICUSDT": {
+   "rows": 1110,
+   "first_ts": "2026-09-28T20:00:03+00:00",
+   "last_ts": "2026-09-29T14:29:02+00:00",
+   "max_gap_seconds": 62,
+   "gaps_over_limit": 0,
+   "samples_too_fast": 0,
+   "duplicate_timestamps": 0,
+   "out_of_order": 0,
+   "ticker_rows": 1110,
+   "nonempty_book_rows": 0,
+   "last_age_seconds": 0.0
+  }
+ },
+ "errors": [],
+ "rule_id": "exnight-strategy-v3",
+ "label": "v3_20260929_RERIC",
+ "results": [
+  {
+   "event_id": "rERIC-2026-09-29-1",
+   "spot_symbol": "RERICUSDT",
+   "ex_date": "2026-09-29",
+   "sell_cutoff": "2026-09-28T20:00:00-04:00",
+   "rung_0400": "2026-09-29T04:00:00-04:00",
+   "pre_price": 9.42,
+   "post_price": 9.41,
+   "pre_price_source": "ticker_last",
+   "post_price_source": "ticker_last",
+   "pre_distance_seconds": 58.0,
+   "post_distance_seconds": 3.0,
+   "pre_error": null,
+   "post_error": null,
+   "gross_dividend": 0.15792,
+   "taker_fee": 0.001,
+   "realised_pdr": 0.0633232016210726,
+   "frozen_decision_file": "signals_v3_20260928T2330Z.csv",
+   "notionals": [
+    {
+     "notional_usd": 1000,
+     "frozen_verdict": "NO_SIGNAL",
+     "frozen_reason": "buy: $1,000 exceeds visible top-of-book ($59) on ticker-only symbol",
+     "frozen_tier": "E0_RANGE",
+     "frozen_w_low": 0.0,
+     "frozen_w_high": 0.3,
+     "cost_per_share": 0.27413505250087594,
+     "realised_edge_keep_gross": -0.42205505250087616,
+     "realised_edge_keep_70pct": -0.37467905250087613,
+     "realised_verdict": "HOLD",
+     "sell_book_source": "ticker_only",
+     "buy_book_source": "ticker_only",
+     "sell_error": null,
+     "buy_error": null
+    },
+    {
+     "notional_usd": 5000,
+     "frozen_verdict": "NO_SIGNAL",
+     "frozen_reason": "sell: $5,000 exceeds visible top-of-book ($1,891) on ticker-only symbol; buy: $5,000 exceeds visible top-of-book ($59) on ticker-only symbol",
+     "frozen_tier": "E0_RANGE",
+     "frozen_w_low": 0.0,
+     "frozen_w_high": 0.3,
+     "cost_per_share": null,
+     "realised_edge_keep_gross": null,
+     "realised_edge_keep_70pct": null,
+     "realised_verdict": "NO_SIGNAL",
+     "sell_book_source": "ticker_only",
+     "buy_book_source": "ticker_only",
+     "sell_error": "$5,000 exceeds visible sell liquidity",
+     "buy_error": null
+    },
+    {
+     "notional_usd": 25000,
+     "frozen_verdict": "NO_SIGNAL",
+     "frozen_reason": "sell: $25,000 exceeds visible top-of-book ($1,891) on ticker-only symbol; buy: $25,000 exceeds visible top-of-book ($59) on ticker-only symbol",
+     "frozen_tier": "E0_RANGE",
+     "frozen_w_low": 0.0,
+     "frozen_w_high": 0.3,
+     "cost_per_share": null,
+     "realised_edge_keep_gross": null,
+     "realised_edge_keep_70pct": null,
+     "realised_verdict": "NO_SIGNAL",
+     "sell_book_source": "ticker_only",
+     "buy_book_source": "ticker_only",
+     "sell_error": "$25,000 exceeds visible sell liquidity",
+     "buy_error": null
+    }
+   ],
+   "modeled": {
+    "label": "MODELED_EXECUTION",
+    "slippage_bps": 25,
+    "cost_per_share": 0.042390000000000004,
+    "edge_keep_gross": -0.19031000000000023,
+    "edge_keep_70pct": -0.1429340000000002,
+    "realised_verdict": "HOLD"
+   },
+   "complete": true,
+   "has_frozen_decision": true
+  }
+ ]
+}
