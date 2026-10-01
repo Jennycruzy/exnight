@@ -89,7 +89,7 @@ function renderUpcoming(v3) {
     const shown = bookVerdict ? event.realised_verdict : (event.modeled_verdict || event.realised_verdict || event.score_status);
     const basis = bookVerdict ? "recorded quotes" : "modeled costs (visible quotes too thin)";
     const outcome = event.score_status === "NOT_SCORED" ? `<span class="source">after ${esc(event.ex_date)} 10:30 ET</span>`
-      : `${verdict(shown)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the dividend · ${esc(basis)} · recording ${esc(event.score_status)}</span>`;
+      : `${verdict(shown)}<br><span class="source">${event.price_discovery === "NONE" ? "no overnight trades, no reading" : `price fell ${number(event.realised_pdr, 2)}× the dividend`} · ${esc(basis)} · recording ${esc(event.score_status)}</span>`;
     const why = event.verdict === "PENDING" ? event.reason
       : event.verdict === "NO_SIGNAL" ? (event.reason || "evidence incomplete")
       : `break-even yield ${event.breakeven_yield_bp == null ? "not reachable" : `${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% withholding documented" : "withholding 0–30%"}`;
@@ -104,9 +104,14 @@ function renderForward(v3) {
   $("forward-tag").textContent = `${scored.length} OF ${total} SCORED`;
   $("forward-body").innerHTML = scored.length ? scored.map((event) => {
     const edge = event.modeled_edge_keep_70pct;
-    const edgeText = edge == null ? "—" : `<span class="${edge < 0 ? "negative" : "positive"}">${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)}</span><br><span class="source">${edge < 0 ? "a loss, so holding was right" : "a gain"} · 30% tax, modeled costs</span>`;
+    const trades = event.overnight_last_price_changes;
+    const note = event.price_discovery === "NONE" ? "no trades overnight, so no reading"
+      : event.price_discovery === "THIN" ? `only ${trades} trade${trades === 1 ? "" : "s"} overnight, weak reading`
+      : edge < 0 ? "a loss, so holding was right" : "a gain";
+    const edgeText = edge == null ? "—" : event.price_discovery === "NONE" ? `—<br><span class="source">${note}</span>`
+      : `<span class="${edge < 0 ? "negative" : "positive"}">${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)}</span><br><span class="source">${note} · 30% tax, modeled costs</span>`;
     return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>${verdict(event.verdict)}<br><span class="source">locked ${esc(when(event.decided_at))}</span></td>`
-      + `<td>${verdict(event.modeled_verdict || event.realised_verdict)}<br><span class="source">price fell ${number(event.realised_pdr, 2)}× the $${number(event.gross_dividend, 2)} dividend</span></td>`
+      + `<td>${verdict(event.modeled_verdict || event.realised_verdict)}<br><span class="source">${event.price_discovery === "NONE" ? "price unchanged: no overnight trades" : `price fell ${number(event.realised_pdr, 2)}× the $${number(event.gross_dividend, 2)} dividend`}</span></td>`
       + `<td>${edgeText}</td><td>${esc(event.score_status)}</td></tr>`;
   }).join("") : `<tr><td colspan="6" class="empty">First window not yet scored.</td></tr>`;
   $("forward-note").innerHTML = `Every decision is saved to Git before the 20:00 ET sell cutoff, then graded automatically from the minute-by-minute recording. `

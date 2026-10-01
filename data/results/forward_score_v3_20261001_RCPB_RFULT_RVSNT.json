@@ -66,6 +66,8 @@
    "gross_dividend": 0.25,
    "taker_fee": 0.001,
    "realised_pdr": 1.240000000000009,
+   "overnight_last_price_changes": 11,
+   "price_discovery": "PRICED",
    "frozen_decision_file": "signals_v3_20260930T2330Z.csv",
    "notionals": [
     {
@@ -145,6 +147,8 @@
    "gross_dividend": 0.19,
    "taker_fee": 0.001,
    "realised_pdr": 0.7894736842105188,
+   "overnight_last_price_changes": 1,
+   "price_discovery": "THIN",
    "frozen_decision_file": "signals_v3_20260930T2330Z.csv",
    "notionals": [
     {
@@ -224,6 +228,8 @@
    "gross_dividend": 0.375,
    "taker_fee": 0.001,
    "realised_pdr": 0.0,
+   "overnight_last_price_changes": 0,
+   "price_discovery": "NONE",
    "frozen_decision_file": "signals_v3_20260930T2330Z.csv",
    "notionals": [
     {

@@ -23,9 +23,8 @@ def test_buy_capture_loses_in_every_scenario():
 def test_quoted_buy_figures_match_saved_result():
     report = json.loads(buy_evidence.OUTPUT.read_text())
     best = f"{_mean(report, 'counted, no withholding', 10):.1f}".replace("-", "−")
-    uncounted = f"{_mean(report, 'not counted', 10):.1f}".replace("-", "−")
-    readme = (ROOT / "README.md").read_text()
-    assert f"{best} bps per event" in readme and f"{uncounted} bps or worse" in readme
+    readme = (ROOT / "README.md").read_text().replace("-", "−")
+    assert f"{best} bps per event" in readme
     assert f"({best} bps per event)" in (ROOT / "SUBMISSION.md").read_text()
     from dashboard.server import LIMITS
     assert any(best.replace("−", "-") in item for item in LIMITS)

@@ -93,12 +93,39 @@ was frozen.
 
 ### Live test (running now)
 
-| Token | Ex-date | Dividend | Locked decision | Drop ÷ dividend | Selling first vs holding | Recording |
-|---|---|---:|---|---:|---:|---|
-| rTOWN | 25 Sep 2026 | $0.28 (77 bps) | NO_SIGNAL (quotes too thin for $1k) | 0.00x | **-$0.36/share**, holding was right | PASS: 1,110 samples, longest gap 62 s |
-| rBZ | 28 Sep 2026 | $0.51 (362 bps) | NO_SIGNAL (quotes too thin for $1k) | 1.08x | +$0.13/share if 30% tax is withheld, -$0.02 if you keep it all: too close to call | PASS: 3,990 samples, longest gap 62 s |
-| rINDB | 28 Sep 2026 | $0.64 (79 bps) | NO_SIGNAL (quotes too thin for $1k) | 0.00x | **-$0.81/share**, holding was right | PASS: 3,990 samples, longest gap 62 s |
-| rKDP | 28 Sep 2026 | $0.23 (72 bps) | HOLD at $1k and $5k | 0.65x | **-$0.16/share**, holding was right | PASS: 3,990 samples, longest gap 62 s |
+14 of 16 events are graded so far. **How to read this:** a token's last price only moves when
+someone trades it. Overnight, many rTokens don't trade at all, so the price at 04:00 ET is the
+same as at 20:00 ET and the drop shows as 0.00x. That says nothing about the dividend; it means
+there was no price to read. The "Overnight trades" column counts how often the last price
+changed between the two readings: **NONE** (0, no reading), **THIN** (1–3, weak reading) or
+**PRICED** (4 or more). I added this label on 1 October, after seeing the first 14 results, so
+it describes the data and isn't part of the frozen rule.
+
+- **PRICED events (5): average drop 0.94x the dividend** (rBZ 1.08, rKDP 0.65, rAGNC 0.67,
+  rMDLZ 1.06, rCPB 1.24). That's in line with the 0.97x backtest average, so the drop is real
+  live too.
+- On all 5, selling first did not clearly win. Three lost outright. rBZ and rCPB would only
+  have won if 30% tax is withheld, by $0.13 and $0.05 a share, and lost if you keep the whole
+  dividend. Exnight made no EXIT call on any of them.
+- The 5 NONE and 4 THIN events are listed for completeness. Don't read them as "the price
+  ignored the dividend".
+
+| Token | Ex-date | Dividend | Locked decision | Overnight trades | Drop ÷ dividend | Selling first vs holding (modelled cost) | Recording |
+|---|---|---:|---|---|---:|---|---|
+| rTOWN | 25 Sep 2026 | $0.28 (77 bps) | NO_SIGNAL (quotes too thin for $1k) | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 1,110 samples, longest gap 62 s |
+| rBZ | 28 Sep 2026 | $0.51 (354 bps) | NO_SIGNAL (quotes too thin for $1k) | PRICED (8) | 1.08x | +$0.13/share if 30% tax is withheld, -$0.02 if you keep it all: too close to call | PASS: 3,990 samples, longest gap 62 s |
+| rINDB | 28 Sep 2026 | $0.64 (79 bps) | NO_SIGNAL (quotes too thin for $1k) | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 3,990 samples, longest gap 62 s |
+| rKDP | 28 Sep 2026 | $0.23 (72 bps) | HOLD at $1k and $5k | PRICED (29) | 0.65x | **-$0.15/share**, holding was right | PASS: 3,990 samples, longest gap 62 s |
+| rERIC | 29 Sep 2026 | $0.16 (161 bps) | NO_SIGNAL (quotes too thin for $1k) | THIN (3) | 0.06x | -$0.14/share, only 3 trades overnight: weak reading | PASS: 1,110 samples, longest gap 62 s |
+| rAGNC | 30 Sep 2026 | $0.12 (120 bps) | NO_SIGNAL (quotes too thin for $1k) | PRICED (37) | 0.67x | **-$0.05/share**, holding was right | PASS: 1,110 samples, longest gap 62 s |
+| rCVBF | 30 Sep 2026 | $0.20 (90 bps) | NO_SIGNAL (quotes too thin for $1k) | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 1,110 samples, longest gap 62 s |
+| rDOX | 30 Sep 2026 | $0.57 (96 bps) | NO_SIGNAL (quotes too thin for $1k) | THIN (2) | -0.02x | -$0.67/share, only 2 trades overnight: weak reading | PASS: 1,110 samples, longest gap 62 s |
+| rHST | 30 Sep 2026 | $0.20 (90 bps) | NO_SIGNAL (quotes too thin for $1k) | THIN (2) | 0.15x | -$0.21/share, only 2 trades overnight: weak reading | PASS: 1,110 samples, longest gap 62 s |
+| rJOYY | 30 Sep 2026 | $1.55 (197 bps) | HOLD at $1k | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 1,110 samples, longest gap 62 s |
+| rMDLZ | 30 Sep 2026 | $0.52 (85 bps) | HOLD at $1k and $5k | PRICED (6) | 1.06x | **-$0.08/share**, holding was right | PASS: 1,110 samples, longest gap 62 s |
+| rCPB | 1 Oct 2026 | $0.25 (124 bps) | NO_SIGNAL (quotes too thin for $1k) | PRICED (11) | 1.24x | +$0.05/share if 30% tax is withheld, -$0.03 if you keep it all: too close to call | PASS: 1,110 samples, longest gap 62 s |
+| rFULT | 1 Oct 2026 | $0.19 (82 bps) | NO_SIGNAL (quotes too thin for $1k) | THIN (1) | 0.79x | -$0.08/share, only 1 trade overnight: weak reading | PASS: 1,110 samples, longest gap 62 s |
+| rVSNT | 1 Oct 2026 | $0.38 (113 bps) | NO_SIGNAL (quotes too thin for $1k) | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 1,110 samples, longest gap 62 s |
 
 Scores land in [`data/results/forward_score_v3_*.json`](data/results/) and show up in the app
 as each event is graded. Costs here are modelled because these tokens have no public order
@@ -140,13 +167,14 @@ I didn't publish a Playbook for Exnight, because it would've shown a misleading 
 - **EXIT hasn't fired yet, but it's getting close.** It needs a dividend of roughly 70 bps or
   more *and* a tight drop estimate (uncertainty under 0.133). Nothing in the backtest met both,
   which is why the 30-day Sharpe says `INSUFFICIENT_EVENTS`. The live test is where that
-  changes: on 28 September rBZ paid a 3.6% dividend and dropped 1.08x of it, so selling first
+  changes: on 28 September rBZ paid a 3.5% dividend and dropped 1.08x of it, so selling first
   would have won $0.13 a share if 30% tax is withheld. Exnight's locked call was NO_SIGNAL
   (quotes too thin), not HOLD, so it didn't miss a win. The rule responds to big events; it
   isn't stuck on HOLD.
 - **The backtest leans on one token.** 56 events are usable without hindsight and 45 of them
-  are rSATA. The live test fixes that going forward: the four events graded so far are four
-  different tokens (rTOWN, rBZ, rINDB, rKDP), and 12 more are scheduled to 8 October. Another
+  are rSATA. The live test fixes that going forward: the 14 events graded so far are 14
+  different tokens, and 2 more (rCMCSA, rTIGO) are scheduled to 8 October. Only 5 of the 14
+  traded enough overnight to give a reading (see the live table). Another
   71 past events are waiting on dated issuer evidence
   ([source audit](docs/dividend_provenance_audit.md)).
 

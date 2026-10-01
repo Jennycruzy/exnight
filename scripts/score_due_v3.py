@@ -40,22 +40,32 @@ def _tracked(path: str) -> bool:
 
 
 def _push_env() -> dict | None:
-    """Environment for the VS Code credential helper, if a VS Code server is present."""
-    newest = lambda pattern: max(glob.glob(os.path.expanduser(pattern)), key=os.path.getmtime, default=None)
-    askpass = newest("~/.vscode-server/bin/*/extensions/git/dist/askpass.sh")
-    socket = newest("/run/user/%d/vscode-git-*.sock" % os.getuid())
-    if not askpass or not socket:
+    """Environment for the VS Code credential helper, using the first socket that authenticates.
+
+    Old sockets from disconnected VS Code windows stay on disk, and the newest by mtime can be
+    one of them, so each is tried with a cheap ls-remote, newest first.
+    """
+    askpasses = glob.glob(os.path.expanduser("~/.vscode-server/bin/*/extensions/git/dist/askpass.sh"))
+    sockets = sorted(glob.glob("/run/user/%d/vscode-git-*.sock" % os.getuid()), key=os.path.getmtime, reverse=True)
+    if not askpasses or not sockets:
         return None
+    askpass = max(askpasses, key=os.path.getmtime)
     base = Path(askpass).parents[3]
-    return {**os.environ, "GIT_ASKPASS": askpass, "VSCODE_GIT_ASKPASS_NODE": str(base / "node"),
-            "VSCODE_GIT_ASKPASS_MAIN": str(Path(askpass).with_name("askpass-main.js")),
-            "VSCODE_GIT_ASKPASS_EXTRA_ARGS": "", "VSCODE_GIT_IPC_HANDLE": socket, "GIT_TERMINAL_PROMPT": "0"}
+    for socket in sockets:
+        env = {**os.environ, "GIT_ASKPASS": askpass, "VSCODE_GIT_ASKPASS_NODE": str(base / "node"),
+               "VSCODE_GIT_ASKPASS_MAIN": str(Path(askpass).with_name("askpass-main.js")),
+               "VSCODE_GIT_ASKPASS_EXTRA_ARGS": "", "VSCODE_GIT_IPC_HANDLE": socket, "GIT_TERMINAL_PROMPT": "0"}
+        try:
+            if _git("ls-remote", "-q", "origin", "HEAD", env=env, timeout=20).returncode == 0:
+                return env
+        except subprocess.TimeoutExpired:
+            continue
+    return None
 
 
-def _push(branch: str) -> str:
-    env = _push_env()
+def _push(branch: str, env: dict | None) -> str:
     if env is None:
-        return f"{branch}: not pushed (no VS Code credential helper found)"
+        return f"{branch}: not pushed (no live VS Code credential helper found)"
     try:
         result = _git("push", "origin", branch, env=env, timeout=90)
     except subprocess.TimeoutExpired:
@@ -101,11 +111,12 @@ def main() -> int:
         scored_any = True
         print(f"{now.isoformat()} {label}: {status}; committed {_git('rev-parse', '--short', 'HEAD').stdout.strip()}")
     if scored_any:
-        publish = subprocess.run(["bash", str(ROOT / "scripts" / "publish_pages.sh")], cwd=ROOT,
+        env = _push_env()
+        publish = subprocess.run(["bash", str(ROOT / "scripts" / "publish_pages.sh")], cwd=ROOT, env=env,
                                  capture_output=True, text=True, timeout=600)
         print(publish.stdout.strip() or publish.stderr.strip()[-400:])
-        print(_push("main"))
-        print(_push("gh-pages"))
+        print(_push("main", env))
+        print(_push("gh-pages", env))
     return 0
 
 

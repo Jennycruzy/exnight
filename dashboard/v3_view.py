@@ -108,6 +108,8 @@ def v3(project_root: Path) -> dict[str, Any]:
             "decided_at": row.get("decided_at"), "decision_file": row.get("decision_file"),
             "score_status": (score or {}).get("status", "NOT_SCORED"),
             "realised_pdr": _float((realised or {}).get("realised_pdr")),
+            "price_discovery": (realised or {}).get("price_discovery"),
+            "overnight_last_price_changes": (realised or {}).get("overnight_last_price_changes"),
             "realised_verdict": first.get("realised_verdict"),
             "realised_edge_keep_70pct": _float(first.get("realised_edge_keep_70pct")),
             "modeled_verdict": ((realised or {}).get("modeled") or {}).get("realised_verdict"),

@@ -33,20 +33,19 @@ def test_scorecard_shows_the_always_exit_figures():
 
 
 def test_readme_headline_figures_come_from_saved_results():
-    readme = (ROOT / "README.md").read_text()
+    readme = (ROOT / "README.md").read_text().replace("−", "-")
     exit_ = json.loads(baseline.OUTPUT.read_text())["primary"]["oos"]
     score = json.loads((ROOT / "data" / "results" / "competition_scorecard.json").read_text())
     oos = score["oos_concatenated_non_overlapping_folds"]
     days = json.loads((ROOT / "data" / "results" / "competition_backtest_manifest.json").read_text())["oos_calendar_days"]
-    minus = lambda text: text.replace("-", "−")
-    assert f"Out-of-sample, {oos['policy']['event_count']} events over {days} days" in readme
-    assert minus(f"| Trades | {oos['policy']['trade_count']} | {exit_['score']['policy']['trade_count']} | 0 |") in readme
-    assert minus(f"**{exit_['mean_active_bps']:.1f} bps**") in readme
+    assert f"| {oos['policy']['event_count']} unseen events over {days} days |" in readme
+    assert f"| Trades | {oos['policy']['trade_count']} | {exit_['score']['policy']['trade_count']} | 0 |" in readme
+    assert f"**{exit_['mean_active_bps']:.1f} bps**" in readme
     assert f"| {100 * exit_['share_exit_beat_hold']:.0f}% |" in readme
-    assert minus(f"| {100 * oos['policy']['total_return']:.3f}% | {100 * exit_['score']['policy']['total_return']:.3f}% | "
-                 f"{100 * oos['benchmark']['total_return']:.3f}% |") in readme
-    assert minus(f"| {oos['policy']['sharpe']:.2f} | {exit_['score']['policy']['sharpe']:.2f} | "
-                 f"{oos['benchmark']['sharpe']:.2f} |") in readme
+    assert (f"| {100 * oos['policy']['total_return']:.3f}% | {100 * exit_['score']['policy']['total_return']:.3f}% | "
+            f"{100 * oos['benchmark']['total_return']:.3f}% |") in readme
+    assert (f"| {oos['policy']['sharpe']:.2f} | {exit_['score']['policy']['sharpe']:.2f} | "
+            f"{oos['benchmark']['sharpe']:.2f} |") in readme
 
 
 def test_submission_copy_matches_saved_results():

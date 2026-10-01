@@ -37,5 +37,5 @@ def test_report_numbers_come_from_scorecard():
     readme = (ROOT / "README.md").read_text()
     oos = score["oos_concatenated_non_overlapping_folds"]
     assert f"Only {score['sample']['eligible_ex_ante']} of the {score['sample']['resolved_usable']}" in readme
-    assert f"{oos['policy']['event_count']}\n   events" in readme
-    assert f"Sharpe **{oos['policy']['sharpe']:.2f}**".replace("-", "−") in readme
+    assert f"{oos['policy']['event_count']} test events in\n   total" in readme
+    assert f"| Sharpe | {oos['policy']['sharpe']:.2f} |" in readme

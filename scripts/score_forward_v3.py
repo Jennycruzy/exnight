@@ -17,6 +17,13 @@ HOLD if edge(w_high) <= 0, otherwise ENTITLEMENT_AMBIGUOUS.
 When the recorded quotes cannot absorb a notional, the book-walk edge is undefined. Each event
 therefore also carries the same edge at the walk-forward scorecard's MODELED_EXECUTION cost
 (taker fee on both legs plus 25 bps round trip), labelled as modeled.
+
+The ticker's last price only moves when someone trades. Each event therefore counts how often
+the recorded last price changed between the sell cutoff and the 04:00 rung, and labels its
+price discovery: NONE (no change, so the drop is 0 by construction and says nothing about the
+dividend), THIN (1-3 changes, only a few overnight trades) or PRICED (4 or more). These
+thresholds were set on 1 Oct 2026 after the first 14 events had been scored, so they are
+descriptive, not part of the registered rule; the PDR itself is unchanged.
 """
 from __future__ import annotations
 
@@ -39,6 +46,7 @@ SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
 RESULTS = ROOT / "data" / "results"
 RECORDER = ROOT / "data" / "raw" / "recorder"
 NOTIONALS = (1000, 5000, 25000)
+THIN_MAX_CHANGES = 3        # 1-3 overnight last-price changes is THIN; 0 is NONE
 MODELED_SLIPPAGE_BPS = 25   # the walk-forward scorecard's base MODELED_EXECUTION assumption
 
 
@@ -66,6 +74,14 @@ def realised_verdict(edge_low: float | None, edge_high: float | None) -> str:
     return "ENTITLEMENT_AMBIGUOUS"
 
 
+def price_discovery(rows: list, cutoff: dt.datetime, rung: dt.datetime) -> tuple[int, str]:
+    """Count last-price changes from the pre sample to the post sample and label them."""
+    window = [row for ts, row in rows if ts >= cutoff - dt.timedelta(minutes=2) and ts <= rung + dt.timedelta(minutes=2)]
+    prices = [(row.get("ticker") or {}).get("lastPrice") for row in window]
+    changes = sum(1 for a, b in zip(prices, prices[1:]) if a != b)
+    return changes, "NONE" if changes == 0 else "THIN" if changes <= THIN_MAX_CHANGES else "PRICED"
+
+
 def score_event(target: dict, group: dict, event: dict, rows: list, signal_files: list[Path],
                 *, max_lateness_seconds: int) -> dict:
     cutoff = dt.datetime.fromisoformat(group["sell_cutoff"])
@@ -77,6 +93,7 @@ def score_event(target: dict, group: dict, event: dict, rows: list, signal_files
     gross = float(event["gross_dividend_per_share"])
     fee = float(event["instrument_snapshot"]["taker_fee"])
     drop = pre - post if None not in (pre, post) else None
+    changes, discovery = price_discovery(rows, cutoff, rung)
     decision, decision_file = frozen_decision(target["event_id"], cutoff, signal_files)
     notionals = []
     for notional in NOTIONALS:
@@ -117,6 +134,7 @@ def score_event(target: dict, group: dict, event: dict, rows: list, signal_files
         pre_distance_seconds=pre_distance, post_distance_seconds=post_distance,
         pre_error=pre_error, post_error=post_error, gross_dividend=gross, taker_fee=fee,
         realised_pdr=drop / gross if drop is not None else None,
+        overnight_last_price_changes=changes, price_discovery=discovery,
         frozen_decision_file=decision_file, notionals=notionals, modeled=modeled, complete=complete,
         has_frozen_decision=decision_file is not None,
     )
@@ -152,7 +170,7 @@ def main() -> int:
     tmp.write_text(json.dumps(report, indent=1, default=str) + "\n")
     tmp.replace(out)
     print(json.dumps(dict(status=report["status"], validation=report["errors"],
-                          events=[dict(event=r["event_id"], pdr=r["realised_pdr"],
+                          events=[dict(event=r["event_id"], pdr=r["realised_pdr"], price_discovery=r["price_discovery"],
                                        frozen=r["notionals"][0]["frozen_verdict"],
                                        realised=r["notionals"][0]["realised_verdict"],
                                        realised_modeled=(r["modeled"] or {}).get("realised_verdict")) for r in scored]), indent=1))

@@ -40,6 +40,8 @@
    "gross_dividend": 0.15792,
    "taker_fee": 0.001,
    "realised_pdr": 0.0633232016210726,
+   "overnight_last_price_changes": 3,
+   "price_discovery": "THIN",
    "frozen_decision_file": "signals_v3_20260928T2330Z.csv",
    "notionals": [
     {
