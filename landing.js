@@ -76,7 +76,8 @@ async function live() {
     const events = data.v3?.events || [];
     const scored = events.filter((event) => event.score_status && event.score_status !== "NOT_SCORED");
     $("s-live").textContent = `${scored.length} / ${events.length}`;
-    const latest = scored.at(-1) || events[0];
+    // A token with no overnight trades has no drop to read, so the card shows the latest well-traded event.
+    const latest = scored.filter((event) => event.price_discovery === "PRICED").at(-1) || scored.at(-1) || events[0];
     if (!latest) { $("lc-foot").textContent = "No live events scheduled."; return; }
     const done = latest.score_status && latest.score_status !== "NOT_SCORED";
     $("lc-symbol").textContent = latest.symbol;
@@ -90,7 +91,7 @@ async function live() {
     $("lc-rec").textContent = done ? latest.score_status : "in progress";
     const next = events.find((event) => !event.score_status || event.score_status === "NOT_SCORED");
     $("lc-foot").innerHTML = done
-      ? `${edge != null && edge < 0 ? "Holding was right: selling first would have lost money. " : ""}${next ? `Next: <b>${next.symbol}</b> on ${next.ex_date}.` : "All scheduled events scored."}`
+      ? `${edge != null && edge < 0 && latest.price_discovery === "PRICED" ? "Holding was right: selling first would have lost money. " : ""}${latest.price_discovery === "THIN" ? "Only a few overnight trades, so a weak reading. " : ""}${next ? `Next: <b>${next.symbol}</b> on ${next.ex_date}.` : "All scheduled events scored."}`
       : "Recording now. Graded automatically after the ex-date.";
   } catch (error) {
     $("lc-foot").textContent = `Live evidence unavailable (${error.message}).`;
