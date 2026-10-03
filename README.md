@@ -11,6 +11,27 @@ I tested it. It doesn't work, and Exnight is the tool that tells you when it wou
   results, token lookup, backtest, all the evidence)
 - Track: Alpha Factory, rToken Factor Strategies
 
+## What's built
+
+- **Real orders through Bitget Agent Hub.** Every account, order, status and cancel call goes
+  through the official `bgc` CLI ([`exnight/trading.py`](exnight/trading.py)). On 23 September
+  it placed a real rTOWN buy (order `1486721505797718016`) that filled at the quoted price.
+  Every step is saved in [`data/raw/paper/20260923T182547.240457Z/`](data/raw/paper/20260923T182547.240457Z/):
+  the order book before, a dry run, a balance check, the order, its status, and the book
+  after. Agent Hub's demo account rejects rTokens, so the only way to prove execution was a
+  real, capped order.
+- **A live forward test that can't be edited afterwards.** 16 high-dividend events from
+  25 Sep to 8 Oct. Each decision is committed to Git before the 20:00 ET cutoff, a recorder
+  saves the price every minute, and a scorer grades the event on its own. 14 are graded so far
+  ([table below](#live-test-running-now)).
+- **An AI reader that can't move the numbers.** Qwen reads the Bitget notices and data that
+  were public at decision time, and flags anything that could distort an event: weekend
+  pricing, re-listings, special dividends
+  ([`exnight/ai_confounder.py`](exnight/ai_confounder.py)). Every prompt and response is logged
+  so it can be replayed. It never computes a number or makes a decision.
+- **A frozen rule, tested on data it hadn't seen.** Fitted, frozen, then run on 39 later
+  events: it beat "always sell first" by 32.5 bps per event.
+
 ## The short version
 
 The drop is real. Across 127 past dividends, the rToken fell by 0.97x the dividend on
@@ -34,10 +55,11 @@ It's being tested live right now, on 16 high-dividend events between 25 Septembe
 a recorder saves the price every minute, and a scorer grades it after the ex-date. Git history
 shows none of it was edited afterwards.
 
-Four graded so far. Holding was right on rTOWN, rINDB and rKDP. The fourth, rBZ, is the
-interesting one: a big dividend and a full-size drop, so selling first would have won by
-$0.13 a share if 30% tax is withheld, and lost by $0.02 if it isn't. That's exactly the kind of
-event where EXIT starts to become possible.
+14 graded so far. On the 5 with enough overnight trading to read, the drop averaged 0.94x
+the dividend, and selling first never clearly won. rBZ is the interesting one: a big dividend
+and a full-size drop, so selling first would have won by $0.13 a share if 30% tax is withheld,
+and lost by $0.02 if it isn't. That's exactly the kind of event where EXIT starts to become
+possible.
 
 I also placed a real order. On 23 September I bought about $10 of rTOWN at 36.28. It filled in
 full in under half a second at the quoted price, even though the public order book was empty.
