@@ -80,6 +80,13 @@ trade size you get one of three answers:
 There's no BUY. Buying for the dividend lost money every time, so recommending it would be
 dishonest.
 
+The same rTokens also live on Arbitrum One: Bitget Wallet added Reality's rTokens in September
+2026 for self-custody holders (for example rAAPL is
+[`0xaBa5…1892`](https://arbiscan.io/token/0xaBa5e0C80e9f58E391214689fB342049C0d31892)). Each
+token is backed by the same share, so the overnight price drop Exnight measures applies to it
+too. The HOLD / EXIT answer also depends on trading costs, and Exnight only measures those on
+Bitget.
+
 ## How it decides
 
 It's three numbers:
