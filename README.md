@@ -152,6 +152,13 @@ Exnight is ahead on 44 of 55 tokens, by 42.3 bps per event (t-stat 1.97). Full r
 per-event rows: [`reports/backtest.md`](reports/backtest.md). Rerun it with
 `python scripts/run_backtest.py`.
 
+**Why no trades, and would trading have helped?** The rule only steps out if the drop beats
+the whole dividend plus costs, because Bitget doesn't publish how much a holder keeps. So I
+checked whether a looser rule would have found anything, using every resolved dividend. Assume
+the holder keeps only 70%, and step out only on dividends of 100 bps or more. Stepping out then
+wins 5 of 9 and averages -0.9 bps per event (t-stat -0.02). On this data, a less cautious rule
+had nothing reliable to trade ([details](reports/backtest.md)).
+
 Always selling first lost at every cost I tested (10 to 100 bps) and every tax rate (0% to
 30%). The small negative return for holding is just normal market movement on those nights.
 I added the always-sell-first column after seeing the results; it doesn't change anything that

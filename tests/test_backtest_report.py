@@ -82,3 +82,16 @@ def test_position_check_reads_the_snapshot_and_never_claims_an_uncredited_divide
     text = backtest_report.render_run_records(json.loads(backtest_report.OUTPUT.read_text()), backtest_report.live_order())
     assert ("not yet" in text) == (not pos["dividend_credited"])
     assert "[redacted]" in (competition.ROOT / pos["folder"] / "01_account_rTOWN.json").read_text()
+
+
+def test_counterfactual_is_consistent_and_quoted():
+    report = json.loads(backtest_report.OUTPUT.read_text())
+    cf = report["would_trading_have_helped"]
+    assert sum(b["keep_70"]["events"] for b in cf["buckets"]) == cf["events"] == report["vs_always_exit_full_sample"]["all"]["events"]
+    hy = cf["high_yield_keep_70"]
+    rows = [e["exit_minus_hold_keep_70"] for e in cf["high_yield"]]
+    assert hy["events"] == len(rows) and abs(hy["mean_bps"] - sum(rows) / len(rows)) < 1e-9
+    assert hy["exit_won"] == sum(r > 0 for r in rows)
+    readme = (competition.ROOT / "README.md").read_text().replace("\n", " ")
+    assert f"wins {hy['exit_won']} of {hy['events']} and averages {hy['mean_bps']:.1f} bps per event (t-stat {hy['t_stat']:.2f})" in readme
+    assert all(f["pdr_estimate"] - 2 * f["pdr_se"] < 1 for f in report["policy_folds"])

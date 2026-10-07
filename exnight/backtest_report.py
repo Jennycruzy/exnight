@@ -175,6 +175,59 @@ def _full_sample(slippage_bps: int = c.BASE_SLIPPAGE_BPS, withholding: float = c
             **{name: summary(items) for name, items in cuts.items()}}
 
 
+YIELD_BUCKETS = ((0, 25), (25, 50), (50, 100), (100, 150), (150, 10_000))
+HIGH_YIELD_BPS = 100
+
+
+def _counterfactual(slippage_bps: int = c.BASE_SLIPPAGE_BPS) -> dict:
+    """Would stepping out have paid if the rule had traded? Realised EXIT minus HOLD per event,
+    by dividend yield, for a holder who keeps the whole dividend and for one who keeps 70%.
+
+    Same events, prices, rungs and costs as the full-sample check. Post hoc: it changes no rule,
+    and it is not a strategy. It shows whether a less cautious rule had anything to find.
+    """
+    knowledge = pd.read_csv(c.KNOWLEDGE, keep_default_na=False)
+    keep = set(knowledge.loc[(knowledge.eligible_ex_ante == "YES")
+                             | (knowledge.exclusion_reason == "NO_PRE_DECISION_GROSS_DECLARATION"), "event_id"])
+    score = json.loads(c.SCORECARD.read_text())
+    folds = [(*f["test_period"].split(".."), f["selected_rung"]) for f in score["folds"]]
+    events = []
+    for r in json.loads(c.EVENT_RESULTS.read_text()):
+        if r["event_id"] not in keep:
+            continue
+        rung = next((x for start, end, x in folds if start <= r["ex_date"] <= end), score["initial_model"]["selected_rung"])
+        p1 = (r["p_post"] or {}).get(rung)
+        if p1 is None or not r["p_pre"]:
+            continue
+        p0, gross = float(r["p_pre"]), float(r["gross_dividend"])
+        yield_bps = 1e4 * gross / p0
+        drop_bps = 1e4 * (p0 - float(p1)) / p0
+        cost_bps = 1e4 * 2 * float(r["fee_rate"]) + slippage_bps
+        events.append({"event_id": r["event_id"], "symbol": r["symbol"], "ex_date": r["ex_date"],
+                       "yield_bps": yield_bps, "drop_over_dividend": drop_bps / yield_bps if yield_bps else None,
+                       "cost_bps": cost_bps,
+                       "exit_minus_hold_keep_100": drop_bps - yield_bps - cost_bps,
+                       "exit_minus_hold_keep_70": drop_bps - 0.7 * yield_bps - cost_bps})
+
+    def bucket(items: list[dict], key: str) -> dict:
+        values = pd.Series([e[key] for e in items], dtype=float)
+        std = float(values.std(ddof=1)) if len(items) > 1 else None
+        return {"events": len(items), "mean_bps": float(values.mean()) if len(items) else None,
+                "median_bps": float(values.median()) if len(items) else None,
+                "t_stat": float(values.mean()) / std * len(items) ** 0.5 if std else None,
+                "exit_won": int((values > 0).sum())}
+
+    buckets = []
+    for low, high in YIELD_BUCKETS:
+        items = [e for e in events if low <= e["yield_bps"] < high]
+        buckets.append({"yield_bps": [low, high], "keep_100": bucket(items, "exit_minus_hold_keep_100"),
+                        "keep_70": bucket(items, "exit_minus_hold_keep_70")})
+    high = sorted((e for e in events if e["yield_bps"] >= HIGH_YIELD_BPS), key=lambda e: (e["ex_date"], e["event_id"]))
+    return {"label": "POST_HOC_COUNTERFACTUAL_NOT_A_STRATEGY", "events": len(events), "buckets": buckets,
+            "high_yield_threshold_bps": HIGH_YIELD_BPS, "high_yield": high,
+            "high_yield_keep_70": bucket(high, "exit_minus_hold_keep_70")}
+
+
 def _live() -> dict:
     events = []
     for path in sorted(c.RESULTS.glob("forward_score_v3_*.json")):
@@ -231,12 +284,14 @@ def build() -> dict:
         "vs_always_exit": _view(spread, periods, comparison=True),
         "vs_always_exit_sensitivity_oos": sensitivity,
         "live": _live(),
+        "policy_folds": [{k: f[k] for k in ("fold", "pdr_estimate", "pdr_se")} for f in json.loads(c.SCORECARD.read_text())["folds"]],
     }
     oos = [r for r in spread if r["fold"] in periods["OOS"][2]]
     report["vs_always_exit_per_event"] = {name: _per_event([r for r in spread if r["fold"] in period[2]])
                                          for name, period in periods.items()}
     report["vs_always_exit_oos_concentration"] = _concentration(spread, periods["OOS"])
     report["vs_always_exit_full_sample"] = _full_sample()
+    report["would_trading_have_helped"] = _counterfactual()
     report["vs_always_exit_oos_decomposition"] = {
         "cost_bps": 1e4 * sum(r["fee_drag_return"] + r["slippage_drag_return"] for r in oos) / len(oos),
         "hold_bps": 1e4 * sum(r["hold_return"] for r in oos) / len(oos),
@@ -399,6 +454,10 @@ def render_run_records(report: dict, order: dict) -> str:
     return "\n".join(lines)
 
 
+def _bp(value) -> str:
+    return "n/a" if value is None else f"{value:.1f}"
+
+
 def _pct(value) -> str:
     return "n/a" if value is None else f"{100 * value:.3f}%"
 
@@ -441,6 +500,8 @@ def render_markdown(report: dict) -> str:
     gap = report["vs_always_exit_oos_decomposition"]
     conc = report["vs_always_exit_oos_concentration"]
     full = report["vs_always_exit_full_sample"]
+    cf = report["would_trading_have_helped"]
+    hy = cf["high_yield_keep_70"]
     top = max(conc["by_symbol"], key=lambda sym: conc["by_symbol"][sym]["events"])
     lines = [
         "# Exnight backtest record",
@@ -524,6 +585,40 @@ def render_markdown(report: dict) -> str:
         "Its return is the holder's return: the overnight price move plus the dividend kept.",
         "",
         head, *_rows_for(report["policy"], rule_trades=True),
+        "",
+        "### Why Exnight made no trades, and whether trading would have helped",
+        "",
+        "Bitget doesn't publish what an rToken holder keeps of a dividend, so the frozen rule steps out",
+        "only if the drop beats the *whole* dividend plus costs, with the drop's uncertainty taken",
+        "at two standard errors. The walk-forward estimated the drop at "
+        + "; ".join(f"{f['pdr_estimate']:.2f} ± {f['pdr_se']:.2f} of the dividend ({f['fold']})" for f in report["policy_folds"])
+        + ". Neither lower bound is above 1, so no event could pass, whatever its size.",
+        "",
+        "So the question is whether a less cautious rule would have found anything. The table uses the",
+        f"realised drop on every resolved dividend ({cf['events']} events, added after the results; not a strategy):",
+        "stepping out minus holding, per event, after fees and slippage.",
+        "",
+        "| Dividend yield | Events | Holder keeps 100%: mean / median, bps | Holder keeps 70%: mean / median, bps | t-stat (keeps 70%) | Stepping out won (keeps 70%) |",
+        "|---|---:|---:|---:|---:|---:|",
+        *[f"| {b['yield_bps'][0]}–{b['yield_bps'][1] if b['yield_bps'][1] < 10_000 else ''} bps | {b['keep_70']['events']} | "
+          f"{_bp(b['keep_100']['mean_bps'])} / {_bp(b['keep_100']['median_bps'])} | "
+          f"{_bp(b['keep_70']['mean_bps'])} / {_bp(b['keep_70']['median_bps'])} | {_num(b['keep_70']['t_stat'])} | "
+          f"{b['keep_70']['exit_won']} of {b['keep_70']['events']} |" for b in cf["buckets"]],
+        "",
+        f"Even if the holder keeps only 70% and the rule stepped out only on dividends of {cf['high_yield_threshold_bps']} bps or more, "
+        f"it would have won {hy['exit_won']} of {hy['events']} and averaged {_bp(hy['mean_bps'])} bps per event (t-stat {_num(hy['t_stat'])}):",
+        "",
+        "| Token | Ex-date | Yield, bps | Drop / dividend | Cost, bps | Stepping out minus holding, bps |",
+        "|---|---|---:|---:|---:|---:|",
+        *[f"| {e['symbol']} | {e['ex_date']} | {e['yield_bps']:.0f} | {_num(e['drop_over_dividend'])} | {e['cost_bps']:.0f} | "
+          f"{e['exit_minus_hold_keep_70']:+.1f} |" for e in cf["high_yield"]],
+        "",
+        "Stepping out lost wherever the price had fallen well short of the dividend by the measurement",
+        "time; on two nights it hadn't moved at all. No yield band shows stepping out ahead with a t-stat",
+        "near 2; on the smallest dividends it is reliably behind. The one band with a positive average",
+        "has a negative median. On this data, a rule that stepped out by dividend size, at either",
+        "withholding, had no reliable edge to trade, so holding was the right output, not a missing one. The one input that could change this is the withholding Bitget",
+        "actually applies, which the live rTOWN position will show when its dividend is credited.",
         "",
         "## 3. Live test (pre-registered, after the backtest)",
         "",

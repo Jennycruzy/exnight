@@ -90,6 +90,45 @@ Its return is the holder's return: the overnight price move plus the dividend ke
 | Rolling 30-day Sharpe | too few trades to score | too few trades to score |
 | OOS / IS Sharpe | | n/a (undefined: in-sample Sharpe is not positive) |
 
+### Why Exnight made no trades, and whether trading would have helped
+
+Bitget doesn't publish what an rToken holder keeps of a dividend, so the frozen rule steps out
+only if the drop beats the *whole* dividend plus costs, with the drop's uncertainty taken
+at two standard errors. The walk-forward estimated the drop at 1.03 ± 0.87 of the dividend (OOS_2026_08); 0.92 ± 0.35 of the dividend (OOS_2026_09). Neither lower bound is above 1, so no event could pass, whatever its size.
+
+So the question is whether a less cautious rule would have found anything. The table uses the
+realised drop on every resolved dividend (127 events, added after the results; not a strategy):
+stepping out minus holding, per event, after fees and slippage.
+
+| Dividend yield | Events | Holder keeps 100%: mean / median, bps | Holder keeps 70%: mean / median, bps | t-stat (keeps 70%) | Stepping out won (keeps 70%) |
+|---|---:|---:|---:|---:|---:|
+| 0–25 bps | 73 | -36.5 / -40.2 | -34.4 / -38.7 | -2.45 | 13 of 73 |
+| 25–50 bps | 23 | -68.7 / -62.6 | -57.7 / -54.8 | -1.38 | 1 of 23 |
+| 50–100 bps | 22 | 0.6 / -35.5 | 21.5 / -12.6 | 0.55 | 9 of 22 |
+| 100–150 bps | 2 | -41.2 / -41.2 | 1.0 / 1.0 | 0.01 | 1 of 2 |
+| 150– bps | 7 | -81.9 / -93.9 | -1.4 / 35.4 | -0.03 | 4 of 7 |
+
+Even if the holder keeps only 70% and the rule stepped out only on dividends of 100 bps or more, it would have won 5 of 9 and averaged -0.9 bps per event (t-stat -0.02):
+
+| Token | Ex-date | Yield, bps | Drop / dividend | Cost, bps | Stepping out minus holding, bps |
+|---|---|---:|---:|---:|---:|
+| rMO | 2026-06-15 | 147 | 1.40 | 35 | +67.4 |
+| rSQQQ | 2026-06-24 | 159 | 1.14 | 35 | +35.4 |
+| rHIMX | 2026-06-30 | 164 | 0.01 | 35 | -148.7 |
+| rBITI | 2026-07-01 | 497 | 1.06 | 35 | +141.6 |
+| rCMCSA | 2026-07-01 | 134 | 0.47 | 35 | -65.5 |
+| rOPRA | 2026-07-07 | 189 | 0.00 | 35 | -167.1 |
+| rBITI | 2026-08-03 | 518 | 0.89 | 35 | +61.4 |
+| rBITI | 2026-09-01 | 195 | 0.63 | 45 | -58.1 |
+| rMO | 2026-09-15 | 157 | 1.79 | 45 | +125.8 |
+
+Stepping out lost wherever the price had fallen well short of the dividend by the measurement
+time; on two nights it hadn't moved at all. No yield band shows stepping out ahead with a t-stat
+near 2; on the smallest dividends it is reliably behind. The one band with a positive average
+has a negative median. On this data, a rule that stepped out by dividend size, at either
+withholding, had no reliable edge to trade, so holding was the right output, not a missing one. The one input that could change this is the withholding Bitget
+actually applies, which the live rTOWN position will show when its dividend is credited.
+
 ## 3. Live test (pre-registered, after the backtest)
 
 14 of 16 high-dividend events graded so far, each decision committed to Git before the 20:00 ET cutoff. Per event, holding minus stepping out (modeled execution, 70% of the dividend kept):
