@@ -74,3 +74,11 @@ def test_full_sample_keeps_the_scorecard_events_and_quotes_in_readme():
     rest = full["all_without_top_symbol"]
     readme = (competition.ROOT / "README.md").read_text()
     assert f"Exnight is ahead on {rest['symbols_ahead']} of {rest['symbols']} tokens, by {rest['mean_bps']:.1f} bps per event (t-stat {rest['t_stat']:.2f})" in readme.replace("\n", " ")
+
+
+def test_position_check_reads_the_snapshot_and_never_claims_an_uncredited_dividend():
+    pos = backtest_report.position_check(backtest_report.live_order())
+    assert pos is not None and pos["quantity"] == 0.2783
+    text = backtest_report.render_run_records(json.loads(backtest_report.OUTPUT.read_text()), backtest_report.live_order())
+    assert ("not yet" in text) == (not pos["dividend_credited"])
+    assert "[redacted]" in (competition.ROOT / pos["folder"] / "01_account_rTOWN.json").read_text()

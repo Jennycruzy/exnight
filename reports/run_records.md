@@ -15,6 +15,21 @@ write-up: [`docs/live_fill_20260923.md`](../docs/live_fill_20260923.md).
 
 Order `1486721505797718016`, status `filled`, value 10.097837 USDT; balances read 2026-09-23T18:26:49Z with a read-only key.
 
+**Since the order.** Exnight's frozen call for rTOWN's ex-date was NO_SIGNAL: no step-out, so
+the position was held through it. Read-only snapshot 2026-10-07T02:07:11.646Z ([`data/raw/paper/20261007T020711Z_rTOWN_position/`](../data/raw/paper/20261007T020711Z_rTOWN_position/)):
+
+| | |
+|---|---|
+| Holding | 0.2783 rTOWN, held through the 2026-09-25 ex-date |
+| Paid, with fee | 10.1079 USDT |
+| Worth now | 9.8530 USDT (last 35.41; quote 35.04 / 35.98) |
+| Change since the buy, fee included | -0.2549 USDT, before the dividend |
+| Dividend due | 0.28 per share: 0.0779 USDT gross, 0.0545 if 30% is withheld |
+| Dividend credited? | not yet: Bitget lists payment at 2026-10-08T16:00:00Z; the ledger has 2 rows, the buy only |
+
+The credit will show what withholding Bitget actually applies to an rToken holder, which the
+backtest has to assume.
+
 ## 2. Live forward test
 
 16 high-dividend ex-dates from 25 September to 8 October, chosen and scheduled before the first
