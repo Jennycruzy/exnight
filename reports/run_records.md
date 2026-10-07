@@ -27,8 +27,7 @@ the position was held through it. Read-only snapshot 2026-10-07T02:07:11.646Z ([
 | Dividend due | 0.28 per share: 0.0779 USDT gross, 0.0545 if 30% is withheld |
 | Dividend credited? | not yet: Bitget lists payment at 2026-10-08T16:00:00Z; the ledger has 2 rows, the buy only |
 
-The credit will show what withholding Bitget actually applies to an rToken holder, which the
-backtest has to assume.
+The credit will show what withholding Bitget actually applies to an rToken holder, which the backtest has to assume. `scripts/check_dividend_credit.py` checks for it read-only every 15 minutes after the payment time and records it here when it lands.
 
 ## 2. Live forward test
 

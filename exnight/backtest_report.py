@@ -272,9 +272,9 @@ def live_order(folder: Path = LIVE_ORDER) -> dict:
     }
 
 
-def position_check(order: dict) -> dict | None:
+def position_check(order: dict, paper: Path | None = None) -> dict | None:
     """Latest read-only snapshot of the live position: holdings, ledger, quote and dividend due."""
-    folders = sorted((ROOT / "data" / "raw" / "paper").glob("*_rTOWN_position"))
+    folders = sorted((paper or ROOT / "data" / "raw" / "paper").glob("*_rTOWN_position"))
     if not folders:
         return None
     folder = folders[-1]
@@ -288,14 +288,19 @@ def position_check(order: dict) -> dict | None:
     gross = float(event["gross_dividend_per_share"])
     cost = float(order["value_usdt"]) + float(order["fee_usdt"])
     value = float(assets["rTOWN"]["usdValue"])
-    credited = [row for row in ledger if row["type"] not in ("ORDER_DEALT_IN", "ORDER_DEALT_FROZEN_OUT")]
+    credit = json.loads((folder / "07_credit.json").read_text()) if (folder / "07_credit.json").is_file() else None
+    credited_usdt = float(credit.get("credited_usdt", credit["usdt_change_since_buy"])) if credit else None
     return {
-        "folder": folder.relative_to(ROOT).as_posix(), "checked_at": read("01_account_rTOWN.json")["requestTime"],
+        "credited_usdt": credited_usdt, "credit_detected_at": credit["detected_at"] if credit else None,
+        "credit_ledger_types": sorted({row.get("type", "?") for row in credit["ledger_rows"]}) if credit else [],
+        "implied_withholding": (1 - credited_usdt / (qty * gross)) if credit and qty * gross else None,
+        "folder": (folder.relative_to(ROOT) if folder.is_relative_to(ROOT) else folder).as_posix(),
+        "checked_at": read("01_account_rTOWN.json")["requestTime"],
         "quantity": qty, "last_price": ticker["lastPrice"], "bid": ticker["bid1Price"], "ask": ticker["ask1Price"],
         "value_usdt": value, "cost_usdt": cost, "ex_date": event["exchange_ex_date"],
         "dividend_payment_ts": event["cash_dividend_timestamp"], "gross_per_share": gross,
         "dividend_gross_usdt": qty * gross, "dividend_70pct_usdt": qty * gross * 0.7,
-        "ledger_rows": len(ledger), "dividend_credited": bool(credited),
+        "ledger_rows": len(ledger), "dividend_credited": credit is not None,
     }
 
 
@@ -315,11 +320,19 @@ def _position_lines(pos: dict | None) -> list[str]:
         f"| Change since the buy, fee included | {mark:+.4f} USDT, before the dividend |",
         f"| Dividend due | {pos['gross_per_share']} per share: {pos['dividend_gross_usdt']:.4f} USDT gross, "
         f"{pos['dividend_70pct_usdt']:.4f} if 30% is withheld |",
-        f"| Dividend credited? | {'yes, see the ledger file' if pos['dividend_credited'] else 'not yet'}: "
-        f"Bitget lists payment at {pos['dividend_payment_ts']}; the ledger has {pos['ledger_rows']} rows, the buy only |",
+        (f"| Dividend credited | **{pos['credited_usdt']:.6f} USDT**, seen {pos['credit_detected_at']} "
+         f"(ledger type {', '.join(pos['credit_ledger_types']) or 'balance change only'}) |"
+         if pos["dividend_credited"] else
+         f"| Dividend credited? | not yet: Bitget lists payment at {pos['dividend_payment_ts']}; "
+         f"the ledger has {pos['ledger_rows']} rows, the buy only |"),
+        *([f"| Withholding actually applied | **{100 * pos['implied_withholding']:.1f}%** "
+           f"(1 − credited / gross due) |"] if pos["dividend_credited"] else []),
         "",
-        "The credit will show what withholding Bitget actually applies to an rToken holder, which the",
-        "backtest has to assume.",
+        ("This is the withholding the backtest had to assume (0% to 30%), now observed on a real holding."
+         if pos["dividend_credited"] else
+         "The credit will show what withholding Bitget actually applies to an rToken holder, which the "
+         "backtest has to assume. `scripts/check_dividend_credit.py` checks for it read-only every 15 "
+         "minutes after the payment time and records it here when it lands."),
         "",
     ]
 
