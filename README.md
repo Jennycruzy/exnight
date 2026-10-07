@@ -24,6 +24,13 @@ I tested it. It doesn't work, and Exnight is the tool that tells you when it wou
   25 Sep to 8 Oct. Each decision is committed to Git before the 20:00 ET cutoff, a recorder
   saves the price every minute, and a scorer grades the event on its own. 14 are graded so far
   ([table below](#live-test-running-now)).
+- **Each freeze is also anchored on Arbitrum One.** Right after the nightly commit, the
+  commit hash and the SHA-256 of the frozen files go on-chain in a 0-value transaction
+  ([`exnight/anchor.py`](exnight/anchor.py)), so the timestamp doesn't depend on Git or
+  GitHub. For example, the 6 October freeze was anchored at 23:30:10 UTC, before the
+  00:00 UTC cutoff
+  ([Arbiscan](https://arbiscan.io/tx/0x00729be150d03ba81b2d659237b39dda17ae591a99332544028147fa0f14ff02)).
+  Anyone can check one with `python -m exnight.anchor verify data/anchors/<record>.json`.
 - **An AI reader that can't move the numbers.** Qwen reads the Bitget notices and data that
   were public at decision time, and flags anything that could distort an event: weekend
   pricing, re-listings, special dividends
