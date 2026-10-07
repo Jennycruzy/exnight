@@ -576,16 +576,16 @@
   "live": {
     "label": "MODELED_EXECUTION",
     "scheduled": 16,
-    "graded": 14,
+    "graded": 15,
     "all": {
-      "events": 14,
-      "hold_beat_exit": 12,
-      "mean_hold_minus_exit_bps": 72.15939843889505
+      "events": 15,
+      "hold_beat_exit": 13,
+      "mean_hold_minus_exit_bps": 69.45288061896507
     },
     "priced_overnight": {
-      "events": 5,
-      "hold_beat_exit": 3,
-      "mean_hold_minus_exit_bps": -0.7241970834566483
+      "events": 6,
+      "hold_beat_exit": 4,
+      "mean_hold_minus_exit_bps": 4.656774287110345
     },
     "events": [
       {
@@ -769,6 +769,19 @@
         "pre_price": 31.9,
         "post_price": 31.9,
         "exit_minus_hold_bps": -127.2884012539185
+      },
+      {
+        "event_id": "rCMCSA-2026-10-07-1",
+        "ex_date": "2026-10-07",
+        "price_discovery": "PRICED",
+        "realised_pdr": 0.7878787878787818,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20261006T2330Z.csv",
+        "sell_cutoff": "2026-10-06T20:00:00-04:00",
+        "gross_dividend": 0.33,
+        "pre_price": 21.58,
+        "post_price": 21.32,
+        "exit_minus_hold_bps": -31.56163113994531
       }
     ]
   },
