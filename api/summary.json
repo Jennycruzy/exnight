@@ -1,4 +1,260 @@
 {
+ "backtest": {
+  "concentration": {
+   "by_symbol": {
+    "rDGRW": {
+     "events": 1,
+     "mean_bps": -112.34277990672314,
+     "positive": 0,
+     "std_bps": null,
+     "t_stat": null,
+     "worst_bps": -112.34277990672314
+    },
+    "rNXPI": {
+     "events": 1,
+     "mean_bps": 142.99083538949506,
+     "positive": 1,
+     "std_bps": null,
+     "t_stat": null,
+     "worst_bps": 142.99083538949506
+    },
+    "rSATA": {
+     "events": 32,
+     "mean_bps": 30.594010660498782,
+     "positive": 28,
+     "std_bps": 26.964628333240796,
+     "t_stat": 6.418254947742404,
+     "worst_bps": -75.57171514543593
+    },
+    "rSTRC": {
+     "events": 3,
+     "mean_bps": 44.40395611712493,
+     "positive": 3,
+     "std_bps": 23.9932392808481,
+     "t_stat": 3.205482475778512,
+     "worst_bps": 16.700020214271163
+    },
+    "rTLT": {
+     "events": 2,
+     "mean_bps": 61.67634876370255,
+     "positive": 2,
+     "std_bps": 44.2381660485929,
+     "t_stat": 1.9716804897262592,
+     "worst_bps": 30.395241563486017
+    }
+   },
+   "leave_one_symbol_out": {
+    "rDGRW": {
+     "events": 38,
+     "mean_bps": 36.27799322116411,
+     "positive": 34,
+     "sharpe": 15.433595767380897,
+     "std_bps": 32.697597024070454,
+     "t_stat": 6.8394190939331025,
+     "worst_bps": -75.57171514543593
+    },
+    "rNXPI": {
+     "events": 38,
+     "mean_bps": 29.558687555474158,
+     "positive": 33,
+     "sharpe": 12.824542468584871,
+     "std_bps": 36.221075844037216,
+     "t_stat": 5.030551501587874,
+     "worst_bps": -112.34277990672314
+    },
+    "rSATA": {
+     "events": 7,
+     "mean_bps": 41.03037448022168,
+     "positive": 6,
+     "sharpe": 3.616310542851458,
+     "std_bps": 79.49243374955346,
+     "t_stat": 1.3656163480480612,
+     "worst_bps": -112.34277990672314
+    },
+    "rSTRC": {
+     "events": 36,
+     "mean_bps": 31.472474837392724,
+     "positive": 31,
+     "sharpe": 10.546478847853098,
+     "std_bps": 41.219016612157574,
+     "t_stat": 4.581255559810211,
+     "worst_bps": -112.34277990672314
+    },
+    "rTLT": {
+     "events": 37,
+     "mean_bps": 30.888331485678588,
+     "positive": 32,
+     "sharpe": 11.033762172125053,
+     "std_bps": 39.904082445597936,
+     "t_stat": 4.70845021034291,
+     "worst_bps": -112.34277990672314
+    }
+   },
+   "symbols": 5
+  },
+  "decomposition": {
+   "book_bps_per_30_days": 32.40493044369213,
+   "cost_bps": 38.58974358974362,
+   "gap_bps": 32.4672041666029,
+   "hold_bps": -6.1225394231407
+  },
+  "full_sample": {
+   "all": {
+    "events": 127,
+    "mean_bps": 38.46605618205221,
+    "positive": 105,
+    "std_bps": 148.53804069411657,
+    "symbols": 56,
+    "symbols_ahead": 45,
+    "t_stat": 2.9183799372344,
+    "worst_bps": -689.2303527227725
+   },
+   "all_without_top_symbol": {
+    "events": 77,
+    "mean_bps": 42.31976180496924,
+    "positive": 61,
+    "std_bps": 188.7462786402621,
+    "symbols": 55,
+    "symbols_ahead": 44,
+    "t_stat": 1.9674793346749864,
+    "worst_bps": -689.2303527227725
+   },
+   "excluded_events_verdict": "NO_SIGNAL (no gross dividend declared before the cutoff), so the holder holds",
+   "excluded_from_scorecard": {
+    "events": 71,
+    "mean_bps": 42.71398439815884,
+    "positive": 57,
+    "std_bps": 194.90185316582443,
+    "symbols": 55,
+    "symbols_ahead": 44,
+    "t_stat": 1.8466444731122484,
+    "worst_bps": -689.2303527227725
+   },
+   "label": "POST_HOC_ROBUSTNESS_NOT_THE_FROZEN_SCORECARD",
+   "oos_period": {
+    "events": 51,
+    "mean_bps": 31.794657766040057,
+    "positive": 42,
+    "std_bps": 46.51126177290456,
+    "symbols": 12,
+    "symbols_ahead": 8,
+    "t_stat": 4.881812795250032,
+    "worst_bps": -112.34277990672314
+   },
+   "oos_period_without_top_symbol": {
+    "events": 19,
+    "mean_bps": 33.816800259583246,
+    "positive": 14,
+    "std_bps": 68.92073753136577,
+    "symbols": 11,
+    "symbols_ahead": 7,
+    "t_stat": 2.1387469171864266,
+    "worst_bps": -112.34277990672314
+   },
+   "top_symbol": "rSATA"
+  },
+  "live": {
+   "all": {
+    "events": 14,
+    "hold_beat_exit": 12,
+    "mean_hold_minus_exit_bps": 72.15939843889505
+   },
+   "graded": 14,
+   "priced_overnight": {
+    "events": 5,
+    "hold_beat_exit": 3,
+    "mean_hold_minus_exit_bps": -0.7241970834566483
+   },
+   "scheduled": 16
+  },
+  "per_event": {
+   "IS": {
+    "events": 17,
+    "mean_bps": 34.486781197284785,
+    "positive": 14,
+    "std_bps": 59.635585646418846,
+    "t_stat": 2.384358936408115,
+    "worst_bps": -131.38150524493255
+   },
+   "OOS": {
+    "events": 39,
+    "mean_bps": 32.4672041666029,
+    "positive": 34,
+    "std_bps": 40.091896832582705,
+    "t_stat": 5.0573218294138185,
+    "worst_bps": -112.34277990672314
+   }
+  },
+  "status": "AVAILABLE",
+  "vs_always_exit": {
+   "IS": {
+    "days": 38,
+    "end": "2026-07-31",
+    "events": 17,
+    "metrics": {
+     "annualized_return": 0.022774259718409073,
+     "comparator_fee_drag": 0.00068,
+     "comparator_slippage_drag_MODELED_EXECUTION": 0.0017,
+     "comparator_trade_count": 17,
+     "comparator_turnover": 1.36,
+     "entitlement_uncertain_count": 0,
+     "event_count": 17,
+     "maximum_drawdown": -0.0005255260209796608,
+     "sharpe": 6.513826505641301,
+     "sortino": 4.068681831837846,
+     "total_return": 0.0023471730751494224,
+     "win_rate": 0.8235294117647058
+    },
+    "rolling": {
+     "max": 6.652089619439654,
+     "min": 2.1056082772092912,
+     "positive": 9,
+     "scored": 9,
+     "windows": 9
+    },
+    "start": "2026-06-24"
+   },
+   "OOS": {
+    "days": 47,
+    "end": "2026-09-16",
+    "events": 39,
+    "metrics": {
+     "annualized_return": 0.04010977214964595,
+     "comparator_fee_drag": 0.00212,
+     "comparator_slippage_drag_MODELED_EXECUTION": 0.0039,
+     "comparator_trade_count": 39,
+     "comparator_turnover": 3.12,
+     "entitlement_uncertain_count": 0,
+     "event_count": 39,
+     "maximum_drawdown": -0.0005503190722292439,
+     "sharpe": 11.955744478703467,
+     "sortino": 6.953601296409314,
+     "total_return": 0.005076772436178434,
+     "win_rate": 0.8717948717948718
+    },
+    "rolling": {
+     "max": 10.239052696559119,
+     "min": 8.246786267849508,
+     "positive": 18,
+     "scored": 18,
+     "windows": 18
+    },
+    "start": "2026-08-01"
+   },
+   "decay": {
+    "alert": false,
+    "note": "alert when OOS < 0.5 x IS",
+    "ratio": 1.8354410373609416
+   }
+  },
+  "window": {
+   "end": "2026-09-16",
+   "oos_days": 47,
+   "requirement": "total >= 60 days, out-of-sample >= 30 days",
+   "start": "2026-06-24",
+   "total_days": 85
+  }
+ },
  "comparison": {
   "days": 47,
   "events": 39,
@@ -484,6 +740,31 @@
    "href": "evidence/forward_score_v3_20261001_RCPB_RFULT_RVSNT.json",
    "label": "V3 forward score, 20261001_RCPB_RFULT_RVSNT",
    "name": "forward_score_v3_20261001_RCPB_RFULT_RVSNT.json"
+  },
+  {
+   "href": "evidence/run_records.md",
+   "label": "Run records: live order, live test, backtest",
+   "name": "run_records.md"
+  },
+  {
+   "href": "evidence/backtest.md",
+   "label": "Backtest record (readable)",
+   "name": "backtest.md"
+  },
+  {
+   "href": "evidence/backtest.json",
+   "label": "Backtest record (all metrics)",
+   "name": "backtest.json"
+  },
+  {
+   "href": "evidence/backtest_daily.csv",
+   "label": "Backtest daily returns",
+   "name": "backtest_daily.csv"
+  },
+  {
+   "href": "evidence/backtest_events.csv",
+   "label": "Backtest per-event rows",
+   "name": "backtest_events.csv"
   }
  ],
  "forward_score": {
@@ -724,7 +1005,7 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-10-01T15:57:18.044350+00:00",
+ "generated_at": "2026-10-07T02:17:52.570942+00:00",
  "limits": [
   "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
   "Current order books are observed-now evidence, not historical event-time fills.",
@@ -4931,8 +5212,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-09-30T23:30:05+00:00",
-    "decision_file": "signals_v3_20260930T2330Z.csv",
+    "decided_at": "2026-10-06T23:30:06+00:00",
+    "decision_file": "signals_v3_20261006T2330Z.csv",
     "entitlement_tier": "E1_DOCUMENTED_PRECEDENT",
     "event_id": "rCMCSA-2026-10-07-1",
     "ex_date": "2026-10-07",
@@ -4946,16 +5227,16 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "",
+    "reason": "sell: $1,000 exceeds visible top-of-book ($540) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($389) on ticker-only symbol",
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-06T20:00:00-04:00",
     "symbol": "rCMCSA",
-    "verdict": "HOLD"
+    "verdict": "NO_SIGNAL"
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-09-30T23:30:05+00:00",
-    "decision_file": "signals_v3_20260930T2330Z.csv",
+    "decided_at": "2026-10-06T23:30:06+00:00",
+    "decision_file": "signals_v3_20261006T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rTIGO-2026-10-08-1",
     "ex_date": "2026-10-08",
@@ -4969,7 +5250,7 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "sell: $1,000 exceeds visible top-of-book ($258) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($681) on ticker-only symbol",
+    "reason": "sell: $1,000 exceeds visible top-of-book ($180) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($740) on ticker-only symbol",
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-07T20:00:00-04:00",
     "symbol": "rTIGO",

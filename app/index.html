@@ -162,6 +162,13 @@
           <article class="metric"><span>Unseen test events</span><strong id="validation-oos-events">—</strong><small id="validation-oos-days">test days</small></article>
           <article class="metric"><span>Sell trades made</span><strong id="validation-trades">—</strong><small>none cleared the rule</small></article>
         </section>
+        <article class="panel" id="judge-panel">
+          <div class="panel-heading"><div><p class="eyebrow">Scored on the Alpha Factory metrics</p><h2>Exnight minus always selling first</h2></div><span class="tag amber">COSTS MODELED</span></div>
+          <p class="panel-lede" id="judge-lede">Each night's return is Exnight's return minus the return of stepping out of every event, on the same events, prices, costs and capital.</p>
+          <div class="table-wrap"><table class="validation-table"><thead><tr><th>Metric</th><th>In-sample</th><th>Out-of-sample</th></tr></thead><tbody id="judge-metrics"></tbody></table></div>
+          <div id="judge-note" class="score-panel"></div>
+          <p class="source">Full record, daily returns and per-event rows: <a href="https://github.com/Jennycruzy/exnight/blob/main/reports/backtest.md">reports/backtest.md</a> · rerun with <code>python scripts/run_backtest.py</code></p>
+        </article>
         <div class="two-col validation-grid">
           <article class="panel">
             <div class="panel-heading"><div><p class="eyebrow">Unseen-data performance</p><h2>Exnight, holding, and the difference</h2></div></div>
