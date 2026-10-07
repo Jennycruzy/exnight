@@ -121,6 +121,30 @@ dividend info that was public at decision time:
 | Times selling first won | — | 13% | — |
 | Total return | -0.096% | -0.600% | -0.096% |
 | Sharpe | -2.57 | -22.93 | -2.57 |
+| Sortino | -1.59 | -33.82 | -1.59 |
+| Max drawdown | -0.169% | -0.600% | -0.169% |
+| Turnover (x capital) | 0 | 3.12 | 0 |
+
+The same results scored as Exnight minus always selling first, night by night. The rule was
+fitted on 24 Jun–31 Jul and tested on 1 Aug–16 Sep, 85 days in total:
+
+| Exnight minus always selling first | In-sample (38 days, 17 events) | Out-of-sample (47 days, 39 events) |
+|---|---:|---:|
+| Sharpe | 6.51 | **11.96** |
+| Sortino | 4.07 | 6.95 |
+| Max drawdown | -0.053% | -0.055% |
+| Nights Exnight came out ahead | 82% | 87% |
+| Rolling 30-day Sharpe | 9 of 9 windows positive | 18 of 18 windows positive |
+| Out-of-sample / in-sample Sharpe | | 1.84 (no decay) |
+
+The gap is cost avoidance, not a price forecast: stepping out paid 38.6 bps per event in fees
+and slippage, and holding returned -6.1 bps. It stays positive in all 16 slippage and withholding cases tested; in the
+case kindest to selling first it is still 14.0 bps per event. Per event, without annualising,
+the gap averages 32.5 bps with a t-stat of 5.06. One limit: 32 of the 39 unseen events are
+rSATA, a frequent payer. Without it the gap is still positive (41.0 bps over 7 events), but
+that's too few events to be conclusive. Full record, daily returns and
+per-event rows: [`reports/backtest.md`](reports/backtest.md). Rerun it with
+`python scripts/run_backtest.py`.
 
 Always selling first lost at every cost I tested (10 to 100 bps) and every tax rate (0% to
 30%). The small negative return for holding is just normal market movement on those nights.
@@ -245,6 +269,12 @@ Check the saved evidence without any network requests:
 
 ```bash
 .venv/bin/python scripts/verify_evidence.py
+```
+
+Rerun the backtest and write the full record to `reports/`:
+
+```bash
+.venv/bin/python scripts/run_backtest.py
 ```
 
 Regenerate every competition result from committed inputs:

@@ -10,6 +10,31 @@ let activeDate = null;
 let chartSymbol = null;
 const DISPLAY_NAMES = {"Always step out": "Always sell first", "Hold": "Just hold"};
 
+function renderJudge(backtest) {
+  const panel = $("judge-panel");
+  if (!panel) return;
+  if (backtest.status !== "AVAILABLE") { panel.hidden = true; return; }
+  const is = backtest.vs_always_exit.IS, oos = backtest.vs_always_exit.OOS, decay = backtest.vs_always_exit.decay;
+  const pct = (v) => v == null ? "n/a" : `${number(v * 100, 3)}%`;
+  const roll = (r) => r.scored ? `${r.positive} of ${r.scored} windows positive` : "too few events";
+  const rows = [
+    ["Window", `${esc(is.start)} to ${esc(is.end)} (${is.days} days)`, `${esc(oos.start)} to ${esc(oos.end)} (${oos.days} days)`],
+    ["Events", is.events, oos.events],
+    ["Sharpe", number(is.metrics.sharpe, 2), `<strong>${number(oos.metrics.sharpe, 2)}</strong>`],
+    ["Sortino", number(is.metrics.sortino, 2), number(oos.metrics.sortino, 2)],
+    ["Max drawdown", pct(is.metrics.maximum_drawdown), pct(oos.metrics.maximum_drawdown)],
+    ["Nights Exnight came out ahead", `${number(is.metrics.win_rate * 100, 0)}%`, `${number(oos.metrics.win_rate * 100, 0)}%`],
+    ["Rolling 30-day Sharpe", roll(is.rolling), roll(oos.rolling)],
+    ["Out-of-sample / in-sample Sharpe", "", decay.ratio == null ? "n/a" : `${number(decay.ratio, 2)} ${decay.alert ? "(decay alert)" : "(no decay)"}`],
+    ["Exnight's own trades / turnover", "0 / 0", "0 / 0"],
+  ];
+  $("judge-metrics").innerHTML = rows.map(([k, a, b]) => `<tr><td>${k}</td><td>${a}</td><td>${b}</td></tr>`).join("");
+  const gap = backtest.decomposition, per = backtest.per_event.OOS, conc = backtest.concentration;
+  const top = Object.entries(conc.by_symbol).sort((a, b) => b[1].events - a[1].events)[0];
+  const rest = conc.leave_one_symbol_out[top[0]];
+  $("judge-note").innerHTML = `<strong>Where it comes from</strong>Stepping out cost ${number(gap.cost_bps, 1)} bps per event in fees and slippage; holding returned ${number(gap.hold_bps, 1)} bps. Per event the gap averages ${number(per.mean_bps, 1)} bps (t-stat ${number(per.t_stat, 2)}), ahead on ${per.positive} of ${per.events}. <strong>Limit</strong>${esc(top[0])} supplies ${top[1].events} of ${per.events} unseen events; without it the gap is ${number(rest.mean_bps, 1)} bps over ${rest.events} events (t-stat ${number(rest.t_stat, 2)}), positive but not conclusive.`;
+}
+
 function when(value) {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? (value || "") : `${date.toISOString().slice(0, 16).replace("T", " ")} UTC`;
@@ -55,7 +80,7 @@ function pctText(value, digits = 3) {
   return value == null ? "—" : `${signed(value * 100, digits)}%`;
 }
 
-function renderComparison(comparison) {
+function renderComparison(comparison, backtest = {}) {
   if (comparison.status !== "AVAILABLE") {
     $("summary-headline").textContent = "Exnight decides whether stepping out before an ex-date is worth it";
     $("comparison-body").innerHTML = `<tr><td colspan="6" class="empty">Comparison unavailable.</td></tr>`;
@@ -67,8 +92,15 @@ function renderComparison(comparison) {
     + `<td class="${row.active_bps_per_event < 0 ? "negative" : ""}">${row.active_bps_per_event == null ? "—" : `${signed(row.active_bps_per_event)} bps`}</td>`
     + `<td>${row.beat_hold_share == null ? "—" : `${Math.round(row.beat_hold_share * 100)}% of events`}</td>`
     + `<td>${pctText(row.total_return)}</td><td>${signed(row.sharpe, 2)}</td></tr>`).join("");
-  $("comparison-note").textContent = `${comparison.events} unseen events over ${comparison.days} days, using only information published before each decision. `
+  let note = `${comparison.events} unseen events over ${comparison.days} days, using only information published before each decision. `
     + "Holding's small negative return comes from ordinary market moves on those nights, not from the dividend. The always-sell-first line was added after the results were known and changes nothing that was frozen.";
+  note = esc(note);
+  if (backtest.status === "AVAILABLE") {
+    const is = backtest.vs_always_exit.IS, oos = backtest.vs_always_exit.OOS;
+    const windows = is.rolling.scored + oos.rolling.scored, positive = is.rolling.positive + oos.rolling.positive;
+    note += ` <strong>Scored night by night as Exnight minus always selling first:</strong> Sharpe ${number(is.metrics.sharpe, 2)} in-sample, ${number(oos.metrics.sharpe, 2)} out-of-sample, positive in ${positive} of ${windows} rolling 30-day windows. <a data-route-link="validation" href="#/validation">All metrics and limits →</a>`;
+  }
+  $("comparison-note").innerHTML = note;
 }
 
 function renderUpcoming(v3) {
@@ -133,7 +165,7 @@ function render(data) {
   const failed = recorder.status !== "PASS";
   const scored = observation.status === "SCORED";
 
-  renderComparison(data.comparison || {});
+  renderComparison(data.comparison || {}, data.backtest || {});
   renderForward(data.v3 || {});
   renderUpcoming(data.v3 || {});
 
@@ -184,6 +216,7 @@ function render(data) {
   $("validation-series").innerHTML = series.map(([name, item, ratio]) => `<tr><td><strong>${name}</strong></td><td>${item?.total_return == null ? "—" : `${number(item.total_return * 100, 3)}%`}</td><td>${number(item?.[ratio], 2)}</td><td>${item?.maximum_drawdown == null ? "—" : `${number(item.maximum_drawdown * 100, 3)}%`}</td></tr>`).join("");
   $("validation-assumptions").innerHTML = `<dt>Historical costs</dt><dd>MODELED_EXECUTION</dd><dt>Slippage grid</dt><dd>${(competition.cost_grid_bps || []).join(" / ") || "—"} bps round trip</dd><dt>Withholding range</dt><dd>${(competition.withholding_range || []).join(" / ") || "—"}%</dd><dt>Interpretation</dt><dd>Exnight matched HOLD because no EXIT cleared the frozen rule.</dd>`;
   $("validation-note").innerHTML = `<strong>Rolling 30-day Sharpe · INSUFFICIENT_EVENTS</strong>${competition.oos?.policy?.trade_count ?? 0} OOS EXIT trades across ${competition.oos?.policy?.event_count ?? 0} events. Active return is zero; an active information ratio is undefined.`;
+  renderJudge(data.backtest || {});
   $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(fold.fold)}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No walk-forward scorecard available.</td></tr>`;
 
   activeDate = data.signals.meta.event_date || activeDate;

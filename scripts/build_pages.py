@@ -29,6 +29,17 @@ PUBLIC_EVIDENCE = {
     "always_exit_baseline.json": "Always-step-out comparison",
 }
 
+PUBLIC_REPORTS = {
+    "backtest.md": "Backtest record (readable)",
+    "backtest.json": "Backtest record (all metrics)",
+    "backtest_daily.csv": "Backtest daily returns",
+    "backtest_events.csv": "Backtest per-event rows",
+}
+
+
+def _read_json(path: Path) -> dict | None:
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+
 
 def write_json(path: Path, value: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -94,6 +105,8 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     from dashboard import v3_view
     summary["comparison"] = v3_view.comparison(project_root)
     summary["v3"] = v3_view.v3(project_root)
+    from dashboard.server import _backtest_view
+    summary["backtest"] = _backtest_view(_read_json(project_root / "reports" / "backtest.json"))
     from dashboard.server import LIMITS
     summary["limits"] = list(LIMITS)
     downloads = []
@@ -102,6 +115,13 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
         evidence[path.name] = f"V3 forward score, {path.stem.removeprefix('forward_score_v3_')}"
     for name, label in evidence.items():
         source = project_root / "data" / "results" / name
+        if source.is_file():
+            destination = output / "evidence" / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+            downloads.append({"name": name, "label": label, "href": f"evidence/{name}"})
+    for name, label in PUBLIC_REPORTS.items():
+        source = project_root / "reports" / name
         if source.is_file():
             destination = output / "evidence" / name
             destination.parent.mkdir(parents=True, exist_ok=True)

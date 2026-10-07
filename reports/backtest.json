@@ -1,0 +1,821 @@
+{
+  "label": "ADDED_AFTER_OOS_RESULTS_REPORTING_ONLY",
+  "window": {
+    "start": "2026-06-24",
+    "end": "2026-09-16",
+    "total_days": 85,
+    "oos_days": 47,
+    "requirement": "total >= 60 days, out-of-sample >= 30 days"
+  },
+  "capital": {
+    "notional_per_event_usd": 1000.0,
+    "capital_base_usd": 25000.0,
+    "taker_fee_each_side": "per-event Bitget fee in the frame",
+    "slippage_bps_round_trip": 25,
+    "withholding": 0.0,
+    "execution": "MODELED_EXECUTION",
+    "annualisation": "daily series, sqrt(365)"
+  },
+  "policy": {
+    "IS": {
+      "start": "2026-06-24",
+      "end": "2026-07-31",
+      "days": 38,
+      "events": 17,
+      "metrics": {
+        "total_return": -3.5348355822306665e-05,
+        "annualized_return": -0.00033947862501892967,
+        "sharpe": -0.11249820158574197,
+        "sortino": -0.0712159118369659,
+        "maximum_drawdown": -0.0010937532349072354,
+        "turnover": 0.0,
+        "win_rate": 0.6470588235294118,
+        "trade_count": 0,
+        "event_count": 17,
+        "entitlement_uncertain_count": 0,
+        "fee_drag": 0.0,
+        "slippage_drag_MODELED_EXECUTION": 0.0
+      },
+      "rolling_30_day_sharpe": {
+        "windows": 9,
+        "scored": 0,
+        "positive": 0,
+        "min": null,
+        "max": null,
+        "series": [
+          {
+            "end": "2026-07-23",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-24",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-25",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-26",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-27",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-28",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-29",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-07-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    "OOS": {
+      "start": "2026-08-01",
+      "end": "2026-09-16",
+      "days": 47,
+      "events": 39,
+      "metrics": {
+        "total_return": -0.0009551962848424189,
+        "annualized_return": -0.007394087024370943,
+        "sharpe": -2.565503011873622,
+        "sortino": -1.5875654248206947,
+        "maximum_drawdown": -0.0016870715117968116,
+        "turnover": 0.0,
+        "win_rate": 0.6666666666666666,
+        "trade_count": 0,
+        "event_count": 39,
+        "entitlement_uncertain_count": 0,
+        "fee_drag": 0.0,
+        "slippage_drag_MODELED_EXECUTION": 0.0
+      },
+      "rolling_30_day_sharpe": {
+        "windows": 18,
+        "scored": 0,
+        "positive": 0,
+        "min": null,
+        "max": null,
+        "series": [
+          {
+            "end": "2026-08-30",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-08-31",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-01",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-02",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-03",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-04",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-05",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-06",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-07",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-08",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-09",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-10",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-11",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-12",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-13",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-14",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-15",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          },
+          {
+            "end": "2026-09-16",
+            "status": "INSUFFICIENT_EVENTS",
+            "trade_count": 0
+          }
+        ]
+      }
+    },
+    "oos_over_is_sharpe": {
+      "ratio": null,
+      "alert": null,
+      "note": "undefined: in-sample Sharpe is not positive"
+    }
+  },
+  "vs_always_exit": {
+    "IS": {
+      "start": "2026-06-24",
+      "end": "2026-07-31",
+      "days": 38,
+      "events": 17,
+      "metrics": {
+        "total_return": 0.0023471730751494224,
+        "annualized_return": 0.022774259718409073,
+        "sharpe": 6.513826505641301,
+        "sortino": 4.068681831837846,
+        "maximum_drawdown": -0.0005255260209796608,
+        "win_rate": 0.8235294117647058,
+        "event_count": 17,
+        "entitlement_uncertain_count": 0,
+        "comparator_trade_count": 17,
+        "comparator_turnover": 1.36,
+        "comparator_fee_drag": 0.00068,
+        "comparator_slippage_drag_MODELED_EXECUTION": 0.0017
+      },
+      "rolling_30_day_sharpe": {
+        "windows": 9,
+        "scored": 9,
+        "positive": 9,
+        "min": 2.1056082772092912,
+        "max": 6.652089619439654,
+        "series": [
+          {
+            "end": "2026-07-23",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": 2.3074784195469578
+          },
+          {
+            "end": "2026-07-24",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": 2.1056082772092912
+          },
+          {
+            "end": "2026-07-25",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": 2.1056082772092912
+          },
+          {
+            "end": "2026-07-26",
+            "status": "OK",
+            "trade_count": 9,
+            "sharpe": 2.1056082772092912
+          },
+          {
+            "end": "2026-07-27",
+            "status": "OK",
+            "trade_count": 10,
+            "sharpe": 2.400051400925691
+          },
+          {
+            "end": "2026-07-28",
+            "status": "OK",
+            "trade_count": 12,
+            "sharpe": 3.794356508023654
+          },
+          {
+            "end": "2026-07-29",
+            "status": "OK",
+            "trade_count": 13,
+            "sharpe": 4.130126081641191
+          },
+          {
+            "end": "2026-07-30",
+            "status": "OK",
+            "trade_count": 14,
+            "sharpe": 5.505569494387994
+          },
+          {
+            "end": "2026-07-31",
+            "status": "OK",
+            "trade_count": 16,
+            "sharpe": 6.652089619439654
+          }
+        ]
+      }
+    },
+    "OOS": {
+      "start": "2026-08-01",
+      "end": "2026-09-16",
+      "days": 47,
+      "events": 39,
+      "metrics": {
+        "total_return": 0.005076772436178434,
+        "annualized_return": 0.04010977214964595,
+        "sharpe": 11.955744478703467,
+        "sortino": 6.953601296409314,
+        "maximum_drawdown": -0.0005503190722292439,
+        "win_rate": 0.8717948717948718,
+        "event_count": 39,
+        "entitlement_uncertain_count": 0,
+        "comparator_trade_count": 39,
+        "comparator_turnover": 3.12,
+        "comparator_fee_drag": 0.00212,
+        "comparator_slippage_drag_MODELED_EXECUTION": 0.0039
+      },
+      "rolling_30_day_sharpe": {
+        "windows": 18,
+        "scored": 18,
+        "positive": 18,
+        "min": 8.246786267849508,
+        "max": 10.239052696559119,
+        "series": [
+          {
+            "end": "2026-08-30",
+            "status": "OK",
+            "trade_count": 23,
+            "sharpe": 9.696814466742108
+          },
+          {
+            "end": "2026-08-31",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.309464246744136
+          },
+          {
+            "end": "2026-09-01",
+            "status": "OK",
+            "trade_count": 27,
+            "sharpe": 10.239052696559119
+          },
+          {
+            "end": "2026-09-02",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": 10.018318079623219
+          },
+          {
+            "end": "2026-09-03",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": 10.122492530181217
+          },
+          {
+            "end": "2026-09-04",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": 10.198319497330704
+          },
+          {
+            "end": "2026-09-05",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.552744160296124
+          },
+          {
+            "end": "2026-09-06",
+            "status": "OK",
+            "trade_count": 24,
+            "sharpe": 8.91843717278372
+          },
+          {
+            "end": "2026-09-07",
+            "status": "OK",
+            "trade_count": 24,
+            "sharpe": 8.91843717278372
+          },
+          {
+            "end": "2026-09-08",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.657101262537324
+          },
+          {
+            "end": "2026-09-09",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.700285903456043
+          },
+          {
+            "end": "2026-09-10",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.779336489187688
+          },
+          {
+            "end": "2026-09-11",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.874504544846507
+          },
+          {
+            "end": "2026-09-12",
+            "status": "OK",
+            "trade_count": 24,
+            "sharpe": 9.242517958898
+          },
+          {
+            "end": "2026-09-13",
+            "status": "OK",
+            "trade_count": 22,
+            "sharpe": 8.246786267849508
+          },
+          {
+            "end": "2026-09-14",
+            "status": "OK",
+            "trade_count": 23,
+            "sharpe": 8.691161291104596
+          },
+          {
+            "end": "2026-09-15",
+            "status": "OK",
+            "trade_count": 25,
+            "sharpe": 9.515404095294517
+          },
+          {
+            "end": "2026-09-16",
+            "status": "OK",
+            "trade_count": 26,
+            "sharpe": 9.551394727802787
+          }
+        ]
+      }
+    },
+    "oos_over_is_sharpe": {
+      "ratio": 1.8354410373609416,
+      "alert": false,
+      "note": "alert when OOS < 0.5 x IS"
+    }
+  },
+  "vs_always_exit_sensitivity_oos": [
+    {
+      "slippage_bps": 10,
+      "withholding": 0.0,
+      "oos_sharpe": 6.952131969334075,
+      "oos_sortino": 4.048295287377723,
+      "oos_total_return": 0.0027279351030899956,
+      "oos_mean_bps_per_event": 17.46720416660289
+    },
+    {
+      "slippage_bps": 10,
+      "withholding": 0.15,
+      "oos_sharpe": 6.380553202552356,
+      "oos_sortino": 3.627687114110048,
+      "oos_total_return": 0.0024581200010831417,
+      "oos_mean_bps_per_event": 15.741864643255084
+    },
+    {
+      "slippage_bps": 10,
+      "withholding": 0.25,
+      "oos_sharpe": 5.97523103955803,
+      "oos_sortino": 3.3455817954597427,
+      "oos_total_return": 0.0022782802358118914,
+      "oos_mean_bps_per_event": 14.591638294356539
+    },
+    {
+      "slippage_bps": 10,
+      "withholding": 0.3,
+      "oos_sharpe": 5.765690498202716,
+      "oos_sortino": 3.2043724030467837,
+      "oos_total_return": 0.0021883714423291956,
+      "oos_mean_bps_per_event": 14.016525119907275
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.0,
+      "oos_sharpe": 11.955744478703467,
+      "oos_sortino": 6.953601296409314,
+      "oos_total_return": 0.005076772436178434,
+      "oos_mean_bps_per_event": 32.4672041666029
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.15,
+      "oos_sharpe": 11.623484441475556,
+      "oos_sortino": 6.696130606583586,
+      "oos_total_return": 0.004806353055302193,
+      "oos_mean_bps_per_event": 30.74186464325509
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.25,
+      "oos_sharpe": 11.373810825671042,
+      "oos_sortino": 6.508201963580102,
+      "oos_total_return": 0.0046261105165494865,
+      "oos_mean_bps_per_event": 29.591638294356546
+    },
+    {
+      "slippage_bps": 25,
+      "withholding": 0.3,
+      "oos_sharpe": 11.2401691007354,
+      "oos_sortino": 6.409393895901629,
+      "oos_total_return": 0.004536000360049641,
+      "oos_mean_bps_per_event": 29.016525119907282
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.0,
+      "oos_sharpe": 17.382677749825586,
+      "oos_sortino": null,
+      "oos_total_return": 0.00900330676512695,
+      "oos_mean_bps_per_event": 57.4672041666029
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.15,
+      "oos_sharpe": 17.37381692487256,
+      "oos_sortino": null,
+      "oos_total_return": 0.008731877351674244,
+      "oos_mean_bps_per_event": 55.74186464325507
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.25,
+      "oos_sharpe": 17.353138617209577,
+      "oos_sortino": null,
+      "oos_total_return": 0.008550961590058526,
+      "oos_mean_bps_per_event": 54.59163829435654
+    },
+    {
+      "slippage_bps": 50,
+      "withholding": 0.3,
+      "oos_sharpe": 17.337847482854084,
+      "oos_sortino": null,
+      "oos_total_return": 0.008460514861777568,
+      "oos_mean_bps_per_event": 54.01652511990728
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.0,
+      "oos_sharpe": 21.60853249503463,
+      "oos_sortino": null,
+      "oos_total_return": 0.016900839084927455,
+      "oos_mean_bps_per_event": 107.46720416660287
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.15,
+      "oos_sharpe": 21.773209672682537,
+      "oos_sortino": null,
+      "oos_total_return": 0.016627378681760785,
+      "oos_mean_bps_per_event": 105.74186464325506
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.25,
+      "oos_sharpe": 21.881770429558653,
+      "oos_sortino": null,
+      "oos_total_return": 0.016445109192744223,
+      "oos_mean_bps_per_event": 104.59163829435656
+    },
+    {
+      "slippage_bps": 100,
+      "withholding": 0.3,
+      "oos_sharpe": 21.935556001555547,
+      "oos_sortino": null,
+      "oos_total_return": 0.01635398568047619,
+      "oos_mean_bps_per_event": 104.01652511990726
+    }
+  ],
+  "live": {
+    "label": "MODELED_EXECUTION",
+    "scheduled": 16,
+    "graded": 14,
+    "all": {
+      "events": 14,
+      "hold_beat_exit": 12,
+      "mean_hold_minus_exit_bps": 72.15939843889505
+    },
+    "priced_overnight": {
+      "events": 5,
+      "hold_beat_exit": 3,
+      "mean_hold_minus_exit_bps": -0.7241970834566483
+    },
+    "events": [
+      {
+        "event_id": "rTOWN-2026-09-25-1",
+        "ex_date": "2026-09-25",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -98.84615384615385
+      },
+      {
+        "event_id": "rBZ-2026-09-28-1",
+        "ex_date": "2026-09-28",
+        "price_discovery": "PRICED",
+        "realised_pdr": 1.0784313725490209,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": 91.9765791341382
+      },
+      {
+        "event_id": "rINDB-2026-09-28-1",
+        "ex_date": "2026-09-28",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -100.17241379310344
+      },
+      {
+        "event_id": "rKDP-2026-09-28-1",
+        "ex_date": "2026-09-28",
+        "price_discovery": "PRICED",
+        "realised_pdr": 0.652173913043472,
+        "frozen_verdict_1k": "HOLD",
+        "exit_minus_hold_bps": -48.440725680325755
+      },
+      {
+        "event_id": "rERIC-2026-09-29-1",
+        "ex_date": "2026-09-29",
+        "price_discovery": "THIN",
+        "realised_pdr": 0.0633232016210726,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -151.73460721868386
+      },
+      {
+        "event_id": "rAGNC-2026-09-30-1",
+        "ex_date": "2026-09-30",
+        "price_discovery": "PRICED",
+        "realised_pdr": 0.6666666666666673,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -49.23280423280415
+      },
+      {
+        "event_id": "rCVBF-2026-09-30-1",
+        "ex_date": "2026-09-30",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -108.81039197812215
+      },
+      {
+        "event_id": "rDOX-2026-09-30-1",
+        "ex_date": "2026-09-30",
+        "price_discovery": "THIN",
+        "realised_pdr": -0.017574692442878754,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -115.8977252995308
+      },
+      {
+        "event_id": "rHST-2026-09-30-1",
+        "ex_date": "2026-09-30",
+        "price_discovery": "THIN",
+        "realised_pdr": 0.15000000000000568,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -94.01960784313675
+      },
+      {
+        "event_id": "rJOYY-2026-09-30-1",
+        "ex_date": "2026-09-30",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "HOLD",
+        "exit_minus_hold_bps": -179.61538461538464
+      },
+      {
+        "event_id": "rMDLZ-2026-09-30-1",
+        "ex_date": "2026-09-30",
+        "price_discovery": "PRICED",
+        "realised_pdr": 1.0576923076923022,
+        "frozen_verdict_1k": "HOLD",
+        "exit_minus_hold_bps": -13.692139370476829
+      },
+      {
+        "event_id": "rCPB-2026-10-01-1",
+        "ex_date": "2026-10-01",
+        "price_discovery": "PRICED",
+        "realised_pdr": 1.240000000000009,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": 23.01007556675177
+      },
+      {
+        "event_id": "rFULT-2026-10-01-1",
+        "ex_date": "2026-10-01",
+        "price_discovery": "THIN",
+        "realised_pdr": 0.7894736842105188,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -37.467877713779984
+      },
+      {
+        "event_id": "rVSNT-2026-10-01-1",
+        "ex_date": "2026-10-01",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "exit_minus_hold_bps": -127.2884012539185
+      }
+    ]
+  },
+  "vs_always_exit_per_event": {
+    "IS": {
+      "events": 17,
+      "mean_bps": 34.486781197284785,
+      "std_bps": 59.635585646418846,
+      "t_stat": 2.384358936408115,
+      "positive": 14,
+      "worst_bps": -131.38150524493255
+    },
+    "OOS": {
+      "events": 39,
+      "mean_bps": 32.4672041666029,
+      "std_bps": 40.091896832582705,
+      "t_stat": 5.0573218294138185,
+      "positive": 34,
+      "worst_bps": -112.34277990672314
+    }
+  },
+  "vs_always_exit_oos_concentration": {
+    "symbols": 5,
+    "by_symbol": {
+      "rDGRW": {
+        "events": 1,
+        "mean_bps": -112.34277990672314,
+        "std_bps": null,
+        "t_stat": null,
+        "positive": 0,
+        "worst_bps": -112.34277990672314
+      },
+      "rNXPI": {
+        "events": 1,
+        "mean_bps": 142.99083538949506,
+        "std_bps": null,
+        "t_stat": null,
+        "positive": 1,
+        "worst_bps": 142.99083538949506
+      },
+      "rSATA": {
+        "events": 32,
+        "mean_bps": 30.594010660498782,
+        "std_bps": 26.964628333240796,
+        "t_stat": 6.418254947742404,
+        "positive": 28,
+        "worst_bps": -75.57171514543593
+      },
+      "rSTRC": {
+        "events": 3,
+        "mean_bps": 44.40395611712493,
+        "std_bps": 23.9932392808481,
+        "t_stat": 3.205482475778512,
+        "positive": 3,
+        "worst_bps": 16.700020214271163
+      },
+      "rTLT": {
+        "events": 2,
+        "mean_bps": 61.67634876370255,
+        "std_bps": 44.2381660485929,
+        "t_stat": 1.9716804897262592,
+        "positive": 2,
+        "worst_bps": 30.395241563486017
+      }
+    },
+    "leave_one_symbol_out": {
+      "rDGRW": {
+        "events": 38,
+        "mean_bps": 36.27799322116411,
+        "std_bps": 32.697597024070454,
+        "t_stat": 6.8394190939331025,
+        "positive": 34,
+        "worst_bps": -75.57171514543593,
+        "sharpe": 15.433595767380897
+      },
+      "rNXPI": {
+        "events": 38,
+        "mean_bps": 29.558687555474158,
+        "std_bps": 36.221075844037216,
+        "t_stat": 5.030551501587874,
+        "positive": 33,
+        "worst_bps": -112.34277990672314,
+        "sharpe": 12.824542468584871
+      },
+      "rSATA": {
+        "events": 7,
+        "mean_bps": 41.03037448022168,
+        "std_bps": 79.49243374955346,
+        "t_stat": 1.3656163480480612,
+        "positive": 6,
+        "worst_bps": -112.34277990672314,
+        "sharpe": 3.616310542851458
+      },
+      "rSTRC": {
+        "events": 36,
+        "mean_bps": 31.472474837392724,
+        "std_bps": 41.219016612157574,
+        "t_stat": 4.581255559810211,
+        "positive": 31,
+        "worst_bps": -112.34277990672314,
+        "sharpe": 10.546478847853098
+      },
+      "rTLT": {
+        "events": 37,
+        "mean_bps": 30.888331485678588,
+        "std_bps": 39.904082445597936,
+        "t_stat": 4.70845021034291,
+        "positive": 32,
+        "worst_bps": -112.34277990672314,
+        "sharpe": 11.033762172125053
+      }
+    }
+  },
+  "vs_always_exit_oos_decomposition": {
+    "cost_bps": 38.58974358974362,
+    "hold_bps": -6.1225394231407,
+    "gap_bps": 32.4672041666029,
+    "book_bps_per_30_days": 32.40493044369213
+  }
+}

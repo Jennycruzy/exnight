@@ -294,6 +294,28 @@ def decision_lookup(data_root: Path, query: str,
     }
 
 
+def _backtest_view(report: dict | None) -> dict:
+    """The judge-metric backtest record from `reports/backtest.json`, without daily series."""
+    if not report:
+        return {"status": "UNAVAILABLE"}
+
+    def period(view: dict) -> dict:
+        rolling = view["rolling_30_day_sharpe"]
+        return {key: view[key] for key in ("start", "end", "days", "events", "metrics")} | {
+            "rolling": {key: rolling[key] for key in ("windows", "scored", "positive", "min", "max")}}
+
+    comparison = report["vs_always_exit"]
+    return {
+        "status": "AVAILABLE", "window": report["window"],
+        "vs_always_exit": {"IS": period(comparison["IS"]), "OOS": period(comparison["OOS"]),
+                           "decay": comparison["oos_over_is_sharpe"]},
+        "per_event": report["vs_always_exit_per_event"],
+        "decomposition": report["vs_always_exit_oos_decomposition"],
+        "concentration": report["vs_always_exit_oos_concentration"],
+        "live": {key: report["live"][key] for key in ("scheduled", "graded", "all", "priced_overnight")},
+    }
+
+
 def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = None,
                    signal_date: str | None = None) -> dict[str, Any]:
     now = now or dt.datetime.now(UTC)
@@ -305,6 +327,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
     health = _json(data_root / "results" / "health_20260922.json")
     competition_scorecard = _json(data_root / "results" / "competition_scorecard.json") or {}
     competition_manifest = _json(data_root / "results" / "competition_backtest_manifest.json") or {}
+    backtest = _backtest_view(_json(project_root / "reports" / "backtest.json"))
     recorder = (scored_recorder_summary(data_root, forward, now)
                 if forward is not None else recorder_summary(data_root, now=now))
     event_ids = set(signal_meta.get("event_ids", []))
@@ -371,7 +394,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "recorder": recorder,
         "depth": depth,
         "signals": {"meta": signal_meta, "rows": [_signal_row(row) for row in selected]},
-        "provenance": provenance, "forward_score": score, "competition": competition,
+        "provenance": provenance, "forward_score": score, "competition": competition, "backtest": backtest,
         "comparison": v3_view.comparison(project_root), "v3": v3_view.v3(project_root),
         "downloads": downloads,
         "limits": list(LIMITS),
