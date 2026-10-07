@@ -772,6 +772,18 @@
       }
     ]
   },
+  "policy_folds": [
+    {
+      "fold": "OOS_2026_08",
+      "pdr_estimate": 1.034275825976304,
+      "pdr_se": 0.8710489450546619
+    },
+    {
+      "fold": "OOS_2026_09",
+      "pdr_estimate": 0.9194329582809133,
+      "pdr_se": 0.3528604632179606
+    }
+  ],
   "vs_always_exit_per_event": {
     "IS": {
       "events": 17,
@@ -935,6 +947,212 @@
       "worst_bps": -689.2303527227725,
       "symbols": 55,
       "symbols_ahead": 44
+    }
+  },
+  "would_trading_have_helped": {
+    "label": "POST_HOC_COUNTERFACTUAL_NOT_A_STRATEGY",
+    "events": 127,
+    "buckets": [
+      {
+        "yield_bps": [
+          0,
+          25
+        ],
+        "keep_100": {
+          "events": 73,
+          "mean_bps": -36.495539152701866,
+          "median_bps": -40.22955305564001,
+          "t_stat": -2.604584359755676,
+          "exit_won": 13
+        },
+        "keep_70": {
+          "events": 73,
+          "mean_bps": -34.36803787730018,
+          "median_bps": -38.660687138948006,
+          "t_stat": -2.4528554333719224,
+          "exit_won": 13
+        }
+      },
+      {
+        "yield_bps": [
+          25,
+          50
+        ],
+        "keep_100": {
+          "events": 23,
+          "mean_bps": -68.67793147794892,
+          "median_bps": -62.56796473181463,
+          "t_stat": -1.6376554643133383,
+          "exit_won": 1
+        },
+        "keep_70": {
+          "events": 23,
+          "mean_bps": -57.67902215491353,
+          "median_bps": -54.80896399706077,
+          "t_stat": -1.3780957179439315,
+          "exit_won": 1
+        }
+      },
+      {
+        "yield_bps": [
+          50,
+          100
+        ],
+        "keep_100": {
+          "events": 22,
+          "mean_bps": 0.6454310979521658,
+          "median_bps": -35.471793631167756,
+          "t_stat": 0.01645752794668757,
+          "exit_won": 6
+        },
+        "keep_70": {
+          "events": 22,
+          "mean_bps": 21.53396580470383,
+          "median_bps": -12.616023895513706,
+          "t_stat": 0.5458436071383702,
+          "exit_won": 9
+        }
+      },
+      {
+        "yield_bps": [
+          100,
+          150
+        ],
+        "keep_100": {
+          "events": 2,
+          "mean_bps": -41.217358054320634,
+          "median_bps": -41.217358054320634,
+          "t_stat": -0.6384595914452322,
+          "exit_won": 1
+        },
+        "keep_70": {
+          "events": 2,
+          "mean_bps": 0.950322179661228,
+          "median_bps": 0.950322179661228,
+          "t_stat": 0.014299863998027448,
+          "exit_won": 1
+        }
+      },
+      {
+        "yield_bps": [
+          150,
+          10000
+        ],
+        "keep_100": {
+          "events": 7,
+          "mean_bps": -81.88387443241083,
+          "median_bps": -93.91941199376913,
+          "t_stat": -1.9900850587506111,
+          "exit_won": 1
+        },
+        "keep_70": {
+          "events": 7,
+          "mean_bps": -1.4070057835090128,
+          "median_bps": 35.35221644224286,
+          "t_stat": -0.0296989575134048,
+          "exit_won": 4
+        }
+      }
+    ],
+    "high_yield_threshold_bps": 100,
+    "high_yield": [
+      {
+        "event_id": "rMO-2026-06-15-1",
+        "symbol": "rMO",
+        "ex_date": "2026-06-15",
+        "yield_bps": 146.88968030708259,
+        "drop_over_dividend": 1.3971698113207496,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": 23.340146612529225,
+        "exit_minus_hold_keep_70": 67.40705070465401
+      },
+      {
+        "event_id": "rSQQQ-2026-06-24-1",
+        "symbol": "rSQQQ",
+        "ex_date": "2026-06-24",
+        "yield_bps": 158.70697165044677,
+        "drop_over_dividend": 1.1432837178520054,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": -12.259875052891175,
+        "exit_minus_hold_keep_70": 35.35221644224286
+      },
+      {
+        "event_id": "rHIMX-2026-06-30-1",
+        "symbol": "rHIMX",
+        "ex_date": "2026-06-30",
+        "yield_bps": 164.37983969569353,
+        "drop_over_dividend": 0.008264462809912774,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": -198.02132862382905,
+        "exit_minus_hold_keep_70": -148.70737671512097
+      },
+      {
+        "event_id": "rBITI-2026-07-01-1",
+        "symbol": "rBITI",
+        "ex_date": "2026-07-01",
+        "yield_bps": 496.8333333333333,
+        "drop_over_dividend": 1.0553809241796122,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": -7.484910836762708,
+        "exit_minus_hold_keep_70": 141.5650891632373
+      },
+      {
+        "event_id": "rCMCSA-2026-07-01-1",
+        "symbol": "rCMCSA",
+        "ex_date": "2026-07-01",
+        "yield_bps": 134.2281879194631,
+        "drop_over_dividend": 0.4727272727272799,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": -105.77486272117049,
+        "exit_minus_hold_keep_70": -65.50640634533156
+      },
+      {
+        "event_id": "rOPRA-2026-07-07-1",
+        "symbol": "rOPRA",
+        "ex_date": "2026-07-07",
+        "yield_bps": 188.67924528301884,
+        "drop_over_dividend": 0.0,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": -223.67924528301884,
+        "exit_minus_hold_keep_70": -167.07547169811318
+      },
+      {
+        "event_id": "rBITI-2026-08-03-1",
+        "symbol": "rBITI",
+        "ex_date": "2026-08-03",
+        "yield_bps": 517.6421534267913,
+        "drop_over_dividend": 0.886177330026694,
+        "cost_bps": 35.0,
+        "exit_minus_hold_keep_100": -93.91941199376913,
+        "exit_minus_hold_keep_70": 61.37323403426831
+      },
+      {
+        "event_id": "rBITI-2026-09-01-1",
+        "symbol": "rBITI",
+        "ex_date": "2026-09-01",
+        "yield_bps": 194.63942058975687,
+        "drop_over_dividend": 0.6325783147901051,
+        "cost_bps": 45.0,
+        "exit_minus_hold_keep_100": -116.51474392136599,
+        "exit_minus_hold_keep_70": -58.12291774443891
+      },
+      {
+        "event_id": "rMO-2026-09-15-1",
+        "symbol": "rMO",
+        "ex_date": "2026-09-15",
+        "yield_bps": 156.9126378286684,
+        "drop_over_dividend": 1.7882882882882871,
+        "cost_bps": 45.0,
+        "exit_minus_hold_keep_100": 78.69239468476096,
+        "exit_minus_hold_keep_70": 125.76618603336146
+      }
+    ],
+    "high_yield_keep_70": {
+      "events": 9,
+      "mean_bps": -0.8831551250267403,
+      "median_bps": 35.35221644224286,
+      "t_stat": -0.02333760005467246,
+      "exit_won": 5
     }
   },
   "vs_always_exit_oos_decomposition": {
