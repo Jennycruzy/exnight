@@ -12,7 +12,7 @@ I tested it. It doesn't work, and Exnight is the tool that tells you when it wou
 - Run records: [`reports/run_records.md`](reports/run_records.md) (a real Bitget order, the
   16-event live test, and the 85-day backtest with 47 days out-of-sample; rerun with
   `python scripts/run_backtest.py`)
-- Track: Alpha Factory, rToken Factor Strategies
+- Track: Alpha Factory, sub-theme After-Hours Information Pricing
 
 ## What's built
 
