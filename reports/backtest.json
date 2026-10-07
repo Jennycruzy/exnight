@@ -882,6 +882,61 @@
       }
     }
   },
+  "vs_always_exit_full_sample": {
+    "label": "POST_HOC_ROBUSTNESS_NOT_THE_FROZEN_SCORECARD",
+    "top_symbol": "rSATA",
+    "excluded_events_verdict": "NO_SIGNAL (no gross dividend declared before the cutoff), so the holder holds",
+    "all": {
+      "events": 127,
+      "mean_bps": 38.46605618205221,
+      "std_bps": 148.53804069411657,
+      "t_stat": 2.9183799372344,
+      "positive": 105,
+      "worst_bps": -689.2303527227725,
+      "symbols": 56,
+      "symbols_ahead": 45
+    },
+    "all_without_top_symbol": {
+      "events": 77,
+      "mean_bps": 42.31976180496924,
+      "std_bps": 188.7462786402621,
+      "t_stat": 1.9674793346749864,
+      "positive": 61,
+      "worst_bps": -689.2303527227725,
+      "symbols": 55,
+      "symbols_ahead": 44
+    },
+    "oos_period": {
+      "events": 51,
+      "mean_bps": 31.794657766040057,
+      "std_bps": 46.51126177290456,
+      "t_stat": 4.881812795250032,
+      "positive": 42,
+      "worst_bps": -112.34277990672314,
+      "symbols": 12,
+      "symbols_ahead": 8
+    },
+    "oos_period_without_top_symbol": {
+      "events": 19,
+      "mean_bps": 33.816800259583246,
+      "std_bps": 68.92073753136577,
+      "t_stat": 2.1387469171864266,
+      "positive": 14,
+      "worst_bps": -112.34277990672314,
+      "symbols": 11,
+      "symbols_ahead": 7
+    },
+    "excluded_from_scorecard": {
+      "events": 71,
+      "mean_bps": 42.71398439815884,
+      "std_bps": 194.90185316582443,
+      "t_stat": 1.8466444731122484,
+      "positive": 57,
+      "worst_bps": -689.2303527227725,
+      "symbols": 55,
+      "symbols_ahead": 44
+    }
+  },
   "vs_always_exit_oos_decomposition": {
     "cost_bps": 38.58974358974362,
     "hold_bps": -6.1225394231407,

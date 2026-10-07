@@ -145,7 +145,10 @@ and slippage, and holding returned -6.1 bps. It stays positive in all 16 slippag
 case kindest to selling first it is still 14.0 bps per event. Per event, without annualising,
 the gap averages 32.5 bps with a t-stat of 5.06. One limit: 32 of the 39 unseen events are
 rSATA, a frequent payer. Without it the gap is still positive (41.0 bps over 7 events), but
-that's too few events to be conclusive. Full record, daily returns and
+that's too few events to be conclusive. So I widened the check, after the results, to every
+resolved dividend: 127 events on 56 tokens. The 71 the scorecard leaves out had no dividend
+declared before the cutoff, so Exnight says NO_SIGNAL and the holder holds. Without rSATA,
+Exnight is ahead on 44 of 55 tokens, by 42.3 bps per event (t-stat 1.97). Full record, daily returns and
 per-event rows: [`reports/backtest.md`](reports/backtest.md). Rerun it with
 `python scripts/run_backtest.py`.
 

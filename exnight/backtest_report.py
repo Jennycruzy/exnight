@@ -128,6 +128,53 @@ def _concentration(rows: list[dict], period: tuple) -> dict:
     return {"symbols": len(symbols), "by_symbol": by_symbol, "leave_one_symbol_out": leave_one_out}
 
 
+def _full_sample(slippage_bps: int = c.BASE_SLIPPAGE_BPS, withholding: float = c.PRIMARY_WITHHOLDING) -> dict:
+    """Every resolved cash event, including those the scorecard excludes for declaration timing.
+
+    For an excluded event Exnight has no gross dividend before the cutoff, so its output is
+    NO_SIGNAL and the holder holds; the gap is therefore hold minus always-EXIT, measured at the
+    rung the walk-forward chose for that period. Labelled post hoc; the frozen scorecard is untouched.
+    """
+    knowledge = pd.read_csv(c.KNOWLEDGE, keep_default_na=False)
+    eligible = set(knowledge.loc[knowledge.eligible_ex_ante == "YES", "event_id"])
+    timing_only = set(knowledge.loc[(knowledge.eligible_ex_ante == "NO")
+                                    & (knowledge.exclusion_reason == "NO_PRE_DECISION_GROSS_DECLARATION"), "event_id"])
+    score = json.loads(c.SCORECARD.read_text())
+    folds = [(*f["test_period"].split(".."), f["selected_rung"]) for f in score["folds"]]
+
+    def rung(ex_date: str) -> str:
+        return next((r for start, end, r in folds if start <= ex_date <= end), score["initial_model"]["selected_rung"])
+
+    rows = []
+    for r in json.loads(c.EVENT_RESULTS.read_text()):
+        if r["event_id"] not in eligible | timing_only:
+            continue
+        p1 = (r["p_post"] or {}).get(rung(r["ex_date"]))
+        if p1 is None or not r["p_pre"]:
+            continue
+        p0 = float(r["p_pre"])
+        hold = (float(p1) - p0 + float(r["gross_dividend"]) * (1 - withholding)) / p0
+        cost = 2 * float(r["fee_rate"]) + slippage_bps / 10_000
+        rows.append({"event_id": r["event_id"], "symbol": r["symbol"], "ex_date": r["ex_date"],
+                     "in_scorecard": r["event_id"] in eligible, "policy_return": hold + cost})
+
+    def summary(items: list[dict]) -> dict:
+        per_symbol = pd.Series({sym: sum(i["policy_return"] for i in items if i["symbol"] == sym)
+                                / sum(i["symbol"] == sym for i in items) for sym in {i["symbol"] for i in items}})
+        return dict(_per_event(items), symbols=len(per_symbol), symbols_ahead=int((per_symbol > 0).sum()))
+
+    cuts = {
+        "all": rows,
+        "all_without_top_symbol": [r for r in rows if r["symbol"] != "rSATA"],
+        "oos_period": [r for r in rows if r["ex_date"] >= c.OOS_START.isoformat()],
+        "oos_period_without_top_symbol": [r for r in rows if r["ex_date"] >= c.OOS_START.isoformat() and r["symbol"] != "rSATA"],
+        "excluded_from_scorecard": [r for r in rows if not r["in_scorecard"]],
+    }
+    return {"label": "POST_HOC_ROBUSTNESS_NOT_THE_FROZEN_SCORECARD", "top_symbol": "rSATA",
+            "excluded_events_verdict": "NO_SIGNAL (no gross dividend declared before the cutoff), so the holder holds",
+            **{name: summary(items) for name, items in cuts.items()}}
+
+
 def _live() -> dict:
     events = []
     for path in sorted(c.RESULTS.glob("forward_score_v3_*.json")):
@@ -189,6 +236,7 @@ def build() -> dict:
     report["vs_always_exit_per_event"] = {name: _per_event([r for r in spread if r["fold"] in period[2]])
                                          for name, period in periods.items()}
     report["vs_always_exit_oos_concentration"] = _concentration(spread, periods["OOS"])
+    report["vs_always_exit_full_sample"] = _full_sample()
     report["vs_always_exit_oos_decomposition"] = {
         "cost_bps": 1e4 * sum(r["fee_drag_return"] + r["slippage_drag_return"] for r in oos) / len(oos),
         "hold_bps": 1e4 * sum(r["hold_return"] for r in oos) / len(oos),
@@ -326,6 +374,7 @@ def render_markdown(report: dict) -> str:
     kind = min(report["vs_always_exit_sensitivity_oos"], key=lambda s: s["oos_mean_bps_per_event"])
     gap = report["vs_always_exit_oos_decomposition"]
     conc = report["vs_always_exit_oos_concentration"]
+    full = report["vs_always_exit_full_sample"]
     top = max(conc["by_symbol"], key=lambda sym: conc["by_symbol"][sym]["events"])
     lines = [
         "# Exnight backtest record",
@@ -383,7 +432,25 @@ def render_markdown(report: dict) -> str:
         "",
         f"Without {top} the gap is still positive ({conc['leave_one_symbol_out'][top]['mean_bps']:.1f} bps per event), but "
         f"{conc['leave_one_symbol_out'][top]['events']} events are too few to be conclusive "
-        f"(t-stat {_num(conc['leave_one_symbol_out'][top]['t_stat'])}). The live test below adds 16 different, high-dividend events.",
+        f"(t-stat {_num(conc['leave_one_symbol_out'][top]['t_stat'])}). The check below widens the sample to every resolved event: "
+        f"without {top}, Exnight is ahead on {full['all_without_top_symbol']['symbols_ahead']} of "
+        f"{full['all_without_top_symbol']['symbols']} tokens.",
+        "",
+        "**Every resolved event (robustness check, added after the results).** The scorecard counts",
+        "only events whose gross dividend was declared before the decision. The other",
+        f"{full['excluded_from_scorecard']['events']} resolved cash events were excluded for that reason alone. On them Exnight",
+        "has nothing to act on, outputs NO_SIGNAL, and the holder holds, so the same gap can be measured",
+        "with the same prices, costs and timing. Nothing in the frozen scorecard changes.",
+        "",
+        "| Sample | Events | Tokens | Mean, bps | t-stat | Tokens where Exnight is ahead |",
+        "|---|---:|---:|---:|---:|---:|",
+        *[f"| {label} | {full[key]['events']} | {full[key]['symbols']} | {full[key]['mean_bps']:.1f} | "
+          f"{_num(full[key]['t_stat'])} | {full[key]['symbols_ahead']} of {full[key]['symbols']} |"
+          for key, label in (("all", "Every resolved event"),
+                             ("all_without_top_symbol", f"Every resolved event, without {full['top_symbol']}"),
+                             ("oos_period", "Out-of-sample period"),
+                             ("oos_period_without_top_symbol", f"Out-of-sample period, without {full['top_symbol']}"),
+                             ("excluded_from_scorecard", "Only the events the scorecard excludes"))],
         "",
         "## 2. Exnight as traded",
         "",

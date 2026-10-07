@@ -54,7 +54,21 @@ Per event, without annualising:
 | rSTRC | 3 | 44.4 | 36 | 31.5 | 4.58 | 10.55 |
 | rTLT | 2 | 61.7 | 37 | 30.9 | 4.71 | 11.03 |
 
-Without rSATA the gap is still positive (41.0 bps per event), but 7 events are too few to be conclusive (t-stat 1.37). The live test below adds 16 different, high-dividend events.
+Without rSATA the gap is still positive (41.0 bps per event), but 7 events are too few to be conclusive (t-stat 1.37). The check below widens the sample to every resolved event: without rSATA, Exnight is ahead on 44 of 55 tokens.
+
+**Every resolved event (robustness check, added after the results).** The scorecard counts
+only events whose gross dividend was declared before the decision. The other
+71 resolved cash events were excluded for that reason alone. On them Exnight
+has nothing to act on, outputs NO_SIGNAL, and the holder holds, so the same gap can be measured
+with the same prices, costs and timing. Nothing in the frozen scorecard changes.
+
+| Sample | Events | Tokens | Mean, bps | t-stat | Tokens where Exnight is ahead |
+|---|---:|---:|---:|---:|---:|
+| Every resolved event | 127 | 56 | 38.5 | 2.92 | 45 of 56 |
+| Every resolved event, without rSATA | 77 | 55 | 42.3 | 1.97 | 44 of 55 |
+| Out-of-sample period | 51 | 12 | 31.8 | 4.88 | 8 of 12 |
+| Out-of-sample period, without rSATA | 19 | 11 | 33.8 | 2.14 | 7 of 11 |
+| Only the events the scorecard excludes | 71 | 55 | 42.7 | 1.85 | 44 of 55 |
 
 ## 2. Exnight as traded
 

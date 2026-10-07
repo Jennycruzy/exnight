@@ -312,6 +312,7 @@ def _backtest_view(report: dict | None) -> dict:
         "per_event": report["vs_always_exit_per_event"],
         "decomposition": report["vs_always_exit_oos_decomposition"],
         "concentration": report["vs_always_exit_oos_concentration"],
+        "full_sample": report.get("vs_always_exit_full_sample"),
         "live": {key: report["live"][key] for key in ("scheduled", "graded", "all", "priced_overnight")},
     }
 

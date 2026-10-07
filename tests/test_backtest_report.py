@@ -64,3 +64,13 @@ def test_run_records_quote_the_saved_order():
     assert order["order_id"] in text and f"| {order['instrument']} | {order['direction']} | {order['fill_price']} " in text
     report = json.loads(backtest_report.OUTPUT.read_text())
     assert sum(f"| {e['ex_date']} |" in text for e in report["live"]["events"]) == report["live"]["graded"]
+
+
+def test_full_sample_keeps_the_scorecard_events_and_quotes_in_readme():
+    report = json.loads(backtest_report.OUTPUT.read_text())
+    full = report["vs_always_exit_full_sample"]
+    assert full["all"]["events"] == full["excluded_from_scorecard"]["events"] + 56
+    assert full["oos_period"]["events"] >= report["vs_always_exit_per_event"]["OOS"]["events"]
+    rest = full["all_without_top_symbol"]
+    readme = (competition.ROOT / "README.md").read_text()
+    assert f"Exnight is ahead on {rest['symbols_ahead']} of {rest['symbols']} tokens, by {rest['mean_bps']:.1f} bps per event (t-stat {rest['t_stat']:.2f})" in readme.replace("\n", " ")
