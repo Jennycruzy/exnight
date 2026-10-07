@@ -27,3 +27,6 @@ data/results/ai_confounders.csv
 
 # Deployment notes stay in the server workspace and are not published.
 docs/handoff.md
+
+# Submission form copy stays local.
+SUBMISSION.md

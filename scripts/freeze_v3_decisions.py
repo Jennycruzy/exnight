@@ -2,7 +2,7 @@
 
 Run each weekday at 19:30 ET (23:30 UTC while US daylight time is in force):
 
-    30 23 * * 1-5 cd /home/ubuntu/exnight && .venv/bin/python scripts/freeze_v3_decisions.py \
+    30 23 * * 1-5 cd /path/to/exnight && .venv/bin/python scripts/freeze_v3_decisions.py \
         >> data/raw/recorder/freeze_v3.log 2>&1
 
 Writes data/results/signals_v3_<UTC stamp>.csv and its run manifest, then commits exactly

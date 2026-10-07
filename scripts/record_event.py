@@ -9,7 +9,7 @@ without touching the disk, which lets the cron line stay in place across events.
 
 Example crontab line (UTC):
 
-    * * * * * cd /home/ubuntu/exnight && .venv/bin/python scripts/record_event.py \
+    * * * * * cd /path/to/exnight && .venv/bin/python scripts/record_event.py \
         --label 20260921_rAVGO_rVST --symbols RAVGOUSDT RVSTUSDT RSATAUSDT \
         --start 2026-09-17T10:00:00Z --end 2026-09-21T14:30:00Z >> data/raw/recorder/cron.log 2>&1
 """

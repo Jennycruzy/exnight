@@ -25,6 +25,5 @@ def test_quoted_buy_figures_match_saved_result():
     best = f"{_mean(report, 'counted, no withholding', 10):.1f}".replace("-", "−")
     readme = (ROOT / "README.md").read_text().replace("-", "−")
     assert f"{best} bps per event" in readme
-    assert f"({best} bps per event)" in (ROOT / "SUBMISSION.md").read_text()
     from dashboard.server import LIMITS
     assert any(best.replace("−", "-") in item for item in LIMITS)

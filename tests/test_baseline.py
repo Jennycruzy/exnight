@@ -46,16 +46,3 @@ def test_readme_headline_figures_come_from_saved_results():
             f"{100 * oos['benchmark']['total_return']:.3f}% |") in readme
     assert (f"| {oos['policy']['sharpe']:.2f} | {exit_['score']['policy']['sharpe']:.2f} | "
             f"{oos['benchmark']['sharpe']:.2f} |") in readme
-
-
-def test_submission_copy_matches_saved_results():
-    text = (ROOT / "SUBMISSION.md").read_text()
-    exit_ = json.loads(baseline.OUTPUT.read_text())["primary"]["oos"]
-    score = json.loads((ROOT / "data" / "results" / "competition_scorecard.json").read_text())
-    oos = score["oos_concatenated_non_overlapping_folds"]
-    minus = lambda t: t.replace("-", "−")
-    assert f"{score['sample']['eligible_ex_ante']} of {score['sample']['resolved_usable']} events" in text
-    assert f"{oos['policy']['event_count']} events over 47 days" in text
-    assert minus(f"{100 * oos['policy']['total_return']:.3f}%, Sharpe {oos['policy']['sharpe']:.2f}") in text
-    assert minus(f"**{exit_['mean_active_bps']:.1f} bps per event**") in text
-    assert f"only {100 * exit_['share_exit_beat_hold']:.0f}% of events" in text

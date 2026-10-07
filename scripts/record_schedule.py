@@ -4,7 +4,7 @@ Reads data/forward/v3_schedule.json and, for each group whose [start, end) conta
 current minute, appends one sample per symbol through scripts/record_event.py's writer. One
 cron line covers every planned event; outside all windows the script touches nothing.
 
-    * * * * * cd /home/ubuntu/exnight && .venv/bin/python scripts/record_schedule.py \
+    * * * * * cd /path/to/exnight && .venv/bin/python scripts/record_schedule.py \
         >> data/raw/recorder/cron_v3.log 2>&1
 """
 from __future__ import annotations

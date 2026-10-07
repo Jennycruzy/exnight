@@ -2,7 +2,7 @@
 
 Run hourly from cron:
 
-    20 * * * * cd /home/ubuntu/exnight && .venv/bin/python scripts/score_due_v3.py \
+    20 * * * * cd /path/to/exnight && .venv/bin/python scripts/score_due_v3.py \
         >> data/raw/recorder/score_v3.log 2>&1
 
 For each group whose window ended at least five minutes ago and whose score is not yet
