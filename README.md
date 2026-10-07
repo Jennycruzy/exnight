@@ -9,6 +9,9 @@ I tested it. It doesn't work, and Exnight is the tool that tells you when it wou
   there's a calculator you can play with)
 - App: [jennycruzy.github.io/exnight/app](https://jennycruzy.github.io/exnight/app/) (live
   results, token lookup, backtest, all the evidence)
+- Run records: [`reports/run_records.md`](reports/run_records.md) (a real Bitget order, the
+  16-event live test, and the 85-day backtest with 47 days out-of-sample; rerun with
+  `python scripts/run_backtest.py`)
 - Track: Alpha Factory, rToken Factor Strategies
 
 ## What's built
@@ -276,6 +279,10 @@ Rerun the backtest and write the full record to `reports/`:
 ```bash
 .venv/bin/python scripts/run_backtest.py
 ```
+
+It reruns the walk-forward from the frozen manifest, then the comparison and the report. The
+`reports/` files come out byte-identical; `data/results/competition_*` may differ in the last
+digit of a few floating-point values.
 
 Regenerate every competition result from committed inputs:
 

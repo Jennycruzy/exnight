@@ -53,3 +53,14 @@ def test_readme_quotes_the_report():
     assert f"averages {oos['mean_bps']:.1f} bps with a t-stat of {oos['t_stat']:.2f}" in readme
     rest = report["vs_always_exit_oos_concentration"]["leave_one_symbol_out"]["rSATA"]
     assert f"({rest['mean_bps']:.1f} bps over {rest['events']} events)" in readme
+
+
+def test_run_records_quote_the_saved_order():
+    backtest_report.build()
+    order = backtest_report.live_order()
+    status = json.loads((backtest_report.LIVE_ORDER / "04_order_status.json").read_text())["data"]
+    assert (order["order_id"], order["fill_price"], order["quantity"]) == (status["orderId"], status["avgPrice"], status["cumExecQty"])
+    text = backtest_report.RUN_RECORDS.read_text()
+    assert order["order_id"] in text and f"| {order['instrument']} | {order['direction']} | {order['fill_price']} " in text
+    report = json.loads(backtest_report.OUTPUT.read_text())
+    assert sum(f"| {e['ex_date']} |" in text for e in report["live"]["events"]) == report["live"]["graded"]

@@ -594,6 +594,11 @@
         "price_discovery": "NONE",
         "realised_pdr": 0.0,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260924T2330Z.csv",
+        "sell_cutoff": "2026-09-24T20:00:00-04:00",
+        "gross_dividend": 0.28,
+        "pre_price": 36.4,
+        "post_price": 36.4,
         "exit_minus_hold_bps": -98.84615384615385
       },
       {
@@ -602,6 +607,11 @@
         "price_discovery": "PRICED",
         "realised_pdr": 1.0784313725490209,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260925T2330Z.csv",
+        "sell_cutoff": "2026-09-25T20:00:00-04:00",
+        "gross_dividend": 0.51,
+        "pre_price": 14.09,
+        "post_price": 13.54,
         "exit_minus_hold_bps": 91.9765791341382
       },
       {
@@ -610,6 +620,11 @@
         "price_discovery": "NONE",
         "realised_pdr": 0.0,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260925T2330Z.csv",
+        "sell_cutoff": "2026-09-25T20:00:00-04:00",
+        "gross_dividend": 0.64,
+        "pre_price": 81.2,
+        "post_price": 81.2,
         "exit_minus_hold_bps": -100.17241379310344
       },
       {
@@ -618,6 +633,11 @@
         "price_discovery": "PRICED",
         "realised_pdr": 0.652173913043472,
         "frozen_verdict_1k": "HOLD",
+        "frozen_decision_file": "signals_v3_20260925T2330Z.csv",
+        "sell_cutoff": "2026-09-25T20:00:00-04:00",
+        "gross_dividend": 0.23,
+        "pre_price": 31.97,
+        "post_price": 31.82,
         "exit_minus_hold_bps": -48.440725680325755
       },
       {
@@ -626,6 +646,11 @@
         "price_discovery": "THIN",
         "realised_pdr": 0.0633232016210726,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260928T2330Z.csv",
+        "sell_cutoff": "2026-09-28T20:00:00-04:00",
+        "gross_dividend": 0.15792,
+        "pre_price": 9.42,
+        "post_price": 9.41,
         "exit_minus_hold_bps": -151.73460721868386
       },
       {
@@ -634,6 +659,11 @@
         "price_discovery": "PRICED",
         "realised_pdr": 0.6666666666666673,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260929T2330Z.csv",
+        "sell_cutoff": "2026-09-29T20:00:00-04:00",
+        "gross_dividend": 0.12,
+        "pre_price": 9.45,
+        "post_price": 9.37,
         "exit_minus_hold_bps": -49.23280423280415
       },
       {
@@ -642,6 +672,11 @@
         "price_discovery": "NONE",
         "realised_pdr": 0.0,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260929T2330Z.csv",
+        "sell_cutoff": "2026-09-29T20:00:00-04:00",
+        "gross_dividend": 0.2,
+        "pre_price": 21.94,
+        "post_price": 21.94,
         "exit_minus_hold_bps": -108.81039197812215
       },
       {
@@ -650,6 +685,11 @@
         "price_discovery": "THIN",
         "realised_pdr": -0.017574692442878754,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260929T2330Z.csv",
+        "sell_cutoff": "2026-09-29T20:00:00-04:00",
+        "gross_dividend": 0.569,
+        "pre_price": 57.59,
+        "post_price": 57.6,
         "exit_minus_hold_bps": -115.8977252995308
       },
       {
@@ -658,6 +698,11 @@
         "price_discovery": "THIN",
         "realised_pdr": 0.15000000000000568,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260929T2330Z.csv",
+        "sell_cutoff": "2026-09-29T20:00:00-04:00",
+        "gross_dividend": 0.2,
+        "pre_price": 22.44,
+        "post_price": 22.41,
         "exit_minus_hold_bps": -94.01960784313675
       },
       {
@@ -666,6 +711,11 @@
         "price_discovery": "NONE",
         "realised_pdr": 0.0,
         "frozen_verdict_1k": "HOLD",
+        "frozen_decision_file": "signals_v3_20260929T2330Z.csv",
+        "sell_cutoff": "2026-09-29T20:00:00-04:00",
+        "gross_dividend": 1.55,
+        "pre_price": 80.6,
+        "post_price": 80.6,
         "exit_minus_hold_bps": -179.61538461538464
       },
       {
@@ -674,6 +724,11 @@
         "price_discovery": "PRICED",
         "realised_pdr": 1.0576923076923022,
         "frozen_verdict_1k": "HOLD",
+        "frozen_decision_file": "signals_v3_20260929T2330Z.csv",
+        "sell_cutoff": "2026-09-29T20:00:00-04:00",
+        "gross_dividend": 0.52,
+        "pre_price": 59.41,
+        "post_price": 58.86,
         "exit_minus_hold_bps": -13.692139370476829
       },
       {
@@ -682,6 +737,11 @@
         "price_discovery": "PRICED",
         "realised_pdr": 1.240000000000009,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260930T2330Z.csv",
+        "sell_cutoff": "2026-09-30T20:00:00-04:00",
+        "gross_dividend": 0.25,
+        "pre_price": 19.85,
+        "post_price": 19.54,
         "exit_minus_hold_bps": 23.01007556675177
       },
       {
@@ -690,6 +750,11 @@
         "price_discovery": "THIN",
         "realised_pdr": 0.7894736842105188,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260930T2330Z.csv",
+        "sell_cutoff": "2026-09-30T20:00:00-04:00",
+        "gross_dividend": 0.19,
+        "pre_price": 22.57,
+        "post_price": 22.42,
         "exit_minus_hold_bps": -37.467877713779984
       },
       {
@@ -698,6 +763,11 @@
         "price_discovery": "NONE",
         "realised_pdr": 0.0,
         "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20260930T2330Z.csv",
+        "sell_cutoff": "2026-09-30T20:00:00-04:00",
+        "gross_dividend": 0.375,
+        "pre_price": 31.9,
+        "post_price": 31.9,
         "exit_minus_hold_bps": -127.2884012539185
       }
     ]

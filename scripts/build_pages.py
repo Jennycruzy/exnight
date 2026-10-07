@@ -30,6 +30,7 @@ PUBLIC_EVIDENCE = {
 }
 
 PUBLIC_REPORTS = {
+    "run_records.md": "Run records: live order, live test, backtest",
     "backtest.md": "Backtest record (readable)",
     "backtest.json": "Backtest record (all metrics)",
     "backtest_daily.csv": "Backtest daily returns",

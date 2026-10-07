@@ -29,6 +29,8 @@ ROOT = c.ROOT
 REPORTS = ROOT / "reports"
 OUTPUT = REPORTS / "backtest.json"
 MARKDOWN = REPORTS / "backtest.md"
+RUN_RECORDS = REPORTS / "run_records.md"
+LIVE_ORDER = ROOT / "data" / "raw" / "paper" / "20260923T182547.240457Z"
 DAILY = REPORTS / "backtest_daily.csv"
 EVENTS = REPORTS / "backtest_events.csv"
 LABEL = "ADDED_AFTER_OOS_RESULTS_REPORTING_ONLY"
@@ -137,6 +139,8 @@ def _live() -> dict:
                 "event_id": e["event_id"], "ex_date": e["ex_date"], "price_discovery": e.get("price_discovery"),
                 "realised_pdr": e.get("realised_pdr"),
                 "frozen_verdict_1k": next((n["frozen_verdict"] for n in e["notionals"] if n["notional_usd"] == 1000), None),
+                "frozen_decision_file": e.get("frozen_decision_file"), "sell_cutoff": e.get("sell_cutoff"),
+                "gross_dividend": e.get("gross_dividend"), "pre_price": pre, "post_price": e.get("post_price"),
                 "exit_minus_hold_bps": None if edge is None or not pre else 1e4 * edge / pre,
             })
     scored = [e for e in events if e["exit_minus_hold_bps"] is not None]
@@ -197,7 +201,88 @@ def build() -> dict:
     _write_daily(policy_rows, spread, is_start, oos_end)
     _write_events(spread)
     MARKDOWN.write_text(render_markdown(report))
+    RUN_RECORDS.write_text(render_run_records(report, live_order()))
     return report
+
+
+def live_order(folder: Path = LIVE_ORDER) -> dict:
+    """The real order's fields, read from the saved Bitget responses."""
+    read = lambda name: json.loads((folder / name).read_text())
+    status = read("04_order_status.json")["data"]
+    before = read("03_balance_preflight.json")
+    after = read("06_balance_after.json")
+    return {
+        "folder": folder.relative_to(ROOT).as_posix(),
+        "submitted_at": read("03_order.json")["requestTime"],
+        "order_id": status["orderId"], "instrument": status["symbol"], "direction": status["side"],
+        "order_type": f"{status['orderType']} {status['timeInForce']}", "limit_price": status["price"],
+        "fill_price": status["avgPrice"], "quantity": status["cumExecQty"], "value_usdt": status["cumExecValue"],
+        "status": status["orderStatus"], "fee_usdt": status["feeDetail"][0]["fee"],
+        "usdt_before": before["available"], "usdt_after": after["assets"]["USDT"]["available"],
+        "base_after": after["assets"][status["symbol"].removesuffix("USDT").replace("R", "r", 1)]["available"],
+        "balance_checked_at": after["checked_at"],
+    }
+
+
+def render_run_records(report: dict, order: dict) -> str:
+    live, window = report["live"], report["window"]
+    oos = report["vs_always_exit"]["OOS"]["metrics"]
+    base = order["instrument"].removesuffix("USDT").replace("R", "r", 1)
+    rows = []
+    for e in sorted(live["events"], key=lambda e: (e["ex_date"], e["event_id"])):
+        stamp = (e["frozen_decision_file"] or "").removeprefix("signals_v3_").removesuffix(".csv")
+        hold = "n/a" if e["exit_minus_hold_bps"] is None else f"{-e['exit_minus_hold_bps']:+.1f}"
+        pdr = "n/a" if e["realised_pdr"] is None else f"{e['realised_pdr']:.2f}"
+        rows.append(f"| {e['event_id'].split('-')[0]} | {e['ex_date']} | {stamp} | {e['frozen_verdict_1k']} | "
+                    f"{e['pre_price']} → {e['post_price']} | {pdr} | {e['price_discovery']} | {hold} |")
+    lines = [
+        "# Exnight run records",
+        "",
+        "In the handbook's order of priority: live, then backtest. Every figure below is read from",
+        "files committed in this repository; `python scripts/run_backtest.py` regenerates this page.",
+        "",
+        "## 1. Live order on Bitget",
+        "",
+        "A real order placed through Bitget Agent Hub to check that an rToken with an empty public",
+        f"order book fills at its quote. Saved request and response files: [`{order['folder']}/`](../{order['folder']}/);",
+        "write-up: [`docs/live_fill_20260923.md`](../docs/live_fill_20260923.md).",
+        "",
+        "| Timestamp (UTC) | Instrument | Direction | Price | Quantity | Fee | Balance change |",
+        "|---|---|---|---:|---:|---:|---|",
+        f"| {order['submitted_at']} | {order['instrument']} | {order['direction']} | {order['fill_price']} "
+        f"(limit {order['limit_price']}, {order['order_type']}) | {order['quantity']} | {order['fee_usdt']} USDT | "
+        f"USDT {order['usdt_before']} → {order['usdt_after']}; {base} 0 → {order['base_after']} |",
+        "",
+        f"Order `{order['order_id']}`, status `{order['status']}`, value {order['value_usdt']} USDT; balances read "
+        f"{order['balance_checked_at']} with a read-only key.",
+        "",
+        "## 2. Live forward test",
+        "",
+        f"{live['scheduled']} high-dividend ex-dates from 25 September to 8 October, chosen and scheduled before the first",
+        "one. Each decision is committed to Git (and, from 5 October, anchored on Arbitrum One) before",
+        "the 20:00 ET sell cutoff, the price is recorded every minute, and a scorer grades it after the",
+        f"ex-date. {live['graded']} graded so far. Prices are the last trade at the cutoff and at 04:00 ET;",
+        "\"Hold minus step out\" is per event, modeled costs, 70% of the dividend kept.",
+        "",
+        "| Token | Ex-date | Decision committed | Decision ($1k) | Price, cutoff → 04:00 ET | Drop / dividend | Overnight trading | Hold minus step out, bps |",
+        "|---|---|---|---|---|---:|---|---:|",
+        *rows,
+        "",
+        f"Holding beat stepping out on {live['all']['hold_beat_exit']} of {live['all']['events']} graded events; on the "
+        f"{live['priced_overnight']['events']} nights where the price actually moved, {live['priced_overnight']['hold_beat_exit']} of "
+        f"{live['priced_overnight']['events']}. Score files: `data/results/forward_score_v3_*.json`; recordings:",
+        "`data/raw/recorder/v3_*/`.",
+        "",
+        "## 3. Backtest",
+        "",
+        f"{window['start']} to {window['end']}: {window['total_days']} days in total, {window['oos_days']} days out-of-sample, walk-forward.",
+        f"Exnight minus always selling first, out-of-sample: Sharpe {_num(oos['sharpe'])}, Sortino {_num(oos['sortino'])}, "
+        f"max drawdown {_pct(oos['maximum_drawdown'])}. Full record and limits: [`backtest.md`](backtest.md); code:",
+        "[`exnight/backtest_report.py`](../exnight/backtest_report.py), [`exnight/competition.py`](../exnight/competition.py),",
+        "[`scripts/run_backtest.py`](../scripts/run_backtest.py).",
+        "",
+    ]
+    return "\n".join(lines)
 
 
 def _pct(value) -> str:

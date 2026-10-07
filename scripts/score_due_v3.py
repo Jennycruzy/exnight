@@ -8,9 +8,9 @@ Run hourly from cron:
 For each group whose window ended at least five minutes ago and whose score is not yet
 committed, it runs scripts/score_forward_v3.py, force-adds the raw recording (the recorder
 directory is otherwise ignored), commits exactly those files as jennycruzy with no attribution,
-rebuilds the public dashboard onto gh-pages, and then tries to push both branches. Pushing
-goes through the VS Code Git credential helper, so it only succeeds while a VS Code window is
-connected; otherwise the commits wait locally and the log says so. An INCOMPLETE score is
+refreshes the backtest record in reports/, rebuilds the public dashboard onto gh-pages, and
+then tries to push both branches. Pushing uses a stored git credential if one works, else the
+VS Code Git credential helper; if neither works the commits wait locally and the log says so. An INCOMPLETE score is
 still committed: a gap is part of the evidence.
 """
 from __future__ import annotations
@@ -40,11 +40,17 @@ def _tracked(path: str) -> bool:
 
 
 def _push_env() -> dict | None:
-    """Environment for the VS Code credential helper, using the first socket that authenticates.
+    """Environment that can push: a stored git credential if one works, else the VS Code helper.
 
     Old sockets from disconnected VS Code windows stay on disk, and the newest by mtime can be
     one of them, so each is tried with a cheap ls-remote, newest first.
     """
+    plain = {**os.environ, "GIT_TERMINAL_PROMPT": "0"}
+    try:
+        if _git("ls-remote", "-q", "origin", "HEAD", env=plain, timeout=20).returncode == 0:
+            return plain  # a stored credential (for example `gh auth setup-git`) works without VS Code
+    except subprocess.TimeoutExpired:
+        pass
     askpasses = glob.glob(os.path.expanduser("~/.vscode-server/bin/*/extensions/git/dist/askpass.sh"))
     sockets = sorted(glob.glob("/run/user/%d/vscode-git-*.sock" % os.getuid()), key=os.path.getmtime, reverse=True)
     if not askpasses or not sockets:
@@ -71,6 +77,21 @@ def _push(branch: str, env: dict | None) -> str:
     except subprocess.TimeoutExpired:
         return f"{branch}: not pushed (timed out; VS Code probably disconnected)"
     return f"{branch}: pushed" if result.returncode == 0 else f"{branch}: not pushed ({result.stderr.strip()[-160:]})"
+
+
+def _refresh_backtest_record(now: dt.datetime) -> None:
+    """Rebuild reports/ so its live-test section includes the windows just scored."""
+    run = subprocess.run([sys.executable, "-m", "exnight.backtest_report"], cwd=ROOT,
+                         capture_output=True, text=True, timeout=600)
+    if run.returncode:
+        print(f"{now.isoformat()} backtest record not refreshed: {run.stderr.strip()[-400:]}")
+        return
+    if not _git("status", "--porcelain", "--", "reports").stdout.strip():
+        return
+    _git("add", "--", "reports")
+    commit = _git("commit", "--only", "-q", "-m", "Refresh the backtest record with the latest live scores", "--", "reports")
+    print(f"{now.isoformat()} backtest record: " + ("committed " + _git("rev-parse", "--short", "HEAD").stdout.strip()
+                                                    if commit.returncode == 0 else f"commit failed: {commit.stderr.strip()}"))
 
 
 def main() -> int:
@@ -111,6 +132,7 @@ def main() -> int:
         scored_any = True
         print(f"{now.isoformat()} {label}: {status}; committed {_git('rev-parse', '--short', 'HEAD').stdout.strip()}")
     if scored_any:
+        _refresh_backtest_record(now)
         env = _push_env()
         publish = subprocess.run(["bash", str(ROOT / "scripts" / "publish_pages.sh")], cwd=ROOT, env=env,
                                  capture_output=True, text=True, timeout=600)
