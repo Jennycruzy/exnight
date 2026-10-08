@@ -155,11 +155,11 @@
   },
   "live": {
    "all": {
-    "events": 15,
-    "hold_beat_exit": 13,
-    "mean_hold_minus_exit_bps": 69.45288061896507
+    "events": 16,
+    "hold_beat_exit": 14,
+    "mean_hold_minus_exit_bps": 71.53034481104898
    },
-   "graded": 15,
+   "graded": 16,
    "priced_overnight": {
     "events": 6,
     "hold_beat_exit": 4,
@@ -747,6 +747,11 @@
    "name": "forward_score_v3_20261007_RCMCSA.json"
   },
   {
+   "href": "evidence/forward_score_v3_20261008_RTIGO.json",
+   "label": "V3 forward score, 20261008_RTIGO",
+   "name": "forward_score_v3_20261008_RTIGO.json"
+  },
+  {
    "href": "evidence/run_records.md",
    "label": "Run records: live order, live test, backtest",
    "name": "run_records.md"
@@ -1010,7 +1015,7 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-10-08T02:51:32.947411+00:00",
+ "generated_at": "2026-10-08T10:31:04.891682+00:00",
  "limits": [
   "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
   "Current order books are observed-now evidence, not historical event-time fills.",
@@ -5247,16 +5252,16 @@
     "ex_date": "2026-10-08",
     "gross_dividend": 0.75,
     "gross_yield_bp": 80.103,
-    "modeled_edge_keep_70pct": null,
-    "modeled_edge_keep_gross": null,
-    "modeled_verdict": null,
-    "overnight_last_price_changes": null,
-    "price_discovery": null,
+    "modeled_edge_keep_70pct": -0.9344999999999999,
+    "modeled_edge_keep_gross": -1.1595,
+    "modeled_verdict": "HOLD",
+    "overnight_last_price_changes": 0,
+    "price_discovery": "NONE",
     "realised_edge_keep_70pct": null,
-    "realised_pdr": null,
-    "realised_verdict": null,
+    "realised_pdr": 0.0,
+    "realised_verdict": "NO_SIGNAL",
     "reason": "buy: $1,000 exceeds visible top-of-book ($815) on ticker-only symbol",
-    "score_status": "NOT_SCORED",
+    "score_status": "PASS",
     "sell_cutoff": "2026-10-07T20:00:00-04:00",
     "symbol": "rTIGO",
     "verdict": "NO_SIGNAL"
@@ -5267,7 +5272,7 @@
   "pdr_hat": 0.9656110633409246,
   "pdr_se": 0.18323952822276032,
   "rule_id": "exnight-strategy-v3",
-  "scored": 15,
+  "scored": 16,
   "status": "AVAILABLE"
  }
 }

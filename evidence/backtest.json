@@ -576,11 +576,11 @@
   "live": {
     "label": "MODELED_EXECUTION",
     "scheduled": 16,
-    "graded": 15,
+    "graded": 16,
     "all": {
-      "events": 15,
-      "hold_beat_exit": 13,
-      "mean_hold_minus_exit_bps": 69.45288061896507
+      "events": 16,
+      "hold_beat_exit": 14,
+      "mean_hold_minus_exit_bps": 71.53034481104898
     },
     "priced_overnight": {
       "events": 6,
@@ -782,19 +782,32 @@
         "pre_price": 21.58,
         "post_price": 21.32,
         "exit_minus_hold_bps": -31.56163113994531
+      },
+      {
+        "event_id": "rTIGO-2026-10-08-1",
+        "ex_date": "2026-10-08",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20261007T2330Z.csv",
+        "sell_cutoff": "2026-10-07T20:00:00-04:00",
+        "gross_dividend": 0.75,
+        "pre_price": 91.0,
+        "post_price": 91.0,
+        "exit_minus_hold_bps": -102.69230769230768
       }
     ]
   },
   "policy_folds": [
     {
       "fold": "OOS_2026_08",
-      "pdr_estimate": 1.034275825976304,
-      "pdr_se": 0.8710489450546619
+      "pdr_estimate": 1.0342758259763043,
+      "pdr_se": 0.871048945054662
     },
     {
       "fold": "OOS_2026_09",
-      "pdr_estimate": 0.9194329582809133,
-      "pdr_se": 0.3528604632179606
+      "pdr_estimate": 0.9194329582809134,
+      "pdr_se": 0.35286046321796066
     }
   ],
   "vs_always_exit_per_event": {
