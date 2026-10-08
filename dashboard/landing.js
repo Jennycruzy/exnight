@@ -90,6 +90,8 @@ async function live() {
     $("lc-edge").className = edge == null ? "" : edge < 0 ? "negative" : "positive";
     $("lc-rec").textContent = done ? latest.score_status : "in progress";
     const next = events.find((event) => !event.score_status || event.score_status === "NOT_SCORED");
+    $("lc-state").textContent = next ? "RECORDING" : `ALL ${events.length} GRADED`;
+    $("lc-state").classList.toggle("final", !next);
     $("lc-foot").innerHTML = done
       ? `${edge != null && edge < 0 && latest.price_discovery === "PRICED" ? "Holding was right: selling first would have lost money. " : ""}${latest.price_discovery === "THIN" ? "Only a few overnight trades, so a weak reading. " : ""}${next ? `Next: <b>${next.symbol}</b> on ${next.ex_date}.` : "All scheduled events scored."}`
       : "Recording now. Graded automatically after the ex-date.";

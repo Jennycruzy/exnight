@@ -203,8 +203,7 @@ it describes the data and isn't part of the frozen rule.
 | rTIGO | 8 Oct 2026 | $0.75 (82 bps) | NO_SIGNAL (quotes too thin for $1k) | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 869 samples, longest gap 63 s |
 
 rTIGO was graded at 10:29 UTC on 8 October, once both prices the score uses (20:00 ET cutoff and
-04:00 ET) had been recorded. The recorder kept running to 14:30 UTC; those later rows aren't
-used in the score.
+04:00 ET) had been recorded. The committed recording is exactly the one the score used.
 
 Scores land in [`data/results/forward_score_v3_*.json`](data/results/) and show up in the app
 as each event is graded. Costs here are modelled because these tokens have no public order
