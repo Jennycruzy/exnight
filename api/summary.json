@@ -1010,7 +1010,7 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-10-07T14:40:09.352147+00:00",
+ "generated_at": "2026-10-08T02:51:32.947411+00:00",
  "limits": [
   "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
   "Current order books are observed-now evidence, not historical event-time fills.",
@@ -5240,8 +5240,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-06T23:30:06+00:00",
-    "decision_file": "signals_v3_20261006T2330Z.csv",
+    "decided_at": "2026-10-07T23:30:06+00:00",
+    "decision_file": "signals_v3_20261007T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rTIGO-2026-10-08-1",
     "ex_date": "2026-10-08",
@@ -5255,7 +5255,7 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "sell: $1,000 exceeds visible top-of-book ($180) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($740) on ticker-only symbol",
+    "reason": "buy: $1,000 exceeds visible top-of-book ($815) on ticker-only symbol",
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-07T20:00:00-04:00",
     "symbol": "rTIGO",
