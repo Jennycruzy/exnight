@@ -25,7 +25,7 @@ I tested it. It doesn't work, and Exnight is the tool that tells you when it wou
   real, capped order.
 - **A live forward test that can't be edited afterwards.** 16 high-dividend events from
   25 Sep to 8 Oct. Each decision is committed to Git before the 20:00 ET cutoff, a recorder
-  saves the price every minute, and a scorer grades the event on its own. 14 are graded so far
+  saves the price every minute, and a scorer grades the event on its own. 15 are graded so far
   ([table below](#live-test-running-now)).
 - **Each freeze is also anchored on Arbitrum One.** Right after the nightly commit, the
   commit hash and the SHA-256 of the frozen files go on-chain in a 0-value transaction
@@ -65,7 +65,7 @@ It's being tested live right now, on 16 high-dividend events between 25 Septembe
 a recorder saves the price every minute, and a scorer grades it after the ex-date. Git history
 shows none of it was edited afterwards.
 
-14 graded so far. On the 5 with enough overnight trading to read, the drop averaged 0.94x
+15 graded so far. On the 6 with enough overnight trading to read, the drop averaged 0.91x
 the dividend, and selling first never clearly won. rBZ is the interesting one: a big dividend
 and a full-size drop, so selling first would have won by $0.13 a share if 30% tax is withheld,
 and lost by $0.02 if it isn't. That's exactly the kind of event where EXIT starts to become
@@ -166,7 +166,7 @@ was frozen.
 
 ### Live test (running now)
 
-14 of 16 events are graded so far. **How to read this:** a token's last price only moves when
+15 of 16 events are graded so far. **How to read this:** a token's last price only moves when
 someone trades it. Overnight, many rTokens don't trade at all, so the price at 04:00 ET is the
 same as at 20:00 ET and the drop shows as 0.00x. That says nothing about the dividend; it means
 there was no price to read. The "Overnight trades" column counts how often the last price
@@ -174,10 +174,10 @@ changed between the two readings: **NONE** (0, no reading), **THIN** (1–3, wea
 **PRICED** (4 or more). I added this label on 1 October, after seeing the first 14 results, so
 it describes the data and isn't part of the frozen rule.
 
-- **PRICED events (5): average drop 0.94x the dividend** (rBZ 1.08, rKDP 0.65, rAGNC 0.67,
-  rMDLZ 1.06, rCPB 1.24). That's in line with the 0.97x backtest average, so the drop is real
+- **PRICED events (6): average drop 0.91x the dividend** (rBZ 1.08, rKDP 0.65, rAGNC 0.67,
+  rMDLZ 1.06, rCPB 1.24, rCMCSA 0.79). That's in line with the 0.97x backtest average, so the drop is real
   live too.
-- On all 5, selling first did not clearly win. Three lost outright. rBZ and rCPB would only
+- On all 6, selling first did not clearly win. Four lost outright. rBZ and rCPB would only
   have won if 30% tax is withheld, by $0.13 and $0.05 a share, and lost if you keep the whole
   dividend. Exnight made no EXIT call on any of them.
 - The 5 NONE and 4 THIN events are listed for completeness. Don't read them as "the price
@@ -199,6 +199,7 @@ it describes the data and isn't part of the frozen rule.
 | rCPB | 1 Oct 2026 | $0.25 (124 bps) | NO_SIGNAL (quotes too thin for $1k) | PRICED (11) | 1.24x | +$0.05/share if 30% tax is withheld, -$0.03 if you keep it all: too close to call | PASS: 1,110 samples, longest gap 62 s |
 | rFULT | 1 Oct 2026 | $0.19 (82 bps) | NO_SIGNAL (quotes too thin for $1k) | THIN (1) | 0.79x | -$0.08/share, only 1 trade overnight: weak reading | PASS: 1,110 samples, longest gap 62 s |
 | rVSNT | 1 Oct 2026 | $0.38 (113 bps) | NO_SIGNAL (quotes too thin for $1k) | NONE (0) | 0.00x | No trades overnight (0 price changes): no reading | PASS: 1,110 samples, longest gap 62 s |
+| rCMCSA | 7 Oct 2026 | $0.33 (153 bps) | NO_SIGNAL (quotes too thin for $1k) | PRICED (37) | 0.79x | **-$0.07/share**, holding was right | PASS: 1,110 samples, longest gap 62 s |
 
 Scores land in [`data/results/forward_score_v3_*.json`](data/results/) and show up in the app
 as each event is graded. Costs here are modelled because these tokens have no public order
@@ -245,8 +246,8 @@ I didn't publish a Playbook for Exnight, because it would've shown a misleading 
   (quotes too thin), not HOLD, so it didn't miss a win. The rule responds to big events; it
   isn't stuck on HOLD.
 - **The backtest leans on one token.** 56 events are usable without hindsight and 45 of them
-  are rSATA. The live test fixes that going forward: the 14 events graded so far are 14
-  different tokens, and 2 more (rCMCSA, rTIGO) are scheduled to 8 October. Only 5 of the 14
+  are rSATA. The live test fixes that going forward: the 15 events graded so far are 15
+  different tokens, and 1 more (rTIGO) is scheduled for 8 October. Only 6 of the 15
   traded enough overnight to give a reading (see the live table). Another
   71 past events are waiting on dated issuer evidence
   ([source audit](docs/dividend_provenance_audit.md)).
