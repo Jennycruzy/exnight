@@ -34,7 +34,7 @@ The credit will show what withholding Bitget actually applies to an rToken holde
 16 high-dividend ex-dates from 25 September to 8 October, chosen and scheduled before the first
 one. Each decision is committed to Git (and, from 5 October, anchored on Arbitrum One) before
 the 20:00 ET sell cutoff, the price is recorded every minute, and a scorer grades it after the
-ex-date. 15 graded so far. Prices are the last trade at the cutoff and at 04:00 ET;
+ex-date. All 16 graded. Prices are the last trade at the cutoff and at 04:00 ET;
 "Hold minus step out" is per event, modeled costs, 70% of the dividend kept.
 
 | Token | Ex-date | Decision committed | Decision ($1k) | Price, cutoff → 04:00 ET | Drop / dividend | Overnight trading | Hold minus step out, bps |
@@ -54,8 +54,9 @@ ex-date. 15 graded so far. Prices are the last trade at the cutoff and at 04:00 
 | rFULT | 2026-10-01 | 20260930T2330Z | NO_SIGNAL | 22.57 → 22.42 | 0.79 | THIN | +37.5 |
 | rVSNT | 2026-10-01 | 20260930T2330Z | NO_SIGNAL | 31.9 → 31.9 | 0.00 | NONE | +127.3 |
 | rCMCSA | 2026-10-07 | 20261006T2330Z | NO_SIGNAL | 21.58 → 21.32 | 0.79 | PRICED | +31.6 |
+| rTIGO | 2026-10-08 | 20261007T2330Z | NO_SIGNAL | 91.0 → 91.0 | 0.00 | NONE | +102.7 |
 
-Holding beat stepping out on 13 of 15 graded events; on the 6 nights where the price actually moved, 4 of 6. Score files: `data/results/forward_score_v3_*.json`; recordings:
+Holding beat stepping out on 14 of 16 graded events; on the 6 nights where the price actually moved, 4 of 6. Score files: `data/results/forward_score_v3_*.json`; recordings:
 `data/raw/recorder/v3_*/`.
 
 ## 3. Backtest

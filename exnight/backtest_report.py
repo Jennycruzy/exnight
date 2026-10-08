@@ -430,7 +430,7 @@ def render_run_records(report: dict, order: dict) -> str:
         f"{live['scheduled']} high-dividend ex-dates from 25 September to 8 October, chosen and scheduled before the first",
         "one. Each decision is committed to Git (and, from 5 October, anchored on Arbitrum One) before",
         "the 20:00 ET sell cutoff, the price is recorded every minute, and a scorer grades it after the",
-        f"ex-date. {live['graded']} graded so far. Prices are the last trade at the cutoff and at 04:00 ET;",
+        f"ex-date. {'All ' + str(live['graded']) + ' graded' if live['graded'] == live['scheduled'] else str(live['graded']) + ' graded so far'}. Prices are the last trade at the cutoff and at 04:00 ET;",
         "\"Hold minus step out\" is per event, modeled costs, 70% of the dividend kept.",
         "",
         "| Token | Ex-date | Decision committed | Decision ($1k) | Price, cutoff → 04:00 ET | Drop / dividend | Overnight trading | Hold minus step out, bps |",
@@ -622,7 +622,7 @@ def render_markdown(report: dict) -> str:
         "",
         "## 3. Live test (pre-registered, after the backtest)",
         "",
-        f"{live['graded']} of {live['scheduled']} high-dividend events graded so far, each decision committed to Git "
+        f"{live['graded']} of {live['scheduled']} high-dividend events graded{'' if live['graded'] == live['scheduled'] else ' so far'}, each decision committed to Git "
         "before the 20:00 ET cutoff. Per event, holding minus stepping out (modeled execution, 70% of the dividend kept):",
         "",
         "| Events | Holding beat stepping out | Mean, bps per event |",
