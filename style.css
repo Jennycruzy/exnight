@@ -94,6 +94,7 @@ td.empty { display: table-cell; }
 .live-card header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); font: 600 11px/1 var(--mono); letter-spacing: .1em; color: var(--ink-3); }
 .pulse { display: inline-flex; align-items: center; gap: 8px; color: var(--hold); }
 .pulse::before { content: ""; width: 7px; height: 7px; background: var(--hold); animation: blink 1.6s infinite; }
+.pulse.final::before { animation: none; }
 @keyframes blink { 50% { opacity: .25; } }
 .live-card .lc-body { padding: 20px 16px; }
 .lc-token { display: flex; justify-content: space-between; align-items: baseline; }
