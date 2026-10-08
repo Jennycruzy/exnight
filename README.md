@@ -106,8 +106,8 @@ It's three numbers:
 2. **How much of the dividend you'd keep** after tax (up to 30% withheld).
 3. **What the round trip costs**: two fees plus slippage.
 
-Selling first only pays if the drop is bigger than what you keep plus the cost. Right now the
-cautious drop estimate is 0.60x the dividend and a holder keeps 0.70x, so the answer is HOLD.
+Selling first only pays if the drop is bigger than what you keep plus the cost. Across the 127
+resolved dividends, the cautious drop estimate is 0.60x the dividend and a holder keeps 0.70x, so the answer is HOLD.
 The calculator on the site lets you move the numbers and watch it flip.
 
 ## Results
