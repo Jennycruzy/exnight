@@ -67,7 +67,7 @@
     <div class="wrap">
       <p class="eyebrow">Interactive</p>
       <h2>Try it yourself.</h2>
-      <p class="lede">Drag the sliders. It's the same math Exnight runs on every event, just for one trade. Try the rBZ preset to see what it takes for EXIT to show up.</p>
+      <p class="lede">Drag the sliders. It's the same math Exnight runs on every event, just for one trade. Try the rBZ preset to see what it takes for selling first to pay.</p>
       <div class="calc">
         <div class="calc-inputs">
           <div class="field">
@@ -113,7 +113,7 @@
         <div class="stat"><strong id="s-oos">39</strong><span>unseen events. Exnight said hold on all of them</span></div>
         <div class="stat"><strong id="s-live">—</strong><span>live events graded (25 Sep to 8 Oct)</span></div>
       </div>
-      <div class="honest">
+      <div class="honest single">
         <div class="yes"><h3>What I found</h3><ul>
           <li>The overnight drop is real. On average it's 0.97× the dividend.</li>
           <li>On unseen data, Exnight came out 32.5 bps per event ahead of selling first.</li>
@@ -122,11 +122,6 @@
           <li>Bitget's Playbook backtest doesn't credit dividends, so it makes selling first look better than it is.</li>
           <li>A real $10 order filled at the quoted price, even with an empty public order book.</li>
           <li>Every call is in Git before the cutoff, so nobody can change it once the result is in.</li>
-        </ul></div>
-        <div class="no"><h3>What's still open</h3><ul>
-          <li>EXIT hasn't fired yet, but it's close. On 28 Sep rBZ paid a 3.5% dividend and dropped 1.08× of it. Exnight's call was NO_SIGNAL, so it didn't miss a win.</li>
-          <li>The backtest leans on rSATA. The live test fixes that: 16 different tokens, all graded.</li>
-          <li>Many rTokens don't trade overnight. Only 6 of the 16 live events traded enough to read the drop. Those 6 fell 0.91× the dividend on average, close to the backtest's 0.97×.</li>
         </ul></div>
       </div>
     </div>
@@ -140,7 +135,7 @@
         <div><dt>EX-DATE</dt><dd>The day the price drops by the dividend. You must hold the token before it to get paid.</dd></div>
         <div><dt>HOLD</dt><dd>Keep the token through the ex-date. Selling first would cost more than it saves.</dd></div>
         <div><dt>EXIT</dt><dd>Sell before the cutoff and buy back after. Only when that clearly wins after tax and costs.</dd></div>
-        <div><dt>NO_SIGNAL</dt><dd>Not enough to go on, like a trade too big for the visible quotes. It won't guess.</dd></div>
+        <div><dt>NOT ENOUGH DATA</dt><dd>Not enough to go on, like a trade too big for the quoted price. It won't guess, so you keep holding.</dd></div>
       </dl>
     </div>
   </section>

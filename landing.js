@@ -7,9 +7,11 @@ function fmt(value, digits = 1) {
   return text.startsWith("-") ? `−${text.slice(1)}` : text;
 }
 
+const LABELS = {NO_SIGNAL: "NOT ENOUGH DATA", ENTITLEMENT_AMBIGUOUS: "TOO CLOSE TO CALL", NOT_SCORED: "NOT GRADED YET"};
+
 function chip(value) {
   const text = value || "—";
-  return `<span class="verdict ${text}">${text}</span>`;
+  return `<span class="verdict ${text}">${LABELS[text] || text}</span>`;
 }
 
 // Calculator: selling first avoids the price drop but gives up the dividend you would have kept,
@@ -88,7 +90,7 @@ async function live() {
     const edge = latest.modeled_edge_keep_70pct;
     $("lc-edge").textContent = edge == null ? "pending" : `${edge < 0 ? "−" : "+"}$${Math.abs(edge).toFixed(2)} / share`;
     $("lc-edge").className = edge == null ? "" : edge < 0 ? "negative" : "positive";
-    $("lc-rec").textContent = done ? latest.score_status : "in progress";
+    $("lc-rec").textContent = done ? (latest.score_status === "PASS" ? "complete" : String(latest.score_status).toLowerCase()) : "in progress";
     const next = events.find((event) => !event.score_status || event.score_status === "NOT_SCORED");
     $("lc-state").textContent = next ? "RECORDING" : `ALL ${events.length} GRADED`;
     $("lc-state").classList.toggle("final", !next);

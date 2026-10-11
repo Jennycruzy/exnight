@@ -778,7 +778,7 @@
   }
  ],
  "forward_score": {
-  "message": "1 of 3 events have complete cash basis. Unresolved: rAPH, rSTM.",
+  "message": "1 of 3 tokens have a confirmed dividend amount. Not confirmed: rAPH, rSTM.",
   "path": "data/results/forward_score_20260922.json",
   "report": {
    "checked_at": "2026-09-22T14:29:02+00:00",
@@ -1015,17 +1015,17 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-10-08T11:40:58.581513+00:00",
+ "generated_at": "2026-10-11T12:28:39.636090+00:00",
  "limits": [
-  "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
-  "Current order books are observed-now evidence, not historical event-time fills.",
-  "Most Reality tokens show only a live ticker quote, not a two-sided public book; one $10 rTOWN buy filled in full at that quote, but larger sizes are unproven.",
-  "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date); this dashboard exposes no execution controls."
+  "Exnight never suggests buying just to collect a dividend: across 127 events that lost money on average, even in the best case (no tax, low costs: -17.7 bps per event).",
+  "The order books shown are from today, not from the night of each past event.",
+  "Most rTokens show only a best price, not a full order book. One $10 rTOWN buy filled in full at that price, but larger sizes are unproven.",
+  "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date). This site can't place trades."
  ],
  "mode": "PUBLIC_SNAPSHOT",
  "observation": {
   "event_date": "2026-09-22",
-  "message": "Public evidence snapshot. The September 22 recorder passed cadence checks. 1 of 3 events have complete cash basis. Unresolved: rAPH, rSTM.",
+  "message": "Saved snapshot. The 22 September recording saved a price every minute with no gaps. 1 of 3 tokens have a confirmed dividend amount. Not confirmed: rAPH, rSTM.",
   "status": "SCORED"
  },
  "project": "EXNIGHT",
