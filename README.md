@@ -114,8 +114,21 @@ The calculator on the site lets you move the numbers and watch it flip.
 
 ### Backtest on unseen data
 
-The rule was fitted on past events, frozen, then run on later events it hadn't seen, using only
-dividend info that was public at decision time:
+The rule was fitted on past events (24 Jun–31 Jul), frozen, then run on later events it hadn't
+seen (1 Aug–16 Sep), 85 days in total, using only dividend info that was public at decision
+time. It is scored night by night against the obvious trade, always selling first:
+
+| Exnight minus always selling first | In-sample (38 days, 17 events) | Out-of-sample (47 days, 39 events) |
+|---|---:|---:|
+| Sharpe | 6.51 | **11.96** |
+| Sortino | 4.07 | 6.95 |
+| Max drawdown | -0.053% | -0.055% |
+| Nights Exnight came out ahead | 82% | 87% |
+| Rolling 30-day Sharpe | 9 of 9 windows positive | 18 of 18 windows positive |
+| Out-of-sample / in-sample Sharpe | | 1.84 (no decay) |
+
+The same 39 events, strategy by strategy. Exnight held every time, so its own book is the
+holder's overnight return:
 
 | 39 unseen events over 47 days | Exnight | Always sell first | Just hold |
 |---|---:|---:|---:|
@@ -127,18 +140,6 @@ dividend info that was public at decision time:
 | Sortino | -1.59 | -33.82 | -1.59 |
 | Max drawdown | -0.169% | -0.600% | -0.169% |
 | Turnover (x capital) | 0 | 3.12 | 0 |
-
-The same results scored as Exnight minus always selling first, night by night. The rule was
-fitted on 24 Jun–31 Jul and tested on 1 Aug–16 Sep, 85 days in total:
-
-| Exnight minus always selling first | In-sample (38 days, 17 events) | Out-of-sample (47 days, 39 events) |
-|---|---:|---:|
-| Sharpe | 6.51 | **11.96** |
-| Sortino | 4.07 | 6.95 |
-| Max drawdown | -0.053% | -0.055% |
-| Nights Exnight came out ahead | 82% | 87% |
-| Rolling 30-day Sharpe | 9 of 9 windows positive | 18 of 18 windows positive |
-| Out-of-sample / in-sample Sharpe | | 1.84 (no decay) |
 
 The gap is cost avoidance, not a price forecast: stepping out paid 38.6 bps per event in fees
 and slippage, and holding returned -6.1 bps. It stays positive in all 16 slippage and withholding cases tested; in the

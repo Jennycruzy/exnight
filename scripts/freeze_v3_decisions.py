@@ -7,7 +7,8 @@ Run each weekday at 19:30 ET (23:30 UTC while US daylight time is in force):
 
 Writes data/results/signals_v3_<UTC stamp>.csv and its run manifest, then commits exactly
 those two files. The commit refuses to run under any identity other than the configured
-jennycruzy one and carries no attribution lines. Pushing is left to the operator.
+jennycruzy one and carries no attribution lines. It then pushes main and republishes the
+site (gh-pages), so each locked call is public the same night, before its cutoff.
 
 After the commit, if EXNIGHT_ANCHOR_KEY is set (in the environment or .env), the commit and
 the sha256 of both files are written into an Arbitrum One transaction (exnight/anchor.py), and
@@ -25,6 +26,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 
 from dotenv import load_dotenv  # noqa: E402
 
@@ -51,7 +53,20 @@ def main() -> int:
     _git("commit", "--only", "-q", "-m", f"Freeze V3 forward decisions at {now.isoformat()}", "--", *paths)
     commit = _git("rev-parse", "HEAD")
     print(f"{now.isoformat()} froze {len(frame)} rows {counts}; commit {commit[:7]}")
-    return anchor_freeze(commit, paths, now, tag)
+    status = anchor_freeze(commit, paths, now, tag)
+    publish()
+    return status
+
+
+def publish() -> None:
+    """Push the lock (and its anchor) and rebuild the public site. Failures are logged only."""
+    import score_due_v3  # push helpers shared with the scorer
+    env = score_due_v3._push_env()
+    run = subprocess.run(["bash", str(ROOT / "scripts" / "publish_pages.sh")], cwd=ROOT, env=env,
+                         capture_output=True, text=True, timeout=600)
+    print(run.stdout.strip() or run.stderr.strip()[-400:])
+    print(score_due_v3._push("main", env))
+    print(score_due_v3._push("gh-pages", env))
 
 
 def anchor_freeze(commit: str, paths: list[str], now: dt.datetime, tag: str) -> int:
