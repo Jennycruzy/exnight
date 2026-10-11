@@ -151,6 +151,12 @@ input[type=range]::-moz-range-thumb { width: 18px; height: 18px; background: var
 
 .honest { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 44px; border: 1px solid var(--line); }
 .honest.single { grid-template-columns: 1fr; }
+.dividend-card { display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; margin-top: 44px; padding: 26px 28px; border: 1px solid var(--line); }
+.dividend-card h3 { font-size: 20px; margin: 6px 0 10px; }
+.dv-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; align-content: center; }
+.dv-rows span { display: block; font-size: 13px; color: var(--ink-3); }
+.dv-rows b { font: 700 16px var(--mono); }
+.dividend-panel { margin-bottom: 20px; }
 .honest > div { padding: 28px; }
 .honest > div + div { border-left: 1px solid var(--line); }
 .honest h3 { font-size: 16px; margin-bottom: 14px; }
@@ -324,6 +330,7 @@ input[type=range]::-moz-range-thumb { width: 18px; height: 18px; background: var
   .calc-inputs, .honest > div + div, .answer > div + div, .decision-form { border-right: 0; border-left: 0; border-top: 1px solid var(--line); }
   .calc-inputs { border-top: 0; border-bottom: 1px solid var(--line); }
   .stat-strip, .metrics, .glossary { grid-template-columns: 1fr 1fr; }
+  .dividend-card { grid-template-columns: 1fr; }
   .stat:nth-child(2n), .metric:nth-child(2n), .glossary div:nth-child(2n) { border-right: 0; }
   .stat:nth-child(-n+2), .metric:nth-child(-n+2), .glossary div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .steps, .destination-grid, .decision-options { grid-template-columns: 1fr; }
