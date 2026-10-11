@@ -242,6 +242,8 @@ I didn't publish a Playbook for Exnight, because it would've shown a misleading 
 
 ## What's still open
 
+Every error I found in my own work and every Bitget limit I hit, with dates and fixes: [developer log](docs/DEVLOG.md).
+
 - **The rTOWN dividend is still waiting on Bitget.** This is the one real position, held
   through the ex-date to measure how much of a dividend actually reaches an rToken holder.
 
