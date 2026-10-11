@@ -146,3 +146,13 @@ def test_recorder_skips_while_previous_run_holds_the_lock(tmp_path, monkeypatch)
     monkeypatch.setattr(sys, "argv", ["record_schedule.py", "--schedule", str(schedule)])
     assert record_schedule.main() == 0
     assert called == []
+
+
+def test_planner_skips_events_whose_cutoff_no_freeze_can_reach():
+    # Planned Sunday 11 Oct: Monday 12 Oct's cutoff was Friday 9 Oct, already gone.
+    # Tuesday 13 Oct's cutoff (Mon 20:00 ET = Tue 00:00 UTC) still has the Monday 23:30 UTC freeze.
+    now = dt.datetime(2026, 10, 11, 14, 0, tzinfo=dt.UTC)
+    assert not plan.lockable(dt.date(2026, 10, 12), now)
+    assert plan.lockable(dt.date(2026, 10, 13), now)
+    # Planned Monday 23:45 UTC, after that freeze: Tuesday's event can no longer be locked.
+    assert not plan.lockable(dt.date(2026, 10, 13), dt.datetime(2026, 10, 12, 23, 45, tzinfo=dt.UTC))

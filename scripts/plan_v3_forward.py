@@ -10,6 +10,10 @@ MIN_YIELD_BP = 20 bp minimum round trip (0.1% taker on both legs) / 0.30 withhol
 EXIT is impossible under V3 even with a perfect estimate and documented 30% withholding, so
 recording such an event cannot test the rule's EXIT side.
 
+An event is only planned if a scheduled freeze (23:30 UTC on weekdays) still falls before its
+sell cutoff, so every planned decision can be locked in advance. A later round is written to
+its own file (--output data/forward/v3_schedule_r2.json) and never edits an earlier one.
+
 Windows (US Eastern): the sell cutoff is 20:00 ET on the previous weekday, the last moment
 to step out before the ex-date. Recording runs from 16:00 ET that day to 10:30 ET on the
 ex-date, which covers the cutoff, the overnight session and the 04:00 ET rung.
@@ -56,14 +60,36 @@ def window(ex_date: dt.date) -> dict:
     )
 
 
+FREEZE_AT = dt.time(23, 30)  # UTC, weekdays: scripts/freeze_v3_decisions.py
+
+
+def next_freeze(now: dt.datetime) -> dt.datetime:
+    """The first scheduled freeze at or after `now`."""
+    day = now.astimezone(dt.UTC).date()
+    while True:
+        at = dt.datetime.combine(day, FREEZE_AT, dt.UTC)
+        if day.weekday() < 5 and at >= now:
+            return at
+        day += dt.timedelta(days=1)
+
+
+def lockable(ex_date: dt.date, now: dt.datetime | None) -> bool:
+    """True if a freeze still runs before this event's sell cutoff."""
+    if now is None:
+        return True
+    cutoff = dt.datetime.fromisoformat(window(ex_date)["sell_cutoff"])
+    return next_freeze(now) < cutoff
+
+
 def select(ledger: list[dict], prices: dict[str, float], plan_date: dt.date,
-           horizon_days: int = HORIZON_DAYS) -> list[dict]:
+           horizon_days: int = HORIZON_DAYS, now: dt.datetime | None = None) -> list[dict]:
     last = plan_date + dt.timedelta(days=horizon_days)
     out = []
     for e in ledger:
         ex = dt.date.fromisoformat(e["exchange_ex_date"])
         if (e["event_type"] != "CASH_DIV" or e["cash_dividend_basis"] != "GROSS"
-                or e.get("basis_tier") not in (1, 2, 3) or not plan_date < ex <= last):
+                or e.get("basis_tier") not in (1, 2, 3) or not plan_date < ex <= last
+                or not lockable(ex, now)):
             continue
         price = prices.get(e["event_id"])
         gross = float(e["gross_dividend_per_share"])
@@ -100,11 +126,15 @@ def main() -> int:
     ledger = [json.loads(l) for l in args.ledger.read_text().splitlines() if l.strip()]
     sig = pd.read_csv(args.signals).drop_duplicates("event_id")
     prices = {r.event_id: float(r.price) for r in sig.itertuples() if pd.notna(r.price)}
-    targets = select(ledger, prices, args.plan_date)
+    if args.output.exists():
+        raise SystemExit(f"{args.output} already exists; a planned round is never overwritten")
+    now = dt.datetime.now(dt.UTC)
+    targets = select(ledger, prices, args.plan_date, now=now)
     plan = dict(
-        rule_id="exnight-strategy-v3", planned_at=dt.datetime.now(dt.UTC).isoformat(),
+        rule_id="exnight-strategy-v3", planned_at=now.isoformat(),
         plan_date=args.plan_date.isoformat(), min_gross_yield_bp=MIN_YIELD_BP, horizon_days=HORIZON_DAYS,
-        selection="GROSS basis tier 1-3, ex-date within horizon, gross yield at reference price >= min",
+        selection="GROSS basis tier 1-3, ex-date within horizon, gross yield at reference price >= min, "
+                  "a scheduled freeze still before the sell cutoff",
         reference_prices=f"{args.signals.relative_to(ROOT)} (V3 forward run)",
         ledger=str(args.ledger.relative_to(ROOT)), targets=targets, groups=groups(targets),
     )
