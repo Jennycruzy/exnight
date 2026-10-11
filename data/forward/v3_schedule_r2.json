@@ -1,0 +1,162 @@
+{
+ "rule_id": "exnight-strategy-v3",
+ "planned_at": "2026-10-11T14:37:39.238219+00:00",
+ "plan_date": "2026-10-11",
+ "min_gross_yield_bp": 66.66666666666667,
+ "horizon_days": 21,
+ "selection": "GROSS basis tier 1-3, ex-date within horizon, gross yield at reference price >= min, a scheduled freeze still before the sell cutoff",
+ "reference_prices": "data/results/signals_v3.csv (V3 forward run)",
+ "ledger": "data/ledger/reality_forward_20261011_resolved.jsonl",
+ "targets": [
+  {
+   "event_id": "rOZK-2026-10-13-1",
+   "symbol": "rOZK",
+   "spot_symbol": "ROZKUSDT",
+   "ex_date": "2026-10-13",
+   "gross_dividend": 0.49,
+   "reference_price": 44.44,
+   "gross_yield_bp": 110.261
+  },
+  {
+   "event_id": "rCHCO-2026-10-15-1",
+   "symbol": "rCHCO",
+   "spot_symbol": "RCHCOUSDT",
+   "ex_date": "2026-10-15",
+   "gross_dividend": 1.0,
+   "reference_price": 139.97,
+   "gross_yield_bp": 71.444
+  },
+  {
+   "event_id": "rCSWC-2026-10-15-1",
+   "symbol": "rCSWC",
+   "spot_symbol": "RCSWCUSDT",
+   "ex_date": "2026-10-15",
+   "gross_dividend": 0.1934,
+   "reference_price": 23.52,
+   "gross_yield_bp": 82.228
+  },
+  {
+   "event_id": "rCNXC-2026-10-23-1",
+   "symbol": "rCNXC",
+   "spot_symbol": "RCNXCUSDT",
+   "ex_date": "2026-10-23",
+   "gross_dividend": 0.37,
+   "reference_price": 25.95,
+   "gross_yield_bp": 142.582
+  },
+  {
+   "event_id": "rPSEC-2026-10-28-1",
+   "symbol": "rPSEC",
+   "spot_symbol": "RPSECUSDT",
+   "ex_date": "2026-10-28",
+   "gross_dividend": 0.035,
+   "reference_price": 1.73,
+   "gross_yield_bp": 202.312
+  },
+  {
+   "event_id": "rAGNC-2026-10-30-1",
+   "symbol": "rAGNC",
+   "spot_symbol": "RAGNCUSDT",
+   "ex_date": "2026-10-30",
+   "gross_dividend": 0.12,
+   "reference_price": 8.68,
+   "gross_yield_bp": 138.249
+  },
+  {
+   "event_id": "rPAA-2026-10-30-1",
+   "symbol": "rPAA",
+   "spot_symbol": "RPAAUSDT",
+   "ex_date": "2026-10-30",
+   "gross_dividend": 0.4175,
+   "reference_price": 24.34,
+   "gross_yield_bp": 171.528
+  },
+  {
+   "event_id": "rPAGP-2026-10-30-1",
+   "symbol": "rPAGP",
+   "spot_symbol": "RPAGPUSDT",
+   "ex_date": "2026-10-30",
+   "gross_dividend": 0.4175,
+   "reference_price": 26.62,
+   "gross_yield_bp": 156.837
+  }
+ ],
+ "groups": [
+  {
+   "label": "v3_20261013_ROZK",
+   "ex_date": "2026-10-13",
+   "symbols": [
+    "ROZKUSDT"
+   ],
+   "event_ids": [
+    "rOZK-2026-10-13-1"
+   ],
+   "sell_cutoff": "2026-10-12T20:00:00-04:00",
+   "rung_0400": "2026-10-13T04:00:00-04:00",
+   "start": "2026-10-12T20:00:00+00:00",
+   "end": "2026-10-13T14:30:00+00:00"
+  },
+  {
+   "label": "v3_20261015_RCHCO_RCSWC",
+   "ex_date": "2026-10-15",
+   "symbols": [
+    "RCHCOUSDT",
+    "RCSWCUSDT"
+   ],
+   "event_ids": [
+    "rCHCO-2026-10-15-1",
+    "rCSWC-2026-10-15-1"
+   ],
+   "sell_cutoff": "2026-10-14T20:00:00-04:00",
+   "rung_0400": "2026-10-15T04:00:00-04:00",
+   "start": "2026-10-14T20:00:00+00:00",
+   "end": "2026-10-15T14:30:00+00:00"
+  },
+  {
+   "label": "v3_20261023_RCNXC",
+   "ex_date": "2026-10-23",
+   "symbols": [
+    "RCNXCUSDT"
+   ],
+   "event_ids": [
+    "rCNXC-2026-10-23-1"
+   ],
+   "sell_cutoff": "2026-10-22T20:00:00-04:00",
+   "rung_0400": "2026-10-23T04:00:00-04:00",
+   "start": "2026-10-22T20:00:00+00:00",
+   "end": "2026-10-23T14:30:00+00:00"
+  },
+  {
+   "label": "v3_20261028_RPSEC",
+   "ex_date": "2026-10-28",
+   "symbols": [
+    "RPSECUSDT"
+   ],
+   "event_ids": [
+    "rPSEC-2026-10-28-1"
+   ],
+   "sell_cutoff": "2026-10-27T20:00:00-04:00",
+   "rung_0400": "2026-10-28T04:00:00-04:00",
+   "start": "2026-10-27T20:00:00+00:00",
+   "end": "2026-10-28T14:30:00+00:00"
+  },
+  {
+   "label": "v3_20261030_RAGNC_RPAA_RPAGP",
+   "ex_date": "2026-10-30",
+   "symbols": [
+    "RAGNCUSDT",
+    "RPAAUSDT",
+    "RPAGPUSDT"
+   ],
+   "event_ids": [
+    "rAGNC-2026-10-30-1",
+    "rPAA-2026-10-30-1",
+    "rPAGP-2026-10-30-1"
+   ],
+   "sell_cutoff": "2026-10-29T20:00:00-04:00",
+   "rung_0400": "2026-10-30T04:00:00-04:00",
+   "start": "2026-10-29T20:00:00+00:00",
+   "end": "2026-10-30T14:30:00+00:00"
+  }
+ ]
+}

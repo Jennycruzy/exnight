@@ -51,4 +51,4 @@ def test_public_build_includes_comparison_and_v3(tmp_path):
     build_pages.build(ROOT, tmp_path / "site", snapshot_path=ROOT / "data/results/public_dashboard_snapshot.json")
     summary = json.loads((tmp_path / "site" / "api" / "summary.json").read_text())
     assert summary["comparison"]["status"] == "AVAILABLE"
-    assert len(summary["v3"]["events"]) == 16
+    assert sum(event["round"] == 1 for event in summary["v3"]["events"]) == 16  # the first 16 never change

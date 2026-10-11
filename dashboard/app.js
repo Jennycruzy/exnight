@@ -152,7 +152,8 @@ function renderUpcoming(v3) {
     const why = event.verdict === "PENDING" ? event.reason
       : event.verdict === "NO_SIGNAL" ? (plainReason(event.reason) || "not enough evidence")
       : `${event.breakeven_yield_bp == null ? "selling first can't win at any dividend size" : `selling first needs a dividend over ${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% tax confirmed" : "tax could be 0% to 30%"}`;
-    const round = rounds.length > 1 ? `<br><span class="source">round ${esc(event.round)}</span>` : "";
+    const added = rounds.find((r) => r.round === event.round);
+    const round = event.round > 1 && added ? `<br><span class="source">added ${esc(dayMonth(added.plan_date))}</span>` : "";
     return `<tr><td><strong>${esc(event.symbol)}</strong>${round}</td><td>${esc(event.ex_date)}</td><td>$${number(event.gross_dividend, 4)}<br><span class="source">${number(event.gross_yield_bp, 0)} bps of price</span></td>`
       + `<td>${verdict(event.verdict)}</td><td class="source">${esc(why)}</td><td>${outcome}</td></tr>`;
   }).join("");
@@ -274,7 +275,7 @@ function render(data) {
   $("validation-assumptions").innerHTML = `<dt>Past trading costs</dt><dd>Estimated, because old order books aren't saved anywhere</dd><dt>Slippage tested</dt><dd>${(competition.cost_grid_bps || []).join(" / ") || "—"} bps round trip</dd><dt>Tax rates tested</dt><dd>${(competition.withholding_range || []).join(" / ") || "—"}%</dd><dt>What it means</dt><dd>Exnight held every time, because selling first never cleared the locked rule.</dd>`;
   $("validation-note").innerHTML = `<strong>Nothing to compare</strong>Exnight sold first ${competition.oos?.policy?.trade_count ?? 0} times across ${competition.oos?.policy?.event_count ?? 0} unseen events, so it matched holding exactly and the difference is zero.`;
   renderJudge(data.backtest || {});
-  $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(String(fold.fold).replace(/^OOS_(\d{4})_(\d{2})$/, (m, y, mo) => `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][Number(mo) - 1]} ${y} test`))}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(RUNGS[fold.selected_rung] || fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No test rounds available.</td></tr>`;
+  $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(String(fold.fold).replace(/^OOS_(\d{4})_(\d{2})$/, (m, y, mo) => `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][Number(mo) - 1]} ${y} test`))}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(RUNGS[fold.selected_rung] || fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No test periods available.</td></tr>`;
 
   activeDate = data.signals.meta.event_date || activeDate;
   $("signal-date").innerHTML = (meta.available_dates || []).map((date) => `<option value="${esc(date)}" ${date === activeDate ? "selected" : ""}>${esc(date)}</option>`).join("");
