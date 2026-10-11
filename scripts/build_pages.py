@@ -52,7 +52,7 @@ def public_snapshot(project_root: Path, now: dt.datetime | None = None) -> dict[
     snapshot["mode"] = "PUBLIC_SNAPSHOT"
     snapshot["downloads"] = []
     snapshot["observation"]["message"] = (
-        "Public evidence snapshot. " + snapshot["observation"]["message"]
+        "Saved snapshot. " + snapshot["observation"]["message"]
     )
     return snapshot
 
@@ -108,8 +108,15 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     summary["v3"] = v3_view.v3(project_root)
     from dashboard.server import _backtest_view
     summary["backtest"] = _backtest_view(_read_json(project_root / "reports" / "backtest.json"))
-    from dashboard.server import LIMITS
+    from dashboard.server import LIMITS, observation_text, score_message
     summary["limits"] = list(LIMITS)
+    # Saved snapshots carry older wording; rebuild the plain-language messages from their data.
+    report = (summary.get("forward_score") or {}).get("report")
+    if report:
+        message = score_message(report)
+        summary["forward_score"]["message"] = message
+        summary["observation"]["message"] = "Saved snapshot. " + observation_text(
+            (summary.get("recorder") or {}).get("status") == "PASS", message)
     downloads = []
     evidence = dict(PUBLIC_EVIDENCE)
     for path in sorted((project_root / "data" / "results").glob("forward_score_v3_*.json")):

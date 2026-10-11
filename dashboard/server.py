@@ -346,17 +346,10 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         observation_message = "Recorder is collecting evidence; forward score is intentionally deferred."
         observation_date = signal_meta.get("event_date")
     else:
-        incomplete = [str(row.get("symbol", "")) for row in forward.get("results", [])
-                      if not row.get("complete")]
-        complete_count = sum(bool(row.get("complete")) for row in forward.get("results", []))
-        message = (f"{complete_count} of {len(forward.get('results', []))} events have complete "
-                   f"cash basis. Unresolved: {', '.join(incomplete)}."
-                   if incomplete else "All forward events have complete cash basis.")
+        message = score_message(forward)
         score = {"status": forward.get("status", "UNKNOWN"), "message": message,
                  "path": "data/results/forward_score_20260922.json", "report": forward}
-        observation_message = ("The September 22 recorder passed cadence checks. " + message
-                               if recorder["status"] == "PASS" else
-                               "The September 22 recorder has unresolved integrity errors. " + message)
+        observation_message = observation_text(recorder["status"] == "PASS", message)
         event_dates = {str(row.get("ex_date", "")) for row in forward.get("results", [])}
         observation_date = next(iter(event_dates)) if len(event_dates) == 1 else "2026-09-22"
     downloads = [
@@ -380,7 +373,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
                           for item in capacity["events"])
         depth = {
             "status": "NO_PUBLIC_BOOK" if empty_books == len(capacity["events"]) else "PARTIAL",
-            "message": f"{empty_books} of {len(capacity['events'])} recorded pairs had no two-sided public book.",
+            "message": f"{empty_books} of {len(capacity['events'])} tokens had no public order book while recording.",
             "latest": capacity.get("as_of"),
             "book_supported_count": len(capacity["events"]) - empty_books,
             "event_count": len(capacity["events"]),
@@ -403,11 +396,26 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
 
 
 
+def score_message(forward: dict) -> str:
+    """Plain-language summary of the 22 September grade."""
+    results = forward.get("results", [])
+    incomplete = [str(row.get("symbol", "")) for row in results if not row.get("complete")]
+    if not incomplete:
+        return "Every token has a confirmed dividend amount."
+    return (f"{len(results) - len(incomplete)} of {len(results)} tokens have a confirmed "
+            f"dividend amount. Not confirmed: {', '.join(incomplete)}.")
+
+
+def observation_text(recorder_passed: bool, message: str) -> str:
+    return ("The 22 September recording saved a price every minute with no gaps. " + message
+            if recorder_passed else "The 22 September recording has gaps. " + message)
+
+
 LIMITS = (
-    "BUY is never recommended: across 127 events, buying before the ex-date to collect the dividend lost money on average even in the most favourable case (counted, no tax, low costs: -17.7 bps per event).",
-    "Current order books are observed-now evidence, not historical event-time fills.",
-    "Most Reality tokens show only a live ticker quote, not a two-sided public book; one $10 rTOWN buy filled in full at that quote, but larger sizes are unproven.",
-    "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date); this dashboard exposes no execution controls.",
+    "Exnight never suggests buying just to collect a dividend: across 127 events that lost money on average, even in the best case (no tax, low costs: -17.7 bps per event).",
+    "The order books shown are from today, not from the night of each past event.",
+    "Most rTokens show only a best price, not a full order book. One $10 rTOWN buy filled in full at that price, but larger sizes are unproven.",
+    "One real $10 order has been placed (rTOWN, 23 September, held through the ex-date). This site can't place trades.",
 )
 
 

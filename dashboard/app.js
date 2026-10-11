@@ -25,15 +25,15 @@ function renderJudge(backtest) {
     ["Max drawdown", pct(is.metrics.maximum_drawdown), pct(oos.metrics.maximum_drawdown)],
     ["Nights Exnight came out ahead", `${number(is.metrics.win_rate * 100, 0)}%`, `${number(oos.metrics.win_rate * 100, 0)}%`],
     ["Rolling 30-day Sharpe", roll(is.rolling), roll(oos.rolling)],
-    ["Out-of-sample / in-sample Sharpe", "", decay.ratio == null ? "n/a" : `${number(decay.ratio, 2)} ${decay.alert ? "(decay alert)" : "(no decay)"}`],
+    ["Unseen Sharpe ÷ training Sharpe", "", decay.ratio == null ? "n/a" : `${number(decay.ratio, 2)} ${decay.alert ? "(weaker on unseen data)" : "(held up on unseen data)"}`],
     ["Exnight's own trades / turnover", "0 / 0", "0 / 0"],
   ];
   $("judge-metrics").innerHTML = rows.map(([k, a, b]) => `<tr><td>${k}</td><td>${a}</td><td>${b}</td></tr>`).join("");
   const gap = backtest.decomposition, per = backtest.per_event.OOS, conc = backtest.concentration;
   const top = Object.entries(conc.by_symbol).sort((a, b) => b[1].events - a[1].events)[0];
   const rest = conc.leave_one_symbol_out[top[0]];
-  $("judge-note").innerHTML = `<strong>Where it comes from</strong>Stepping out cost ${number(gap.cost_bps, 1)} bps per event in fees and slippage; holding returned ${number(gap.hold_bps, 1)} bps. Per event the gap averages ${number(per.mean_bps, 1)} bps (t-stat ${number(per.t_stat, 2)}), ahead on ${per.positive} of ${per.events}. <strong>Limit</strong>${esc(top[0])} supplies ${top[1].events} of ${per.events} unseen events; without it the gap is ${number(rest.mean_bps, 1)} bps over ${rest.events} events (t-stat ${number(rest.t_stat, 2)}), positive but not conclusive.`
-    + (backtest.full_sample ? ` <strong>Wider check</strong>Across every resolved dividend (${backtest.full_sample.all.events} events, ${backtest.full_sample.all.symbols} tokens; Exnight says NO_SIGNAL and holds where no dividend was declared in time), without ${esc(top[0])} Exnight is ahead on ${backtest.full_sample.all_without_top_symbol.symbols_ahead} of ${backtest.full_sample.all_without_top_symbol.symbols} tokens, ${number(backtest.full_sample.all_without_top_symbol.mean_bps, 1)} bps per event (t-stat ${number(backtest.full_sample.all_without_top_symbol.t_stat, 2)}). Added after the results; the frozen scorecard is unchanged.` : "");
+  $("judge-note").innerHTML = `<strong>Where it comes from</strong>Selling first cost ${number(gap.cost_bps, 1)} bps per event in fees and slippage; holding returned ${number(gap.hold_bps, 1)} bps. Per event the gap averages ${number(per.mean_bps, 1)} bps (confidence score t = ${number(per.t_stat, 2)}), ahead on ${per.positive} of ${per.events}. <strong>Limit</strong>${esc(top[0])} supplies ${top[1].events} of ${per.events} unseen events; without it the gap is ${number(rest.mean_bps, 1)} bps over ${rest.events} events (t = ${number(rest.t_stat, 2)}), positive but not conclusive.`
+    + (backtest.full_sample ? ` <strong>Wider check</strong>Across every resolved dividend (${backtest.full_sample.all.events} events, ${backtest.full_sample.all.symbols} tokens; where no dividend was announced in time, Exnight says not enough data and holds), without ${esc(top[0])} Exnight is ahead on ${backtest.full_sample.all_without_top_symbol.symbols_ahead} of ${backtest.full_sample.all_without_top_symbol.symbols} tokens, ${number(backtest.full_sample.all_without_top_symbol.mean_bps, 1)} bps per event (t = ${number(backtest.full_sample.all_without_top_symbol.t_stat, 2)}). Added after the results; the locked scorecard is unchanged.` : "");
 }
 
 function when(value) {
@@ -66,9 +66,33 @@ function number(value, digits = 2) {
   return value == null || Number.isNaN(Number(value)) ? "—" : Number(value).toFixed(digits);
 }
 
+const LABELS = {NO_SIGNAL: "NOT ENOUGH DATA", ENTITLEMENT_AMBIGUOUS: "TOO CLOSE TO CALL", NOT_SCORED: "NOT GRADED YET", PENDING: "WAITING", UNKNOWN: "UNKNOWN"};
+const label = (value) => LABELS[value] || value;
+const STATUS = {PASS: "complete", WARN: "check", FAIL: "failed", INCOMPLETE: "incomplete", UNKNOWN: "unknown"};
+const status = (value) => STATUS[value] || String(value || "unknown").toLowerCase().replace(/_/g, " ");
+const RUNGS = {premarket_0400: "04:00 ET", open_0930: "09:30 ET", after_hours_2000: "20:00 ET"};
+const QUOTES = {ticker_only: "best quote only", public_book: "full order book"};
+const quotes = (sell, buy) => sell || buy ? `sale: ${QUOTES[sell] || sell || "none"} · buy-back: ${QUOTES[buy] || buy || "none"}` : "no quotes saved";
+
+// Turns the rule's internal reason codes into plain sentences.
+function plainReason(text) {
+  if (!text) return "";
+  const parts = String(text).split("; ").map((part) => {
+    const size = part.match(/^(sell|buy): \$([\d,.]+) exceeds visible top-of-book \(\$([\d,.]+)\)/);
+    if (size) return `a $${size[2]} ${size[1] === "sell" ? "sale" : "buy-back"} is bigger than the $${size[3]} on offer at the quoted price`;
+    const depth = part.match(/^(sell|buy): no depth sample/);
+    if (depth) return `no price quotes saved for the ${depth[1] === "sell" ? "sale" : "buy-back"}`;
+    if (/basis/.test(part)) return "the dividend amount wasn't confirmed before the decision";
+    if (/net entitlement unresolved/.test(part)) return "selling first only wins if 30% tax is taken, and the tax rate isn't confirmed";
+    return part;
+  });
+  const unique = [...new Set(parts)].join("; ");
+  return unique.charAt(0).toUpperCase() + unique.slice(1);
+}
+
 function verdict(value) {
   const text = value || "UNKNOWN";
-  return `<span class="verdict ${esc(text)}">${esc(text)}</span>`;
+  return `<span class="verdict ${esc(text)}">${esc(label(text))}</span>`;
 }
 
 function signed(value, digits = 1) {
@@ -83,7 +107,7 @@ function pctText(value, digits = 3) {
 
 function renderComparison(comparison, backtest = {}) {
   if (comparison.status !== "AVAILABLE") {
-    $("summary-headline").textContent = "Exnight decides whether stepping out before an ex-date is worth it";
+    $("summary-headline").textContent = "Exnight decides whether selling before an ex-date is worth it";
     $("comparison-body").innerHTML = `<tr><td colspan="6" class="empty">Comparison unavailable.</td></tr>`;
     return;
   }
@@ -94,12 +118,12 @@ function renderComparison(comparison, backtest = {}) {
     + `<td>${row.beat_hold_share == null ? "—" : `${Math.round(row.beat_hold_share * 100)}% of events`}</td>`
     + `<td>${pctText(row.total_return)}</td><td>${signed(row.sharpe, 2)}</td></tr>`).join("");
   let note = `${comparison.events} unseen events over ${comparison.days} days, using only information published before each decision. `
-    + "Holding's small negative return comes from ordinary market moves on those nights, not from the dividend. The always-sell-first line was added after the results were known and changes nothing that was frozen.";
+    + "Holding's small negative return comes from ordinary market moves on those nights, not from the dividend. The always-sell-first line was added after the results were known and changes none of the locked decisions.";
   note = esc(note);
   if (backtest.status === "AVAILABLE") {
     const is = backtest.vs_always_exit.IS, oos = backtest.vs_always_exit.OOS;
     const windows = is.rolling.scored + oos.rolling.scored, positive = is.rolling.positive + oos.rolling.positive;
-    note += ` <strong>Scored night by night as Exnight minus always selling first:</strong> Sharpe ${number(is.metrics.sharpe, 2)} in-sample, ${number(oos.metrics.sharpe, 2)} out-of-sample, positive in ${positive} of ${windows} rolling 30-day windows. <a data-route-link="validation" href="#/validation">All metrics and limits →</a>`;
+    note += ` <strong>Scored night by night as Exnight minus always selling first:</strong> Sharpe ${number(is.metrics.sharpe, 2)} in the training period, ${number(oos.metrics.sharpe, 2)} on unseen data, positive in ${positive} of ${windows} rolling 30-day windows. <a data-route-link="validation" href="#/validation">All metrics and limits →</a>`;
   }
   $("comparison-note").innerHTML = note;
 }
@@ -114,18 +138,18 @@ function renderUpcoming(v3) {
   $("upcoming-tag").textContent = `${v3.scored} OF ${v3.events.length} SCORED`;
   $("landing-upcoming-count").textContent = v3.events.length;
   $("landing-upcoming-note").textContent = `events to ${v3.events[v3.events.length - 1]?.ex_date || "—"} · ${v3.scored} scored`;
-  $("upcoming-note").textContent = `Every event with a verified dividend worth at least ${number(v3.min_gross_yield_bp, 1)} bps of the price, the smallest size where stepping out could ever pay. `
-    + `Each decision is frozen before the 20:00 ET sell cutoff. V3 currently expects a drop of at least ${number(v3.lower_ratio, 2)} of the dividend, `
-    + "below the 0.70 a holder keeps after 30% withholding, so it holds unless that estimate tightens.";
+  $("upcoming-note").textContent = `Every event with a verified dividend worth at least ${number(v3.min_gross_yield_bp, 1)} bps of the price, the smallest size where selling first could ever pay. `
+    + `Each decision is locked before the 20:00 ET sell cutoff. To stay safe, Exnight assumes the price falls only ${number(v3.lower_ratio, 2)}× the dividend, `
+    + "less than the 0.70× a holder keeps after 30% tax, so selling first never came out ahead and it held every time.";
   $("upcoming-body").innerHTML = v3.events.map((event) => {
     const bookVerdict = event.realised_verdict && event.realised_verdict !== "NO_SIGNAL";
     const shown = bookVerdict ? event.realised_verdict : (event.modeled_verdict || event.realised_verdict || event.score_status);
-    const basis = bookVerdict ? "recorded quotes" : "modeled costs (visible quotes too thin)";
+    const basis = bookVerdict ? "recorded quotes" : "estimated costs (quotes too thin)";
     const outcome = event.score_status === "NOT_SCORED" ? `<span class="source">after ${esc(event.ex_date)} 10:30 ET</span>`
-      : `${verdict(shown)}<br><span class="source">${event.price_discovery === "NONE" ? "no overnight trades, no reading" : `price fell ${number(event.realised_pdr, 2)}× the dividend`} · ${esc(basis)} · recording ${esc(event.score_status)}</span>`;
+      : `${verdict(shown)}<br><span class="source">${event.price_discovery === "NONE" ? "no overnight trades, no reading" : `price fell ${number(event.realised_pdr, 2)}× the dividend`} · ${esc(basis)} · recording ${esc(status(event.score_status))}</span>`;
     const why = event.verdict === "PENDING" ? event.reason
-      : event.verdict === "NO_SIGNAL" ? (event.reason || "evidence incomplete")
-      : `break-even yield ${event.breakeven_yield_bp == null ? "not reachable" : `${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% withholding documented" : "withholding 0–30%"}`;
+      : event.verdict === "NO_SIGNAL" ? (plainReason(event.reason) || "not enough evidence")
+      : `${event.breakeven_yield_bp == null ? "selling first can't win at any dividend size" : `selling first needs a dividend over ${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% tax confirmed" : "tax could be 0% to 30%"}`;
     return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>$${number(event.gross_dividend, 4)}<br><span class="source">${number(event.gross_yield_bp, 0)} bps of price</span></td>`
       + `<td>${verdict(event.verdict)}</td><td class="source">${esc(why)}</td><td>${outcome}</td></tr>`;
   }).join("");
@@ -142,15 +166,15 @@ function renderForward(v3) {
       : event.price_discovery === "THIN" ? `only ${trades} trade${trades === 1 ? "" : "s"} overnight, weak reading`
       : edge < 0 ? "a loss, so holding was right" : "a gain";
     const edgeText = edge == null ? "—" : event.price_discovery === "NONE" ? `—<br><span class="source">${note}</span>`
-      : `<span class="${edge < 0 ? "negative" : "positive"}">${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)}</span><br><span class="source">${note} · 30% tax, modeled costs</span>`;
+      : `<span class="${edge < 0 ? "negative" : "positive"}">${edge < 0 ? "−" : "+"}$${number(Math.abs(edge), 2)}</span><br><span class="source">${note} · 30% tax, estimated costs</span>`;
     return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>${verdict(event.verdict)}<br><span class="source">locked ${esc(when(event.decided_at))}</span></td>`
       + `<td>${verdict(event.modeled_verdict || event.realised_verdict)}<br><span class="source">${event.price_discovery === "NONE" ? "price unchanged: no overnight trades" : `price fell ${number(event.realised_pdr, 2)}× the $${number(event.gross_dividend, 2)} dividend`}</span></td>`
-      + `<td>${edgeText}</td><td>${esc(event.score_status)}</td></tr>`;
+      + `<td>${edgeText}</td><td>${esc(status(event.score_status))}</td></tr>`;
   }).join("") : `<tr><td colspan="6" class="empty">First window not yet scored.</td></tr>`;
   $("forward-note").innerHTML = `Every decision is saved to Git before the 20:00 ET sell cutoff, then graded automatically from the minute-by-minute recording. `
     + `${total - scored.length} more high-yield events are scheduled up to ${esc(v3.events?.[total - 1]?.ex_date || "—")}. `
     + `A real order backs this up: 0.2783 rTOWN bought on 23 September filled in full at the quote on an empty public book, 10 bps fee, no slippage (<a href="https://github.com/Jennycruzy/exnight/blob/main/docs/live_fill_20260923.md">live fill</a>). `
-    + `The public order books are empty, so trading costs are modeled. One $10 fill doesn't prove a $1,000 trade would fill the same way.`;
+    + `The public order books are empty, so trading costs are estimated. One $10 fill doesn't prove a $1,000 trade would fill the same way.`;
 }
 
 function render(data) {
@@ -174,33 +198,33 @@ function render(data) {
   $("as-of").textContent = Number.isNaN(generated.getTime()) ? "Snapshot time unknown" : `Snapshot ${generated.toLocaleString([], {year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short"})}`;
   $("event-date").textContent = observation.event_date || meta.event_date || "window pending";
   $("headline").textContent = scored
-    ? (failed ? "Recorder audit needs attention" : score.status === "PASS" ? "Forward window scored" : "Recording passed; score incomplete")
-    : (failed ? "Observation window needs attention" : "Observation window is collecting");
-  $("hero-copy").textContent = scored ? (observation.message || score.message || "Saved forward evidence is available.")
+    ? (failed ? "The recording has gaps" : score.status === "PASS" ? "Recording graded" : "Recording complete; grade incomplete")
+    : (failed ? "The recording has gaps" : "Recording in progress");
+  $("hero-copy").textContent = scored ? (observation.message || score.message || "The saved recording is available.")
     : failed ? `${(recorder.errors || []).join(" · ")} Decisions remain available, with the recording issue shown in their evidence.`
-    : "The recorder is collecting evidence for the scheduled forward window.";
+    : "Recording prices for the scheduled event.";
   const hero = $("hero-status"); hero.className = `hero-status ${failed ? "bad" : "ok"}`;
-  hero.innerHTML = `<span class="status-orb"></span><div><strong>${failed ? "Recorder attention" : scored ? "Recorder passed" : "Recorder healthy"}</strong><small>${(recorder.sample_count || 0).toLocaleString()} saved samples</small></div>`;
+  hero.innerHTML = `<span class="status-orb"></span><div><strong>${failed ? "Recording has gaps" : scored ? "Recording complete" : "Recording"}</strong><small>${(recorder.sample_count || 0).toLocaleString()} saved samples</small></div>`;
 
   $("metric-samples").textContent = (recorder.sample_count || 0).toLocaleString();
-  $("metric-samples-note").textContent = `${Object.keys(recorder.symbols || {}).length} monitored symbols`;
+  $("metric-samples-note").textContent = `${Object.keys(recorder.symbols || {}).length} tokens recorded`;
   const scoredEvents = score.report?.results || [];
   $("metric-events").textContent = scored ? scoredEvents.length : (meta.events ?? "—");
-  $("metric-events-note").textContent = scored ? `${scoredEvents.filter((row) => row.complete).length} with resolved cash basis` : `${meta.rows || 0} frozen notional rows`;
+  $("metric-events-note").textContent = scored ? `${scoredEvents.filter((row) => row.complete).length} with a confirmed dividend` : `${meta.rows || 0} locked decisions`;
   const counts = meta.verdict_counts || {};
-  $("metric-signals").textContent = Object.entries(counts).map(([key, value]) => `${value} ${key}`).join(" · ") || "—";
+  $("metric-signals").textContent = Object.entries(counts).map(([key, value]) => `${value} ${label(key).toLowerCase()}`).join(" · ") || "—";
   $("metric-signals-note").textContent = `For ex-date ${meta.event_date || "—"}`;
-  $("metric-depth").textContent = health.event_count ? `${health.book_supported_count}/${health.event_count}` : (health.status || "UNKNOWN");
-  $("metric-depth-note").textContent = health.message || "No capacity report";
+  $("metric-depth").textContent = health.event_count ? `${health.book_supported_count}/${health.event_count}` : status(health.status);
+  $("metric-depth-note").textContent = health.message || "No order-book report";
   $("landing-signal-count").textContent = (meta.rows || rows.length || 0).toLocaleString();
-  $("landing-signal-note").textContent = `${meta.events || rows.length || 0} forward events`;
+  $("landing-signal-note").textContent = `${meta.events || rows.length || 0} events`;
   $("landing-recorder-count").textContent = (recorder.sample_count || 0).toLocaleString();
-  $("landing-recorder-note").textContent = `${Object.keys(recorder.symbols || {}).length} monitored symbols`;
+  $("landing-recorder-note").textContent = `${Object.keys(recorder.symbols || {}).length} tokens recorded`;
   const scoredTokens = score.report?.results || [];
   $("landing-evidence-count").textContent = scoredTokens.length
-    ? `${scoredTokens.filter((row) => row.complete).length} of ${scoredTokens.length}` : (score.status || "—");
+    ? `${scoredTokens.filter((row) => row.complete).length} of ${scoredTokens.length}` : status(score.status);
   $("landing-evidence-note").textContent = scoredTokens.length
-    ? `first-recording tokens scored` : "forward score";
+    ? `tokens graded in the first recording` : "grade";
   $("landing-validation-count").textContent = competition.sample?.eligible_ex_ante ?? "—";
   $("landing-validation-note").textContent = `knowable in advance · ${competition.oos?.policy?.event_count ?? 0} unseen test events`;
 
@@ -210,60 +234,60 @@ function render(data) {
   $("validation-oos-days").textContent = `${competition.oos_days ?? "—"} calendar days`;
   $("validation-trades").textContent = competition.oos?.policy?.trade_count ?? "—";
   const series = [
-    ["Exnight policy", competition.oos?.policy, "sharpe"],
-    ["HOLD benchmark", competition.oos?.benchmark, "sharpe"],
-    ["Active", competition.oos?.active, "information_ratio"],
+    ["Exnight", competition.oos?.policy, "sharpe"],
+    ["Just hold", competition.oos?.benchmark, "sharpe"],
+    ["Difference", competition.oos?.active, "information_ratio"],
   ];
   $("validation-series").innerHTML = series.map(([name, item, ratio]) => `<tr><td><strong>${name}</strong></td><td>${item?.total_return == null ? "—" : `${number(item.total_return * 100, 3)}%`}</td><td>${number(item?.[ratio], 2)}</td><td>${item?.maximum_drawdown == null ? "—" : `${number(item.maximum_drawdown * 100, 3)}%`}</td></tr>`).join("");
-  $("validation-assumptions").innerHTML = `<dt>Historical costs</dt><dd>MODELED_EXECUTION</dd><dt>Slippage grid</dt><dd>${(competition.cost_grid_bps || []).join(" / ") || "—"} bps round trip</dd><dt>Withholding range</dt><dd>${(competition.withholding_range || []).join(" / ") || "—"}%</dd><dt>Interpretation</dt><dd>Exnight matched HOLD because no EXIT cleared the frozen rule.</dd>`;
-  $("validation-note").innerHTML = `<strong>Rolling 30-day Sharpe · INSUFFICIENT_EVENTS</strong>${competition.oos?.policy?.trade_count ?? 0} OOS EXIT trades across ${competition.oos?.policy?.event_count ?? 0} events. Active return is zero; an active information ratio is undefined.`;
+  $("validation-assumptions").innerHTML = `<dt>Past trading costs</dt><dd>Estimated, because old order books aren't saved anywhere</dd><dt>Slippage tested</dt><dd>${(competition.cost_grid_bps || []).join(" / ") || "—"} bps round trip</dd><dt>Tax rates tested</dt><dd>${(competition.withholding_range || []).join(" / ") || "—"}%</dd><dt>What it means</dt><dd>Exnight held every time, because selling first never cleared the locked rule.</dd>`;
+  $("validation-note").innerHTML = `<strong>Nothing to compare</strong>Exnight sold first ${competition.oos?.policy?.trade_count ?? 0} times across ${competition.oos?.policy?.event_count ?? 0} unseen events, so it matched holding exactly and the difference is zero.`;
   renderJudge(data.backtest || {});
-  $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(fold.fold)}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No walk-forward scorecard available.</td></tr>`;
+  $("validation-folds").innerHTML = (competition.folds || []).map((fold) => `<tr><td>${esc(String(fold.fold).replace(/^OOS_(\d{4})_(\d{2})$/, (m, y, mo) => `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][Number(mo) - 1]} ${y} test`))}</td><td>${esc(fold.training_end)}</td><td>${esc(fold.test_period)}</td><td>${esc(RUNGS[fold.selected_rung] || fold.selected_rung)}</td><td>${number(fold.pdr_estimate, 3)}</td><td>${fold.test_events ?? "—"}</td><td>${fold.test_trades ?? "—"}</td><td>${number(fold.test_sharpe, 2)}</td></tr>`).join("") || `<tr><td colspan="8" class="empty">No test rounds available.</td></tr>`;
 
   activeDate = data.signals.meta.event_date || activeDate;
   $("signal-date").innerHTML = (meta.available_dates || []).map((date) => `<option value="${esc(date)}" ${date === activeDate ? "selected" : ""}>${esc(date)}</option>`).join("");
   const symbolsInRows = [...new Set(rows.map((row) => row.symbol).filter(Boolean))].sort();
   if (!symbolsInRows.includes(activeSymbol)) activeSymbol = "ALL";
-  $("signal-symbol").innerHTML = ["ALL", ...symbolsInRows].map((symbol) => `<option value="${esc(symbol)}" ${symbol === activeSymbol ? "selected" : ""}>${symbol === "ALL" ? "All symbols" : esc(symbol)}</option>`).join("");
+  $("signal-symbol").innerHTML = ["ALL", ...symbolsInRows].map((symbol) => `<option value="${esc(symbol)}" ${symbol === activeSymbol ? "selected" : ""}>${symbol === "ALL" ? "All tokens" : esc(symbol)}</option>`).join("");
   const visibleRows = rows.filter((row) => (activeFilter === "ALL" || row.verdict === activeFilter) && (activeSymbol === "ALL" || row.symbol === activeSymbol));
   $("signals-body").innerHTML = visibleRows.length ? visibleRows.map((row) => {
     const edge = row.exit_edge_lower == null ? "—" : `${number(row.exit_edge_lower, 3)} / ${number(row.cost_per_share, 3)}`;
-    const source = `${row.sell_book_source || "—"} → ${row.buy_book_source || "—"}`;
+    const source = quotes(row.sell_book_source, row.buy_book_source);
     const rowIndex = rows.indexOf(row);
-    return `<tr class="signal-row" data-row-index="${rowIndex}" tabindex="0" aria-label="Open ${esc(row.symbol)} signal detail"><td><strong>${esc(row.symbol)}</strong><br><span class="source">${esc(row.spot_symbol)} · ${esc(row.ex_date)}</span></td><td>$${Number(row.notional_usd || 0).toLocaleString()}</td><td>${verdict(row.verdict)}<br><span class="source">${esc(row.reason || (row.verdict === "HOLD" ? "the expected gain from selling is smaller than the cost" : "no additional reason"))}</span></td><td class="${row.exit_edge_lower > 0 ? "positive" : "negative"}">${esc(edge)}</td><td class="source">${esc(source)}</td></tr>`;
+    return `<tr class="signal-row" data-row-index="${rowIndex}" tabindex="0" aria-label="Open ${esc(row.symbol)} decision detail"><td><strong>${esc(row.symbol)}</strong><br><span class="source">${esc(row.spot_symbol)} · ${esc(row.ex_date)}</span></td><td>$${Number(row.notional_usd || 0).toLocaleString()}</td><td>${verdict(row.verdict)}<br><span class="source">${esc(plainReason(row.reason) || (row.verdict === "HOLD" ? "the expected gain from selling is smaller than the cost" : "no extra detail"))}</span></td><td class="${row.exit_edge_lower > 0 ? "positive" : "negative"}">${esc(edge)}</td><td class="source">${esc(source)}</td></tr>`;
   }).join("") : `<tr><td colspan="5" class="empty">No rows match the current filters.</td></tr>`;
 
   const filterValues = ["ALL", ...Object.keys(meta.verdict_counts || {})];
-  $("signal-filters").innerHTML = filterValues.map((filter) => `<button type="button" class="filter-button ${activeFilter === filter ? "active" : ""}" data-filter="${esc(filter)}">${esc(filter)}${filter === "ALL" ? "" : ` · ${meta.verdict_counts[filter] || 0}`}</button>`).join("");
+  $("signal-filters").innerHTML = filterValues.map((filter) => `<button type="button" class="filter-button ${activeFilter === filter ? "active" : ""}" data-filter="${esc(filter)}">${esc(label(filter))}${filter === "ALL" ? "" : ` · ${meta.verdict_counts[filter] || 0}`}</button>`).join("");
 
   const symbols = recorder.symbols || {};
   $("recorder-list").innerHTML = Object.entries(symbols).map(([symbol, item]) => {
     const coverage = Math.round((item.book_coverage || 0) * 100);
     const warn = coverage === 0 || (item.max_gap_seconds || 0) > 180;
-    return `<div class="health-row"><div class="health-name"><strong>${esc(symbol)}</strong><small>${(item.rows || 0).toLocaleString()} rows · ${recorder.mode === "COMPLETED_WINDOW" ? "ended" : "last"} ${esc(item.last_age_display)}</small></div><div class="health-stat"><strong>${coverage}% public book</strong><div class="health-bar"><i class="${warn ? "warn" : ""}" style="width:${Math.max(coverage, 3)}%"></i></div></div></div>`;
+    return `<div class="health-row"><div class="health-name"><strong>${esc(symbol)}</strong><small>${(item.rows || 0).toLocaleString()} rows · ${recorder.mode === "COMPLETED_WINDOW" ? "ended" : "last"} ${esc(item.last_age_display)}</small></div><div class="health-stat"><strong>${coverage}% with order book</strong><div class="health-bar"><i class="${warn ? "warn" : ""}" style="width:${Math.max(coverage, 3)}%"></i></div></div></div>`;
   }).join("");
-  $("recorder-badge").className = `badge ${failed ? "bad" : "ok"}`; $("recorder-badge").textContent = recorder.status || "UNKNOWN";
+  $("recorder-badge").className = `badge ${failed ? "bad" : "ok"}`; $("recorder-badge").textContent = status(recorder.status).toUpperCase();
   $("recorder-errors").textContent = (recorder.errors || []).join(" · ");
 
-  $("score-badge").className = `badge ${score.status === "PASS" ? "ok" : "warn"}`; $("score-badge").textContent = score.status || "UNKNOWN";
-  $("score-panel").innerHTML = `<strong>${esc(score.status || "UNKNOWN")}</strong>${esc(score.message || "No forward-score report available.")}`;
+  $("score-badge").className = `badge ${score.status === "PASS" ? "ok" : "warn"}`; $("score-badge").textContent = status(score.status).toUpperCase();
+  $("score-panel").innerHTML = `<strong>Grade: ${esc(status(score.status))}</strong>${esc(score.message || "No grade available yet.")}`;
   $("forward-events").innerHTML = (score.report?.results || []).map((event) => {
     const decision = event.notionals?.find((item) => item.notional_usd === 1000)?.frozen_verdict || "NO_SIGNAL";
     const prices = event.pre_price == null || event.post_price == null
       ? "Unavailable" : `${number(event.pre_price, 2)} → ${number(event.post_price, 2)}`;
     const outcome = event.complete
-      ? (event.pre_price === event.post_price ? "No price change" : "Cash basis resolved")
-      : "Cash-adjusted result unavailable";
-    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td><span class="verdict ${esc(decision)}">${esc(decision)}</span></td><td>${event.gross_dividend == null ? "Unresolved" : "Resolved"}</td><td>${esc(prices)}</td><td>${esc(outcome)}</td></tr>`;
-  }).join("") || `<tr><td colspan="5" class="empty">No scored forward events available.</td></tr>`;
+      ? (event.pre_price === event.post_price ? "No price change" : "Dividend confirmed")
+      : "Dividend amount not confirmed";
+    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td><span class="verdict ${esc(decision)}">${esc(label(decision))}</span></td><td>${event.gross_dividend == null ? "Not confirmed" : "Confirmed"}</td><td>${esc(prices)}</td><td>${esc(outcome)}</td></tr>`;
+  }).join("") || `<tr><td colspan="5" class="empty">No graded events yet.</td></tr>`;
   $("timeline-observation").className = `timeline-item ${scored ? (failed ? "active" : "done") : "active"}`;
-  $("timeline-observation-note").textContent = scored ? `${(recorder.sample_count || 0).toLocaleString()} samples; ${failed ? "integrity review needed" : "cadence passed"}` : "Recorder is collecting one-minute samples";
+  $("timeline-observation-note").textContent = scored ? `${(recorder.sample_count || 0).toLocaleString()} samples; ${failed ? "has gaps" : "one every minute, no gaps"}` : "Saving one price a minute";
   $("timeline-forward").className = `timeline-item ${score.status === "PASS" ? "done" : scored ? "active" : ""}`;
-  $("timeline-forward-note").textContent = scored ? (score.message || "Forward score available") : "Runs after the observation window closes";
-  $("provenance-badge").className = `badge ${provenance.status === "PASS" ? "ok" : "warn"}`; $("provenance-badge").textContent = provenance.status || "UNKNOWN";
-  $("provenance-list").innerHTML = `<dt>Manifest</dt><dd>${provenance.manifest_present ? "run_manifest_v1.json" : "missing"}</dd><dt>Signal events</dt><dd>${provenance.signal_events || 0}</dd><dt>Manifest events</dt><dd>${provenance.manifest_events || 0}</dd><dt>Commit</dt><dd>${esc(provenance.code_commit || "—")}</dd><dt>Coverage note</dt><dd>${provenance.missing_events?.length ? `Missing ${provenance.missing_events.length} event(s) from historical summary` : "Complete"}</dd>`;
+  $("timeline-forward-note").textContent = scored ? (score.message || "Grade available") : "Runs after the recording ends";
+  $("provenance-badge").className = `badge ${provenance.status === "PASS" ? "ok" : "warn"}`; $("provenance-badge").textContent = status(provenance.status).toUpperCase();
+  $("provenance-list").innerHTML = `<dt>Run record</dt><dd>${provenance.manifest_present ? "run_manifest_v1.json" : "missing"}</dd><dt>Events with a decision</dt><dd>${provenance.signal_events || 0}</dd><dt>Events in the run record</dt><dd>${provenance.manifest_events || 0}</dd><dt>Code version</dt><dd>${esc(provenance.code_commit || "—")}</dd><dt>Gaps</dt><dd>${provenance.missing_events?.length ? `${provenance.missing_events.length} event(s) missing from the past-events summary` : "None"}</dd>`;
   $("limits-list").innerHTML = (data.limits || []).map((item) => `<li>${esc(item)}</li>`).join("");
-  $("downloads").innerHTML = (data.downloads || []).length ? `<span>DOWNLOAD EVIDENCE</span>${data.downloads.map((item) => `<a href="${esc(STATIC_SITE ? siteUrl(item.href) : item.href)}">${esc(item.label)}</a>`).join("")}` : "<span>No evidence downloads available.</span>";
+  $("downloads").innerHTML = (data.downloads || []).length ? `<span>DOWNLOAD FILES</span>${data.downloads.map((item) => `<a href="${esc(STATIC_SITE ? siteUrl(item.href) : item.href)}">${esc(item.label)}</a>`).join("")}` : "<span>No evidence downloads available.</span>";
   renderChart(recorder);
 }
 
@@ -293,8 +317,8 @@ function renderChart(recorder) {
 function showSignal(row) {
   if (!row) return;
   $("dialog-title").textContent = `${row.symbol} · $${Number(row.notional_usd || 0).toLocaleString()}`;
-  const note = row.reason || row.buy || "No additional guardrail note.";
-  $("dialog-body").innerHTML = `<dt>Verdict</dt><dd>${verdict(row.verdict)}</dd><dt>Event</dt><dd>${esc(row.event_id)}</dd><dt>Reference price</dt><dd>${number(row.price, 4)}</dd><dt>Dividend</dt><dd>Gross ${number(row.gross_dividend, 4)} · net ${number(row.net_dividend, 4)}</dd><dt>Exit edge / cost</dt><dd>${number(row.exit_edge_lower, 4)} / ${number(row.cost_per_share, 4)}</dd><dt>Book evidence</dt><dd>${esc(row.sell_book_source)} → ${esc(row.buy_book_source)}</dd><div class="dialog-note">${esc(note)}</div>`;
+  const note = plainReason(row.reason) || "No extra detail.";
+  $("dialog-body").innerHTML = `<dt>Decision</dt><dd>${verdict(row.verdict)}</dd><dt>Event</dt><dd>${esc(row.event_id)}</dd><dt>Price</dt><dd>${number(row.price, 4)}</dd><dt>Dividend</dt><dd>${number(row.gross_dividend, 4)} before tax · ${number(row.net_dividend, 4)} after</dd><dt>Gain from selling first / cost, per share</dt><dd>${number(row.exit_edge_lower, 4)} / ${number(row.cost_per_share, 4)}</dd><dt>Price quotes used</dt><dd>${esc(quotes(row.sell_book_source, row.buy_book_source))}</dd><div class="dialog-note">${esc(note)}</div>`;
   $("signal-dialog").showModal();
 }
 
@@ -307,21 +331,21 @@ function renderDecision(result) {
   }
   const rows = result.rows || [];
   const verdicts = [...new Set(rows.map((row) => row.verdict || "NO_SIGNAL"))];
-  const summary = verdicts.length === 1 ? verdicts[0] : "VARIES BY SIZE";
+  const summary = verdicts.length === 1 ? label(verdicts[0]) : "VARIES BY SIZE";
   target.className = "decision-result decision-found";
   target.innerHTML = `
     <div class="decision-summary">
-      <div><span>${esc(result.symbol)} · ${esc(result.spot_symbol)}</span><strong>${esc(summary)}</strong><small>Nearest evaluated event · ${esc(result.event_date)}</small></div>
+      <div><span>${esc(result.symbol)} · ${esc(result.spot_symbol)}</span><strong>${esc(summary)}</strong><small>Nearest checked event · ${esc(result.event_date)}</small></div>
       ${verdicts.length === 1 ? verdict(verdicts[0]) : '<span class="verdict HOLD">CHECK SIZE</span>'}
     </div>
     <div class="decision-options">${rows.map((row) => `
       <article>
         <span>$${Number(row.notional_usd || 0).toLocaleString()} trade size</span>
         ${verdict(row.verdict)}
-        <p>${esc(row.reason || "Decision produced from the saved Strategy v1 evidence.")}</p>
-        <small>Edge ${number(row.exit_edge_lower, 4)} · cost ${number(row.cost_per_share, 4)} · ${esc(row.sell_book_source || "no sell-book evidence")} → ${esc(row.buy_book_source || "no buy-book evidence")}</small>
+        <p>${esc(plainReason(row.reason) || "Decision made from the saved evidence.")}</p>
+        <small>Gain from selling first ${number(row.exit_edge_lower, 4)} · cost ${number(row.cost_per_share, 4)} per share · ${esc(quotes(row.sell_book_source, row.buy_book_source))}</small>
       </article>`).join("")}</div>
-    <a class="decision-more" href="#/signals">Open full decision evidence →</a>`;
+    <a class="decision-more" href="#/signals">Open all saved decisions →</a>`;
 }
 
 function currentStaticDecision(record) {
@@ -379,7 +403,7 @@ async function refresh() {
     }
     render(data); $("error").classList.add("hidden");
   } catch (error) {
-    $("error").textContent = `Dashboard data unavailable: ${error.message}`; $("error").classList.remove("hidden");
+    $("error").textContent = `Couldn't load the data: ${error.message}`; $("error").classList.remove("hidden");
   }
 }
 

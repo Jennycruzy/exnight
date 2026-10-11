@@ -62,7 +62,7 @@
         </section>
 
         <section class="panel" aria-labelledby="comparison-title">
-          <div class="panel-heading"><div><p class="eyebrow">02 · Backtest on unseen data</p><h2 id="comparison-title">Exnight vs always selling first vs holding</h2></div><span class="tag amber">COSTS MODELED</span></div>
+          <div class="panel-heading"><div><p class="eyebrow">02 · Backtest on unseen data</p><h2 id="comparison-title">Exnight vs always selling first vs holding</h2></div><span class="tag amber">COSTS ESTIMATED</span></div>
           <div class="table-wrap"><table><thead><tr><th>Approach</th><th>Trades</th><th>Vs holding, per event</th><th>Beat holding</th><th>Total return</th><th>Sharpe</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
           <p id="comparison-note" class="source"></p>
         </section>
@@ -77,7 +77,7 @@
           <a class="destination-card" data-route-link="signals" href="#/signals">
             <span class="destination-index">03 / CHECK A TOKEN</span><span class="destination-arrow">↗</span>
             <h3>What should I do with my token?</h3>
-            <p>Type a symbol, get HOLD, EXIT or NO_SIGNAL for each trade size, with the reason.</p>
+            <p>Type a symbol, get HOLD, EXIT or NOT ENOUGH DATA for each trade size, with the reason.</p>
             <span class="destination-meta"><strong id="landing-signal-count">—</strong><span id="landing-signal-note">decisions</span></span>
           </a>
           <a class="destination-card" data-route-link="validation" href="#/validation">
@@ -114,7 +114,7 @@
           <a class="back-link" data-route-link="home" href="#/">← Overview</a>
         </div>
         <section class="panel" aria-labelledby="upcoming-title">
-          <div class="panel-heading"><div><p class="eyebrow">Strategy V3</p><h2 id="upcoming-title">Decisions and outcomes</h2></div><span id="upcoming-tag" class="tag">—</span></div>
+          <div class="panel-heading"><div><p class="eyebrow">Live test</p><h2 id="upcoming-title">Decisions and outcomes</h2></div><span id="upcoming-tag" class="tag">—</span></div>
           <p id="upcoming-note" class="source"></p>
           <div class="table-wrap"><table><thead><tr><th>Token</th><th>Ex-date</th><th>Dividend</th><th>Locked decision</th><th>Why</th><th>Outcome</th></tr></thead><tbody id="upcoming-body"></tbody></table></div>
         </section>
@@ -123,7 +123,7 @@
       <!-- 03 CHECK A TOKEN -->
       <section id="view-signals" class="view" data-view="signals" aria-labelledby="signals-page-title">
         <div class="view-heading">
-          <div><p class="eyebrow">03 · Check a token</p><h1 id="signals-page-title">What should I do with my token?</h1><p>Look up a Reality token to see its decision at each trade size, or browse every saved decision below. Click a row for the full arithmetic.</p></div>
+          <div><p class="eyebrow">03 · Check a token</p><h1 id="signals-page-title">What should I do with my token?</h1><p>Look up an rToken to see its decision at each trade size, or browse every saved decision below. Click a row for the full arithmetic.</p></div>
           <a class="back-link" data-route-link="home" href="#/">← Overview</a>
         </div>
         <section class="decision-finder" aria-labelledby="decision-finder-title">
@@ -133,7 +133,7 @@
             <p>Any form works: <code>rAPH</code>, <code>RAPHUSDT</code> or <code>APH</code>.</p>
           </div>
           <form id="decision-form" class="decision-form">
-            <label for="decision-symbol">Reality token</label>
+            <label for="decision-symbol">rToken</label>
             <div class="decision-input-row">
               <input id="decision-symbol" name="symbol" type="text" autocomplete="off" placeholder="e.g. rAPH" required>
               <button type="submit">Check</button>
@@ -145,8 +145,8 @@
           </div>
         </section>
         <section class="panel" id="signals">
-          <div class="panel-heading"><div><p class="eyebrow">All saved decisions</p><h2>Decisions by ex-date</h2></div><div class="heading-actions"><select id="signal-date" class="data-select" aria-label="Ex-date"></select><select id="signal-symbol" class="data-select" aria-label="Token"></select><div id="signal-filters" class="filters" aria-label="Filter by decision"></div><span class="tag">STRATEGY V1</span></div></div>
-          <div class="table-wrap"><table><thead><tr><th>Event</th><th>Trade size</th><th>Decision</th><th>Edge / cost per share</th><th>Order-book evidence</th></tr></thead><tbody id="signals-body"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div>
+          <div class="panel-heading"><div><p class="eyebrow">All saved decisions</p><h2>Decisions by ex-date</h2></div><div class="heading-actions"><select id="signal-date" class="data-select" aria-label="Ex-date"></select><select id="signal-symbol" class="data-select" aria-label="Token"></select><div id="signal-filters" class="filters" aria-label="Filter by decision"></div><span class="tag">FIRST VERSION</span></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Event</th><th>Trade size</th><th>Decision</th><th>Gain from selling first / cost, per share</th><th>Price quotes used</th></tr></thead><tbody id="signals-body"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table></div>
         </section>
       </section>
 
@@ -163,26 +163,26 @@
           <article class="metric"><span>Sell trades made</span><strong id="validation-trades">—</strong><small>none cleared the rule</small></article>
         </section>
         <article class="panel" id="judge-panel">
-          <div class="panel-heading"><div><p class="eyebrow">Scored on the Alpha Factory metrics</p><h2>Exnight minus always selling first</h2></div><span class="tag amber">COSTS MODELED</span></div>
+          <div class="panel-heading"><div><p class="eyebrow">Scored on the Alpha Factory metrics</p><h2>Exnight minus always selling first</h2></div><span class="tag amber">COSTS ESTIMATED</span></div>
           <p class="panel-lede" id="judge-lede">Each night's return is Exnight's return minus the return of stepping out of every event, on the same events, prices, costs and capital.</p>
-          <div class="table-wrap"><table class="validation-table"><thead><tr><th>Metric</th><th>In-sample</th><th>Out-of-sample</th></tr></thead><tbody id="judge-metrics"></tbody></table></div>
+          <div class="table-wrap"><table class="validation-table"><thead><tr><th>Metric</th><th>Training period</th><th>Unseen test period</th></tr></thead><tbody id="judge-metrics"></tbody></table></div>
           <div id="judge-note" class="score-panel"></div>
           <p class="source">Full record, daily returns and per-event rows: <a href="https://github.com/Jennycruzy/exnight/blob/main/reports/backtest.md">reports/backtest.md</a> · rerun with <code>python scripts/run_backtest.py</code></p>
         </article>
         <div class="two-col validation-grid">
           <article class="panel">
             <div class="panel-heading"><div><p class="eyebrow">Unseen-data performance</p><h2>Exnight, holding, and the difference</h2></div></div>
-            <div class="table-wrap"><table class="validation-table"><thead><tr><th>Series</th><th>Total return</th><th>Sharpe / IR</th><th>Max drawdown</th></tr></thead><tbody id="validation-series"></tbody></table></div>
+            <div class="table-wrap"><table class="validation-table"><thead><tr><th>Series</th><th>Total return</th><th>Sharpe</th><th>Max drawdown</th></tr></thead><tbody id="validation-series"></tbody></table></div>
           </article>
           <article class="panel">
-            <div class="panel-heading"><div><p class="eyebrow">Assumptions</p><h2>What the result means</h2></div><span class="tag amber">COSTS MODELED</span></div>
+            <div class="panel-heading"><div><p class="eyebrow">Assumptions</p><h2>What the result means</h2></div><span class="tag amber">COSTS ESTIMATED</span></div>
             <dl id="validation-assumptions" class="details"></dl>
             <div id="validation-note" class="score-panel"></div>
           </article>
         </div>
         <article class="panel">
-          <div class="panel-heading"><div><p class="eyebrow">Folds</p><h2>Training windows and the later test windows</h2></div><span class="tag">NO LEAKAGE</span></div>
-          <div class="table-wrap"><table><thead><tr><th>Fold</th><th>Training end</th><th>Test period</th><th>Selected time</th><th>Drop estimate</th><th>Test events</th><th>Sell trades</th><th>Test Sharpe</th></tr></thead><tbody id="validation-folds"></tbody></table></div>
+          <div class="panel-heading"><div><p class="eyebrow">Test rounds</p><h2>Training periods and the later test periods</h2></div><span class="tag">NO PEEKING AHEAD</span></div>
+          <div class="table-wrap"><table><thead><tr><th>Round</th><th>Training end</th><th>Test period</th><th>Price read at</th><th>Drop estimate</th><th>Test events</th><th>Sell trades</th><th>Test Sharpe</th></tr></thead><tbody id="validation-folds"></tbody></table></div>
         </article>
       </section>
 
@@ -194,15 +194,15 @@
         </div>
         <section class="hero">
           <div>
-            <p class="eyebrow">Recorded window (Strategy V1) · <span id="event-date">—</span></p>
+            <p class="eyebrow">First recorded test · <span id="event-date">—</span></p>
             <h2 id="headline">Loading…</h2>
-            <p id="hero-copy" class="hero-copy">Loading the saved recording and its audit.</p>
+            <p id="hero-copy" class="hero-copy">Loading the saved recording and its checks.</p>
           </div>
           <div id="hero-status" class="status-card pending"><span class="status-orb"></span><div><strong>Checking recorder</strong><small>Loading</small></div></div>
         </section>
         <section class="metrics" aria-label="Recorder metrics">
           <article class="metric"><span>Samples saved</span><strong id="metric-samples">—</strong><small id="metric-samples-note">Across tokens</small></article>
-          <article class="metric"><span>Events</span><strong id="metric-events">—</strong><small id="metric-events-note">Strategy V1</small></article>
+          <article class="metric"><span>Events</span><strong id="metric-events">—</strong><small id="metric-events-note">First test</small></article>
           <article class="metric"><span>Decision mix</span><strong id="metric-signals">—</strong><small id="metric-signals-note">Selected ex-date</small></article>
           <article class="metric"><span>Public order book</span><strong id="metric-depth">—</strong><small id="metric-depth-note">Recorded window</small></article>
         </section>
@@ -221,23 +221,23 @@
       <!-- 06 EVIDENCE -->
       <section id="view-evidence" class="view" data-view="evidence" aria-labelledby="evidence-page-title">
         <div class="view-heading">
-          <div><p class="eyebrow">06 · Evidence</p><h1 id="evidence-page-title">Files, provenance and limits</h1><p>Download the scored results and manifests behind every number, and see exactly what is not yet proven.</p></div>
+          <div><p class="eyebrow">06 · Evidence</p><h1 id="evidence-page-title">Files, sources and limits</h1><p>Download the scored results and manifests behind every number, and see exactly what is not yet proven.</p></div>
           <a class="back-link" data-route-link="home" href="#/">← Overview</a>
         </div>
         <div class="two-col evidence-grid">
           <article class="panel" id="evidence">
-            <div class="panel-heading"><div><p class="eyebrow">First live recording</p><h2>22 September result (Strategy V1)</h2></div><span id="score-badge" class="badge">—</span></div>
+            <div class="panel-heading"><div><p class="eyebrow">First live recording</p><h2>22 September result (first version)</h2></div><span id="score-badge" class="badge">—</span></div>
             <div id="score-panel" class="score-panel"></div>
             <div class="timeline"><div class="timeline-item done"><span></span><div><strong>Research</strong><small>Event calendar, price study, costs and saved decisions</small></div></div><div id="timeline-observation" class="timeline-item"><span></span><div><strong>Recording</strong><small id="timeline-observation-note">Checking</small></div></div><div id="timeline-forward" class="timeline-item"><span></span><div><strong>Grading</strong><small id="timeline-forward-note">Checking</small></div></div></div>
           </article>
           <article class="panel">
-            <div class="panel-heading"><div><p class="eyebrow">Provenance</p><h2>Where the numbers come from</h2></div><span id="provenance-badge" class="badge">—</span></div>
+            <div class="panel-heading"><div><p class="eyebrow">Sources</p><h2>Where the numbers come from</h2></div><span id="provenance-badge" class="badge">—</span></div>
             <dl id="provenance-list" class="details"></dl>
             <div id="downloads" class="downloads"></div>
           </article>
         </div>
         <article class="panel">
-          <div class="panel-heading"><div><p class="eyebrow">22 September tokens</p><h2>What happened for each token</h2></div><span class="tag">STRATEGY V1</span></div>
+          <div class="panel-heading"><div><p class="eyebrow">22 September tokens</p><h2>What happened for each token</h2></div><span class="tag">FIRST VERSION</span></div>
           <div class="table-wrap"><table><thead><tr><th>Token</th><th>$1k decision</th><th>Dividend amount</th><th>Price before → after</th><th>Result</th></tr></thead><tbody id="forward-events"></tbody></table></div>
         </article>
         <article class="panel limits-panel">

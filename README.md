@@ -242,10 +242,24 @@ I didn't publish a Playbook for Exnight, because it would've shown a misleading 
 
 ## What's still open
 
-- **EXIT hasn't fired yet, but it's getting close.** It needs a dividend of roughly 70 bps or
-  more *and* a tight drop estimate (uncertainty under 0.133). Nothing in the backtest met both,
-  which is why the 30-day Sharpe says `INSUFFICIENT_EVENTS`. The live test is where that
-  changes: on 28 September rBZ paid a 3.5% dividend and dropped 1.08x of it, so selling first
+- **The rTOWN dividend is still waiting on Bitget.** This is the one real position, held
+  through the ex-date to measure how much of a dividend actually reaches an rToken holder.
+
+  | | |
+  |---|---|
+  | Position | 0.2783 rTOWN, bought 23 Sep, held through the 25 Sep ex-date |
+  | Due, per Bitget's own record | $0.28 per share, payable 8 Oct 16:00 UTC ([dividends endpoint](https://api.bitget.com/api/v3/reality/market/dividends?code=TOWN&limit=1)) |
+  | Owed to this position | $0.0779 before tax, $0.0545 if 30% is withheld |
+  | Received (11 Oct 12:15 UTC) | Nothing yet. The account shows only the buy |
+
+  Everything on our side is in place: the position was held on the record date and is still
+  held. Bitget doesn't publish what it has paid out on rTokens, so the delay can't be checked
+  from outside. A check runs every 15 minutes until 20 Oct and commits the credit the moment it
+  arrives. Two questions only Bitget can answer: when will it be credited, and at what tax rate?
+- **EXIT never fired.** Across all 16 live events every locked call was HOLD or NO_SIGNAL.
+  It needs a dividend of roughly 70 bps or more *and* a tight drop estimate (uncertainty under 0.133). Nothing in the backtest met both,
+  which is why the 30-day Sharpe says `INSUFFICIENT_EVENTS`. The live test came closest:
+  on 28 September rBZ paid a 3.5% dividend and dropped 1.08x of it, so selling first
   would have won $0.13 a share if 30% tax is withheld. Exnight's locked call was NO_SIGNAL
   (quotes too thin), not HOLD, so it didn't miss a win. The rule responds to big events; it
   isn't stuck on HOLD.

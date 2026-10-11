@@ -150,6 +150,7 @@ input[type=range]::-moz-range-thumb { width: 18px; height: 18px; background: var
 .bar-compare .row b { font-family: var(--mono); text-align: right; color: var(--ink); }
 
 .honest { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 44px; border: 1px solid var(--line); }
+.honest.single { grid-template-columns: 1fr; }
 .honest > div { padding: 28px; }
 .honest > div + div { border-left: 1px solid var(--line); }
 .honest h3 { font-size: 16px; margin-bottom: 14px; }
