@@ -106,6 +106,7 @@ def build(project_root: Path, output: Path, snapshot_path: Path | None = None,
     from dashboard import v3_view
     summary["comparison"] = v3_view.comparison(project_root)
     summary["v3"] = v3_view.v3(project_root)
+    summary["dividend"] = v3_view.dividend(project_root)
     from dashboard.server import _backtest_view
     summary["backtest"] = _backtest_view(_read_json(project_root / "reports" / "backtest.json"))
     from dashboard.server import LIMITS, observation_text, score_message

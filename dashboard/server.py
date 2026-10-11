@@ -390,6 +390,7 @@ def dashboard_data(project_root: Path = PROJECT_ROOT, now: dt.datetime | None = 
         "signals": {"meta": signal_meta, "rows": [_signal_row(row) for row in selected]},
         "provenance": provenance, "forward_score": score, "competition": competition, "backtest": backtest,
         "comparison": v3_view.comparison(project_root), "v3": v3_view.v3(project_root),
+        "dividend": v3_view.dividend(project_root),
         "downloads": downloads,
         "limits": list(LIMITS),
     }

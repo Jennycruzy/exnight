@@ -1,6 +1,6 @@
 """Record every scheduled forward window that is open now (one sample per call).
 
-Reads data/forward/v3_schedule.json and, for each group whose [start, end) contains the
+Reads every round in data/forward/ (v3_schedule.json, v3_schedule_r2.json, ...) and, for each group whose [start, end) contains the
 current minute, appends one sample per symbol through scripts/record_event.py's writer. One
 cron line covers every planned event; outside all windows the script touches nothing.
 
@@ -21,10 +21,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from exnight import schedule  # noqa: E402
 from exnight.market import BitgetPublic  # noqa: E402
 from record_event import append, sample  # noqa: E402
 
-SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
+SCHEDULE = ROOT / "data" / "forward"
 LOCK = ROOT / "data" / "raw" / "recorder" / ".record_schedule.lock"
 RETRY_WITHIN_SECONDS = 30   # one retry only if the first attempt failed early enough in the minute
 
@@ -39,7 +40,7 @@ def main() -> int:
     ap.add_argument("--schedule", type=Path, default=SCHEDULE)
     args = ap.parse_args()
     now = dt.datetime.now(dt.UTC).replace(microsecond=0)
-    groups = active_groups(json.loads(args.schedule.read_text()), now)
+    groups = active_groups(schedule.load(args.schedule), now)
     if not groups:
         return 0
     # Runs are serialised: if the previous minute's run is still waiting on the API, this one

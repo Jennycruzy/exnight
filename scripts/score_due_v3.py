@@ -25,7 +25,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
+sys.path.insert(0, str(ROOT))
+
+from exnight import schedule  # noqa: E402
+
+SCHEDULE = ROOT / "data" / "forward"
 NAME = "jennycruzy"
 EMAIL = "103373316+Jennycruzy@users.noreply.github.com"
 SETTLE = dt.timedelta(minutes=5)
@@ -103,7 +107,7 @@ def main() -> int:
         print("refusing to commit: repository identity is not jennycruzy", file=sys.stderr)
         return 1
     now = dt.datetime.now(dt.UTC)
-    plan = json.loads(args.schedule.read_text())
+    plan = schedule.load(args.schedule)
     scored_any = False
     for group in plan["groups"]:
         label = group["label"]

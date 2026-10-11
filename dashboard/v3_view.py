@@ -16,6 +16,8 @@ import math
 from pathlib import Path
 from typing import Any
 
+from exnight import schedule
+
 
 def _json(path: Path) -> dict[str, Any] | None:
     try:
@@ -83,8 +85,9 @@ def _latest_decisions(results: Path, cutoffs: dict[str, dt.datetime]) -> dict[st
 
 def v3(project_root: Path) -> dict[str, Any]:
     results = project_root / "data" / "results"
-    plan = _json(project_root / "data" / "forward" / "v3_schedule.json")
-    if not plan:
+    try:
+        plan = schedule.load(project_root / "data" / "forward")
+    except (OSError, ValueError, json.JSONDecodeError):
         return {"status": "UNAVAILABLE"}
     group_of = {event: g for g in plan["groups"] for event in g["event_ids"]}
     cutoffs = {event: dt.datetime.fromisoformat(g["sell_cutoff"]) for event, g in group_of.items()}
@@ -98,7 +101,7 @@ def v3(project_root: Path) -> dict[str, Any]:
         realised = next((r for r in (score or {}).get("results", []) if r.get("event_id") == event), None)
         first = (realised or {}).get("notionals", [{}])[0] if realised else {}
         events.append({
-            "event_id": event, "symbol": target["symbol"], "ex_date": target["ex_date"],
+            "event_id": event, "symbol": target["symbol"], "ex_date": target["ex_date"], "round": target["round"],
             "sell_cutoff": group["sell_cutoff"], "gross_dividend": target["gross_dividend"],
             "gross_yield_bp": target["gross_yield_bp"],
             "verdict": row.get("verdict") or "PENDING",
@@ -123,5 +126,36 @@ def v3(project_root: Path) -> dict[str, Any]:
         "lower_ratio": _float(first_row.get("lower_ratio")),
         "pdr_hat": _float(first_row.get("pdr_hat")), "pdr_se": _float(first_row.get("pdr_se")),
         "scored": sum(e["score_status"] != "NOT_SCORED" for e in events),
+        "rounds": plan["rounds"],
         "events": events,
     }
+
+
+# The one real position: 0.2783 rTOWN bought 23 Sep and held through the 25 Sep ex-date.
+RTOWN_SHARES = 0.2783
+RTOWN_GROSS_PER_SHARE = 0.28
+RTOWN_PAY_TIME = "2026-10-08T16:00:00+00:00"   # Bitget's dividend record (dividendDate)
+
+
+def dividend(project_root: Path) -> dict[str, Any]:
+    """Status of the rTOWN dividend owed to the live position, from committed checker output."""
+    paper = project_root / "data" / "raw" / "paper"
+    gross = round(RTOWN_SHARES * RTOWN_GROSS_PER_SHARE, 6)
+    out = {"symbol": "rTOWN", "shares": RTOWN_SHARES, "gross_per_share": RTOWN_GROSS_PER_SHARE,
+           "owed_gross_usdt": gross, "owed_after_30pct_usdt": round(gross * 0.7, 6), "due_at": RTOWN_PAY_TIME,
+           "status": "WAITING", "last_checked": None}
+    credits = sorted(paper.glob("*_rTOWN_position/07_credit.json"))
+    if credits:
+        credit = _json(credits[-1]) or {}
+        paid = _float(credit.get("credited_usdt"))
+        out |= {"status": "PAID", "credited_usdt": paid, "credited_at": credit.get("detected_at"),
+                "evidence": credits[-1].parent.relative_to(project_root).as_posix(),
+                "withheld_share": None if paid is None else round(1 - paid / gross, 4)}
+        return out
+    log = paper / "dividend_check.log"
+    try:
+        last = [line for line in log.read_text(encoding="utf-8").splitlines() if " not yet:" in line][-1]
+        out["last_checked"] = last.split(" ", 1)[0]
+    except (OSError, IndexError):
+        pass
+    return out

@@ -39,10 +39,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from exnight import schedule  # noqa: E402
 from score_forward import _at, _price, walk  # noqa: E402
 from validate_recording import read_rows, validate  # noqa: E402
 
-SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
+SCHEDULE = ROOT / "data" / "forward"
 RESULTS = ROOT / "data" / "results"
 RECORDER = ROOT / "data" / "raw" / "recorder"
 NOTIONALS = (1000, 5000, 25000)
@@ -142,17 +143,17 @@ def score_event(target: dict, group: dict, event: dict, rows: list, signal_files
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Score one V3 forward recording group")
-    ap.add_argument("label", help="group label from data/forward/v3_schedule.json")
+    ap.add_argument("label", help="group label from any round in data/forward/")
     ap.add_argument("--schedule", type=Path, default=SCHEDULE)
     ap.add_argument("--max-gap-seconds", type=int, default=180)
     ap.add_argument("--max-lateness-seconds", type=int, default=180)
     args = ap.parse_args()
-    plan = json.loads(args.schedule.read_text())
+    plan = schedule.load(args.schedule)
     group = next((g for g in plan["groups"] if g["label"] == args.label), None)
     if group is None:
         raise SystemExit(f"unknown group {args.label}")
     ledger = {json.loads(l)["event_id"]: json.loads(l)
-              for l in (ROOT / plan["ledger"]).read_text().splitlines() if l.strip()}
+              for l in (ROOT / group["ledger"]).read_text().splitlines() if l.strip()}
     targets = [t for t in plan["targets"] if t["event_id"] in group["event_ids"]]
     paths = sorted((RECORDER / group["label"]).glob("*.jsonl"))
     by_symbol, errors = read_rows(paths)

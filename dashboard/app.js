@@ -136,6 +136,8 @@ function renderUpcoming(v3) {
     return;
   }
   $("upcoming-tag").textContent = `${v3.scored} OF ${v3.events.length} SCORED`;
+  const rounds = v3.rounds || [];
+  if (rounds.length) $("upcoming-page-title").textContent = `Every high-dividend event, ${dayMonth(rounds[0].first_ex_date)} to ${dayMonth(rounds.at(-1).last_ex_date)}`;
   $("landing-upcoming-count").textContent = v3.events.length;
   $("landing-upcoming-note").textContent = `events to ${v3.events[v3.events.length - 1]?.ex_date || "—"} · ${v3.scored} scored`;
   $("upcoming-note").textContent = `Every event with a verified dividend worth at least ${number(v3.min_gross_yield_bp, 1)} bps of the price, the smallest size where selling first could ever pay. `
@@ -150,9 +152,38 @@ function renderUpcoming(v3) {
     const why = event.verdict === "PENDING" ? event.reason
       : event.verdict === "NO_SIGNAL" ? (plainReason(event.reason) || "not enough evidence")
       : `${event.breakeven_yield_bp == null ? "selling first can't win at any dividend size" : `selling first needs a dividend over ${number(event.breakeven_yield_bp, 0)} bps`} · ${event.entitlement_tier === "E1_DOCUMENTED_PRECEDENT" ? "30% tax confirmed" : "tax could be 0% to 30%"}`;
-    return `<tr><td><strong>${esc(event.symbol)}</strong></td><td>${esc(event.ex_date)}</td><td>$${number(event.gross_dividend, 4)}<br><span class="source">${number(event.gross_yield_bp, 0)} bps of price</span></td>`
+    const round = rounds.length > 1 ? `<br><span class="source">round ${esc(event.round)}</span>` : "";
+    return `<tr><td><strong>${esc(event.symbol)}</strong>${round}</td><td>${esc(event.ex_date)}</td><td>$${number(event.gross_dividend, 4)}<br><span class="source">${number(event.gross_yield_bp, 0)} bps of price</span></td>`
       + `<td>${verdict(event.verdict)}</td><td class="source">${esc(why)}</td><td>${outcome}</td></tr>`;
   }).join("");
+}
+
+function dayMonth(iso) {
+  const d = new Date(`${iso}T12:00:00Z`);
+  return Number.isNaN(d.getTime()) ? (iso || "—") : `${d.getUTCDate()} ${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getUTCMonth()]}`;
+}
+
+function utcStamp(iso) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? "—" : `${dayMonth(d.toISOString().slice(0, 10))}, ${d.toISOString().slice(11, 16)} UTC`;
+}
+
+// The real rTOWN position: what Bitget owes it, and whether it has been paid.
+function renderDividend(dv) {
+  const panel = $("dividend-panel");
+  if (!dv) { panel.hidden = true; return; }
+  panel.hidden = false;
+  const paid = dv.status === "PAID";
+  $("dividend-tag").textContent = paid ? "PAID" : "WAITING FOR BITGET";
+  $("dividend-tag").className = `tag ${paid ? "" : "amber"}`;
+  $("dividend-details").innerHTML = `<dt>Position</dt><dd>${esc(dv.shares)} ${esc(dv.symbol)}, bought 23 Sep, held through the 25 Sep ex-date</dd>`
+    + `<dt>Owed</dt><dd>$${number(dv.owed_gross_usdt, 4)} before tax ($${number(dv.gross_per_share, 2)} a share), $${number(dv.owed_after_30pct_usdt, 4)} if 30% is withheld</dd>`
+    + `<dt>Due</dt><dd>${esc(utcStamp(dv.due_at))}, from Bitget's own dividend record</dd>`
+    + `<dt>Received</dt><dd>${paid ? `<span class="positive">$${number(dv.credited_usdt, 4)}</span> on ${esc(utcStamp(dv.credited_at))}` : "Not yet"}</dd>`
+    + (paid && dv.withheld_share != null ? `<dt>Tax Bitget kept</dt><dd>${Math.round(dv.withheld_share * 100)}%</dd>` : "");
+  $("dividend-note").innerHTML = paid
+    ? `Recorded from a read-only account snapshot: <a href="https://github.com/Jennycruzy/exnight/tree/main/${esc(dv.evidence)}">evidence</a>.`
+    : `The account is checked every 15 minutes${dv.last_checked ? ` (last check ${esc(utcStamp(dv.last_checked))})` : ""}. This panel updates when Bitget pays.`;
 }
 
 function renderForward(v3) {
@@ -193,6 +224,7 @@ function render(data) {
   renderComparison(data.comparison || {}, data.backtest || {});
   renderForward(data.v3 || {});
   renderUpcoming(data.v3 || {});
+  renderDividend(data.dividend);
 
   const generated = new Date(data.generated_at);
   $("as-of").textContent = Number.isNaN(generated.getTime()) ? "Snapshot time unknown" : `Snapshot ${generated.toLocaleString([], {year:"numeric", month:"short", day:"numeric", hour:"2-digit", minute:"2-digit", timeZoneName:"short"})}`;

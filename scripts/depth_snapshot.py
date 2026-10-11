@@ -20,12 +20,13 @@ import pandas as pd
 
 from exnight.calendar import read_ledger
 from exnight.market import BitgetPublic
+from exnight.schedule import files as schedule_files, load as load_schedule
 
 ET = ZoneInfo("America/New_York")  # Bitget labels the zone "EST"; OBSERVED to mean US Eastern wall clock
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "results" / "depth_samples.csv"
 RAW = ROOT / "data" / "raw" / "depth"
-SCHEDULE = ROOT / "data" / "forward" / "v3_schedule.json"
+SCHEDULE = ROOT / "data" / "forward"
 BANDS = (0.005, 0.02)
 NOTIONALS = (1_000, 5_000, 25_000)
 
@@ -148,8 +149,8 @@ def sample_book(api: BitgetPublic, sym: str, ticker: dict | None) -> tuple[dict,
 def sampled_symbols(schedule: Path = SCHEDULE) -> list[str]:
     """Study-ledger symbols plus every symbol in the forward schedule, if one exists."""
     symbols = {e.spot_symbol for e in read_ledger() if e.spot_symbol}
-    if schedule.exists():
-        symbols |= {s for g in json.loads(schedule.read_text())["groups"] for s in g["symbols"]}
+    if schedule_files(schedule):
+        symbols |= {s for g in load_schedule(schedule)["groups"] for s in g["symbols"]}
     return sorted(symbols)
 
 

@@ -63,6 +63,37 @@ document.querySelectorAll("[data-pdr]").forEach((button) => button.addEventListe
 }));
 calc();
 
+function shortDate(iso) {
+  const d = new Date(`${iso}T12:00:00Z`);
+  return Number.isNaN(d.getTime()) ? iso : `${d.getUTCDate()} ${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getUTCMonth()]}`;
+}
+
+function utcText(iso) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? "—" : `${shortDate(d.toISOString().slice(0, 10))}, ${d.toISOString().slice(11, 16)} UTC`;
+}
+
+// The real rTOWN position: what Bitget owes it, and whether it has been paid.
+function renderDividend(dv) {
+  if (!dv) return;
+  $("dividend-card").hidden = false;
+  $("dv-held").textContent = `${dv.shares} ${dv.symbol}`;
+  $("dv-owed").textContent = `$${dv.owed_gross_usdt.toFixed(4)}`;
+  $("dv-due").textContent = utcText(dv.due_at);
+  if (dv.status === "PAID") {
+    $("dv-title").textContent = "Paid by Bitget";
+    $("dv-paid").textContent = `$${Number(dv.credited_usdt).toFixed(4)}`;
+    $("dv-paid").className = "positive";
+    $("dv-copy").textContent = dv.withheld_share == null ? "Credited to the account."
+      : `Credited ${utcText(dv.credited_at)}. Bitget kept ${Math.round(dv.withheld_share * 100)}% as tax.`;
+  } else {
+    $("dv-title").textContent = "Waiting for Bitget to pay";
+    $("dv-paid").textContent = "not yet";
+    $("dv-copy").textContent = `Exnight said hold, so the position was held through the ex-date and is owed the dividend. `
+      + `The account is checked every 15 minutes${dv.last_checked ? ` (last: ${utcText(dv.last_checked)})` : ""}, and this updates when the money arrives.`;
+  }
+}
+
 // Live evidence from the same committed snapshot the app uses.
 async function live() {
   try {
@@ -78,6 +109,9 @@ async function live() {
     const events = data.v3?.events || [];
     const scored = events.filter((event) => event.score_status && event.score_status !== "NOT_SCORED");
     $("s-live").textContent = `${scored.length} / ${events.length}`;
+    const rounds = data.v3?.rounds || [];
+    if (rounds.length) $("s-live-label").textContent = `live events graded (${shortDate(rounds[0].first_ex_date)} to ${shortDate(rounds.at(-1).last_ex_date)})`;
+    renderDividend(data.dividend);
     // A token with no overnight trades has no drop to read, so the card shows the latest well-traded event.
     const latest = scored.filter((event) => event.price_discovery === "PRICED").at(-1) || scored.at(-1) || events[0];
     if (!latest) { $("lc-foot").textContent = "No live events scheduled."; return; }
