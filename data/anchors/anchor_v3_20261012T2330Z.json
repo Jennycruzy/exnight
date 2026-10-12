@@ -1,0 +1,23 @@
+{
+ "chain_id": 42161,
+ "from": "0xe201bbf3C736a5d188797974a7e4B9464f707eA8",
+ "nonce": 3,
+ "gas_limit": 46413,
+ "max_fee_per_gas": 40072000,
+ "worst_case_fee_wei": 1859861736000,
+ "tx_hash": "0x74a42103d455e135024350e15b21bea89af52320ffce956870bd041e9e70b41b",
+ "payload": "EXNIGHT v3 freeze\ncommit 4887060284f235cbb9cc48492fd3eea0e0fb7c1b\nsha256 416074b176fdd9a34c676d7c4162894395e8dd56f46eb41359fe0be06adad8d9 data/results/run_manifest_v3_20261012T2330Z.json\nsha256 d6549f5373f8ea73a4e97ea582125cfd17bd691d881381a669c759cc4a2634b5 data/results/signals_v3_20261012T2330Z.csv\n",
+ "sent": true,
+ "block_number": 514261844,
+ "block_time_utc": "2026-10-12T23:30:11+00:00",
+ "fee_paid_wei": 594660000000,
+ "explorer": "https://arbiscan.io/tx/0x74a42103d455e135024350e15b21bea89af52320ffce956870bd041e9e70b41b",
+ "frozen_at_utc": "2026-10-12T23:30:07+00:00",
+ "cutoff_utc": "2026-10-13T00:00:00+00:00",
+ "commit": "4887060284f235cbb9cc48492fd3eea0e0fb7c1b",
+ "files": [
+  "data/results/signals_v3_20261012T2330Z.csv",
+  "data/results/run_manifest_v3_20261012T2330Z.json"
+ ],
+ "before_cutoff": true
+}
