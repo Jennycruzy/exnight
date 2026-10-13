@@ -155,11 +155,11 @@
   },
   "live": {
    "all": {
-    "events": 16,
-    "hold_beat_exit": 14,
-    "mean_hold_minus_exit_bps": 71.53034481104898
+    "events": 17,
+    "hold_beat_exit": 15,
+    "mean_hold_minus_exit_bps": 74.42370331002246
    },
-   "graded": 16,
+   "graded": 17,
    "priced_overnight": {
     "events": 6,
     "hold_beat_exit": 4,
@@ -693,7 +693,7 @@
  "dividend": {
   "due_at": "2026-10-08T16:00:00+00:00",
   "gross_per_share": 0.28,
-  "last_checked": "2026-10-12T23:30:02.212984+00:00",
+  "last_checked": "2026-10-13T23:30:01.546812+00:00",
   "owed_after_30pct_usdt": 0.054547,
   "owed_gross_usdt": 0.077924,
   "shares": 0.2783,
@@ -760,6 +760,11 @@
    "href": "evidence/forward_score_v3_20261008_RTIGO.json",
    "label": "V3 forward score, 20261008_RTIGO",
    "name": "forward_score_v3_20261008_RTIGO.json"
+  },
+  {
+   "href": "evidence/forward_score_v3_20261013_ROZK.json",
+   "label": "V3 forward score, 20261013_ROZK",
+   "name": "forward_score_v3_20261013_ROZK.json"
   },
   {
    "href": "evidence/run_records.md",
@@ -1025,7 +1030,7 @@
   },
   "status": "INCOMPLETE"
  },
- "generated_at": "2026-10-12T23:30:15.325213+00:00",
+ "generated_at": "2026-10-13T23:30:15.102089+00:00",
  "limits": [
   "Exnight never suggests buying just to collect a dividend: across 127 events that lost money on average, even in the best case (no tax, low costs: -17.7 bps per event).",
   "The order books shown are from today, not from the night of each past event.",
@@ -5301,25 +5306,25 @@
     "ex_date": "2026-10-13",
     "gross_dividend": 0.49,
     "gross_yield_bp": 110.261,
-    "modeled_edge_keep_70pct": null,
-    "modeled_edge_keep_gross": null,
-    "modeled_verdict": null,
-    "overnight_last_price_changes": null,
-    "price_discovery": null,
+    "modeled_edge_keep_70pct": -0.54685,
+    "modeled_edge_keep_gross": -0.69385,
+    "modeled_verdict": "HOLD",
+    "overnight_last_price_changes": 0,
+    "price_discovery": "NONE",
     "realised_edge_keep_70pct": null,
-    "realised_pdr": null,
-    "realised_verdict": null,
+    "realised_pdr": 0.0,
+    "realised_verdict": "NO_SIGNAL",
     "reason": "buy: $1,000 exceeds visible top-of-book ($46) on ticker-only symbol",
     "round": 2,
-    "score_status": "NOT_SCORED",
+    "score_status": "PASS",
     "sell_cutoff": "2026-10-12T20:00:00-04:00",
     "symbol": "rOZK",
     "verdict": "NO_SIGNAL"
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rCHCO-2026-10-15-1",
     "ex_date": "2026-10-15",
@@ -5342,8 +5347,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rCSWC-2026-10-15-1",
     "ex_date": "2026-10-15",
@@ -5357,7 +5362,7 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "sell: $1,000 exceeds visible top-of-book ($117) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($119) on ticker-only symbol",
+    "reason": "sell: $1,000 exceeds visible top-of-book ($117) on ticker-only symbol",
     "round": 2,
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-14T20:00:00-04:00",
@@ -5366,8 +5371,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rCNXC-2026-10-23-1",
     "ex_date": "2026-10-23",
@@ -5390,8 +5395,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rPSEC-2026-10-28-1",
     "ex_date": "2026-10-28",
@@ -5405,7 +5410,7 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "buy: $1,000 exceeds visible top-of-book ($308) on ticker-only symbol",
+    "reason": "buy: $1,000 exceeds visible top-of-book ($7) on ticker-only symbol",
     "round": 2,
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-27T20:00:00-04:00",
@@ -5414,8 +5419,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rAGNC-2026-10-30-1",
     "ex_date": "2026-10-30",
@@ -5429,17 +5434,17 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "sell: $1,000 exceeds visible top-of-book ($9) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($26) on ticker-only symbol",
+    "reason": "",
     "round": 2,
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-29T20:00:00-04:00",
     "symbol": "rAGNC",
-    "verdict": "NO_SIGNAL"
+    "verdict": "HOLD"
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rPAA-2026-10-30-1",
     "ex_date": "2026-10-30",
@@ -5453,7 +5458,7 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "buy: $1,000 exceeds visible top-of-book ($498) on ticker-only symbol",
+    "reason": "buy: $1,000 exceeds visible top-of-book ($472) on ticker-only symbol",
     "round": 2,
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-29T20:00:00-04:00",
@@ -5462,8 +5467,8 @@
    },
    {
     "breakeven_yield_bp": null,
-    "decided_at": "2026-10-12T23:30:07+00:00",
-    "decision_file": "signals_v3_20261012T2330Z.csv",
+    "decided_at": "2026-10-13T23:30:06+00:00",
+    "decision_file": "signals_v3_20261013T2330Z.csv",
     "entitlement_tier": "E0_RANGE",
     "event_id": "rPAGP-2026-10-30-1",
     "ex_date": "2026-10-30",
@@ -5477,7 +5482,7 @@
     "realised_edge_keep_70pct": null,
     "realised_pdr": null,
     "realised_verdict": null,
-    "reason": "buy: $1,000 exceeds visible top-of-book ($810) on ticker-only symbol",
+    "reason": "sell: $1,000 exceeds visible top-of-book ($812) on ticker-only symbol; buy: $1,000 exceeds visible top-of-book ($434) on ticker-only symbol",
     "round": 2,
     "score_status": "NOT_SCORED",
     "sell_cutoff": "2026-10-29T20:00:00-04:00",
@@ -5508,7 +5513,7 @@
    }
   ],
   "rule_id": "exnight-strategy-v3",
-  "scored": 16,
+  "scored": 17,
   "status": "AVAILABLE"
  }
 }
