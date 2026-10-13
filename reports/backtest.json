@@ -576,11 +576,11 @@
   "live": {
     "label": "MODELED_EXECUTION",
     "scheduled": 16,
-    "graded": 16,
+    "graded": 17,
     "all": {
-      "events": 16,
-      "hold_beat_exit": 14,
-      "mean_hold_minus_exit_bps": 71.53034481104898
+      "events": 17,
+      "hold_beat_exit": 15,
+      "mean_hold_minus_exit_bps": 74.42370331002246
     },
     "priced_overnight": {
       "events": 6,
@@ -795,19 +795,32 @@
         "pre_price": 91.0,
         "post_price": 91.0,
         "exit_minus_hold_bps": -102.69230769230768
+      },
+      {
+        "event_id": "rOZK-2026-10-13-1",
+        "ex_date": "2026-10-13",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20261012T2330Z.csv",
+        "sell_cutoff": "2026-10-12T20:00:00-04:00",
+        "gross_dividend": 0.49,
+        "pre_price": 45.3,
+        "post_price": 45.3,
+        "exit_minus_hold_bps": -120.71743929359822
       }
     ]
   },
   "policy_folds": [
     {
       "fold": "OOS_2026_08",
-      "pdr_estimate": 1.0342758259763043,
-      "pdr_se": 0.871048945054662
+      "pdr_estimate": 1.034275825976304,
+      "pdr_se": 0.8710489450546619
     },
     {
       "fold": "OOS_2026_09",
-      "pdr_estimate": 0.9194329582809134,
-      "pdr_se": 0.35286046321796066
+      "pdr_estimate": 0.9194329582809133,
+      "pdr_se": 0.3528604632179606
     }
   ],
   "vs_always_exit_per_event": {
