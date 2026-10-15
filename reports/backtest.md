@@ -131,12 +131,12 @@ actually applies, which the live rTOWN position will show when its dividend is c
 
 ## 3. Live test (pre-registered, after the backtest)
 
-17 of 16 high-dividend events graded so far, each decision committed to Git before the 20:00 ET cutoff. Per event, holding minus stepping out (modeled execution, 70% of the dividend kept):
+19 of 16 high-dividend events graded so far, each decision committed to Git before the 20:00 ET cutoff. Per event, holding minus stepping out (modeled execution, 70% of the dividend kept):
 
 | Events | Holding beat stepping out | Mean, bps per event |
 |---|---:|---:|
-| All graded | 15 of 17 | 74.42 |
-| Price moved overnight (PRICED) | 4 of 6 | 4.66 |
+| All graded | 17 of 19 | 72.96 |
+| Price moved overnight (PRICED) | 5 of 7 | 7.70 |
 
 On nights with no overnight trades the price cannot drop, so holding wins by construction;
 the PRICED row is the fair test and it is close to even.

@@ -576,16 +576,16 @@
   "live": {
     "label": "MODELED_EXECUTION",
     "scheduled": 16,
-    "graded": 17,
+    "graded": 19,
     "all": {
-      "events": 17,
-      "hold_beat_exit": 15,
-      "mean_hold_minus_exit_bps": 74.42370331002246
+      "events": 19,
+      "hold_beat_exit": 17,
+      "mean_hold_minus_exit_bps": 72.95530863376402
     },
     "priced_overnight": {
-      "events": 6,
-      "hold_beat_exit": 4,
-      "mean_hold_minus_exit_bps": 4.656774287110345
+      "events": 7,
+      "hold_beat_exit": 5,
+      "mean_hold_minus_exit_bps": 7.6983647848280645
     },
     "events": [
       {
@@ -808,6 +808,32 @@
         "pre_price": 45.3,
         "post_price": 45.3,
         "exit_minus_hold_bps": -120.71743929359822
+      },
+      {
+        "event_id": "rCHCO-2026-10-15-1",
+        "ex_date": "2026-10-15",
+        "price_discovery": "NONE",
+        "realised_pdr": 0.0,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20261014T2330Z.csv",
+        "sell_cutoff": "2026-10-14T20:00:00-04:00",
+        "gross_dividend": 1.0,
+        "pre_price": 140.0,
+        "post_price": 140.0,
+        "exit_minus_hold_bps": -95.0
+      },
+      {
+        "event_id": "rCSWC-2026-10-15-1",
+        "ex_date": "2026-10-15",
+        "price_discovery": "PRICED",
+        "realised_pdr": 0.9307135470527574,
+        "frozen_verdict_1k": "NO_SIGNAL",
+        "frozen_decision_file": "signals_v3_20261014T2330Z.csv",
+        "sell_cutoff": "2026-10-14T20:00:00-04:00",
+        "gross_dividend": 0.1934,
+        "pre_price": 23.42,
+        "post_price": 23.24,
+        "exit_minus_hold_bps": -25.947907771134382
       }
     ]
   },
